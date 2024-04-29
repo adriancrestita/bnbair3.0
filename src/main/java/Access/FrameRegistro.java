@@ -4,6 +4,7 @@
  */
 package Access;
 
+import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -12,8 +13,10 @@ import java.lang.*;
 
 import poo.javabnb.*;
 import java.lang.*;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.*;
 
 /**
  *
@@ -24,8 +27,67 @@ public class FrameRegistro extends javax.swing.JFrame {
     /**
      * Creates new form FrameRegistro
      */
+    
+    private String[] nombresVariables = {
+        "jmailsign",
+        "jpasswordsign",
+        "jphonenumber",
+        "jdni",
+        "jnombre",
+        "jtitular",
+        "jnumtarj",
+        "jfcaducidad"
+    };
+
+    private String[] mensajesOriginales = {
+        "Ingrese el correo",
+        "Ingrese la contraseña",
+        "Ingrese el teléfono",
+        "Ingrese el DNI",
+        "Ingrese el nombre",
+        "Ingrese el nombre del titular",
+        "Ingrese el numero de tarjeta",
+        "Ingrese la fecha de caducidad"
+    };
+    
+    private HashMap<String, JTextField> camposDeTexto = new HashMap<>();
+
+    
     public FrameRegistro() {
         initComponents();
+        
+        // Agregamos los campos de texto al HashMap
+        camposDeTexto.put("jmailsign", jmailsign);
+        camposDeTexto.put("jpasswordsign", jpasswordsign);
+        camposDeTexto.put("jphonenumber", jphonenumber);
+        camposDeTexto.put("jdni", jdni);
+        camposDeTexto.put("jnombre", jnombre);
+        camposDeTexto.put("jtitular", jtitular);
+        camposDeTexto.put("jnumtarj", jnumtarj);
+        camposDeTexto.put("jfcaducidad", jfcaducidad);
+
+        for (int i = 0; i < nombresVariables.length; i++) {
+            JTextField campo = camposDeTexto.get(nombresVariables[i]);
+            final String mensajeOriginal = mensajesOriginales[i];
+
+            campo.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (campo.getText().equals(mensajeOriginal)) {
+                        campo.setText("");
+                    }
+                }
+            });
+
+            campo.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (campo.getText().isEmpty()) {
+                        campo.setText(mensajeOriginal);
+                    }
+                }
+            });
+        }
     }
 
     /**
