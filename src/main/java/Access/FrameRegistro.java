@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Access;
 
 import java.awt.event.*;
@@ -14,6 +10,7 @@ import java.lang.*;
 import poo.javabnb.*;
 import java.lang.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -70,16 +67,14 @@ public class FrameRegistro extends javax.swing.JFrame {
             JTextField campo = camposDeTexto.get(nombresVariables[i]);
             final String mensajeOriginal = mensajesOriginales[i];
 
-            campo.addMouseListener(new MouseAdapter() {
+            campo.addFocusListener(new FocusAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void focusGained(FocusEvent e) {
                     if (campo.getText().equals(mensajeOriginal)) {
                         campo.setText("");
                     }
                 }
-            });
 
-            campo.addFocusListener(new FocusAdapter() {
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (campo.getText().isEmpty()) {
@@ -358,147 +353,38 @@ public class FrameRegistro extends javax.swing.JFrame {
     private void jmailsignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmailsignActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jmailsignActionPerformed
-    public void cambioLogin(int check){
-        if(check==0){
-            
-            FrameLogin fLog = new FrameLogin();
-            fLog.setVisible(true);
-            dispose();
-        }
-    }
-    
-    private static final String LETRAS_DNI = "TRWAGMYFPDXBNJZSQVHLCKE";
-    public boolean esDni(String dni){
-        if (dni == null || dni.length() != 9) {
-            return false;
-        }
-
-        String parteNumerica = dni.substring(0, 8);
-        char letra = dni.charAt(8);
-        if (!parteNumerica.matches("\\d{8}")) {  // Comprueba si la parte numérica son exactamente 8 dígitos.
-            return false;
-        }
-
-        int indice = Integer.parseInt(parteNumerica) % 23;
-        return LETRAS_DNI.charAt(indice) == letra;
-    }
-    
-    public static boolean esCorreo(String texto) {
-        if (texto == null) {
-            return false;
-        }
-
-        // La expresión regular "^([^@]*@[^@]*)$" explicada:
-        // ^ - inicio de la cadena
-        // ([^@]*@[^@]*) - cualquier cantidad de caracteres que no sean '@', seguido por un '@', 
-        //                 seguido por cualquier cantidad de caracteres que no sean '@'
-        // $ - fin de la cadena
-        return texto.matches("[^@]*@[^@]*");
-    }
-    
-    public static boolean esFechaCaducidad(String fecha) {
-        if (fecha == null) {
-            return false;
-        }
-        
-        // Comprobar el formato general con una expresión regular
-        if (!fecha.matches("\\d{2}/\\d{2}")) {
-            return false;
-        }
-
-        // Dividir la fecha en mes y año
-        String[] partes = fecha.split("/");
-        if (partes.length != 2) {
-            return false;
-        }
-
-        String mes = partes[0];
-        String ano = partes[1];
-
-        // Validar el rango del mes
-        try {
-            int mesInt = Integer.parseInt(mes);
-            if (mesInt < 1 || mesInt > 12) {
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            return false;  // El mes no es un número válido
-        }
-
-        // No es necesario validar el año en términos de rango, pues "aa" ya es validado por la expresión regular
-        return true;
-    }
-    
-    public static boolean xLongitud(String texto, int longitud) {
-        if (texto == null) {
-            return false;  // Considera si una cadena nula debe retornar false o lanzar una excepción.
-        }
-        return texto.length() == longitud;
-    }
 
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
-        // TODO add your handling code here:
-        int check=0;
-        if(jmailsign.getText().equals("") || jmailsign.getText().equals("Ingrese el correo") || esCorreo(jmailsign.getText()) == false){
-            JOptionPane.showMessageDialog(null, "Rellene el correo");
-            check++;
-        }
-        if(jpasswordsign.getPassword().equals("") || jpasswordsign.getPassword().equals("Ingrese la contraseña")){
-            JOptionPane.showMessageDialog(null, "Rellene la password");
-            check++;
-        }
-        if(jnombre.getText().equals("") || jnombre.getText().equals("Ingrese el DNI") || esDni(jnombre.getText()) == false){
-            JOptionPane.showMessageDialog(null, "Rellene el DNI");
-            check++;
-        }
-        if(jnumtarj.getText().equals("") || jnumtarj.getText().equals("Ingrese el numero de tarjeta") || xLongitud(jnumtarj.getText(),16) == false){
-            JOptionPane.showMessageDialog(null, "Rellene el numero de la tarjeta");
-            check++;
-        }
-        if(jfcaducidad.getText().equals("") || jfcaducidad.getText().equals("Ingrese la fecha de caducidad") || esFechaCaducidad(jfcaducidad.getText()) == false){
-            JOptionPane.showMessageDialog(null, "Rellene la fecha de caducidad");
-            check++;
-        }
-        if(jtitular.getText().equals("") || jtitular.getText().equals("Ingrese el nombre del titular")){
-            JOptionPane.showMessageDialog(null, "Rellene el nombre del titular");
-            check++;
-        }
-        if(jphonenumber.getText().equals("") || jphonenumber.getText().equals("Ingrese el teléfono") || xLongitud(jphonenumber.getText(),9) == false){
-            JOptionPane.showMessageDialog(null, "Rellene el numero de telefono");
-            check++;
-        }
-        if(jnombre.getText().equals("") || jnombre.getText().equals("Ingrese el nombre")){
-            JOptionPane.showMessageDialog(null, "Rellene el nombre");
-            check++;
-        }
-        
-        
+        MetodosAuxiliares ma = new MetodosAuxiliares();
         ClienteParticular particular = new ClienteParticular(jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
-        
-        //Asignamos valores a los atributos con los SET de Cliente Particular
-        particular.setDni(jnombre.getText());
-        particular.setNombre(jnombre.getText());
-        particular.setCorreoElectronico(jmailsign.getText());
-        particular.setClave(String.valueOf(jpasswordsign.getPassword()));
-        particular.setTelefono(jphonenumber.getText());
-        particular.setesVIP(jesVIP.isEnabled());
-        
-        Javabnb bnb = new Javabnb();
-        
-        try {
-            if(bnb.existeCliente(jmailsign.getText()) == false && check==0){
+        TarjetaCredito tj = new TarjetaCredito(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
+        try{
+            if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
+                //Asignamos valores a los atributos con los SET de Cliente Particular
+                particular.setDni(jdni.getText().trim());
+                particular.setNombre(jnombre.getText().trim());
+                particular.setCorreoElectronico(jmailsign.getText().trim());
+                particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
+                particular.setTelefono(jphonenumber.getText().trim());
+                particular.setesVIP(jesVIP.isSelected());
+                
+                tj.setFechaCaducidad(jfcaducidad.getText().trim());
+                tj.setNombreTitular(jtitular.getText().trim());
+                tj.setNumeroTarjeta(jnumtarj.getText().trim());
+                
                 particular.guardarParticular();
-                cambioLogin(check);
-
+                tj.guardarTarjeta();
                 
+                FrameLogin fLog = new FrameLogin();
+                fLog.setVisible(true);
+                dispose();
             }
-            else{
-                JOptionPane.showMessageDialog(null, "Este usuario ya existe");
-                
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(FrameRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
+        catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
+        }
+        
+       
     }//GEN-LAST:event_bregistrarseActionPerformed
 
     private void jnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnombreActionPerformed

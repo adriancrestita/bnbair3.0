@@ -1,10 +1,12 @@
 package poo.javabnb;
 
 import java.io.*;
+import static poo.javabnb.MetodosAuxiliares.elementosPorDato;
 
 public class ClienteParticular extends Usuario {
     
     //Atributos
+    
     private boolean esVIP;
     
     //Constructor
@@ -83,7 +85,6 @@ public class ClienteParticular extends Usuario {
     }
     
     
-
     public boolean cmpVIP(){
         return esVIP;   
     }

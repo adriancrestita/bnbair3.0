@@ -1,7 +1,13 @@
 package poo.javabnb;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class TarjetaCredito {
+
+public class TarjetaCredito extends ClienteParticular{
     
     //Atributos
     private String nombreTitular;
@@ -9,7 +15,9 @@ public class TarjetaCredito {
     private String fechaCaducidad;
     
     //Constructor
-    public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad) {
+    
+    public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad, String dni, String nombre, String correoElectronico, String clave, String telefono, boolean esVIP) {
+        super(dni,nombre,correoElectronico,clave,telefono,esVIP);
         this.nombreTitular = nombreTitular;
         this.numeroTarjeta = numeroTarjeta;
         this.fechaCaducidad = fechaCaducidad;
@@ -38,5 +46,42 @@ public class TarjetaCredito {
 
     public void setFechaCaducidad(String fechaCaducidad) {
         this.fechaCaducidad = fechaCaducidad;
+    }
+    
+    
+    public boolean tarjetaCorrecta(String correoBuscado,String numtarj, String titular, String fcad) throws FileNotFoundException, IOException{
+        BufferedReader reader = null;
+        String[] elementos = null;
+        try {
+            reader = new BufferedReader(new FileReader("datos_tarjeta.txt"));
+            String lineaActual;
+
+            while ((lineaActual = reader.readLine()) != null) {
+                elementos = lineaActual.split(","); // Dividir la línea por comas
+                if (elementos.length > 0 && elementos[0].equals(correoBuscado) && elementos[1].equals(titular) && elementos[2].equals(numtarj) && elementos[3].equals(fcad)) {
+                    return true; // Retorna true si coincide
+                }
+            }
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
+
+        return false; // Retorna false si no se encuentra cliente que coincida
+    }
+    
+    
+    public void guardarTarjeta() {
+        String linea = correoElectronico + "," + nombreTitular + "," + numeroTarjeta + "," + fechaCaducidad + "\n";
+        try {
+            FileWriter myWriter = new FileWriter("datos_tarjeta.txt", true); //el true activa el append
+            myWriter.write(linea/*.getBytes(), StandardOpenOption.APPEND*/);
+            myWriter.close();
+          } 
+        catch (IOException e) {
+            System.out.println("Ha ocurrido un error");
+            e.printStackTrace();
+          }
     }
 }
