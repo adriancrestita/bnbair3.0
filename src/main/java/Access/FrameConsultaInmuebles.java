@@ -104,6 +104,8 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
 
         Salir.setText("Salir");
 
+        ImageIcon cSesion = new ImageIcon("src/main/java/com/images/Puerta.png");
+        CerrarSesion.setIcon(cSesion);
         CerrarSesion.setText("Cerrar Sesión");
         CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +114,8 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         });
         Salir.add(CerrarSesion);
 
+        ImageIcon apagar = new ImageIcon("src/main/java/com/images/shootDown.png");
+        Quit.setIcon(apagar);
         Quit.setText("Cerrar App");
         Quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

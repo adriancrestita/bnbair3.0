@@ -74,7 +74,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PANEL ADMINISTRADOR");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, -1, -1));
 
         ConsultaInmuebleButton.setText("Acceder");
         ConsultaInmuebleButton.addActionListener(new java.awt.event.ActionListener() {
@@ -179,6 +179,8 @@ public class FrameAdmin extends javax.swing.JFrame {
 
         quitmenu.setText("Salir");
 
+        ImageIcon cSesion = new ImageIcon("src/main/java/com/images/Puerta.png");
+        CerrarSesion.setIcon(cSesion);
         CerrarSesion.setText("Cerrar Sesión");
         CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,6 +189,8 @@ public class FrameAdmin extends javax.swing.JFrame {
         });
         quitmenu.add(CerrarSesion);
 
+        ImageIcon apagar = new ImageIcon("src/main/java/com/images/shootDown.png");
+        Quit.setIcon(apagar);
         Quit.setText("Cerrar App");
         Quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

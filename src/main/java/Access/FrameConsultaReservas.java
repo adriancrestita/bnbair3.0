@@ -70,6 +70,8 @@ public class FrameConsultaReservas extends javax.swing.JFrame {
 
         jMenu1.setText("Inicio");
 
+        ImageIcon admin = new ImageIcon("src/main/java/com/images/admin.png");
+        PantallaAdmin.setIcon(admin);
         PantallaAdmin.setText("Panel Admin");
         PantallaAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,6 +80,8 @@ public class FrameConsultaReservas extends javax.swing.JFrame {
         });
         jMenu1.add(PantallaAdmin);
 
+        ImageIcon casa = new ImageIcon("src/main/java/com/images/CasaEmoji.png");
+        ConsultaInmueble.setIcon(casa);
         ConsultaInmueble.setText("Consulta Inmuebles");
         ConsultaInmueble.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,6 +90,8 @@ public class FrameConsultaReservas extends javax.swing.JFrame {
         });
         jMenu1.add(ConsultaInmueble);
 
+        ImageIcon users = new ImageIcon("src/main/java/com/images/PersonaEmoji.png");
+        ConsultaUser.setIcon(users);
         ConsultaUser.setText("Consulta Usuarios");
         ConsultaUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,7 +104,9 @@ public class FrameConsultaReservas extends javax.swing.JFrame {
 
         jMenu2.setText("Salir");
 
-        CerrarSesion.setText("Cerrar sesión");
+        ImageIcon cSesion = new ImageIcon("src/main/java/com/images/Puerta.png");
+        CerrarSesion.setIcon(cSesion);
+        CerrarSesion.setText("Cerrar Sesión");
         CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CerrarSesionActionPerformed(evt);
@@ -106,7 +114,9 @@ public class FrameConsultaReservas extends javax.swing.JFrame {
         });
         jMenu2.add(CerrarSesion);
 
-        Quit.setText("Cerrar aplicación");
+        ImageIcon apagar = new ImageIcon("src/main/java/com/images/shootDown.png");
+        Quit.setIcon(apagar);
+        Quit.setText("Cerrar App");
         Quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 QuitActionPerformed(evt);

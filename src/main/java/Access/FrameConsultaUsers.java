@@ -33,6 +33,14 @@ public class FrameConsultaUsers extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        Admin = new javax.swing.JMenuItem();
+        Inmueble = new javax.swing.JMenuItem();
+        Reservas = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        CerrarSesion = new javax.swing.JMenuItem();
+        Quit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +67,60 @@ public class FrameConsultaUsers extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 500));
 
+        jMenu1.setText("Inicio");
+
+        Admin.setText("Panel admin");
+        Admin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdminActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Admin);
+
+        Inmueble.setText("Consulta inmueble");
+        Inmueble.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InmuebleActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Inmueble);
+
+        Reservas.setText("Consulta reservas");
+        Reservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReservasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Reservas);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Salir");
+
+        ImageIcon cSesion = new ImageIcon("src/main/java/com/images/Puerta.png");
+        CerrarSesion.setIcon(cSesion);
+        CerrarSesion.setText("Cerrar Sesión");
+        CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarSesionActionPerformed(evt);
+            }
+        });
+        jMenu2.add(CerrarSesion);
+
+        ImageIcon apagar = new ImageIcon("src/main/java/com/images/shootDown.png");
+        Quit.setIcon(apagar);
+        Quit.setText("Cerrar App");
+        Quit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QuitActionPerformed(evt);
+            }
+        });
+        jMenu2.add(Quit);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,6 +134,39 @@ public class FrameConsultaUsers extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void QuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_QuitActionPerformed
+
+    private void AdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminActionPerformed
+        // TODO add your handling code here:
+        FrameAdmin admin = new FrameAdmin();
+        admin.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_AdminActionPerformed
+
+    private void InmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InmuebleActionPerformed
+        // TODO add your handling code here:
+        FrameConsultaInmuebles inmueble = new FrameConsultaInmuebles();
+        inmueble.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_InmuebleActionPerformed
+
+    private void ReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservasActionPerformed
+        // TODO add your handling code here:
+        FrameConsultaReservas reservas = new FrameConsultaReservas();
+        reservas.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_ReservasActionPerformed
+
+    private void CerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarSesionActionPerformed
+        // TODO add your handling code here:
+        FrameInicio inicio = new FrameInicio();
+        inicio.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_CerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,9 +204,17 @@ public class FrameConsultaUsers extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Admin;
+    private javax.swing.JMenuItem CerrarSesion;
+    private javax.swing.JMenuItem Inmueble;
+    private javax.swing.JMenuItem Quit;
+    private javax.swing.JMenuItem Reservas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

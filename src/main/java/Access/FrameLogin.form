@@ -16,6 +16,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PaginaInicialActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon inicio = new ImageIcon(&quot;src/main/java/com/images/logo2icon.png&quot;);&#xd;&#xa;PaginaInicial.setIcon(inicio);"/>
+              </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Register">
               <Properties>
@@ -39,6 +42,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="QuitActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon apagar = new ImageIcon(&quot;src/main/java/com/images/shootDown.png&quot;);&#xd;&#xa;Quit.setIcon(apagar);"/>
+              </AuxValues>
             </MenuItem>
           </SubComponents>
         </Menu>

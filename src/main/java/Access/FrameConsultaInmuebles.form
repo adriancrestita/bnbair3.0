@@ -56,6 +56,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CerrarSesionActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon cSesion = new ImageIcon(&quot;src/main/java/com/images/Puerta.png&quot;);&#xd;&#xa;CerrarSesion.setIcon(cSesion);"/>
+              </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Quit">
               <Properties>
@@ -64,6 +67,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="QuitActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon apagar = new ImageIcon(&quot;src/main/java/com/images/shootDown.png&quot;);&#xd;&#xa;Quit.setIcon(apagar);"/>
+              </AuxValues>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -62,6 +62,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 }
             }
         });
+        
     }
 
     /**
@@ -179,6 +180,8 @@ public class FrameLogin extends javax.swing.JFrame {
 
         MenuInicio.setText("Inicio");
 
+        ImageIcon inicio = new ImageIcon("src/main/java/com/images/logo2icon.png");
+        PaginaInicial.setIcon(inicio);
         PaginaInicial.setText("Página inicial");
         PaginaInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,6 +202,8 @@ public class FrameLogin extends javax.swing.JFrame {
 
         MenuSalir.setText("Salir");
 
+        ImageIcon apagar = new ImageIcon("src/main/java/com/images/shootDown.png");
+        Quit.setIcon(apagar);
         Quit.setText("Cerrar aplicación");
         Quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,21 +238,26 @@ public class FrameLogin extends javax.swing.JFrame {
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
         // TODO add your handling code here:
-        if(jmaillog.getText().equals("")){
-            if(jpasswordlog.getText().equals("")){
+        if(jmaillog.getText().equals("")||jmaillog.getText().equals(mensajeOriginalCorreo)){
+            if(jpasswordlog.getText().equals("")||jpasswordlog.getText().equals(mensajeOriginalContraseña)){
                 JOptionPane.showMessageDialog(null, "Rellene el correo y la contraseña");
             }
             else{
                 JOptionPane.showMessageDialog(null, "Rellene el correo");
             }
         }
-        else if(jpasswordlog.getText().equals("")){
+        else if(jpasswordlog.getText().equals("")||jpasswordlog.getText().equals(mensajeOriginalContraseña)){
             JOptionPane.showMessageDialog(null, "Rellene la contraseña");
         }
         else {
             if (jmaillog.getText().equals("admin@javabnb.com")&&(jpasswordlog.getText().equals("admin"))){
                 FrameAdmin pantallaAdmin= new FrameAdmin();
                 pantallaAdmin.setVisible(true);
+                dispose();
+            }
+            else{
+                FrameMenuParticular menuParticular = new FrameMenuParticular();
+                menuParticular.setVisible(true);
                 dispose();
             }
         }

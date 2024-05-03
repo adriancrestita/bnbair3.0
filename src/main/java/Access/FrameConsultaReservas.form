@@ -16,6 +16,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PantallaAdminActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon admin = new ImageIcon(&quot;src/main/java/com/images/admin.png&quot;);&#xd;&#xa;PantallaAdmin.setIcon(admin);"/>
+              </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ConsultaInmueble">
               <Properties>
@@ -24,6 +27,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConsultaInmuebleActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon casa = new ImageIcon(&quot;src/main/java/com/images/CasaEmoji.png&quot;);&#xd;&#xa;ConsultaInmueble.setIcon(casa);"/>
+              </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ConsultaUser">
               <Properties>
@@ -32,6 +38,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConsultaUserActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon users = new ImageIcon(&quot;src/main/java/com/images/PersonaEmoji.png&quot;);&#xd;&#xa;ConsultaUser.setIcon(users);"/>
+              </AuxValues>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -42,19 +51,25 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="CerrarSesion">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cerrar sesi&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Cerrar Sesi&#xf3;n"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CerrarSesionActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon cSesion = new ImageIcon(&quot;src/main/java/com/images/Puerta.png&quot;);&#xd;&#xa;CerrarSesion.setIcon(cSesion);"/>
+              </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Quit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cerrar aplicaci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Cerrar App"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="QuitActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon apagar = new ImageIcon(&quot;src/main/java/com/images/shootDown.png&quot;);&#xd;&#xa;Quit.setIcon(apagar);"/>
+              </AuxValues>
             </MenuItem>
           </SubComponents>
         </Menu>
