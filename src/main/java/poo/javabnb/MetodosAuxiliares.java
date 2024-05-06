@@ -105,7 +105,25 @@ public class MetodosAuxiliares {
             return false;
         }
     }
-    
+    public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni, boolean esVIP) throws IOException {        
+        // Validar que los campos no están vacíos ni tienen el texto por defecto
+        if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
+            nombre.isEmpty() || nombre.equals("Ingrese el nombre") ||
+            contraseña.isEmpty() || contraseña.equals("Introduce la contraseña") ||
+            telefono.isEmpty() || telefono.equals("Ingrese el teléfono") ||
+            dni.isEmpty() || dni.equals("Ingrese el DNI")){
+            return false;
+        }
+
+        // Verificar cada campo con sus respectivas funciones de validación
+        if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
+            return true;
+        }  
+        else{
+            JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos");
+            return false;
+        }
+    }
     public boolean inicioSesionValido(String correo, String contraseña) throws FileNotFoundException, IOException{
         BufferedReader reader = null;
         String[] elementos = null;

@@ -65,6 +65,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         ConsultarReservas = new javax.swing.JMenuItem();
         CambiarDatos = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         menu1.setLabel("File");
         menuBar1.add(menu1);
@@ -170,13 +171,16 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         });
         jMenu3.add(ConsultarReservas);
 
-        CambiarDatos.setText("Cambiar Datos");
+        CambiarDatos.setText("Cambiar Datos Personales");
         CambiarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CambiarDatosActionPerformed(evt);
             }
         });
         jMenu3.add(CambiarDatos);
+
+        jMenuItem2.setText("Cambiar Datos Bancarios");
+        jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
 
@@ -272,6 +276,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private java.awt.Menu menu1;

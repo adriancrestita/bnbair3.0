@@ -131,11 +131,16 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="CambiarDatos">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cambiar Datos"/>
+                <Property name="text" type="java.lang.String" value="Cambiar Datos Personales"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CambiarDatosActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Cambiar Datos Bancarios"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

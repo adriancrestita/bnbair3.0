@@ -31,20 +31,15 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
         "jphonenumber",
         "jdni",
         "jnombre",
-        "jtitular",
-        "jnumtarj",
-        "jfcaducidad"
+      
     };
-
     private String[] mensajesOriginales = {
         "Ingrese el correo",
         "Ingrese la contraseña",
         "Ingrese el teléfono",
         "Ingrese el DNI",
         "Ingrese el nombre",
-        "Ingrese el nombre del titular",
-        "Ingrese el numero de tarjeta",
-        "Ingrese la fecha de caducidad"
+     
     };
     
     private HashMap<String, JTextField> camposDeTexto = new HashMap<>();
@@ -322,9 +317,16 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
         ClienteParticular particular = new ClienteParticular(jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
-        //if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jesVIP.isSelected())) == true){
-            
-            
+        try {
+            if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jesVIP.isSelected())) == true){
+                particular.reemplazarLinea(particular.getCorreoElectronico(), jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jesVIP.isSelected()); 
+                JOptionPane.showMessageDialog(null, "Cambios guardados correctamente");
+
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FrameDatosPersonales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         FrameLogin fLog = new FrameLogin();
         fLog.setVisible(true);
         dispose();
