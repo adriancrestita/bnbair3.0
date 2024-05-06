@@ -59,9 +59,7 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
         camposDeTexto.put("jphonenumber", jphonenumber);
         camposDeTexto.put("jdni", jdni);
         camposDeTexto.put("jnombre", jnombre);
-        camposDeTexto.put("jtitular", jtitular);
-        camposDeTexto.put("jnumtarj", jnumtarj);
-        camposDeTexto.put("jfcaducidad", jfcaducidad);
+        
 
         for (int i = 0; i < nombresVariables.length; i++) {
             JTextField campo = camposDeTexto.get(nombresVariables[i]);
@@ -324,25 +322,13 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
         ClienteParticular particular = new ClienteParticular(jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
-        try{
-            if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
-                //Asignamos valores a los atributos con los SET de Cliente Particular
-                particular.setDni(jdni.getText().trim());
-                particular.setNombre(jnombre.getText().trim());
-                particular.setCorreoElectronico(jmailsign.getText().trim());
-                particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
-                particular.setTelefono(jphonenumber.getText().trim());
-                particular.setesVIP(jesVIP.isSelected());
-
-
-                FrameLogin fLog = new FrameLogin();
-                fLog.setVisible(true);
-                dispose();
-            }
-        }
-        catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
-        }
+        //if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jesVIP.isSelected())) == true){
+            
+            
+        FrameLogin fLog = new FrameLogin();
+        fLog.setVisible(true);
+        dispose();
+        
 
     }//GEN-LAST:event_bregistrarseActionPerformed
 
