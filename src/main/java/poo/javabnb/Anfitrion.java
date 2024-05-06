@@ -15,5 +15,4 @@ public class Anfitrion extends Usuario {
         this.esSuperanfitrion = esSuperanfitrion;
     }
 
-    // Métodos específicos para Anfitrion
 }
