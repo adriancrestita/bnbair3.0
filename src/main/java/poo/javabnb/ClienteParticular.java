@@ -88,4 +88,39 @@ public class ClienteParticular extends Usuario {
     public boolean cmpVIP(){
         return esVIP;   
     }
+    
+    public static void busquedaDatosCliente(String correo){
+        try {
+            String archivo = "datos_users.txt";
+            String[] elementos = elementosPorDato(archivo, correo, 2);
+
+            if (elementos != null) {
+                for (String elemento : elementos) {
+                    System.out.println(elemento);
+                }
+            } else {
+                System.out.println("No se encontró ningun cliente con ese nombre.");
+            }
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void modificarDatos(String dato, String cambio){
+        switch(dato){
+            case "nombre":
+                setNombre(cambio);
+            case "dni": 
+                setDni(cambio);
+            case "correo":
+                setCorreoElectronico(cambio);
+            case "contraseña":
+                setClave(cambio);
+            case "telefono":
+                setTelefono(cambio);
+            case "VIP":     
+                
+        } 
+    }
 }

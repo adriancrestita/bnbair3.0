@@ -51,4 +51,20 @@ public class Javabnb {
             e.printStackTrace();
         }
     }
+    
+    public static void crearTxtInmueble(){
+        try {
+            File myObj = new File("datos_inmuebles.txt");        
+            if (myObj.createNewFile()) {
+              System.out.println("Archivo creado: " + myObj.getName());
+            } 
+            else {
+              System.out.println("El fichero ya existe");
+            }
+          } 
+        catch (IOException e) {
+            System.out.println("Ha ocurrido un errror");
+            e.printStackTrace();
+        }
+    }
 }

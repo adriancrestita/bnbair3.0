@@ -1,8 +1,10 @@
 package poo.javabnb;
 
+import java.io.IOException;
 import java.util.*;
 
 import java.util.List;
+import static poo.javabnb.MetodosAuxiliares.elementosPorDato;
 
 public class Inmueble {
     
@@ -165,6 +167,24 @@ public class Inmueble {
         "\nPrecio por noche: $" + precioNoche +
         "\nServicios: " + servicios +
         "\nCalificación: " + calificacion + "/5";
+    }
+    
+    public static void busquedaInmueble(String correo){
+        try {
+            String archivo = "datos_inmuebles.txt";
+            String[] elementos = elementosPorDato(archivo, correo, 0);
+
+            if (elementos != null) {
+                for (String elemento : elementos) {
+                    System.out.println(elemento);
+                }
+            } else {
+                System.out.println("No se encontró ningun cliente con ese nombre.");
+            }
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Método para actualizar la calificación basado en una nueva revisión
