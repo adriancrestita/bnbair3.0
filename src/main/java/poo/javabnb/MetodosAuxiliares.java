@@ -75,25 +75,7 @@ public class MetodosAuxiliares {
 
         return false; // Retorna false si no se encuentra cliente que coincida
     }
-    
-    public static void busquedaDatosCliente(String correo){
-        try {
-            String archivo = "datos_users.txt";
-            String[] elementos = elementosPorDato(archivo, correo);
-
-            if (elementos != null) {
-                for (String elemento : elementos) {
-                    System.out.println(elemento);
-                }
-            } else {
-                System.out.println("No se encontró ningun cliente con ese nombre.");
-            }
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
+   
     public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni, String titularTarjeta, String numeroTarjeta, String fechaCaducidad, boolean esVIP) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
@@ -123,8 +105,30 @@ public class MetodosAuxiliares {
             return false;
         }
     }
+    
+    public boolean inicioSesionValido(String correo, String contraseña) throws FileNotFoundException, IOException{
+        BufferedReader reader = null;
+        String[] elementos = null;
+        try {
+            reader = new BufferedReader(new FileReader("datos_users.txt"));
+            String lineaActual;
 
-    public static String[] elementosPorDato(String archivo, String correo) throws IOException{
+            while ((lineaActual = reader.readLine()) != null) {
+                elementos = lineaActual.split(","); // Dividir la línea por comas
+                if (elementos.length > 0 && elementos[2].equals(correo) && elementos[3].equals(contraseña)) {
+                    return true; // Retorna true si coincide
+                }
+            }
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
+
+        return false; // Retorna false si no se encuentra cliente que coincida
+    }
+
+    public static String[] elementosPorDato(String archivo, String correo, int posicion) throws IOException{
         BufferedReader reader = null;
         String[] elementos = null;
 
@@ -134,7 +138,7 @@ public class MetodosAuxiliares {
 
             while ((lineaActual = reader.readLine()) != null) {
                 elementos = lineaActual.split(","); // Dividir la línea por comas
-                if (elementos.length > 0 && elementos[2].equals(correo)) {
+                if (elementos.length > 0 && elementos[posicion].equals(correo)) {
                     return elementos; // Retorna los elementos si el primer dato coincide
                 }
             }
