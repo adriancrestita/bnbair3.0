@@ -23,6 +23,7 @@ public class FrameLogin extends javax.swing.JFrame {
      */
     public FrameLogin() {
         initComponents();
+        setTitle("JavaBnB");
         jmaillog.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

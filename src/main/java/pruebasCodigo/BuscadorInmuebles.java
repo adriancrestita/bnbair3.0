@@ -8,27 +8,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BuscadorInmuebles extends JFrame {
-    private List<String> inmuebles;
-    private List<JLabel> labels;
-    private JPanel panel;
-    private int currentPage;
-    private JTextField searchBar;
+    private List<String> inmuebles; // Lista de inmuebles disponibles
+    private JPanel panel; // Panel principal para mostrar los inmuebles
+    private int currentPage; // Página actual de resultados
+    private JTextField searchBar; // Campo de búsqueda de inmuebles
 
     public BuscadorInmuebles() {
-        this.inmuebles = Arrays.asList("New York", "London", "Paris", "Tokyo", "Rome", "Sydney", "Dubai", "Berlin", "Moscow", "Los Angeles", "Barcelona", "Hong Kong", "Toronto", "San Francisco", "Singapore", "Venice", "Rio de Janeiro", "Mumbai", "Florence", "Amsterdam", "Vienna", "Prague", "Seoul", "Buenos Aires", "Mexico City", "Vancouver", "Madrid", "Bangkok", "Cape Town", "Athens");
-        this.labels = new ArrayList<>();
+        // Inicialización de la lista de inmuebles y la página actual
+        this.inmuebles = Arrays.asList("Nueva York", "Londres", "París", "Tokio", "Roma", "Sídney", "Dubái", "Berlín", "Moscú", "Los Ángeles", "Barcelona", "Hong Kong", "Toronto", "San Francisco", "Singapur", "Venecia", "Río de Janeiro", "Bombay", "Florencia", "Ámsterdam", "Viena", "Praga", "Seúl", "Buenos Aires", "Ciudad de México", "Vancouver", "Madrid", "Bangkok", "Ciudad del Cabo", "Atenas");
         this.currentPage = 0;
 
+        // Configuración de la ventana principal
         setTitle("Buscador de Inmuebles");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        // Campo de búsqueda de inmuebles
         searchBar = new JTextField();
         searchBar.addActionListener(new ActionListener() {
             @Override
@@ -37,7 +37,8 @@ public class BuscadorInmuebles extends JFrame {
             }
         });
 
-        JButton nextPageButton = new JButton("Next Page");
+        // Botones de navegación entre páginas
+        JButton nextPageButton = new JButton("Página Siguiente");
         nextPageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,7 +46,7 @@ public class BuscadorInmuebles extends JFrame {
             }
         });
 
-        JButton previousPageButton = new JButton("Previous Page");
+        JButton previousPageButton = new JButton("Página Anterior");
         previousPageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,8 +54,10 @@ public class BuscadorInmuebles extends JFrame {
             }
         });
 
-        panel = new JPanel(new GridLayout(3, 3));
+        // Panel principal para mostrar los inmuebles
+        panel = new JPanel(new GridLayout(1, 1));
 
+        // Agregar componentes a la ventana principal
         add(searchBar, BorderLayout.NORTH);
         add(panel, BorderLayout.CENTER);
 
@@ -63,67 +66,99 @@ public class BuscadorInmuebles extends JFrame {
         buttonPanel.add(nextPageButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
+        // Cargar los inmuebles al iniciar la ventana
         loadInmuebles();
     }
 
+    // Método para cargar los inmuebles en la página actual
     private void loadInmuebles() {
         panel.removeAll();
-        labels.clear();
 
-        int startIndex = currentPage * 9;
-        int endIndex = Math.min(startIndex + 9, inmuebles.size());
+        int startIndex = currentPage * 9; // Índice de inicio en la lista de inmuebles
+        int endIndex = Math.min(startIndex + 9, inmuebles.size()); // Índice de fin en la lista de inmuebles
 
+        // Panel para mostrar los inmuebles en una cuadrícula 3x3
+        JPanel gridPanel = new JPanel(new GridLayout(3, 3));
+
+        // Agregar etiquetas con los nombres de los inmuebles al panel
         for (int i = startIndex; i < endIndex; i++) {
             JLabel label = new JLabel(inmuebles.get(i));
-            labels.add(label);
-            panel.add(label);
+            label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
+            gridPanel.add(label);
         }
 
-        // Restablecer el diseño de la cuadrícula a 3x3
-        panel.setLayout(new GridLayout(3, 3));
+        // Agregar el panel de cuadrícula al panel principal
+        panel.add(gridPanel);
 
+        // Actualizar la ventana
         revalidate();
         repaint();
     }
 
+    // Método para ir a la siguiente página de resultados
     private void nextPage() {
-        currentPage++;
-        loadInmuebles();
+        int startIndex = (currentPage + 1) * 9;
+        if (startIndex >= inmuebles.size()) {
+            // Mostrar ventana emergente si no hay más páginas disponibles
+            JOptionPane.showMessageDialog(this, "No hay más páginas disponibles.", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            currentPage++;
+            loadInmuebles(); // Cargar la siguiente página de resultados
+        }
     }
 
+    // Método para ir a la página anterior de resultados
     private void previousPage() {
         if (currentPage > 0) {
             currentPage--;
-            loadInmuebles();
+            loadInmuebles(); // Cargar la página anterior de resultados
         }
     }
 
+    // Método para buscar inmuebles por nombre
     private void searchInmuebles(String searchText) {
         panel.removeAll();
-        labels.clear();
 
+        if (searchText.isEmpty()) {
+            // Si la búsqueda está vacía, mostrar todos los inmuebles en una cuadrícula 3x3
+            loadInmuebles();
+            return;
+        }
+
+        boolean encontrado = false;
+
+        // Buscar el inmueble por nombre
         for (String inmueble : inmuebles) {
-            if (inmueble.toLowerCase().contains(searchText.toLowerCase())) {
-                JLabel label = new JLabel(inmueble);
-                labels.add(label);
-                panel.add(label);
+            if (inmueble.equalsIgnoreCase(searchText)) {
+                // Mostrar el inmueble encontrado en el centro del panel
+                JLabel resultLabel = new JLabel(inmueble);
+                resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                resultLabel.setVerticalAlignment(SwingConstants.CENTER);
+                panel.add(resultLabel);
+                encontrado = true;
+                break; // Si se encuentra el inmueble, no es necesario continuar buscando
             }
         }
 
-        if (labels.isEmpty()) {
+        // Si no se encuentra ningún inmueble, mostrar un mensaje
+        if (!encontrado) {
             JLabel noResultsLabel = new JLabel("No se encontraron resultados para: " + searchText);
+            noResultsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            noResultsLabel.setVerticalAlignment(SwingConstants.CENTER);
             panel.add(noResultsLabel);
         }
 
+        // Actualizar la ventana
         revalidate();
         repaint();
     }
 
+    // Método principal para iniciar la aplicación
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new BuscadorInmuebles().setVisible(true);
+                new BuscadorInmuebles().setVisible(true); // Crear y mostrar la ventana principal
             }
         });
     }

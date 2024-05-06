@@ -17,6 +17,7 @@ public class FrameAdmin extends javax.swing.JFrame {
      */
     public FrameAdmin() {
         initComponents();
+        setTitle("JavaBnB");
     }
 
     /**

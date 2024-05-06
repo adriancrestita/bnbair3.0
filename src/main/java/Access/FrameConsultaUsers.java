@@ -17,6 +17,7 @@ public class FrameConsultaUsers extends javax.swing.JFrame {
      */
     public FrameConsultaUsers() {
         initComponents();
+        setTitle("JavaBnB");
     }
 
     /**

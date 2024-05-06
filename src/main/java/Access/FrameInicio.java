@@ -17,6 +17,7 @@ public class FrameInicio extends javax.swing.JFrame {
      */
     public FrameInicio() {
         initComponents();
+        setTitle("JavaBnB");
     }
 
     /**
