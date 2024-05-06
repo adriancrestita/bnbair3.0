@@ -157,7 +157,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         });
         jMenu3.add(ConsultarReservas);
 
-        CambiarDatos.setText("Cambiar Datos");
+        CambiarDatos.setText("Modificar datos personales");
         CambiarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CambiarDatosActionPerformed(evt);

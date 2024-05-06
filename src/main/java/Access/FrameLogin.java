@@ -256,6 +256,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 dispose();
             }
             else{
+                // codigo para verificar que el correo es válido y acceder como particular o anfitrión
                 FrameMenuParticular menuParticular = new FrameMenuParticular();
                 menuParticular.setVisible(true);
                 dispose();

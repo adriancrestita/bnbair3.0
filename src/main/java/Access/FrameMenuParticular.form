@@ -131,7 +131,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="CambiarDatos">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cambiar Datos"/>
+                <Property name="text" type="java.lang.String" value="Modificar datos personales"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CambiarDatosActionPerformed"/>
