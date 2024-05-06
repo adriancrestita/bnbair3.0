@@ -185,6 +185,10 @@ public class FrameMenuParticular extends javax.swing.JFrame {
 
     private void CambiarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CambiarDatosActionPerformed
         // TODO add your handling code here:
+        FrameDatosPersonales fdp = new FrameDatosPersonales();
+        fdp.setVisible(true);
+        dispose();
+        
     }//GEN-LAST:event_CambiarDatosActionPerformed
 
     private void QuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitActionPerformed

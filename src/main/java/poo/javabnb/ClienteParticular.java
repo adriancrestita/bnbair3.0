@@ -107,20 +107,9 @@ public class ClienteParticular extends Usuario {
         }
     }
     
-    public void modificarDatos(String dato, String cambio){
-        switch(dato){
-            case "nombre":
-                setNombre(cambio);
-            case "dni": 
-                setDni(cambio);
-            case "correo":
-                setCorreoElectronico(cambio);
-            case "contraseña":
-                setClave(cambio);
-            case "telefono":
-                setTelefono(cambio);
-            case "VIP":     
+    public void modificarDatos(String nombre, String dni, String correo, String contraseña, String telefono, boolean vip){
+        String linea = nombre + "," + dni + "," + correo + "," + contraseña + "," + telefono + "," + vip + "\n";
                 
-        } 
+         
     }
 }
