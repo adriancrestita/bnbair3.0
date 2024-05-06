@@ -17,6 +17,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
      */
     public FrameConsultaInmuebles() {
         initComponents();
+        setTitle("JavaBnB");
     }
 
     /**

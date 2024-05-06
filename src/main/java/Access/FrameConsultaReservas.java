@@ -17,6 +17,7 @@ public class FrameConsultaReservas extends javax.swing.JFrame {
      */
     public FrameConsultaReservas() {
         initComponents();
+        setTitle("JavaBnB");
     }
 
     /**

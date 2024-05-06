@@ -4,7 +4,13 @@
  */
 package Access;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  *
@@ -15,8 +21,15 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     /**
      * Creates new form FrameMenuParticular
      */
+    
+    //declaración de variables
+    private List<String> inmuebles; // Lista de inmuebles disponibles
+    private JPanel panel; // Panel principal para mostrar los inmuebles
+    private int currentPage; // Página actual de resultados
+    
     public FrameMenuParticular() {
         initComponents();
+        setTitle("JavaBnB");
     }
 
     /**
@@ -157,7 +170,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         });
         jMenu3.add(ConsultarReservas);
 
-        CambiarDatos.setText("Modificar datos personales");
+        CambiarDatos.setText("Cambiar Datos");
         CambiarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CambiarDatosActionPerformed(evt);

@@ -17,6 +17,7 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
      */
     public FrameMenuAnfitrion() {
         initComponents();
+        setTitle("JavaBnB");
     }
 
     /**
