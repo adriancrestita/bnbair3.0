@@ -268,23 +268,12 @@ public class FrameDatosBancarios extends javax.swing.JFrame {
 
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
-        TarjetaCredito tj = new TarjetaCredito(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(), particular.getDni(), particular.getNombre(), particular.getCorreoElectronico(), particular.getClave(), particular.getTelefono(), particular.getesVIP());
+        TarjetaCredito tj = new TarjetaCredito(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(), particular.getDni(), particular.getNombre(), particular.getCorreoElectronico(), particular.getClave(), particular.getTelefono(), particular.cmpVIP());
         try{
-            if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
-                //Asignamos valores a los atributos con los SET de Cliente Particular
-                particular.setDni(jdni.getText().trim());
-                particular.setNombre(jnombre.getText().trim());
-                particular.setCorreoElectronico(jmailsign.getText().trim());
-                particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
-                particular.setTelefono(jphonenumber.getText().trim());
-                particular.setesVIP(jesVIP.isSelected());
-
-                tj.setFechaCaducidad(jfcaducidad.getText().trim());
-                tj.setNombreTitular(jtitular.getText().trim());
-                tj.setNumeroTarjeta(jnumtarj.getText().trim());
-
-                particular.guardarParticular();
-                tj.guardarTarjeta();
+            if((ma.validarFormulario(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true){
+                //Asignamos valores a los atributos con los SET de TarjetaCredito
+                tj.reemplazarLinea(particular.getCorreoElectronico(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
+                JOptionPane.showMessageDialog(null, "Cambios guardados correctamente");
 
                 FrameLogin fLog = new FrameLogin();
                 fLog.setVisible(true);
@@ -294,6 +283,7 @@ public class FrameDatosBancarios extends javax.swing.JFrame {
         catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
         }
+        
     }//GEN-LAST:event_bregistrarseActionPerformed
 
     private void jnumtarjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnumtarjActionPerformed

@@ -116,7 +116,7 @@ public class TarjetaCredito extends ClienteParticular{
     }
     
     
-    public static void reemplazarLinea(String correo, String titular, int numtarj, String fcad) throws IOException {
+    public static void reemplazarLinea(String correo, String titular, String numtarj, String fcad) throws IOException {
         String nuevaLinea = correo + "," + titular + "," + numtarj + "," + fcad + "\n";
 
         File file = new File("datos_users.txt");

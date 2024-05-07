@@ -124,6 +124,25 @@ public class MetodosAuxiliares {
             return false;
         }
     }
+    
+    public boolean validarFormulario(String titularTarjeta, String numeroTarjeta, String fechaCaducidad) throws IOException {        
+        // Validar que los campos no están vacíos ni tienen el texto por defecto
+        if (titularTarjeta.isEmpty() || titularTarjeta.equals("Ingrese el nombre del titular") ||
+            numeroTarjeta.isEmpty() || numeroTarjeta.equals("Ingrese el número de tarjeta") ||
+            fechaCaducidad.isEmpty() || fechaCaducidad.equals("Ingrese la fecha de caducidad")) {
+            return false;
+        }
+
+        // Verificar cada campo con sus respectivas funciones de validación
+        if((xLongitud(numeroTarjeta, 16) && esFechaCaducidadValida(fechaCaducidad)) == true){
+            return true;
+        }  
+        else{
+            JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos");
+            return false;
+        }
+    }
+    
     public boolean inicioSesionValido(String correo, String contraseña) throws FileNotFoundException, IOException{
         BufferedReader reader = null;
         String[] elementos = null;
