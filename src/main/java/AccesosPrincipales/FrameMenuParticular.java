@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -107,6 +109,17 @@ public class FrameMenuParticular extends javax.swing.JFrame {
                 label = new JLabel(nombreDestino);
                 label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
             }
+            
+             // Agregar un MouseListener para detectar clics en el JLabel
+            label.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Mostrar una ventana emergente con el nombre del destino cuando se hace clic
+                    //Sujeto a cambios para que aparezca otra ventana emergente indicando todas las caracteristicas del inmueble
+                    JOptionPane.showMessageDialog(FrameMenuParticular.this, "Destino seleccionado: " + nombreDestino, "Información", JOptionPane.INFORMATION_MESSAGE);
+                }
+            });
+            
             label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
             gridPanel.add(label);
         }
@@ -273,7 +286,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bienvenido");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

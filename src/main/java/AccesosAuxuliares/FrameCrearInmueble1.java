@@ -215,7 +215,7 @@ public class FrameCrearInmueble1 extends javax.swing.JFrame {
 
     private void i1toi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_i1toi2ActionPerformed
         // TODO add your handling code here:
-        m
+        
     }//GEN-LAST:event_i1toi2ActionPerformed
 
     /**
