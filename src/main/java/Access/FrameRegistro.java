@@ -117,7 +117,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
         jSeparator9 = new javax.swing.JSeparator();
-        jesVIP = new javax.swing.JCheckBox();
+        jAnfitrion = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         LabelLogo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -127,6 +127,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jesVIP = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Inicio = new javax.swing.JMenuItem();
@@ -253,9 +254,9 @@ public class FrameRegistro extends javax.swing.JFrame {
         jtelefono.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 380, 180, 20));
         jtelefono.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 180, 20));
 
-        jesVIP.setText("Contratar servicio VIP");
-        jesVIP.setActionCommand("VipJCheckBox");
-        jtelefono.add(jesVIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
+        jAnfitrion.setText("Registrarse como anfitrión");
+        jAnfitrion.setActionCommand("VipJCheckBox");
+        jtelefono.add(jAnfitrion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -300,6 +301,10 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel18.setText("DNI");
         jtelefono.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 100, -1));
+
+        jesVIP.setText("Contratar servicio VIP");
+        jesVIP.setActionCommand("VipJCheckBox");
+        jtelefono.add(jesVIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
 
         jMenu1.setText("Inicio");
 
@@ -357,17 +362,39 @@ public class FrameRegistro extends javax.swing.JFrame {
 
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
-        ClienteParticular particular = new ClienteParticular(jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
-        TarjetaCredito tj = new TarjetaCredito(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
+        ClienteParticular particular = new ClienteParticular(jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jAnfitrion.isEnabled());
+        TarjetaCredito tj = new TarjetaCredito(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jAnfitrion.isEnabled());
         try{
-            if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
+            if(jAnfitrion.isSelected()){
+                if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
+                   //Asignamos valores a los atributos con los SET de Cliente Particular
+                   particular.setDni(jdni.getText().trim());
+                   particular.setNombre(jnombre.getText().trim());
+                   particular.setCorreoElectronico(jmailsign.getText().trim());
+                   particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
+                   particular.setTelefono(jphonenumber.getText().trim());
+                   particular.setesVIP(jAnfitrion.isSelected());
+
+                   tj.setFechaCaducidad(jfcaducidad.getText().trim());
+                   tj.setNombreTitular(jtitular.getText().trim());
+                   tj.setNumeroTarjeta(jnumtarj.getText().trim());
+
+                   particular.guardarParticular();
+                   tj.guardarTarjeta();
+
+                   FrameLogin fLog = new FrameLogin();
+                   fLog.setVisible(true);
+                   dispose();
+               }   
+            }
+            if(!(jAnfitrion.isSelected()) && (ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jAnfitrion.isSelected())) == true ){
                 //Asignamos valores a los atributos con los SET de Cliente Particular
                 particular.setDni(jdni.getText().trim());
                 particular.setNombre(jnombre.getText().trim());
                 particular.setCorreoElectronico(jmailsign.getText().trim());
                 particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
                 particular.setTelefono(jphonenumber.getText().trim());
-                particular.setesVIP(jesVIP.isSelected());
+                particular.setesVIP(jAnfitrion.isSelected());
                 
                 tj.setFechaCaducidad(jfcaducidad.getText().trim());
                 tj.setNombreTitular(jtitular.getText().trim());
@@ -471,6 +498,7 @@ public class FrameRegistro extends javax.swing.JFrame {
     private javax.swing.JLabel LabelLogo;
     private javax.swing.JMenuItem Quit;
     private javax.swing.JButton bregistrarse;
+    private javax.swing.JCheckBox jAnfitrion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

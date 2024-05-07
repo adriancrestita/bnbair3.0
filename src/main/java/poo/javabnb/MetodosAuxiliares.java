@@ -75,6 +75,28 @@ public class MetodosAuxiliares {
 
         return false; // Retorna false si no se encuentra cliente que coincida
     }
+    
+    public boolean existeAnfitrion(String correoBuscado) throws FileNotFoundException, IOException{
+        BufferedReader reader = null;
+        String[] elementos = null;
+        try {
+            reader = new BufferedReader(new FileReader("datos_anfitrion.txt"));
+            String lineaActual;
+
+            while ((lineaActual = reader.readLine()) != null) {
+                elementos = lineaActual.split(","); // Dividir la línea por comas
+                if (elementos.length > 0 && elementos[2].equals(correoBuscado)) {
+                    return true; // Retorna true si coincide
+                }
+            }
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
+
+        return false; // Retorna false si no se encuentra cliente que coincida
+    }
    
     public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni, String titularTarjeta, String numeroTarjeta, String fechaCaducidad, boolean esVIP) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
@@ -143,6 +165,26 @@ public class MetodosAuxiliares {
         }
     }
     
+    public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni) throws IOException {        
+        // Validar que los campos no están vacíos ni tienen el texto por defecto
+        if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
+            nombre.isEmpty() || nombre.equals("Ingrese el nombre") ||
+            contraseña.isEmpty() || contraseña.equals("Introduce la contraseña") ||
+            telefono.isEmpty() || telefono.equals("Ingrese el teléfono") ||
+            dni.isEmpty() || dni.equals("Ingrese el DNI")){
+            return false;
+        }
+
+        // Verificar cada campo con sus respectivas funciones de validación
+        if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
+            return true;
+        }  
+        else{
+            JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos");
+            return false;
+        }
+    }
+    
     public boolean inicioSesionValido(String correo, String contraseña) throws FileNotFoundException, IOException{
         BufferedReader reader = null;
         String[] elementos = null;
@@ -188,7 +230,71 @@ public class MetodosAuxiliares {
         return null; // Retorna null si no se encuentra ninguna línea que coincida
     }
     
+    public static int lineaCliente(String correo, String archivo) throws IOException{
+        BufferedReader reader = null;
+        String[] elementos = null;
+        int lineNumber = 0;  // Inicializar contador de líneas
+
+
+        try {
+            reader = new BufferedReader(new FileReader(archivo));
+            String lineaActual;
+
+            while ((lineaActual = reader.readLine()) != null) {
+                lineNumber++;
+                elementos = lineaActual.split(","); // Dividir la línea por comas
+                if (elementos.length > 0 && elementos[2].equals(correo)) {
+                    return lineNumber; // Retorna los elementos si el primer dato coincide
+                }
+            }
+        } 
+        finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
+        return 0; // Retorna null si no se encuentra ninguna línea que coincida
+    }
     
+    
+    public static void reemplazarLinea(String correoBuscado, String nuevaLinea, String archivo) throws IOException {
+
+        File file = new File(archivo);
+        File tempFile = new File(file.getAbsolutePath() + ".tmp");
+
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            writer = new BufferedWriter(new FileWriter(tempFile));
+
+            String currentLine;
+            int currentLineNumber = 0;
+
+            while ((currentLine = reader.readLine()) != null) {
+                currentLineNumber++;
+                // Reemplaza la línea si es la línea especificada
+                if (currentLineNumber == lineaCliente(correoBuscado, archivo)) {
+                    writer.write(nuevaLinea + System.lineSeparator());
+                } else {
+                    writer.write(currentLine + System.lineSeparator());
+                }
+            }
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+            if (writer != null) {
+                writer.close();
+            }
+        }
+
+        // Eliminar el archivo original y renombrar el archivo temporal para reemplazarlo
+        if (!file.delete() || !tempFile.renameTo(file)) {
+            throw new IOException("No se pudo reemplazar el archivo original con el archivo actualizado");
+        }
+    }
     
     
     

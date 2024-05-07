@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+
 /**
  *
  * @author crestas
@@ -92,7 +93,7 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
         jphonenumber = new javax.swing.JTextField();
         jmailsign = new javax.swing.JTextField();
         jpasswordsign = new javax.swing.JPasswordField();
-        bregistrarse = new javax.swing.JButton();
+        bcambiodatos = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -164,13 +165,13 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
         jpasswordsign.setBorder(null);
         jtelefono.add(jpasswordsign, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 180, -1));
 
-        bregistrarse.setText("Cambiar Datos");
-        bregistrarse.addActionListener(new java.awt.event.ActionListener() {
+        bcambiodatos.setText("Cambiar Datos");
+        bcambiodatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bregistrarseActionPerformed(evt);
+                bcambiodatosActionPerformed(evt);
             }
         });
-        jtelefono.add(bregistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, -1));
+        jtelefono.add(bcambiodatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
         jLabel6.setText("MODIFICACION DATOS PERSONALES");
@@ -314,25 +315,69 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jesVIPActionPerformed
 
-    private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
+    private void bcambiodatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcambiodatosActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
-        ClienteParticular particular = new ClienteParticular(jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
+        ClienteParticular particular = new ClienteParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
+        Anfitrion anf = new Anfitrion(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText());
         try {
-            if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jesVIP.isSelected())) == true){
-                particular.reemplazarLinea(particular.getCorreoElectronico(), jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jesVIP.isSelected()); 
-                JOptionPane.showMessageDialog(null, "Cambios guardados correctamente");
-
+            if(ma.existeCliente(particular.getCorreoElectronico()) == true){
+                try {
+                    if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jesVIP.isSelected())) == true){
+                        
+                        //Asignamos la nueva linea a cambiar con las variables del relleno de datos
+                        String nuevaLinea = (jnombre.getText().trim() + "," + jdni.getText().trim() + "," +  jmailsign.getText().trim() + "," + jpasswordsign.getText().trim() + "," + jphonenumber.getText().trim() + "+" + jesVIP.isSelected() + "\n");
+                        
+                        particular.setDni(jdni.getText().trim());
+                        particular.setNombre(jnombre.getText().trim());
+                        particular.setCorreoElectronico(jmailsign.getText().trim());
+                        particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
+                        particular.setTelefono(jphonenumber.getText().trim());
+                   
+                        ma.reemplazarLinea(particular.getCorreoElectronico(),nuevaLinea, "datos_users.txt");
+                        JOptionPane.showMessageDialog(null, "Cambios guardados correctamente");
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(FrameDatosPersonales.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } catch (IOException ex) {
-            Logger.getLogger(FrameDatosPersonales.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrameDatosPersonales.class.getName()).log(Level.SEVERE, null, ex);      
         }
+        
+        try {
+            if(ma.existeAnfitrion(anf.getCorreoElectronico()) == true){
+                try {
+                    if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim())) == true){
+                        
+                        //Asignamos la nueva linea a cambiar con las variables del relleno de datos
+                        String nuevaLinea = jnombre.getText().trim() + "," + jdni.getText().trim() + "," + jmailsign.getText().trim() + "," + jpasswordsign.getText().trim() + "," + jphonenumber.getText().trim() + "," + anf.getFechaRegistro() + "\n";
+                        
+                        anf.setDni(jdni.getText().trim());
+                        anf.setNombre(jnombre.getText().trim());
+                        anf.setCorreoElectronico(jmailsign.getText().trim());
+                        anf.setClave(String.valueOf(jpasswordsign.getText().trim()));
+                        anf.setTelefono(jphonenumber.getText().trim());
+                        
+                        ma.reemplazarLinea(particular.getCorreoElectronico(),nuevaLinea, "datos_anfitrion.txt");
+                        JOptionPane.showMessageDialog(null, "Cambios guardados correctamente");
+                        
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(FrameDatosPersonales.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FrameDatosPersonales.class.getName()).log(Level.SEVERE, null, ex);      
+        }
+        
+        
 
         FrameLogin fLog = new FrameLogin();
         fLog.setVisible(true);
         dispose();
         
 
-    }//GEN-LAST:event_bregistrarseActionPerformed
+    }//GEN-LAST:event_bcambiodatosActionPerformed
 
     private void jmailsignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmailsignActionPerformed
         // TODO add your handling code here:
@@ -387,7 +432,7 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
     private javax.swing.JMenuItem InicioSesion;
     private javax.swing.JLabel LabelLogo;
     private javax.swing.JMenuItem Quit;
-    private javax.swing.JButton bregistrarse;
+    private javax.swing.JButton bcambiodatos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
