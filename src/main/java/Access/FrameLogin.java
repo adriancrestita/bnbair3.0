@@ -92,7 +92,6 @@ public class FrameLogin extends javax.swing.JFrame {
         MenuBar = new javax.swing.JMenuBar();
         MenuInicio = new javax.swing.JMenu();
         PaginaInicial = new javax.swing.JMenuItem();
-        Register = new javax.swing.JMenuItem();
         MenuSalir = new javax.swing.JMenu();
         Quit = new javax.swing.JMenuItem();
 
@@ -191,14 +190,6 @@ public class FrameLogin extends javax.swing.JFrame {
         });
         MenuInicio.add(PaginaInicial);
 
-        Register.setText("Registrarse");
-        Register.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisterActionPerformed(evt);
-            }
-        });
-        MenuInicio.add(Register);
-
         MenuBar.add(MenuInicio);
 
         MenuSalir.setText("Salir");
@@ -296,13 +287,6 @@ public class FrameLogin extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_PaginaInicialActionPerformed
 
-    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
-        // TODO add your handling code here:
-        FrameRegistro register=new FrameRegistro();
-        register.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_RegisterActionPerformed
-
     private void QuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitActionPerformed
         // TODO add your handling code here:
         System.exit(0);
@@ -353,7 +337,6 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JCheckBox MostrarContraseña;
     private javax.swing.JMenuItem PaginaInicial;
     private javax.swing.JMenuItem Quit;
-    private javax.swing.JMenuItem Register;
     private javax.swing.JButton blogin;
     private javax.swing.JButton bsignin;
     private javax.swing.JLabel jLabel1;

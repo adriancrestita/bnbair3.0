@@ -20,14 +20,6 @@
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon inicio = new ImageIcon(&quot;src/main/java/com/images/logo2icon.png&quot;);&#xd;&#xa;PaginaInicial.setIcon(inicio);"/>
               </AuxValues>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="Register">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Registrarse"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RegisterActionPerformed"/>
-              </Events>
-            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MenuSalir">

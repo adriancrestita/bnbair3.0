@@ -1,5 +1,2 @@
-aaa,54008144G,b@g.c,ddd,123456789,Es VIP
-adasda,54008144G,a2@t.c,asfiudhakfdhfka,123456789,Es VIP
-adra,54008144G,as@g.c,asjdausj,123456789,Es VIP
-adrian.crestita@gmail.com,Adrian,estaesminuevacontraseña,123456789,54008144G,false
-
+cliente,54008144G,cliente@gmail.com,cliente,123456789,Es VIP
+anfitrion,54008144G,anfitrion@gmail.com,anfitrion,123456789,Es VIP

@@ -387,25 +387,27 @@ public class FrameRegistro extends javax.swing.JFrame {
                    dispose();
                }   
             }
-            if(!(jAnfitrion.isSelected()) && (ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jAnfitrion.isSelected())) == true ){
-                //Asignamos valores a los atributos con los SET de Cliente Particular
-                particular.setDni(jdni.getText().trim());
-                particular.setNombre(jnombre.getText().trim());
-                particular.setCorreoElectronico(jmailsign.getText().trim());
-                particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
-                particular.setTelefono(jphonenumber.getText().trim());
-                particular.setesVIP(jAnfitrion.isSelected());
-                
-                tj.setFechaCaducidad(jfcaducidad.getText().trim());
-                tj.setNombreTitular(jtitular.getText().trim());
-                tj.setNumeroTarjeta(jnumtarj.getText().trim());
-                
-                particular.guardarParticular();
-                tj.guardarTarjeta();
-                
-                FrameLogin fLog = new FrameLogin();
-                fLog.setVisible(true);
-                dispose();
+            if(!jAnfitrion.isSelected()){
+                if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jAnfitrion.isSelected())) == true ){
+                    //Asignamos valores a los atributos con los SET de Cliente Particular
+                    particular.setDni(jdni.getText().trim());
+                    particular.setNombre(jnombre.getText().trim());
+                    particular.setCorreoElectronico(jmailsign.getText().trim());
+                    particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
+                    particular.setTelefono(jphonenumber.getText().trim());
+                    particular.setesVIP(jAnfitrion.isSelected());
+
+                    tj.setFechaCaducidad(jfcaducidad.getText().trim());
+                    tj.setNombreTitular(jtitular.getText().trim());
+                    tj.setNumeroTarjeta(jnumtarj.getText().trim());
+
+                    particular.guardarParticular();
+                    tj.guardarTarjeta();
+
+                    FrameLogin fLog = new FrameLogin();
+                    fLog.setVisible(true);
+                    dispose();
+                }
             }
         }
         catch (IOException e) {
