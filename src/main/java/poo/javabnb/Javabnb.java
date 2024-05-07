@@ -1,7 +1,7 @@
 package poo.javabnb;
 
-import Access.FrameInicio;
-import Access.FrameRegistro;
+import AccesosPrincipales.FrameInicio;
+import AccesosPrincipales.FrameRegistro;
 import java.io.*; 
 import java.util.*;
  

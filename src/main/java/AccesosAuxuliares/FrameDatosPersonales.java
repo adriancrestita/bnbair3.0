@@ -1,5 +1,7 @@
-package Access;
+package AccesosAuxuliares;
 
+import AccesosPrincipales.FrameInicio;
+import AccesosPrincipales.FrameLogin;
 import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.ImageIcon;

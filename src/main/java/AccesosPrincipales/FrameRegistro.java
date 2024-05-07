@@ -1,4 +1,4 @@
-package Access;
+package AccesosPrincipales;
 
 import java.awt.event.*;
 import java.io.IOException;
