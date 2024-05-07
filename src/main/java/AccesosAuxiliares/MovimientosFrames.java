@@ -2,13 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package AccesosAuxuliares;
+package AccesosAuxiliares;
 
+import EliminadosPeroGuardados.FrameCrearInmueble1;
+import EliminadosPeroGuardados.FrameCrearInmueble2;
+import EliminadosPeroGuardados.FrameCrearInmueble3;
 import AccesosPrincipales.*;
 
-public class movimientosFrames {
+public class MovimientosFrames {
 
-    public movimientosFrames(){
+    public MovimientosFrames(){
         
     }
     

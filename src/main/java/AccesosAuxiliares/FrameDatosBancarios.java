@@ -1,4 +1,4 @@
-package AccesosAuxuliares;
+package AccesosAuxiliares;
 
 import AccesosPrincipales.FrameInicio;
 import AccesosPrincipales.FrameLogin;

@@ -4,7 +4,7 @@
  */
 package AccesosPrincipales;
 
-import AccesosAuxuliares.FrameDatosPersonales;
+import AccesosAuxiliares.FrameDatosPersonales;
 import javax.swing.ImageIcon;
 
 /**
