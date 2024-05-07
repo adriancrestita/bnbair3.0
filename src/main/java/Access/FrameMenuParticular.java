@@ -282,7 +282,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
                 PrevPgActionPerformed(evt);
             }
         });
-        jPanel1.add(PrevPg, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, -1, -1));
+        jPanel1.add(PrevPg, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, -1, -1));
 
         NextPg.setText("Página siguiente");
         NextPg.addActionListener(new java.awt.event.ActionListener() {
@@ -290,7 +290,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
                 NextPgActionPerformed(evt);
             }
         });
-        jPanel1.add(NextPg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
+        jPanel1.add(NextPg, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 470, -1, -1));
 
         panel.setBackground(new java.awt.Color(220, 154, 98));
         jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 530, 340));
