@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -130,16 +131,21 @@ public class FrameMenuParticular extends javax.swing.JFrame {
 
         boolean encontrado = false;
 
+        // Normalizar el texto de búsqueda
+        String searchTextNormalized = Normalizer.normalize(searchText, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+
         // Buscar el inmueble por nombre
         for (String inmueble : inmuebles) {
-            if (inmueble.equalsIgnoreCase(searchText)) {
+            // Normalizar el nombre del inmueble para comparar
+            String inmuebleNormalized = Normalizer.normalize(inmueble, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+
+            if (inmuebleNormalized.contains(searchTextNormalized)) {
                 // Mostrar el inmueble encontrado en el centro del panel
                 JLabel resultLabel = new JLabel(inmueble);
                 resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 resultLabel.setVerticalAlignment(SwingConstants.CENTER);
                 panel.add(resultLabel);
                 encontrado = true;
-                break; // Si se encuentra el inmueble, no es necesario continuar buscando
             }
         }
 
