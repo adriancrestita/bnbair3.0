@@ -52,6 +52,7 @@ public class FrameRegistro extends javax.swing.JFrame {
     
     public FrameRegistro() {
         initComponents();
+        jLabel6.requestFocus(true);
         setTitle("JavaBnB");
         
         // Agregamos los campos de texto al HashMap

@@ -23,47 +23,8 @@ public class FrameLogin extends javax.swing.JFrame {
      */
     public FrameLogin() {
         initComponents();
+        jLabel4.requestFocus(true);
         setTitle("JavaBnB");
-        jmaillog.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Borrar el texto cuando se hace clic en el campo de texto
-                if (jmaillog.getText().equals(mensajeOriginalCorreo)) {
-                    jmaillog.setText("");
-                }
-            }
-        });
-
-        jpasswordlog.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Borrar el texto cuando se hace clic en el campo de texto
-                if (jpasswordlog.getText().equals(mensajeOriginalContraseña)) {
-                    jpasswordlog.setText("");
-                }
-            }
-        });
-
-        jmaillog.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                // Restaurar el mensaje original si el campo está vacío
-                if (jmaillog.getText().isEmpty()) {
-                    jmaillog.setText(mensajeOriginalCorreo);
-                }
-            }
-        });
-
-        jpasswordlog.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                // Restaurar el mensaje original si el campo está vacío
-                if (jpasswordlog.getText().equals("")) {
-                    jpasswordlog.setText(mensajeOriginalContraseña);
-                }
-            }
-        });
-        
     }
 
     /**
@@ -114,12 +75,20 @@ public class FrameLogin extends javax.swing.JFrame {
         jmaillog.setForeground(new java.awt.Color(204, 204, 204));
         jmaillog.setText("Introduzca el correo");
         jmaillog.setBorder(null);
+        jmaillog.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jmaillogFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jmaillogFocusLost(evt);
+            }
+        });
         jmaillog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmaillogActionPerformed(evt);
             }
         });
-        jPanel1.add(jmaillog, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 178, -1));
+        jPanel1.add(jmaillog, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 210, -1));
 
         blogin.setText("ENTRAR");
         blogin.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -152,6 +121,14 @@ public class FrameLogin extends javax.swing.JFrame {
         jpasswordlog.setForeground(new java.awt.Color(204, 204, 204));
         jpasswordlog.setText("Introduzca la contraseña");
         jpasswordlog.setBorder(null);
+        jpasswordlog.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jpasswordlogFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jpasswordlogFocusLost(evt);
+            }
+        });
         jPanel1.add(jpasswordlog, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 210, -1));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 210, -1));
 
@@ -291,6 +268,35 @@ public class FrameLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_QuitActionPerformed
+
+    private void jmaillogFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jmaillogFocusGained
+        // TODO add your handling code here:
+        if (jmaillog.getText().equals(mensajeOriginalCorreo)){
+            jmaillog.setText("");
+        }
+    }//GEN-LAST:event_jmaillogFocusGained
+
+    private void jmaillogFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jmaillogFocusLost
+        // TODO add your handling code here:
+        if (jmaillog.getText().equals("")){
+            jmaillog.setText(mensajeOriginalCorreo);
+        }
+    }//GEN-LAST:event_jmaillogFocusLost
+
+    private void jpasswordlogFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jpasswordlogFocusGained
+        // TODO add your handling code here:
+        if (jpasswordlog.getText().equals(mensajeOriginalContraseña)){
+            jpasswordlog.setText("");
+        }
+        
+    }//GEN-LAST:event_jpasswordlogFocusGained
+
+    private void jpasswordlogFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jpasswordlogFocusLost
+        // TODO add your handling code here:
+        if (jpasswordlog.getText().equals("")){
+            jpasswordlog.setText(mensajeOriginalContraseña);
+        }
+    }//GEN-LAST:event_jpasswordlogFocusLost
 
     /**
      * @param args the command line arguments

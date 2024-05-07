@@ -9,7 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     
     public FrameMenuParticular() {
         initComponents();
+        jLabel1.requestFocus(true);
+        //cargarInmueblesDesdeArchivo("inmuebles.txt");   FALTA CREAR EL ARCHIVO PARA REGISTRAR LOS INMUEBLES
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("JavaBnB");
         //Declaración de variables
@@ -149,7 +154,22 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         // Actualizar la ventana
         revalidate();
         repaint();
+        Buscador.setText(" 🔍 Buscador de destinos");
     }
+    
+    //Lee el archivo donde se encuentran todos los destinos disponibles y los carga en el arraylist
+    /*private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
+        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                // Agregar cada línea (nombre del inmueble) a la lista de inmuebles
+                inmuebles.add(linea);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/   //MÉTODO PARA LEER EL ARCHIVO CON INMUEBLES REGISTRADOS Y CARGARLOS AL ARRAYLIST
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -269,6 +289,14 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         Buscador.setForeground(new java.awt.Color(204, 204, 204));
         Buscador.setText(" 🔍 Buscador de destinos");
         Buscador.setBorder(null);
+        Buscador.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                BuscadorFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                BuscadorFocusLost(evt);
+            }
+        });
         Buscador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BuscadorActionPerformed(evt);
@@ -381,6 +409,9 @@ public class FrameMenuParticular extends javax.swing.JFrame {
 
     private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
         // TODO add your handling code here:
+        if (Buscador.getText().equals(" 🔍 Buscador de destinos")){
+            Buscador.setText("");
+        }
     }//GEN-LAST:event_BuscadorActionPerformed
 
     private void PrevPgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrevPgActionPerformed
@@ -392,6 +423,20 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         // TODO add your handling code here:
         nextPage();
     }//GEN-LAST:event_NextPgActionPerformed
+
+    private void BuscadorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BuscadorFocusGained
+        // TODO add your handling code here:
+        if (Buscador.getText().equals(" 🔍 Buscador de destinos")){
+            Buscador.setText("");
+        }
+    }//GEN-LAST:event_BuscadorFocusGained
+
+    private void BuscadorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BuscadorFocusLost
+        // TODO add your handling code here:
+        if (Buscador.getText().equals("")){
+            Buscador.setText(" 🔍 Buscador de destinos");
+        }
+    }//GEN-LAST:event_BuscadorFocusLost
 
     /**
      * @param args the command line arguments
