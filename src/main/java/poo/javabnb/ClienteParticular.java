@@ -106,7 +106,7 @@ public class ClienteParticular extends Usuario {
             e.printStackTrace();
         }
     }
-    
+   /* 
     public static int lineaCliente(String correo) throws IOException{
         BufferedReader reader = null;
         String[] elementos = null;
@@ -173,4 +173,5 @@ public class ClienteParticular extends Usuario {
             throw new IOException("No se pudo reemplazar el archivo original con el archivo actualizado");
         }
     }
+*/
 }
