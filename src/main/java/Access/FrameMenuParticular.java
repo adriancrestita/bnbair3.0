@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,14 +25,130 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     
     //declaración de variables
     private List<String> inmuebles; // Lista de inmuebles disponibles
-    private JPanel panel; // Panel principal para mostrar los inmuebles
     private int currentPage; // Página actual de resultados
+    private final String IMAGENES_DESTINO_PATH = "src/main/java/ImagenesDestino/";
     
     public FrameMenuParticular() {
         initComponents();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("JavaBnB");
+        //Declaración de variables
+        this.inmuebles = Arrays.asList("Nueva York", "Londres", "París", "Tokio", "Roma", "Sídney", "Dubái", "Berlín", "Moscú", "Los Ángeles", "Barcelona", "Hong Kong", "Toronto", "San Francisco", "Singapur", "Venecia", "Río de Janeiro", "Bombay", "Florencia", "Ámsterdam", "Viena", "Praga", "Seúl", "Buenos Aires", "Ciudad de México", "Vancouver", "Madrid", "Bangkok", "Ciudad del Cabo", "Atenas");
+        this.currentPage = 0;
+        
+        
+        Buscador.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchInmuebles(Buscador.getText());
+            }
+        });
+        // Cargar los inmuebles al iniciar la ventana
+        loadInmuebles();
+    }
+    // Método para cargar la imagen en el jlabel correspondiente
+    private ImageIcon obtenerImagen(String nombreDestino) {
+        String rutaImagen = IMAGENES_DESTINO_PATH + nombreDestino.replaceAll(" ", "") + ".png";
+        File imagenFile = new File(rutaImagen);
+        if (imagenFile.exists()) {
+            return new ImageIcon(rutaImagen);
+        } 
+        else {
+            return null;
+        }
+    }
+    
+    // Método para ir a la siguiente página de resultados
+    private void nextPage() {
+        int startIndex = (currentPage + 1) * 6; // (6 para 2 filas y 3 columnas)
+        if (startIndex >= inmuebles.size()) {
+            // Mostrar ventana emergente si no hay más páginas disponibles
+            JOptionPane.showMessageDialog(this, "No hay más páginas disponibles.", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            currentPage++;
+            loadInmuebles(); // Cargar la siguiente página de resultados
+        }
     }
 
+    // Método para ir a la página anterior de resultados
+    private void previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            loadInmuebles(); // Cargar la página anterior de resultados
+        }
+    }
+    private void loadInmuebles() {
+        panel.removeAll();
+
+        int startIndex = currentPage * 6; // Índice de inicio en la lista de inmuebles (6 para 2 filas y 3 columnas)
+        int endIndex = Math.min(startIndex + 6, inmuebles.size()); // Índice de fin en la lista de inmuebles
+
+        // Panel para mostrar los inmuebles en una cuadrícula de 2x3
+        JPanel gridPanel = new JPanel(new GridLayout(2, 3));
+        gridPanel.setBackground(new Color(220, 154, 98)); // Establecer el color de fondo
+
+        // Agregar etiquetas con las imágenes o nombres de los inmuebles al panel
+        for (int i = startIndex; i < endIndex; i++) {
+            String nombreDestino = inmuebles.get(i);
+            ImageIcon imagen = obtenerImagen(nombreDestino);
+
+            // Si no se encuentra la imagen, mostrar el nombre del destino
+            JLabel label;
+            if (imagen != null) {
+                label = new JLabel(imagen);
+            } else {
+                label = new JLabel(nombreDestino);
+                label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
+            }
+            label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
+            gridPanel.add(label);
+        }
+        // Establecer el tamaño del gridPanel igual al del panel principal
+        gridPanel.setPreferredSize(panel.getSize());
+
+        // Agregar el panel de cuadrícula al panel principal
+        panel.add(gridPanel);
+
+        // Actualizar la ventana
+        revalidate();
+        repaint();
+    }
+    private void searchInmuebles(String searchText) {
+        panel.removeAll();
+
+        if (searchText.isEmpty()) {
+            // Si la búsqueda está vacía, mostrar todos los inmuebles en una cuadrícula de 2x3
+            loadInmuebles();
+            return;
+        }
+
+        boolean encontrado = false;
+
+        // Buscar el inmueble por nombre
+        for (String inmueble : inmuebles) {
+            if (inmueble.equalsIgnoreCase(searchText)) {
+                // Mostrar el inmueble encontrado en el centro del panel
+                JLabel resultLabel = new JLabel(inmueble);
+                resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                resultLabel.setVerticalAlignment(SwingConstants.CENTER);
+                panel.add(resultLabel);
+                encontrado = true;
+                break; // Si se encuentra el inmueble, no es necesario continuar buscando
+            }
+        }
+
+        // Si no se encuentra ningún inmueble, mostrar un mensaje
+        if (!encontrado) {
+            JLabel noResultsLabel = new JLabel("No se encontraron resultados para: " + searchText);
+            noResultsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            noResultsLabel.setVerticalAlignment(SwingConstants.CENTER);
+            panel.add(noResultsLabel);
+        }
+
+        // Actualizar la ventana
+        revalidate();
+        repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,6 +175,11 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        Buscador = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
+        PrevPg = new javax.swing.JButton();
+        NextPg = new javax.swing.JButton();
+        panel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         CerrarSesion = new javax.swing.JMenuItem();
@@ -124,7 +246,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bienvenido");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -140,6 +262,38 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 90, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 500));
+
+        Buscador.setBackground(new java.awt.Color(220, 154, 98));
+        Buscador.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
+        Buscador.setForeground(new java.awt.Color(204, 204, 204));
+        Buscador.setText(" 🔍 Buscador de destinos");
+        Buscador.setBorder(null);
+        Buscador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscadorActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 520, -1));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 520, 20));
+
+        PrevPg.setText("Página anterior");
+        PrevPg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PrevPgActionPerformed(evt);
+            }
+        });
+        jPanel1.add(PrevPg, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, -1, -1));
+
+        NextPg.setText("Página siguiente");
+        NextPg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NextPgActionPerformed(evt);
+            }
+        });
+        jPanel1.add(NextPg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
+
+        panel.setBackground(new java.awt.Color(220, 154, 98));
+        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 530, 340));
 
         jMenu2.setText("Inicio");
 
@@ -224,6 +378,20 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ConsultarReservasActionPerformed
 
+    private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscadorActionPerformed
+
+    private void PrevPgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrevPgActionPerformed
+        // TODO add your handling code here:
+        previousPage();
+    }//GEN-LAST:event_PrevPgActionPerformed
+
+    private void NextPgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextPgActionPerformed
+        // TODO add your handling code here:
+        nextPage();
+    }//GEN-LAST:event_NextPgActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -260,9 +428,12 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Buscador;
     private javax.swing.JMenuItem CambiarDatos;
     private javax.swing.JMenuItem CerrarSesion;
     private javax.swing.JMenuItem ConsultarReservas;
+    private javax.swing.JButton NextPg;
+    private javax.swing.JButton PrevPg;
     private javax.swing.JMenuItem Quit;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JFileChooser jFileChooser1;
@@ -279,11 +450,13 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator3;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.Menu menu3;
     private java.awt.Menu menu4;
     private java.awt.MenuBar menuBar1;
     private java.awt.MenuBar menuBar2;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }

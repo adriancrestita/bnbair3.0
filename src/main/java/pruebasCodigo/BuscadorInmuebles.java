@@ -74,11 +74,11 @@ public class BuscadorInmuebles extends JFrame {
     private void loadInmuebles() {
         panel.removeAll();
 
-        int startIndex = currentPage * 9; // Índice de inicio en la lista de inmuebles
-        int endIndex = Math.min(startIndex + 9, inmuebles.size()); // Índice de fin en la lista de inmuebles
+        int startIndex = currentPage * 6; // Índice de inicio en la lista de inmuebles (6 para 2 filas y 3 columnas)
+        int endIndex = Math.min(startIndex + 6, inmuebles.size()); // Índice de fin en la lista de inmuebles
 
-        // Panel para mostrar los inmuebles en una cuadrícula 3x3
-        JPanel gridPanel = new JPanel(new GridLayout(3, 3));
+        // Panel para mostrar los inmuebles en una cuadrícula de 2x3
+        JPanel gridPanel = new JPanel(new GridLayout(2, 3));
 
         // Agregar etiquetas con los nombres de los inmuebles al panel
         for (int i = startIndex; i < endIndex; i++) {
@@ -97,7 +97,7 @@ public class BuscadorInmuebles extends JFrame {
 
     // Método para ir a la siguiente página de resultados
     private void nextPage() {
-        int startIndex = (currentPage + 1) * 9;
+        int startIndex = (currentPage + 1) * 6; // (6 para 2 filas y 3 columnas)
         if (startIndex >= inmuebles.size()) {
             // Mostrar ventana emergente si no hay más páginas disponibles
             JOptionPane.showMessageDialog(this, "No hay más páginas disponibles.", "Alerta", JOptionPane.WARNING_MESSAGE);
@@ -120,7 +120,7 @@ public class BuscadorInmuebles extends JFrame {
         panel.removeAll();
 
         if (searchText.isEmpty()) {
-            // Si la búsqueda está vacía, mostrar todos los inmuebles en una cuadrícula 3x3
+            // Si la búsqueda está vacía, mostrar todos los inmuebles en una cuadrícula de 2x3
             loadInmuebles();
             return;
         }
