@@ -6,7 +6,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import poo.javabnb.*;
 import java.lang.*;
-
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import java.util.Collections;
 import poo.javabnb.*;
 import java.lang.*;
 import java.util.HashMap;

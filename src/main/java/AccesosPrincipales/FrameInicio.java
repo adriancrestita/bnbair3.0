@@ -4,6 +4,9 @@
  */
 package AccesosPrincipales;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import java.util.Collections;
 import javax.swing.ImageIcon;
 
 /**
@@ -16,6 +19,11 @@ public class FrameInicio extends javax.swing.JFrame {
      * Creates new form FrameInicio
      */
     public FrameInicio() {
+        // Esto solo se debe hacer una vez en la ventana principal;
+        // Cambio el accentColor del tema al magenta
+        FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#FF0054"));
+        // Inicia el tema de los controles de la ventana
+        FlatIntelliJLaf.setup();
         initComponents();
         setTitle("JavaBnB");
     }
