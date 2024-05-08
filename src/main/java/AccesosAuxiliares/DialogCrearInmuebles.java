@@ -5,7 +5,12 @@
 package AccesosAuxiliares;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import poo.javabnb.Anfitrion;
+import poo.javabnb.Inmueble;
 
 /**
  *
@@ -81,6 +86,10 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setMaximumSize(new java.awt.Dimension(550, 450));
+        jPanel1.setMinimumSize(new java.awt.Dimension(550, 450));
+        jPanel1.setPreferredSize(new java.awt.Dimension(550, 450));
+        jPanel1.setSize(new java.awt.Dimension(550, 450));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("NUEVO INMUEBLE");
@@ -143,7 +152,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
                 i1toi2ActionPerformed(evt);
             }
         });
-        jPanel1.add(i1toi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(461, 408, -1, -1));
+        jPanel1.add(i1toi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
 
         jTabbedPane1.addTab("tab1", jPanel1);
 
@@ -159,7 +168,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
                 i2toi3ActionPerformed(evt);
             }
         });
-        jPanel2.add(i2toi3, new org.netbeans.lib.awtextra.AbsoluteConstraints(461, 413, -1, -1));
+        jPanel2.add(i2toi3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
 
         i2toi1.setText("Atrás");
         i2toi1.addActionListener(new java.awt.event.ActionListener() {
@@ -167,7 +176,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
                 i2toi1ActionPerformed(evt);
             }
         });
-        jPanel2.add(i2toi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 413, -1, -1));
+        jPanel2.add(i2toi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
 
         jLabel9.setText("Tipo de Propiedad");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 118, -1, -1));
@@ -257,10 +266,15 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
                 i3toi2ActionPerformed(evt);
             }
         });
-        jPanel3.add(i3toi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 410, -1, -1));
+        jPanel3.add(i3toi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
 
         jButton2.setText("Finalizar");
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(467, 410, -1, -1));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
 
         jLabel15.setText("Precio por noche");
         jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 118, -1, -1));
@@ -318,7 +332,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("tab3", jPanel3);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 550, 490));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 550, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -330,20 +344,33 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private void ciudadInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ciudadInmuebleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ciudadInmuebleActionPerformed
-
+    private StringBuilder paths;
     private void imagenesInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenesInmuebleActionPerformed
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Seleccione un archivo"); // Título del FileChooser
+        fileChooser.setMultiSelectionEnabled(true); // Permite seleccionar múltiples archivos
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // Solo archivos, no directorios
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image files", "jpg", "png", "gif", "bmp")); // Filtra solo archivos de imagen
 
-        // Opcional: establecer un directorio específico
-        // fileChooser.setCurrentDirectory(new File("path/to/directory"));
-
-        int result = fileChooser.showOpenDialog(null); // null hace que el FileChooser sea independiente
+        int result = fileChooser.showOpenDialog(null); // Muestra el diálogo del selector de archivos
 
         if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Archivo seleccionado: " + selectedFile.getAbsolutePath());
+            File[] files = fileChooser.getSelectedFiles(); // Obtiene los archivos seleccionados
+
+            //StringBuilder paths = new StringBuilder(); // Usamos StringBuilder para construir la línea de texto
+            for (File file : files) {
+                if (paths.length() > 0) {
+                    paths.append(";"); // Añade una coma antes de cada archivo excepto el primero
+                }
+                paths.append(file.getAbsolutePath()); // Añade la ruta del archivo al StringBuilder
+            }
+
+            /*try (FileWriter writer = new FileWriter("image_paths.txt", true)) { // Crea o abre el archivo para añadir texto al final
+                writer.write(paths.toString() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
+            } catch (IOException e) {
+                System.out.println("Ha ocurrido un error al escribir en el archivo");
+                e.printStackTrace();
+            }*/
         } else if (result == JFileChooser.CANCEL_OPTION) {
             System.out.println("No se seleccionó ningún archivo.");
         }
@@ -397,6 +424,16 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         int price = sliderPrice.getValue();
         labelPrice.setText(String.valueOf(price));
     }//GEN-LAST:event_sliderPriceStateChanged
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try (FileWriter writer = new FileWriter("image_paths.txt", true)) { // Crea o abre el archivo para añadir texto al final
+            writer.write(tituloInmueble.getText().trim() + "," + paths.toString() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
+        } catch (IOException e) {
+            System.out.println("Ha ocurrido un error al escribir en el archivo");
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

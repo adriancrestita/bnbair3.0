@@ -1,2 +1,1 @@
-cliente,54008144G,cliente@gmail.com,cliente,123456789,Es VIP
-anfitrion,54008144G,anfitrion@gmail.com,anfitrion,123456789,Es VIP
+NOMBRE,DNI,CORREO,CONTRASEÑA,TELEFONO,VIP

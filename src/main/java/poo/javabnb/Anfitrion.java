@@ -7,6 +7,8 @@ import java.time.*;
 import java.util.Date;
 
 public class Anfitrion extends Usuario {
+
+    
     
     //Atributos
     private String fechaRegistro; //LocalDate para el registro en hora actual

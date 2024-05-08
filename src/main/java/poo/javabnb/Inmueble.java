@@ -1,5 +1,6 @@
 package poo.javabnb;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -14,24 +15,24 @@ public class Inmueble {
     private int numero;
     private int CP;
     private String ciudad;
-    private int maxHuéspedes;
+    private int maxHuespedes;
     private int numHabitaciones;
     private int numCamas;
     private int numBaños;
     private String tipoPropiedad;
     private double precioNoche;
     private String servicios;
-    private String foto;
+    private static StringBuilder foto;
     private double calificacion;
-
+    private Anfitrion anfi;
     // Constructor
-    public Inmueble(String titulo, String calle, int numero, int CP, String ciudad, int maxHuéspedes, int numHabitaciones, int numCamas, int numBaños, String tipoPropiedad, double precioNoche, String servicios, String foto, double calificacion) {
+    public Inmueble(String titulo, String calle, int numero, int CP, String ciudad, int maxHuéspedes, int numHabitaciones, int numCamas, int numBaños, String tipoPropiedad, double precioNoche, String servicios, StringBuilder foto, double calificacion) {
         this.titulo = titulo;
         this.calle = calle;
         this.numero = numero;
         this.CP = CP;
         this.ciudad = ciudad;
-        this.maxHuéspedes = maxHuéspedes;
+        this.maxHuespedes = maxHuespedes;
         this.numHabitaciones = numHabitaciones;
         this.numCamas = numCamas;
         this.numBaños = numBaños;
@@ -83,12 +84,12 @@ public class Inmueble {
         this.ciudad = ciudad;
     }
 
-    public int getMaxHuéspedes() {
-        return maxHuéspedes;
+    public int getMaxHuespedes() {
+        return maxHuespedes;
     }
 
     public void setMaxHuéspedes(int maxHuéspedes) {
-        this.maxHuéspedes = maxHuéspedes;
+        this.maxHuespedes = maxHuéspedes;
     }
 
     public int getNumHabitaciones() {
@@ -139,13 +140,17 @@ public class Inmueble {
         this.servicios = servicios;
     }
 
-    public String getFoto() {
+    public static StringBuilder getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public static void setFoto(StringBuilder foto) {
+        setFoto(foto);
     }
+
+    /*public void setFoto(StringBuilder foto) {
+        this.foto = foto;
+    }*/
 
     public double getCalificacion() {
         return calificacion;
@@ -159,7 +164,7 @@ public class Inmueble {
     public String mostrarInformacion() {
         return "\nInmueble: " + titulo +
         "\nDirección: " + calle + "," + numero + "," + CP + "," + ciudad +
-        "\nMáximo de huéspedes: " + maxHuéspedes +
+        "\nMáximo de huéspedes: " + maxHuespedes +
         "\nNúmero de habitaciones: " + numHabitaciones +
         "\nNúmero de camas: " + numCamas +
         "\nNúmero de baños: " + numBaños +
@@ -186,7 +191,21 @@ public class Inmueble {
             e.printStackTrace();
         }
     }
-
+    
+    
+    public void guardarInmueble() {
+        String linea = anfi.getCorreoElectronico() + "," + getTitulo() + "," + getCalle() + "," + String.valueOf(numero) + "," + String.valueOf(CP) + "," + getCiudad() + "," + String.valueOf(maxHuespedes) + "," + String.valueOf(numHabitaciones) + "," + String.valueOf(numCamas) + "," + String.valueOf(numBaños) + "," + getTipoPropiedad() + "," + String.valueOf(precioNoche) + "," + getServicios() + "," + String.valueOf(calificacion) + "\n";
+        try {
+            FileWriter myWriter = new FileWriter("datos_inmuebles.txt", true); //el true activa el append
+            myWriter.write(linea/*.getBytes(), StandardOpenOption.APPEND*/);
+            myWriter.close();
+          } 
+        catch (IOException e) {
+            System.out.println("Ha ocurrido un error");
+            e.printStackTrace();
+          }
+    }
+    
     // Método para actualizar la calificación basado en una nueva revisión
     public void actualizarCalificacion(double nuevaCalificacion) {
         this.calificacion = (this.calificacion + nuevaCalificacion) / 2; // Puede variar según cómo quieras calcular la media
