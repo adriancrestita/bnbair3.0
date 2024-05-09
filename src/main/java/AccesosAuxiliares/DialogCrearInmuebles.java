@@ -4,6 +4,7 @@
  */
 package AccesosAuxiliares;
 
+import AccesosPrincipales.MetodosConsultaInmuebles;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -345,6 +346,9 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_ciudadInmuebleActionPerformed
     private String paths = "";
+    private File[] files;
+    private int result;
+
     private void imagenesInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenesInmuebleActionPerformed
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
@@ -352,19 +356,11 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // Solo archivos, no directorios
         fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image files", "jpg", "png", "gif", "bmp")); // Filtra solo archivos de imagen
 
-        int result = fileChooser.showOpenDialog(null); // Muestra el diálogo del selector de archivos
+        result = fileChooser.showOpenDialog(null); // Muestra el diálogo del selector de archivos
 
         if (result == JFileChooser.APPROVE_OPTION) {
-            File[] files = fileChooser.getSelectedFiles(); // Obtiene los archivos seleccionados
-            
-            //StringBuilder paths = new StringBuilder(); // Usamos StringBuilder para construir la línea de texto
-            /*for (File file : files) {
-                if (paths.length() > 0) {
-                    paths.append(";"); // Añade una coma antes de cada archivo excepto el primero
-                }
-                paths.append(file.getAbsolutePath()); // Añade la ruta del archivo al StringBuilder
-                System.out.println(file);
-            }*/
+            files = fileChooser.getSelectedFiles(); // Obtiene los archivos seleccionados
+     
             for (int i = 0; i < files.length; i++) {
                 paths += files[i].getName();
                 // Añadir ";" después de cada elemento excepto el último
@@ -431,6 +427,12 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
             writer.write(tituloInmueble.getText().trim() + "," + paths.trim() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
             System.out.println(paths.trim());
             JOptionPane.showMessageDialog(null, "Inmueble creado correctamente");
+            
+            if (result == JFileChooser.APPROVE_OPTION) {
+                MetodosConsultaInmuebles.saveImages(files);
+            } else {
+                System.out.println("No se seleccionaron archivos.");
+            }
 
         } catch (IOException e) {
             System.out.println("Ha ocurrido un error al escribir en el archivo");

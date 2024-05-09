@@ -10,7 +10,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -52,5 +55,33 @@ public class MetodosConsultaInmuebles {
         }
     }
     
-    
+    public static void saveImages(File[] files) {
+        String destinationDirectory = "src/main/java/ImagenesDestino";  // Ruta del directorio de destino
+        File dir = new File(destinationDirectory);
+        if (!dir.exists()) {
+            dir.mkdirs();  // Crear el directorio si no existe
+        }
+
+        for (File file : files) {
+            File destFile = new File(dir, file.getName());
+            try {
+                Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Imagen copiada: " + destFile.getPath());
+            } catch (IOException e) {
+                System.out.println("Error al copiar la imagen: " + file.getName());
+                e.printStackTrace();
+            }
+        }
+    }
+    public String nombreTitulo(ArrayList<String> list, int i){
+            String elemento;
+
+        if (!list.isEmpty()) {
+            // Imprimir el primer elemento de la lista (posición 0)
+            elemento = list.get(i);
+        } else {
+            System.out.println("La lista está vacía.");
+        }
+        return elemento;
+    }
 }

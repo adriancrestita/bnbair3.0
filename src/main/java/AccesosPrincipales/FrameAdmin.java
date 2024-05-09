@@ -4,6 +4,9 @@
  */
 package AccesosPrincipales;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -220,16 +223,20 @@ public class FrameAdmin extends javax.swing.JFrame {
 
     private void ConsultaInmuebleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaInmuebleButtonActionPerformed
         // TODO add your handling code here:
-        FrameConsultaInmuebles inmuebles= new FrameConsultaInmuebles();
+        FrameConsultaInmuebles inmuebles;
+        inmuebles = new FrameConsultaInmuebles();
         inmuebles.setVisible(true);
         dispose();
+        
     }//GEN-LAST:event_ConsultaInmuebleButtonActionPerformed
 
     private void ConsultaInmueblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaInmueblesActionPerformed
         // TODO add your handling code here:
-        FrameConsultaInmuebles inmuebles= new FrameConsultaInmuebles();
+        FrameConsultaInmuebles inmuebles;
+        inmuebles = new FrameConsultaInmuebles();
         inmuebles.setVisible(true);
         dispose();
+        
     }//GEN-LAST:event_ConsultaInmueblesActionPerformed
 
     private void ConsultaReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaReservasActionPerformed

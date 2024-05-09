@@ -92,6 +92,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         // Agregar etiquetas con las imágenes o nombres de los inmuebles al panel
         for (int i = startIndex; i < endIndex; i++) {
             String nombreDestino = titulosInmuebles.get(i);
+            //String nombreDestino = MetodosAuxiliares.elementosPorDatos
             ImageIcon imagen = MetodosConsultaInmuebles.obtenerImagen(nombreDestino);
 
             // Si no se encuentra la imagen, mostrar el nombre del destino
