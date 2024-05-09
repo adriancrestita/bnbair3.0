@@ -86,9 +86,7 @@ public class Javabnb {
             if (myObj.createNewFile()) {
               System.out.println("Archivo creado: " + myObj.getName());
                 try {
-                    String header ="TITULO INMUEBLE,ARCHIVOS IMAGENES\n";
                     FileWriter myWriter = new FileWriter("imagenes_inmuebles.txt", true); //el true activa el append
-                    myWriter.write(header/*.getBytes(), StandardOpenOption.APPEND*/);
                     myWriter.close();
                 } 
                 catch (IOException e) {

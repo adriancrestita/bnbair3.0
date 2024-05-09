@@ -4,10 +4,15 @@
  */
 package AccesosPrincipales;
 
+import static AccesosPrincipales.FrameConsultaInmuebles.currentPage;
+import static AccesosPrincipales.FrameConsultaInmuebles.titulosInmuebles;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,15 +23,15 @@ public class MetodosConsultaInmuebles {
         
     }
     
-    public void arrayInmuebles(){
-        String nombreArchivo = "imagenes_paths.txt";  // Asegúrate de que el archivo está en el directorio correcto
+    public static void arrayInmuebles(){
+        String nombreArchivo = "image_paths.txt";  // Asegúrate de que el archivo está en el directorio correcto
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
-            inmuebles = new ArrayList<>();  // Inicializa la lista de inmuebles
+            FrameConsultaInmuebles.titulosInmuebles = new ArrayList<>();  // Inicializa la lista de inmuebles
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");  // Divide la línea en partes separadas por comas
                 if (partes.length > 0) {
-                    inmuebles.add(partes[0].trim());  // Añade el primer elemento de la línea a la lista de inmuebles
+                    FrameConsultaInmuebles.titulosInmuebles.add(partes[0].trim());  // Añade el primer elemento de la línea a la lista de inmuebles
                 }
             }
         } catch (IOException e) {
@@ -34,5 +39,18 @@ public class MetodosConsultaInmuebles {
             e.printStackTrace();
         }
     }
+    
+    // Método para cargar la imagen en el jlabel correspondiente
+    public static ImageIcon obtenerImagen(String nombreDestino) {
+        String rutaImagen = FrameConsultaInmuebles.IMAGENES_DESTINO_PATH.trim() + nombreDestino.replaceAll(" ", "") + ".png";
+        File imagenFile = new File(rutaImagen);
+        if (imagenFile.exists()) {
+            return new ImageIcon(rutaImagen);
+        } 
+        else {
+            return null;
+        }
+    }
+    
     
 }

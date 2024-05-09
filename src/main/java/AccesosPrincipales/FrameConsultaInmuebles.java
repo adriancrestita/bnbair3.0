@@ -33,9 +33,9 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
      */
     
     //Declaracion de atributos
-    private List<String> titulosInmuebles; // Lista de inmuebles disponibles
-    private int currentPage; // Página actual de resultados
-    private final String IMAGENES_DESTINO_PATH = "src/main/java/ImagenesDestino/";
+    public static List<String> titulosInmuebles; // Lista de inmuebles disponibles
+    public static int currentPage; // Página actual de resultados
+    public static final String IMAGENES_DESTINO_PATH = "src/main/java/ImagenesDestino/";
     
     
     public FrameConsultaInmuebles() {
@@ -45,7 +45,9 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         
         
         titulosInmuebles = new ArrayList<>(); //genero arraylist de los titulos de los inmuebles para utizarlo en el buscador
-        this.titulosInmuebles = Arrays.asList("Nueva York", "Londres", "París", "Tokio", "Roma", "Sídney", "Dubái", "Berlín", "Moscú", "Los Ángeles", "Barcelona", "Hong Kong", "Toronto", "San Francisco", "Singapur", "Venecia", "Río de Janeiro", "Bombay", "Florencia", "Ámsterdam", "Viena", "Praga", "Seúl", "Buenos Aires", "Ciudad de México", "Vancouver", "Madrid", "Bangkok", "Ciudad del Cabo", "Atenas");
+        MetodosConsultaInmuebles.arrayInmuebles(); //añade los titulso de los inmuebles a la arraylist
+        
+        System.out.println(titulosInmuebles);
         this.currentPage = 0;
         
         Buscador.addActionListener(new ActionListener() {
@@ -57,22 +59,10 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         //Cargar los inmuebles disponibles
         loadInmuebles();
     }
-    // Método para cargar la imagen en el jlabel correspondiente
-    private ImageIcon obtenerImagen(String nombreDestino) {
-        String rutaImagen = IMAGENES_DESTINO_PATH.trim() + nombreDestino.replaceAll(" ", "") + ".png";
-        File imagenFile = new File(rutaImagen);
-        if (imagenFile.exists()) {
-            return new ImageIcon(rutaImagen);
-        } 
-        else {
-            return null;
-        }
-    }
-    
     // Método para ir a la siguiente página de resultados
     private void nextPage() {
-        int startIndex = (currentPage + 1) * 6; // (6 para 2 filas y 3 columnas)
-        if (startIndex >= inmuebles.size()) {
+        int startIndex = (FrameConsultaInmuebles.currentPage + 1) * 6; // (6 para 2 filas y 3 columnas)
+        if (startIndex >= titulosInmuebles.size()) {
             // Mostrar ventana emergente si no hay más páginas disponibles
             JOptionPane.showMessageDialog(this, "No hay más páginas disponibles.", "Alerta", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -80,7 +70,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
             loadInmuebles(); // Cargar la siguiente página de resultados
         }
     }
-
+    
     // Método para ir a la página anterior de resultados
     private void previousPage() {
         if (currentPage > 0) {
@@ -88,11 +78,12 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
             loadInmuebles(); // Cargar la página anterior de resultados
         }
     }
+    
     private void loadInmuebles() {
         panel.removeAll();
 
         int startIndex = currentPage * 6; // Índice de inicio en la lista de inmuebles (6 para 2 filas y 3 columnas)
-        int endIndex = Math.min(startIndex + 6, inmuebles.size()); // Índice de fin en la lista de inmuebles
+        int endIndex = Math.min(startIndex + 6, titulosInmuebles.size()); // Índice de fin en la lista de inmuebles
 
         // Panel para mostrar los inmuebles en una cuadrícula de 2x3
         JPanel gridPanel = new JPanel(new GridLayout(2, 3));
@@ -100,8 +91,8 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
 
         // Agregar etiquetas con las imágenes o nombres de los inmuebles al panel
         for (int i = startIndex; i < endIndex; i++) {
-            String nombreDestino = inmuebles.get(i);
-            ImageIcon imagen = obtenerImagen(nombreDestino);
+            String nombreDestino = titulosInmuebles.get(i);
+            ImageIcon imagen = MetodosConsultaInmuebles.obtenerImagen(nombreDestino);
 
             // Si no se encuentra la imagen, mostrar el nombre del destino
             JLabel label;
@@ -139,7 +130,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         String searchTextNormalized = Normalizer.normalize(searchText, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
 
         // Buscar el inmueble por nombre
-        for (String inmueble : inmuebles) {
+        for (String inmueble : titulosInmuebles) {
             // Normalizar el nombre del inmueble para comparar
             String inmuebleNormalized = Normalizer.normalize(inmueble, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
 
@@ -177,7 +168,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
             // Verificar que la línea contiene al menos dos elementos
             if (partes.length > 1) {
                 // Agregar el segundo elemento (primera dirección de imagen) a la lista de inmuebles
-                inmuebles.add(partes[1].trim()); // Usamos trim() para eliminar espacios en blanco alrededor
+                titulosInmuebles.add(partes[1].trim()); // Usamos trim() para eliminar espacios en blanco alrededor
             }
         }
     } catch (IOException e) {
