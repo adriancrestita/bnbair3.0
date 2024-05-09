@@ -356,21 +356,26 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File[] files = fileChooser.getSelectedFiles(); // Obtiene los archivos seleccionados
-
+            
             //StringBuilder paths = new StringBuilder(); // Usamos StringBuilder para construir la línea de texto
-            for (File file : files) {
+            /*for (File file : files) {
                 if (paths.length() > 0) {
                     paths.append(";"); // Añade una coma antes de cada archivo excepto el primero
                 }
                 paths.append(file.getAbsolutePath()); // Añade la ruta del archivo al StringBuilder
-            }
-
-            /*try (FileWriter writer = new FileWriter("image_paths.txt", true)) { // Crea o abre el archivo para añadir texto al final
-                writer.write(paths.toString() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
-            } catch (IOException e) {
-                System.out.println("Ha ocurrido un error al escribir en el archivo");
-                e.printStackTrace();
+                System.out.println(file);
             }*/
+            String paths = "";
+            for (int i = 0; i < files.length; i++) {
+                paths += files[i].getName();
+                // Añadir ";" después de cada elemento excepto el último
+                if (i < files.length - 1) {
+                    paths += ";";
+                }
+            }
+            System.out.println(paths);
+
+            
         } else if (result == JFileChooser.CANCEL_OPTION) {
             System.out.println("No se seleccionó ningún archivo.");
         }
@@ -427,7 +432,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try (FileWriter writer = new FileWriter("image_paths.txt", true)) { // Crea o abre el archivo para añadir texto al final
-            writer.write(tituloInmueble.getText().trim() + "," + paths.toString() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
+            writer.write(/*tituloInmueble.getText().trim() + "," + */paths.toString() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
         } catch (IOException e) {
             System.out.println("Ha ocurrido un error al escribir en el archivo");
             e.printStackTrace();
