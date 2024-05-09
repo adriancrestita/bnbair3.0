@@ -4,6 +4,7 @@
  */
 package AccesosPrincipales;
 
+import AccesosAuxiliares.DialogCrearInmuebles;
 import AccesosAuxiliares.FrameDatosPersonales;
 import javax.swing.ImageIcon;
 
@@ -35,6 +36,7 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        newInmueble = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -67,6 +69,14 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 90, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 500));
+
+        newInmueble.setText("Crear Inmueble");
+        newInmueble.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newInmuebleActionPerformed(evt);
+            }
+        });
+        jPanel1.add(newInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, -1, -1));
 
         jMenu1.setText("Inicio");
 
@@ -125,6 +135,14 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void newInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newInmuebleActionPerformed
+        // TODO add your handling code here:
+        
+        DialogCrearInmuebles dci = new DialogCrearInmuebles(this, true);
+        dci.setLocationRelativeTo(this);
+        dci.setVisible(true);
+    }//GEN-LAST:event_newInmuebleActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -173,5 +191,6 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton newInmueble;
     // End of variables declaration//GEN-END:variables
 }

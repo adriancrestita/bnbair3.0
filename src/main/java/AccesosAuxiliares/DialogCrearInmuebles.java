@@ -344,7 +344,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private void ciudadInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ciudadInmuebleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ciudadInmuebleActionPerformed
-    private StringBuilder paths;
+    private String paths = "";
     private void imagenesInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenesInmuebleActionPerformed
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
@@ -365,19 +365,15 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
                 paths.append(file.getAbsolutePath()); // Añade la ruta del archivo al StringBuilder
                 System.out.println(file);
             }*/
-            String paths = "";
             for (int i = 0; i < files.length; i++) {
                 paths += files[i].getName();
                 // Añadir ";" después de cada elemento excepto el último
                 if (i < files.length - 1) {
-                    paths += ";";
+                    paths += ",";
                 }
             }
-            System.out.println(paths);
-
-            
         } else if (result == JFileChooser.CANCEL_OPTION) {
-            System.out.println("No se seleccionó ningún archivo.");
+            JOptionPane.showMessageDialog(null, "No se encontró ningún archivo");
         }
     }//GEN-LAST:event_imagenesInmuebleActionPerformed
 
@@ -432,12 +428,16 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try (FileWriter writer = new FileWriter("image_paths.txt", true)) { // Crea o abre el archivo para añadir texto al final
-            writer.write(/*tituloInmueble.getText().trim() + "," + */paths.toString() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
+            writer.write(tituloInmueble.getText().trim() + "," + paths.trim() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
+            System.out.println(paths.trim());
+            JOptionPane.showMessageDialog(null, "Inmueble creado correctamente");
+
         } catch (IOException e) {
             System.out.println("Ha ocurrido un error al escribir en el archivo");
             e.printStackTrace();
         }
         
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

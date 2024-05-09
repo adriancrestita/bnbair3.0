@@ -8,8 +8,12 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -29,7 +33,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
      */
     
     //Declaracion de atributos
-    private List<String> inmuebles; // Lista de inmuebles disponibles
+    private List<String> titulosInmuebles; // Lista de inmuebles disponibles
     private int currentPage; // Página actual de resultados
     private final String IMAGENES_DESTINO_PATH = "src/main/java/ImagenesDestino/";
     
@@ -37,8 +41,11 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
     public FrameConsultaInmuebles() {
         initComponents();
         jLabel1.requestFocus(true);
-        setTitle("JavaBnB");
-        this.inmuebles = Arrays.asList("Nueva York", "Londres", "París", "Tokio", "Roma", "Sídney", "Dubái", "Berlín", "Moscú", "Los Ángeles", "Barcelona", "Hong Kong", "Toronto", "San Francisco", "Singapur", "Venecia", "Río de Janeiro", "Bombay", "Florencia", "Ámsterdam", "Viena", "Praga", "Seúl", "Buenos Aires", "Ciudad de México", "Vancouver", "Madrid", "Bangkok", "Ciudad del Cabo", "Atenas");
+        setTitle("JavaBnB"); // cambia el titulo de la pestaña a JavaBnB
+        
+        
+        titulosInmuebles = new ArrayList<>(); //genero arraylist de los titulos de los inmuebles para utizarlo en el buscador
+        this.titulosInmuebles = Arrays.asList("Nueva York", "Londres", "París", "Tokio", "Roma", "Sídney", "Dubái", "Berlín", "Moscú", "Los Ángeles", "Barcelona", "Hong Kong", "Toronto", "San Francisco", "Singapur", "Venecia", "Río de Janeiro", "Bombay", "Florencia", "Ámsterdam", "Viena", "Praga", "Seúl", "Buenos Aires", "Ciudad de México", "Vancouver", "Madrid", "Bangkok", "Ciudad del Cabo", "Atenas");
         this.currentPage = 0;
         
         Buscador.addActionListener(new ActionListener() {
@@ -52,7 +59,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
     }
     // Método para cargar la imagen en el jlabel correspondiente
     private ImageIcon obtenerImagen(String nombreDestino) {
-        String rutaImagen = IMAGENES_DESTINO_PATH + nombreDestino.replaceAll(" ", "") + ".png";
+        String rutaImagen = IMAGENES_DESTINO_PATH.trim() + nombreDestino.replaceAll(" ", "") + ".png";
         File imagenFile = new File(rutaImagen);
         if (imagenFile.exists()) {
             return new ImageIcon(rutaImagen);
@@ -161,17 +168,22 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
     }
     
     //Lee el archivo donde se encuentran todos los destinos disponibles y los carga en el arraylist
-    /*private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                // Agregar cada línea (nombre del inmueble) a la lista de inmuebles
-                inmuebles.add(linea);
+    private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
+    try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            // Dividir la línea en partes usando la coma como separador
+            String[] partes = linea.split(",");
+            // Verificar que la línea contiene al menos dos elementos
+            if (partes.length > 1) {
+                // Agregar el segundo elemento (primera dirección de imagen) a la lista de inmuebles
+                inmuebles.add(partes[1].trim()); // Usamos trim() para eliminar espacios en blanco alrededor
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }*/   //MÉTODO PARA LEER EL ARCHIVO CON INMUEBLES REGISTRADOS Y CARGARLOS AL ARRAYLIST
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}   //MÉTODO PARA LEER EL ARCHIVO CON INMUEBLES REGISTRADOS Y CARGARLOS AL ARRAYLIST
 
     /**
      * This method is called from within the constructor to initialize the form.
