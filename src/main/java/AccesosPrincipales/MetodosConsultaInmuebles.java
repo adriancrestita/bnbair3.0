@@ -44,8 +44,8 @@ public class MetodosConsultaInmuebles {
     }
     
     // Método para cargar la imagen en el jlabel correspondiente
-    public static ImageIcon obtenerImagen(String nombreDestino) {
-        String rutaImagen = FrameConsultaInmuebles.IMAGENES_DESTINO_PATH.trim() + nombreDestino.replaceAll(" ", "") + ".png";
+    public static ImageIcon obtenerImagenPrincipal(String imagepath) {
+        String rutaImagen = "src/main/java/ImagenesDestino/" + imagepath;
         File imagenFile = new File(rutaImagen);
         if (imagenFile.exists()) {
             return new ImageIcon(rutaImagen);
@@ -74,14 +74,53 @@ public class MetodosConsultaInmuebles {
         }
     }
     public String nombreTitulo(ArrayList<String> list, int i){
-            String elemento;
+        String elemento;
 
         if (!list.isEmpty()) {
             // Imprimir el primer elemento de la lista (posición 0)
             elemento = list.get(i);
         } else {
             System.out.println("La lista está vacía.");
+            elemento = null;
         }
         return elemento;
+    }
+    
+    public String[] arrayImagenesInmueble(String filePath, String inmuebleTitle) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(","); // Asume que la línea está separada por comas
+                if (parts.length > 0 && parts[0].trim().equals(inmuebleTitle.trim())) {
+                    // Si encuentra una coincidencia, devuelve un subarreglo con el resto de elementos
+                    String[] details = new String[parts.length - 1];
+                    System.arraycopy(parts, 1, details, 0, parts.length - 1);
+                    return details;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // Retorna null si no encuentra ninguna línea con el título buscado
+    }
+    
+    public static String primeraImagenInmueble(String tituloInmueble) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("image_paths.txt"))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(","); // Asume que la línea está separada por comas
+                if (parts.length > 0 && parts[0].trim().equals(tituloInmueble.trim())) {
+                    // Si encuentra una coincidencia, devuelve un subarreglo con el resto de elementos
+                    String[] details = new String[parts.length - 1];
+                    System.arraycopy(parts, 1, details, 0, parts.length - 1);
+                    return details[1].trim();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // Retorna null si no encuentra ninguna línea con el título buscado
     }
 }

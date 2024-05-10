@@ -93,7 +93,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         for (int i = startIndex; i < endIndex; i++) {
             String nombreDestino = titulosInmuebles.get(i);
             //String nombreDestino = MetodosAuxiliares.elementosPorDatos
-            ImageIcon imagen = MetodosConsultaInmuebles.obtenerImagen(nombreDestino);
+            ImageIcon imagen = MetodosConsultaInmuebles.obtenerImagenPrincipal(MetodosConsultaInmuebles.primeraImagenInmueble(nombreDestino));
 
             // Si no se encuentra la imagen, mostrar el nombre del destino
             JLabel label;
