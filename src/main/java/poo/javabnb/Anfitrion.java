@@ -2,15 +2,16 @@ package poo.javabnb;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.Date;
 
-public class Anfitrion extends Usuario {
+public class Anfitrion extends Usuario implements Serializable{
 
-    
-    
+
     //Atributos
+    private static final long serialVersionUID = 1L;
     private String fechaRegistro; //LocalDate para el registro en hora actual
     private boolean esSuperAnfitrion;
     
