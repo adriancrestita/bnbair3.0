@@ -7,26 +7,26 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
 
-public class TarjetaCredito extends ClienteParticular{
+public class TarjetaCredito implements Serializable{
     
     //Atributos
+    private static final long serialVersionUID = 1L;
     private String nombreTitular;
     private String numeroTarjeta;
     private String fechaCaducidad;
+    private ClienteParticular particular;
+    
     
     //Constructor
-    
-    public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad, String dni, String nombre, String correoElectronico, String clave, String telefono, boolean esVIP) {
-        super(dni,nombre,correoElectronico,clave,telefono,esVIP);
+    public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad) {
         this.nombreTitular = nombreTitular;
         this.numeroTarjeta = numeroTarjeta;
         this.fechaCaducidad = fechaCaducidad;
     }
     
-    
-
     // Getters y setters
     public String getNombreTitular() {
         return nombreTitular;
@@ -77,7 +77,7 @@ public class TarjetaCredito extends ClienteParticular{
     
     
     public void guardarTarjeta() {
-        String linea = correoElectronico + "," + nombreTitular + "," + numeroTarjeta + "," + fechaCaducidad + "\n";
+        String linea = particular.getCorreoElectronico()+ "," + nombreTitular + "," + numeroTarjeta + "," + fechaCaducidad + "\n";
         try {
             FileWriter myWriter = new FileWriter("datos_tarjeta.txt", true); //el true activa el append
             myWriter.write(linea/*.getBytes(), StandardOpenOption.APPEND*/);

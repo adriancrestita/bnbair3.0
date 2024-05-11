@@ -1,5 +1,6 @@
 package AccesosPrincipales;
 
+import ManejoDatos.AlmacenajeDatos;
 import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.ImageIcon;
@@ -364,9 +365,9 @@ public class FrameRegistro extends javax.swing.JFrame {
     }//GEN-LAST:event_jmailsignActionPerformed
 
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
-        MetodosAuxiliares ma = new MetodosAuxiliares();
-        ClienteParticular particular = new ClienteParticular(jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jAnfitrion.isEnabled());
-        TarjetaCredito tj = new TarjetaCredito(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jnombre.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jAnfitrion.isEnabled());
+        /*MetodosAuxiliares ma = new MetodosAuxiliares();
+        ClienteParticular particular = new ClienteParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
+        TarjetaCredito tj = new TarjetaCredito(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
         try{
             if(jAnfitrion.isSelected()){
                 if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
@@ -416,8 +417,8 @@ public class FrameRegistro extends javax.swing.JFrame {
         catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
         }
-        
-       
+        */
+        AlmacenajeDatos.guardarParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
     }//GEN-LAST:event_bregistrarseActionPerformed
 
     private void jnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnombreActionPerformed
