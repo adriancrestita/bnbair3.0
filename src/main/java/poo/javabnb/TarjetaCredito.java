@@ -17,14 +17,16 @@ public class TarjetaCredito implements Serializable{
     private String nombreTitular;
     private String numeroTarjeta;
     private String fechaCaducidad;
+    private String correo;
     private ClienteParticular particular;
-    
+
     
     //Constructor
-    public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad) {
+    public TarjetaCredito(String correo, String nombreTitular, String numeroTarjeta, String fechaCaducidad) {
         this.nombreTitular = nombreTitular;
         this.numeroTarjeta = numeroTarjeta;
         this.fechaCaducidad = fechaCaducidad;
+        this.correo = correo;
     }
     
     // Getters y setters
