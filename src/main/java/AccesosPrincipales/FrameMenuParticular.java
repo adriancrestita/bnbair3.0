@@ -71,13 +71,10 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     
     // Método para ir a la siguiente página de resultados
     private void nextPage() {
-        int startIndex = (currentPage + 1) * 4; // (4 para 2 filas y 2 columnas)
-        if (startIndex >= inmuebles.size()) {
-            // Mostrar ventana emergente si no hay más páginas disponibles
-            JOptionPane.showMessageDialog(this, "No hay más páginas disponibles.", "Alerta", JOptionPane.WARNING_MESSAGE);
-        } else {
-            currentPage++;
-            loadInmuebles(); // Cargar la siguiente página de resultados
+        int startIndex = (currentPage + 1) * 2; // (2 para 2 filas y 1 columna)
+        if (startIndex < inmuebles.size()) {
+        currentPage++;
+        loadInmuebles(); // Cargar la siguiente página de resultados
         }
     }
 
@@ -97,7 +94,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     private void loadInmuebles() {
         panel.removeAll();
 
-        int startIndex = currentPage * 4; // Índice de inicio en la lista de inmuebles (2 para 2 filas y 2 columnas)
+        int startIndex = currentPage * 2; // Índice de inicio en la lista de inmuebles (2 para 2 filas y 2 columnas)
         int endIndex = Math.min(startIndex + 2, inmuebles.size()); // Índice de fin en la lista de inmuebles
 
         // Panel para mostrar los inmuebles en una cuadrícula de 2x2
@@ -107,6 +104,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         // Agregar etiquetas con las imágenes o nombres de los inmuebles al panel
         for (int i = startIndex; i < endIndex; i++) {
             String nombreDestino = inmuebles.get(i);
+            System.out.println(nombreDestino);
             ImageIcon imagen = MetodosConsultaInmuebles.obtenerImagenPrincipal(MetodosConsultaInmuebles.primeraImagenInmueble(nombreDestino));
             
             // Crear un panel para contener la imagen y la descripción
