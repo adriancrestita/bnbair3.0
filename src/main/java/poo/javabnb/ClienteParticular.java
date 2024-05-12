@@ -1,12 +1,14 @@
 package poo.javabnb;
 
+import ManejoDatos.Deserializador;
+import ManejoDatos.Serializador;
 import java.io.*;
 import static poo.javabnb.MetodosAuxiliares.elementosPorDato;
 
-public class ClienteParticular extends Usuario {
+public class ClienteParticular extends Usuario implements Serializable{
     
     //Atributos
-    
+    private static final long serialVersionUID = 1L;
     private boolean esVIP;
     
     //Constructor
@@ -75,7 +77,7 @@ public class ClienteParticular extends Usuario {
         String linea = getNombre() + "," + getDni() + "," + getCorreoElectronico() + "," + getClave() + "," + getTelefono() + "," + getesVIP() + "\n";
         try {
             FileWriter myWriter = new FileWriter("datos_users.txt", true); //el true activa el append
-            myWriter.write(linea/*.getBytes(), StandardOpenOption.APPEND*/);
+            myWriter.write(linea);
             myWriter.close();
           } 
         catch (IOException e) {
@@ -83,6 +85,7 @@ public class ClienteParticular extends Usuario {
             e.printStackTrace();
           }
     }
+    
     
     
     public boolean cmpVIP(){

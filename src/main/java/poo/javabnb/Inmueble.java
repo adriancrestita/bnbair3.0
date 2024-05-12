@@ -2,14 +2,16 @@ package poo.javabnb;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
 import java.util.List;
 import static poo.javabnb.MetodosAuxiliares.elementosPorDato;
 
-public class Inmueble {
+public class Inmueble implements Serializable{
     
     //Atributos
+    private static final long serialVersionUID = 1L;
     private String titulo;
     private String calle;
     private int numero;

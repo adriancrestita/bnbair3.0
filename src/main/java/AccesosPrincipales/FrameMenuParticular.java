@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,15 +35,16 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     private List<String> inmuebles; // Lista de inmuebles disponibles
     private int currentPage; // Página actual de resultados
     private final String IMAGENES_DESTINO_PATH = "src/main/java/ImagenesDestino/";
+    private final String DESTINO_PATH="";
+    private final String INFORMATION_MESSAGE = "informacion acerca del inmueble";
     
     public FrameMenuParticular() {
         initComponents();
         jLabel1.requestFocus(true);
-        //cargarInmueblesDesdeArchivo("inmuebles.txt");   FALTA CREAR EL ARCHIVO PARA REGISTRAR LOS INMUEBLES
+        this.inmuebles = new ArrayList<>();
+        cargarInmueblesDesdeArchivo("inmuebles.txt");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("JavaBnB");
-        //Declaración de variables
-        this.inmuebles = Arrays.asList("Nueva York", "Londres", "París", "Tokio", "Roma", "Sídney", "Dubái", "Berlín", "Moscú", "Los Ángeles", "Barcelona", "Hong Kong", "Toronto", "San Francisco", "Singapur", "Venecia", "Río de Janeiro", "Bombay", "Florencia", "Ámsterdam", "Viena", "Praga", "Seúl", "Buenos Aires", "Ciudad de México", "Vancouver", "Madrid", "Bangkok", "Ciudad del Cabo", "Atenas");
         this.currentPage = 0;
         
         
@@ -56,8 +58,8 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         loadInmuebles();
     }
     // Método para cargar la imagen en el jlabel correspondiente
-    private ImageIcon obtenerImagen(String nombreDestino) {
-        String rutaImagen = IMAGENES_DESTINO_PATH + nombreDestino.replaceAll(" ", "") + ".png";
+    /*private ImageIcon obtenerImagen(String nombreDestino) {
+        String rutaImagen = IMAGENES_DESTINO_PATH + nombreDestino.replaceAll(" ", "") + ".JPG";
         File imagenFile = new File(rutaImagen);
         if (imagenFile.exists()) {
             return new ImageIcon(rutaImagen);
@@ -65,17 +67,14 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         else {
             return null;
         }
-    }
+    }*/
     
     // Método para ir a la siguiente página de resultados
     private void nextPage() {
-        int startIndex = (currentPage + 1) * 6; // (6 para 2 filas y 3 columnas)
-        if (startIndex >= inmuebles.size()) {
-            // Mostrar ventana emergente si no hay más páginas disponibles
-            JOptionPane.showMessageDialog(this, "No hay más páginas disponibles.", "Alerta", JOptionPane.WARNING_MESSAGE);
-        } else {
-            currentPage++;
-            loadInmuebles(); // Cargar la siguiente página de resultados
+        int startIndex = (currentPage + 1) * 2; // (2 para 2 filas y 1 columna)
+        if (startIndex < inmuebles.size()) {
+        currentPage++;
+        loadInmuebles(); // Cargar la siguiente página de resultados
         }
     }
 
@@ -86,32 +85,47 @@ public class FrameMenuParticular extends javax.swing.JFrame {
             loadInmuebles(); // Cargar la página anterior de resultados
         }
     }
+    // Método para escalar la imagen
+    private ImageIcon scaleImage(ImageIcon imageIcon, int width, int height) {
+        Image image = imageIcon.getImage();
+        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage);
+    }
     private void loadInmuebles() {
         panel.removeAll();
 
-        int startIndex = currentPage * 6; // Índice de inicio en la lista de inmuebles (6 para 2 filas y 3 columnas)
-        int endIndex = Math.min(startIndex + 6, inmuebles.size()); // Índice de fin en la lista de inmuebles
+        int startIndex = currentPage * 2; // Índice de inicio en la lista de inmuebles (2 para 2 filas y 2 columnas)
+        int endIndex = Math.min(startIndex + 2, inmuebles.size()); // Índice de fin en la lista de inmuebles
 
-        // Panel para mostrar los inmuebles en una cuadrícula de 2x3
-        JPanel gridPanel = new JPanel(new GridLayout(2, 3));
+        // Panel para mostrar los inmuebles en una cuadrícula de 2x2
+        JPanel gridPanel = new JPanel(new GridLayout(2, 2));
         gridPanel.setBackground(new Color(220, 154, 98)); // Establecer el color de fondo
 
         // Agregar etiquetas con las imágenes o nombres de los inmuebles al panel
         for (int i = startIndex; i < endIndex; i++) {
             String nombreDestino = inmuebles.get(i);
-            ImageIcon imagen = obtenerImagen(nombreDestino);
+            System.out.println(nombreDestino);
+            ImageIcon imagen = MetodosConsultaInmuebles.obtenerImagenPrincipal(MetodosConsultaInmuebles.primeraImagenInmueble(nombreDestino));
+            
+            // Crear un panel para contener la imagen y la descripción
+            JPanel panelInmueble = new JPanel(new BorderLayout());
+            panelInmueble.setBackground(new Color(220, 154, 98)); // Establecer el color de fondo
 
             // Si no se encuentra la imagen, mostrar el nombre del destino
-            JLabel label;
+            JLabel labelImagen;
             if (imagen != null) {
-                label = new JLabel(imagen);
+                // Escalar la imagen para que se ajuste al tamaño del JLabel
+                imagen = scaleImage(imagen, 250, 250);
+                labelImagen = new JLabel(imagen);
             } else {
-                label = new JLabel(nombreDestino);
-                label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
+                labelImagen = new JLabel(nombreDestino + " (img)");
             }
             
+            // Establecer un tamaño fijo para el JLabel de la imagen
+            labelImagen.setPreferredSize(new Dimension(250, 250));
+            
              // Agregar un MouseListener para detectar clics en el JLabel
-            label.addMouseListener(new MouseAdapter() {
+            labelImagen.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     // Mostrar una ventana emergente con el nombre del destino cuando se hace clic
@@ -120,14 +134,40 @@ public class FrameMenuParticular extends javax.swing.JFrame {
                 }
             });
             
-            label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
-            gridPanel.add(label);
+            // Agregar la imagen al panelInmueble en la parte izquierda
+            panelInmueble.add(labelImagen, BorderLayout.WEST);
+            
+            // Crear una breve descripción del lugar
+            JTextArea descripcion = new JTextArea();
+            descripcion.setText("Descripción breve de " + nombreDestino);
+            descripcion.setLineWrap(true);
+            descripcion.setWrapStyleWord(true);
+            descripcion.setEditable(false);
+            
+            // Agregar la descripción al panelInmueble en la parte derecha
+            panelInmueble.add(descripcion, BorderLayout.CENTER);
+            
+            // Agregar el panelInmueble a la cuadrícula
+            gridPanel.add(panelInmueble);
+            
         }
         // Establecer el tamaño del gridPanel igual al del panel principal
         gridPanel.setPreferredSize(panel.getSize());
 
         // Agregar el panel de cuadrícula al panel principal
         panel.add(gridPanel);
+        
+        // Actualizar la visibilidad de los botones
+        if (currentPage == 0) {
+            PrevPg.setVisible(false);
+            NextPg.setVisible(true);
+        } else if (endIndex >= inmuebles.size()) {
+            PrevPg.setVisible(true);
+            NextPg.setVisible(false);
+        } else {
+            PrevPg.setVisible(true);
+            NextPg.setVisible(true);
+        }
 
         // Actualizar la ventana
         revalidate();
@@ -177,7 +217,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     }
     
     //Lee el archivo donde se encuentran todos los destinos disponibles y los carga en el arraylist
-    /*private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
+    private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -187,7 +227,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/   //MÉTODO PARA LEER EL ARCHIVO CON INMUEBLES REGISTRADOS Y CARGARLOS AL ARRAYLIST
+    }   //MÉTODO PARA LEER EL ARCHIVO CON INMUEBLES REGISTRADOS Y CARGARLOS AL ARRAYLIST
     
     /**
      * This method is called from within the constructor to initialize the form.
