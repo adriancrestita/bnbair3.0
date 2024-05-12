@@ -33,6 +33,7 @@ public class Deserializador {
             return (Inmueble) ois.readObject();
         }
     }
+    //a
     
     
 }
