@@ -36,8 +36,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     private int currentPage; // Página actual de resultados
     private final String IMAGENES_DESTINO_PATH = "src/main/java/ImagenesDestino/";
     private final String DESTINO_PATH="";
-    private final String INFORMATION_MESSAGE = "informacion acerca del inmueble";
-    
+
     public FrameMenuParticular() {
         initComponents();
         jLabel1.requestFocus(true);
@@ -137,7 +136,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
             // Agregar la imagen al panelInmueble en la parte izquierda
             panelInmueble.add(labelImagen, BorderLayout.WEST);
             
-            // Crear una breve descripción del lugar
+            // Crear una breve descripción del lugar (cuando esté guardado la info en el txt, sacarla de ahi y listo)
             JTextArea descripcion = new JTextArea();
             descripcion.setText("Descripción breve de " + nombreDestino);
             descripcion.setLineWrap(true);
