@@ -5,9 +5,12 @@
 package AccesosPrincipales;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -20,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -42,141 +46,56 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         initComponents();
         jLabel1.requestFocus(true);
         setTitle("JavaBnB"); // cambia el titulo de la pestaña a JavaBnB
-        
-        
-        titulosInmuebles = new ArrayList<>(); //genero arraylist de los titulos de los inmuebles para utizarlo en el buscador
-        MetodosConsultaInmuebles.arrayInmuebles(); //añade los titulso de los inmuebles a la arraylist
-        
-        System.out.println(titulosInmuebles);
-        this.currentPage = 0;
-        
-        Buscador.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchInmuebles(Buscador.getText());
-            }
-        });
-        //Cargar los inmuebles disponibles
-        loadInmuebles();
-    }
-    // Método para ir a la siguiente página de resultados
-    private void nextPage() {
-        int startIndex = (FrameConsultaInmuebles.currentPage + 1) * 6; // (6 para 2 filas y 3 columnas)
-        if (startIndex >= titulosInmuebles.size()) {
-            // Mostrar ventana emergente si no hay más páginas disponibles
-            JOptionPane.showMessageDialog(this, "No hay más páginas disponibles.", "Alerta", JOptionPane.WARNING_MESSAGE);
-        } else {
-            currentPage++;
-            loadInmuebles(); // Cargar la siguiente página de resultados
-        }
+
+        JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jPanel1.add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 530, 350));
+        titulosInmuebles = new ArrayList<>();
+
+        cargarInmueblesDesdeArchivo("inmuebles.txt");
+        loadInmuebles(); // Cargar los destinos de viaje antes de agregar los ActionListener
     }
     
-    // Método para ir a la página anterior de resultados
-    private void previousPage() {
-        if (currentPage > 0) {
-            currentPage--;
-            loadInmuebles(); // Cargar la página anterior de resultados
-        }
-    }
-    
-    private void loadInmuebles() {
-        panel.removeAll();
-
-        int startIndex = currentPage * 6; // Índice de inicio en la lista de inmuebles (6 para 2 filas y 3 columnas)
-        int endIndex = Math.min(startIndex + 6, titulosInmuebles.size()); // Índice de fin en la lista de inmuebles
-
-        // Panel para mostrar los inmuebles en una cuadrícula de 2x3
-        JPanel gridPanel = new JPanel(new GridLayout(2, 3));
-        gridPanel.setBackground(new Color(220, 154, 98)); // Establecer el color de fondo
-
-        // Agregar etiquetas con las imágenes o nombres de los inmuebles al panel
-        for (int i = startIndex; i < endIndex; i++) {
-            String nombreDestino = titulosInmuebles.get(i);
-            //String nombreDestino = MetodosAuxiliares.elementosPorDatos
-            ImageIcon imagen = MetodosConsultaInmuebles.obtenerImagenPrincipal(MetodosConsultaInmuebles.primeraImagenInmueble(nombreDestino));
-
-            // Si no se encuentra la imagen, mostrar el nombre del destino
-            JLabel label;
-            if (imagen != null) {
-                label = new JLabel(imagen);
-            } else {
-                label = new JLabel(nombreDestino);
-                label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
-            }
-            label.setHorizontalAlignment(SwingConstants.CENTER); // Centra el texto horizontalmente
-            gridPanel.add(label);
-        }
-        // Establecer el tamaño del gridPanel igual al del panel principal
-        gridPanel.setPreferredSize(panel.getSize());
-
-        // Agregar el panel de cuadrícula al panel principal
-        panel.add(gridPanel);
-
-        // Actualizar la ventana
-        revalidate();
-        repaint();
-    }
-    private void searchInmuebles(String searchText) {
-        panel.removeAll();
-
-        if (searchText.isEmpty()) {
-            // Si la búsqueda está vacía, mostrar todos los inmuebles en una cuadrícula de 2x3
-            loadInmuebles();
-            return;
-        }
-
-        boolean encontrado = false;
-
-        // Normalizar el texto de búsqueda
-        String searchTextNormalized = Normalizer.normalize(searchText, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
-
-        // Buscar el inmueble por nombre
-        for (String inmueble : titulosInmuebles) {
-            // Normalizar el nombre del inmueble para comparar
-            String inmuebleNormalized = Normalizer.normalize(inmueble, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
-
-            if (inmuebleNormalized.contains(searchTextNormalized)) {
-                // Mostrar el inmueble encontrado en el centro del panel
-                JLabel resultLabel = new JLabel(inmueble);
-                resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                resultLabel.setVerticalAlignment(SwingConstants.CENTER);
-                panel.add(resultLabel);
-                encontrado = true;
-            }
-        }
-
-        // Si no se encuentra ningún inmueble, mostrar un mensaje
-        if (!encontrado) {
-            JLabel noResultsLabel = new JLabel("No se encontraron resultados para: " + searchText);
-            noResultsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            noResultsLabel.setVerticalAlignment(SwingConstants.CENTER);
-            panel.add(noResultsLabel);
-        }
-
-        // Actualizar la ventana
-        revalidate();
-        repaint();
-        Buscador.setText(" 🔍 Buscador de destinos");
-    }
-    
-    //Lee el archivo donde se encuentran todos los destinos disponibles y los carga en el arraylist
+    // Método para cargar los destinos desde el archivo "inmuebles.txt"
     private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
-    try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
-        String linea;
-        while ((linea = br.readLine()) != null) {
-            // Dividir la línea en partes usando la coma como separador
-            String[] partes = linea.split(",");
-            // Verificar que la línea contiene al menos dos elementos
-            if (partes.length > 1) {
-                // Agregar el segundo elemento (primera dirección de imagen) a la lista de inmuebles
-                titulosInmuebles.add(partes[1].trim()); // Usamos trim() para eliminar espacios en blanco alrededor
+        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                // Agregar el destino al ArrayList de destinos
+                titulosInmuebles.add(linea);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
     }
-}   //MÉTODO PARA LEER EL ARCHIVO CON INMUEBLES REGISTRADOS Y CARGARLOS AL ARRAYLIST
+    
+    // Método para cargar los destinos de viaje en el panel
+    private void loadInmuebles() {
+        panel.removeAll(); // Limpiar el panel
 
+        // Cambiar el layout manager del panel a GridLayout con una sola columna
+        panel.setLayout(new GridLayout(0, 1));
+
+        // Agregar ActionListener a cada JLabel que representa un destino
+        for (String destino : titulosInmuebles) {
+            JLabel label = new JLabel(destino);
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            // Agregar ActionListener
+            label.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Mostrar ventana emergente con información del destino
+                    JOptionPane.showMessageDialog(FrameConsultaInmuebles.this, "Información sobre el destino: " + destino, "Destino Seleccionado", JOptionPane.INFORMATION_MESSAGE);
+                }
+            });
+            panel.add(label);
+        }
+
+        // Actualizar el panel
+        panel.revalidate();
+        panel.repaint();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -194,8 +113,6 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         Buscador = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         panel = new javax.swing.JPanel();
-        PrevPg = new javax.swing.JButton();
-        NextPg = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         Menu = new javax.swing.JMenu();
         VueltaAdmin = new javax.swing.JMenuItem();
@@ -253,23 +170,8 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 520, 20));
 
         panel.setBackground(new java.awt.Color(220, 154, 98));
-        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 530, 350));
-
-        PrevPg.setText("Página anterior");
-        PrevPg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PrevPgActionPerformed(evt);
-            }
-        });
-        jPanel1.add(PrevPg, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, -1, -1));
-
-        NextPg.setText("Página siguiente");
-        NextPg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NextPgActionPerformed(evt);
-            }
-        });
-        jPanel1.add(NextPg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
+        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 530, 370));
 
         Menu.setText("Menu");
 
@@ -399,16 +301,6 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BuscadorActionPerformed
 
-    private void PrevPgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrevPgActionPerformed
-        // TODO add your handling code here:
-        previousPage();
-    }//GEN-LAST:event_PrevPgActionPerformed
-
-    private void NextPgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextPgActionPerformed
-        // TODO add your handling code here:
-        nextPage();
-    }//GEN-LAST:event_NextPgActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -450,8 +342,6 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
     private javax.swing.JMenuItem ConsultaReservas;
     private javax.swing.JMenuItem ConsultaUser;
     private javax.swing.JMenu Menu;
-    private javax.swing.JButton NextPg;
-    private javax.swing.JButton PrevPg;
     private javax.swing.JMenuItem Quit;
     private javax.swing.JMenu Salir;
     private javax.swing.JMenuItem VueltaAdmin;
