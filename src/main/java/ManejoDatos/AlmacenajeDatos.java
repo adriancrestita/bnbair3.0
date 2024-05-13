@@ -26,5 +26,17 @@ public class AlmacenajeDatos {
         }
     }   
     
-    
+    /*
+                    particular.setDni(jdni.getText().trim());
+                    particular.setNombre(jnombre.getText().trim());
+                    particular.setCorreoElectronico(jmailsign.getText().trim());
+                    particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
+                    particular.setTelefono(jphonenumber.getText().trim());
+                    particular.setesVIP(jAnfitrion.isSelected());
+
+                    tj.setFechaCaducidad(jfcaducidad.getText().trim());
+                    tj.setNombreTitular(jtitular.getText().trim());
+                    tj.setNumeroTarjeta(jnumtarj.getText().trim());
+
+    */
 }

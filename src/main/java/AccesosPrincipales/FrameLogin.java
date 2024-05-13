@@ -4,6 +4,7 @@ package AccesosPrincipales;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
 import javax.swing.JOptionPane;
 import javax.swing.*;
@@ -101,7 +102,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 bloginActionPerformed(evt);
             }
         });
-        jPanel1.add(blogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 370, -1, -1));
+        jPanel1.add(blogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
 
         bsignin.setText("REGISTRARSE");
         bsignin.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +110,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 bsigninActionPerformed(evt);
             }
         });
-        jPanel1.add(bsignin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
+        jPanel1.add(bsignin, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("CONTRASEÑA");
@@ -226,9 +227,12 @@ public class FrameLogin extends javax.swing.JFrame {
             }
             else{
                 // codigo para verificar que el correo es válido y acceder como particular o anfitrión
-                FrameMenuParticular menuParticular = new FrameMenuParticular();
-                menuParticular.setVisible(true);
-                dispose();
+                if(VerificarDatos.verificarInicioSesion(jmaillog.getText().trim(), jpasswordlog.getText().trim())){
+                    FrameMenuParticular menuParticular = new FrameMenuParticular();
+                    menuParticular.setVisible(true);
+                    dispose();
+                }
+                
             }
         }
     }//GEN-LAST:event_bloginActionPerformed
