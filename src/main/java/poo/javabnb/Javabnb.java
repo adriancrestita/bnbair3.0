@@ -2,7 +2,6 @@ package poo.javabnb;
 
 import AccesosPrincipales.FrameInicio;
 import AccesosPrincipales.FrameRegistro;
-import ManejoDatos.CrearDatos;
 import java.io.*; 
 import java.util.*;
  
@@ -14,13 +13,7 @@ public class Javabnb {
         this.administrador = new Administrador("admin@javabnb.com", "admin");
     }
     
-    public static void main(String[] args) throws IOException {
-        CrearDatos.crearTxtUsers();
-        CrearDatos.crearTxtTarjeta();
-        CrearDatos.crearTxtInmuebles();
-        CrearDatos.crearTxtAnfitrion();
-        CrearDatos.crearTxtImagenesInmueble();
-        
+    public static void main(String[] args) throws IOException {      
         FrameInicio fi = new FrameInicio();
         fi.setVisible(true);
     }

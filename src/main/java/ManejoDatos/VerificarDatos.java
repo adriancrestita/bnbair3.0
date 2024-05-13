@@ -49,7 +49,25 @@ public class VerificarDatos {
         return false;  // Retorna falso si no encuentra el cliente
     }
     
-    public boolean validarRegistro(String correo, String nombre, String contraseña, String telefono, String dni, String titularTarjeta, String numeroTarjeta, String fechaCaducidad, boolean esVIP) throws IOException {        
+    public boolean existeAnfitrion(String correoBuscado) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("anfitrion.dat"))) {
+            while (true) {
+                ClienteParticular cliente = (ClienteParticular) ois.readObject();
+                if (cliente.getCorreoElectronico().equals(correoBuscado)) {
+                    return true;  // Cliente encontrado
+                }
+            }
+        } catch (EOFException e) {
+            // Fin del archivo alcanzado, el cliente no existe
+            System.out.println("Fin de la búsqueda, no se encontró el cliente.");
+        } catch (Exception e) {
+            // Maneja otras posibles excepciones como ClassNotFoundException o IOException.
+            e.printStackTrace();
+        }
+        return false;  // Retorna falso si no encuentra el cliente
+    }
+    
+    public boolean validarRegistro(String correo, String nombre, String contraseña, String telefono, String dni, String titularTarjeta, String numeroTarjeta, String fechaCaducidad) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
             nombre.isEmpty() || nombre.equals("Ingrese el nombre") ||
@@ -65,6 +83,34 @@ public class VerificarDatos {
         // Verificar cada campo con sus respectivas funciones de validación
         if(existeCliente(correo) == false){
             if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni) && xLongitud(numeroTarjeta, 16) && esFechaCaducidadValida(fechaCaducidad)) == true){
+                    return true;
+            }
+
+            else{
+                JOptionPane.showMessageDialog(null, "El usuario ya existe");
+                return false;
+            }    
+        }
+          
+        else{
+            JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos");
+            return false;
+        }
+    }
+    
+    public boolean validarRegistro(String correo, String nombre, String contraseña, String telefono, String dni) throws IOException {        
+        // Validar que los campos no están vacíos ni tienen el texto por defecto
+        if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
+            nombre.isEmpty() || nombre.equals("Ingrese el nombre") ||
+            contraseña.isEmpty() || contraseña.equals("Introduce la contraseña") ||
+            telefono.isEmpty() || telefono.equals("Ingrese el teléfono") ||
+            dni.isEmpty() || dni.equals("Ingrese el DNI")) {
+            return false;
+        }
+
+        // Verificar cada campo con sus respectivas funciones de validación
+        if(existeCliente(correo) == false){
+            if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
                     return true;
             }
 

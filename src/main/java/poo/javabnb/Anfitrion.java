@@ -16,8 +16,10 @@ public class Anfitrion extends Usuario implements Serializable{
     private boolean esSuperAnfitrion;
     
     //Constructor
-    public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono) {
-        super(dni, nombre, correoElectronico, clave, telefono);
+    public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono, String fechaRegistro, boolean superAnfitrion) {
+        super(dni, nombre, correoElectronico, clave, telefono); 
+        this.fechaRegistro = fechaRegistro;
+        this.esSuperAnfitrion = superAnfitrion;
     }
     
     //Getters
@@ -85,19 +87,5 @@ public class Anfitrion extends Usuario implements Serializable{
         else{
             return "No es Super Anfitrion";
         }
-    }
-    public void guardarAnfitrion() {
-        setFechaRegistro();
-  
-        String linea = getNombre() + "," + getDni() + "," + getCorreoElectronico() + "," + getClave() + "," + getTelefono() + "," + getFechaRegistro() + "," + cmpSuperAnfitrion() + "\n";
-        try {
-            FileWriter myWriter = new FileWriter("datos_anfitrion.txt", true); //el true activa el append
-            myWriter.write(linea/*.getBytes(), StandardOpenOption.APPEND*/);
-            myWriter.close();
-          } 
-        catch (IOException e) {
-            System.out.println("Ha ocurrido un error");
-            e.printStackTrace();
-          }
     }
 }

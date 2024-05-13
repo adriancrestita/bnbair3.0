@@ -1,9 +1,12 @@
 package poo.javabnb;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class MetodosAuxiliares {
@@ -54,7 +57,12 @@ public class MetodosAuxiliares {
         return texto.length() == longitud;
     }
    
-    
+    public static String fechaActual(){
+        Date todayDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String fechaActual = sdf.format(todayDate);
+        return fechaActual;
+    }
     public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni, boolean esVIP) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
@@ -183,44 +191,8 @@ public class MetodosAuxiliares {
         }
         return 0; // Retorna null si no se encuentra ninguna línea que coincida
     }
-    
-    
-    public static void reemplazarLinea(String correoBuscado, String nuevaLinea, String archivo) throws IOException {
-
-        File file = new File(archivo);
-        File tempFile = new File(file.getAbsolutePath() + ".tmp");
-
-        BufferedReader reader = null;
-        BufferedWriter writer = null;
-
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            writer = new BufferedWriter(new FileWriter(tempFile));
-
-            String currentLine;
-            int currentLineNumber = 0;
-
-            while ((currentLine = reader.readLine()) != null) {
-                currentLineNumber++;
-                // Reemplaza la línea si es la línea especificada
-                if (currentLineNumber == lineaCliente(correoBuscado, archivo)) {
-                    writer.write(nuevaLinea + System.lineSeparator());
-                } else {
-                    writer.write(currentLine + System.lineSeparator());
-                }
-            }
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-            if (writer != null) {
-                writer.close();
-            }
-        }
-
-        // Eliminar el archivo original y renombrar el archivo temporal para reemplazarlo
-        if (!file.delete() || !tempFile.renameTo(file)) {
-            throw new IOException("No se pudo reemplazar el archivo original con el archivo actualizado");
-        }
-    }   
 }
+    
+    
+    
+   

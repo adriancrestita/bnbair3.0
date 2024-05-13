@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import poo.javabnb.Anfitrion;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.TarjetaCredito;
 
@@ -27,6 +28,23 @@ public class AlmacenajeDatos {
             e.printStackTrace();
         }
     }   
+    
+    public static void guardarAnfitrion(String dni, String nombre, String correo, String contraseña, String telefono, String titular, String numtarj, String fcad, String fechaRegistro, boolean superAnfitrion) { //este metodo de guardado es utilizando la serialización de objetos
+        Anfitrion anfitrion = new Anfitrion(dni, nombre, correo, contraseña, telefono, fechaRegistro, superAnfitrion);
+        TarjetaCredito datosBancarios = new TarjetaCredito(correo, titular, numtarj, fcad);
+
+        
+        Serializador serializador = new Serializador();
+
+        try {
+            serializador.guardarAnfitrion(anfitrion, "anfitrion.dat");
+            serializador.guardarDatosBancarios(datosBancarios, "datosBancarios.dat");
+            
+            // Utilizar clienteLeido y datosBancariosLeidos como necesites
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }  
     
     public static void imprimirClientes(String archivo) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
