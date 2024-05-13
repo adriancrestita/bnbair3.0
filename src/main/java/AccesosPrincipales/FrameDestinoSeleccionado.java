@@ -4,7 +4,8 @@
  */
 package AccesosPrincipales;
 
-import javax.swing.ImageIcon;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  *
@@ -20,13 +21,46 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     public FrameDestinoSeleccionado(){
         initComponents();
     }
+    
     public FrameDestinoSeleccionado(String destinoSelec) {
         initComponents();
+        setTitle("JavaBnB");
         this.destino = destinoSelec;
-        
         jLabel1.setText(destino);
-    }
+        
+        JScrollPane scrollPane = new JScrollPane(jPanel3);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // Configurar la barra de desplazamiento vertical
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // No queremos una barra horizontal
 
+        // Establecer el color de fondo del JScrollPane
+        scrollPane.setBackground(new Color(220, 154, 98));
+
+        jPanel1.add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 530, 350));
+        
+        // Crear el panel de imágenes
+        JPanel imagePanel = createImagePanel();
+
+        // Añadir el panel de imágenes al jPanel3
+        jPanel3.setLayout(new BorderLayout());
+        jPanel3.add(imagePanel, BorderLayout.CENTER);
+    }
+    private JPanel createImagePanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Alineación vertical
+
+        // Agregar imagen grande
+        JLabel labelGrande = new JLabel("Imagen Grande");
+        panel.add(labelGrande);
+
+        // Agregar imágenes pequeñas
+        for (int i = 0; i < 4; i++) {
+            JLabel labelPequena = new JLabel("Imagen Pequeña " + (i + 1));
+            panel.add(labelPequena);
+        }
+
+        return panel;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +75,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,7 +85,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, -1, -1));
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 340, 40));
 
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -66,6 +102,21 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 90, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 500));
+
+        jPanel3.setBackground(new java.awt.Color(220, 154, 98));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 520, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 520, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,5 +174,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }
