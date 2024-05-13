@@ -200,6 +200,7 @@ public class FrameLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmaillogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmaillogActionPerformed

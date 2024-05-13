@@ -127,9 +127,12 @@ public class FrameMenuParticular extends javax.swing.JFrame {
             labelImagen.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    // Mostrar una ventana emergente con el nombre del destino cuando se hace clic
-                    //Sujeto a cambios para que aparezca otra ventana emergente indicando todas las caracteristicas del inmueble
-                    JOptionPane.showMessageDialog(FrameMenuParticular.this, "Destino seleccionado: " + nombreDestino, "Información", JOptionPane.INFORMATION_MESSAGE);
+                    // Crear una instancia del nuevo JFrame con información sobre el destino seleccionado
+                    FrameDestinoSeleccionado infoInmueble = new FrameDestinoSeleccionado(nombreDestino);
+                    // Hacer visible el nuevo JFrame
+                    infoInmueble.setVisible(true);
+                    // Opcional: ocultar el JFrame actual
+                    dispose();
                 }
             });
             
@@ -439,6 +442,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void CambiarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CambiarDatosActionPerformed

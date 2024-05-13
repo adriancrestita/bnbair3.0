@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.ui.FlatScrollBarUI;
 
 /**
  *
@@ -84,8 +86,12 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    // Mostrar ventana emergente con información del destino
-                    JOptionPane.showMessageDialog(FrameConsultaInmuebles.this, "Información sobre el destino: " + destino, "Destino Seleccionado", JOptionPane.INFORMATION_MESSAGE);
+                    // Crear una instancia del nuevo JFrame con información sobre el destino seleccionado
+                    FrameDestinoSeleccionado infoInmueble = new FrameDestinoSeleccionado(destino);
+                    // Hacer visible el nuevo JFrame
+                    infoInmueble.setVisible(true);
+                    // Opcional: ocultar el JFrame actual
+                    dispose();
                 }
             });
             panel.add(label);
@@ -245,6 +251,7 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void VueltaAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VueltaAdminActionPerformed
