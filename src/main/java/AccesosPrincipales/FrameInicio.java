@@ -21,7 +21,7 @@ public class FrameInicio extends javax.swing.JFrame {
     public FrameInicio() {
         // Esto solo se debe hacer una vez en la ventana principal;
         // Cambio el accentColor del tema al magenta
-        FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#FF0054"));
+        FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#500000"));
         // Inicia el tema de los controles de la ventana
         FlatIntelliJLaf.setup();
         initComponents();
