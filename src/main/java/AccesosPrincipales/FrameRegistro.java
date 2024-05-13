@@ -418,7 +418,11 @@ public class FrameRegistro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
         }
         */
+        
         AlmacenajeDatos.guardarParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
+        FrameLogin flog = new FrameLogin();
+        flog.setVisible(true);
+        dispose();
     }//GEN-LAST:event_bregistrarseActionPerformed
 
     private void jnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnombreActionPerformed
