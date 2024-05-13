@@ -1,6 +1,7 @@
 package AccesosPrincipales;
 
 import ManejoDatos.AlmacenajeDatos;
+import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.ImageIcon;
@@ -367,18 +368,19 @@ public class FrameRegistro extends javax.swing.JFrame {
 
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
+        VerificarDatos vd = new VerificarDatos();
         ClienteParticular particular = new ClienteParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
         TarjetaCredito tj = new TarjetaCredito(jmailsign.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
         try{
-            if(jAnfitrion.isSelected()){
-                if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
+            if(!jAnfitrion.isSelected()){
+                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
                    //Asignamos valores a los atributos con los SET de Cliente Particular
                    particular.setDni(jdni.getText().trim());
                    particular.setNombre(jnombre.getText().trim());
                    particular.setCorreoElectronico(jmailsign.getText().trim());
                    particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
                    particular.setTelefono(jphonenumber.getText().trim());
-                   particular.setesVIP(jAnfitrion.isSelected());
+                   particular.setesVIP(jesVIP.isSelected());
 
                    tj.setFechaCaducidad(jfcaducidad.getText().trim());
                    tj.setNombreTitular(jtitular.getText().trim());
@@ -393,7 +395,7 @@ public class FrameRegistro extends javax.swing.JFrame {
                    dispose();
                }   
             }
-            if(!jAnfitrion.isSelected()){
+            /*if(!jAnfitrion.isSelected()){
                 if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jAnfitrion.isSelected())) == true ){
                     //Asignamos valores a los atributos con los SET de Cliente Particular
                     particular.setDni(jdni.getText().trim());
@@ -413,7 +415,7 @@ public class FrameRegistro extends javax.swing.JFrame {
                     fLog.setVisible(true);
                     dispose();
                 }
-            }
+            }*/
         }
         catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
