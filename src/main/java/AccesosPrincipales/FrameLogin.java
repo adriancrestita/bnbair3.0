@@ -8,7 +8,11 @@ import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
 import javax.swing.JOptionPane;
 import javax.swing.*;
-
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import java.awt.Color;
+import java.util.Collections;
+import javax.swing.UIManager;
 /**
  *
  * @author crestas
@@ -23,9 +27,16 @@ public class FrameLogin extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public FrameLogin() {
+        
         initComponents();
         jLabel4.requestFocus(true);
         setTitle("JavaBnB");
+        
+        jmaillog.putClientProperty("JTextField.placeholderText", "Introduzca el correo");
+        jmaillog.putClientProperty("JComponent.roundRect", true);
+        
+        jpasswordlog.putClientProperty("JTextField.placeholderText", "Introduzca la contraseña");
+        jpasswordlog.putClientProperty("JComponent.roundRect", true);
     }
 
     /**
@@ -44,9 +55,7 @@ public class FrameLogin extends javax.swing.JFrame {
         blogin = new javax.swing.JButton();
         bsignin = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         jpasswordlog = new javax.swing.JPasswordField();
-        jSeparator3 = new javax.swing.JSeparator();
         MostrarContraseña = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -71,11 +80,9 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel5.setText("CORREO");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 70, 20));
 
-        jmaillog.setBackground(new java.awt.Color(220, 154, 98));
         jmaillog.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jmaillog.setForeground(new java.awt.Color(204, 204, 204));
         jmaillog.setText("Introduzca el correo");
-        jmaillog.setBorder(null);
         jmaillog.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jmaillogFocusGained(evt);
@@ -115,13 +122,10 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("CONTRASEÑA");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, 20));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 210, -1));
 
-        jpasswordlog.setBackground(new java.awt.Color(220, 154, 98));
         jpasswordlog.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jpasswordlog.setForeground(new java.awt.Color(204, 204, 204));
         jpasswordlog.setText("Introduzca la contraseña");
-        jpasswordlog.setBorder(null);
         jpasswordlog.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jpasswordlogFocusGained(evt);
@@ -131,7 +135,6 @@ public class FrameLogin extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jpasswordlog, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 210, -1));
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 210, -1));
 
         MostrarContraseña.setText("Mostrar contraseña");
         MostrarContraseña.addActionListener(new java.awt.event.ActionListener() {
@@ -357,8 +360,6 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextField jmaillog;
     private javax.swing.JPasswordField jpasswordlog;
     // End of variables declaration//GEN-END:variables

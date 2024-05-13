@@ -28,6 +28,7 @@ import javax.swing.SwingConstants;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.ui.FlatScrollBarUI;
 
+
 /**
  *
  * @author hugos
@@ -55,7 +56,17 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         titulosInmuebles = new ArrayList<>();
 
         cargarInmueblesDesdeArchivo("inmuebles.txt");
-        loadInmuebles(); // Cargar los destinos de viaje antes de agregar los ActionListener
+        loadInmuebles();// Cargar los destinos de viaje antes de agregar los ActionListener
+        
+        Buscador.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obtener el texto del campo de búsqueda
+                String filtro = Buscador.getText();
+                // Cargar los inmuebles que coinciden con el filtro
+                loadInmuebles(filtro);
+            }
+        });
     }
     
     // Método para cargar los destinos desde el archivo "inmuebles.txt"
@@ -101,6 +112,42 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         panel.revalidate();
         panel.repaint();
     }
+    private void loadInmuebles(String filtro) {
+        panel.removeAll(); // Limpiar el panel
+
+        // Cambiar el layout manager del panel a GridLayout con una sola columna
+        panel.setLayout(new GridLayout(0, 1));
+
+        // Filtrar los inmuebles según el texto de búsqueda
+        for (String destino : titulosInmuebles) {
+            if (filtro.isEmpty()){loadInmuebles();}
+            else{
+                if (destino.toLowerCase().contains(filtro.toLowerCase())) {
+                    JLabel label = new JLabel(destino);
+                    label.setHorizontalAlignment(SwingConstants.CENTER);
+                    // Agregar ActionListener
+                    label.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            // Crear una instancia del nuevo JFrame con información sobre el destino seleccionado
+                            FrameDestinoSeleccionado infoInmueble = new FrameDestinoSeleccionado(destino);
+                            // Hacer visible el nuevo JFrame
+                            infoInmueble.setVisible(true);
+                            // Opcional: ocultar el JFrame actual
+                            dispose();
+                        }
+                    });
+                    panel.add(label);
+                }
+            }
+        }
+
+        // Actualizar el panel
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -299,6 +346,10 @@ public class FrameConsultaInmuebles extends javax.swing.JFrame {
         if (Buscador.getText().equals("")){
             Buscador.setText(" 🔍 Buscador de destinos");
         }
+        // Obtener el texto del campo de búsqueda
+        String filtro = Buscador.getText();
+        // Cargar los inmuebles que coinciden con el filtro
+        loadInmuebles(filtro);
     }//GEN-LAST:event_BuscadorFocusLost
 
     private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
