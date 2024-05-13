@@ -141,6 +141,7 @@ public class FrameConsultaReservas extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void PantallaAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PantallaAdminActionPerformed
