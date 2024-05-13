@@ -366,9 +366,9 @@ public class FrameRegistro extends javax.swing.JFrame {
     }//GEN-LAST:event_jmailsignActionPerformed
 
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
-        /*MetodosAuxiliares ma = new MetodosAuxiliares();
+        MetodosAuxiliares ma = new MetodosAuxiliares();
         ClienteParticular particular = new ClienteParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
-        TarjetaCredito tj = new TarjetaCredito(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
+        TarjetaCredito tj = new TarjetaCredito(jmailsign.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
         try{
             if(jAnfitrion.isSelected()){
                 if((ma.validarFormulario(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(),jesVIP.isSelected())) == true){
@@ -384,9 +384,10 @@ public class FrameRegistro extends javax.swing.JFrame {
                    tj.setNombreTitular(jtitular.getText().trim());
                    tj.setNumeroTarjeta(jnumtarj.getText().trim());
 
-                   particular.guardarParticular();
-                   tj.guardarTarjeta();
-
+                   AlmacenajeDatos.guardarParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
+                   AlmacenajeDatos.imprimirClientes("cliente.dat");
+                   
+                   JOptionPane.showMessageDialog(null, "Registrado correctamente");
                    FrameLogin fLog = new FrameLogin();
                    fLog.setVisible(true);
                    dispose();
@@ -406,8 +407,7 @@ public class FrameRegistro extends javax.swing.JFrame {
                     tj.setNombreTitular(jtitular.getText().trim());
                     tj.setNumeroTarjeta(jnumtarj.getText().trim());
 
-                    particular.guardarParticular();
-                    tj.guardarTarjeta();
+                    
 
                     FrameLogin fLog = new FrameLogin();
                     fLog.setVisible(true);
@@ -418,12 +418,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
         }
-        */
         
-        AlmacenajeDatos.guardarParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
-        FrameLogin flog = new FrameLogin();
-        flog.setVisible(true);
-        dispose();
     }//GEN-LAST:event_bregistrarseActionPerformed
 
     private void jnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnombreActionPerformed

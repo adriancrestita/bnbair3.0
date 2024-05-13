@@ -53,80 +53,8 @@ public class MetodosAuxiliares {
         }
         return texto.length() == longitud;
     }
-    
-    public boolean existeCliente(String correoBuscado) throws FileNotFoundException, IOException{
-        BufferedReader reader = null;
-        String[] elementos = null;
-        try {
-            reader = new BufferedReader(new FileReader("datos_users.txt"));
-            String lineaActual;
-
-            while ((lineaActual = reader.readLine()) != null) {
-                elementos = lineaActual.split(","); // Dividir la línea por comas
-                if (elementos.length > 0 && elementos[2].equals(correoBuscado)) {
-                    return true; // Retorna true si coincide
-                }
-            }
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
-
-        return false; // Retorna false si no se encuentra cliente que coincida
-    }
-    
-    public boolean existeAnfitrion(String correoBuscado) throws FileNotFoundException, IOException{
-        BufferedReader reader = null;
-        String[] elementos = null;
-        try {
-            reader = new BufferedReader(new FileReader("datos_anfitrion.txt"));
-            String lineaActual;
-
-            while ((lineaActual = reader.readLine()) != null) {
-                elementos = lineaActual.split(","); // Dividir la línea por comas
-                if (elementos.length > 0 && elementos[2].equals(correoBuscado)) {
-                    return true; // Retorna true si coincide
-                }
-            }
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
-
-        return false; // Retorna false si no se encuentra cliente que coincida
-    }
    
-    public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni, String titularTarjeta, String numeroTarjeta, String fechaCaducidad, boolean esVIP) throws IOException {        
-        // Validar que los campos no están vacíos ni tienen el texto por defecto
-        if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
-            nombre.isEmpty() || nombre.equals("Ingrese el nombre") ||
-            contraseña.isEmpty() || contraseña.equals("Introduce la contraseña") ||
-            telefono.isEmpty() || telefono.equals("Ingrese el teléfono") ||
-            dni.isEmpty() || dni.equals("Ingrese el DNI") ||
-            titularTarjeta.isEmpty() || titularTarjeta.equals("Ingrese el nombre del titular") ||
-            numeroTarjeta.isEmpty() || numeroTarjeta.equals("Ingrese el número de tarjeta") ||
-            fechaCaducidad.isEmpty() || fechaCaducidad.equals("Ingrese la fecha de caducidad")) {
-            return false;
-        }
-
-        // Verificar cada campo con sus respectivas funciones de validación
-        if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni) && xLongitud(numeroTarjeta, 16) && esFechaCaducidadValida(fechaCaducidad)) == true){
-            if(existeCliente(correo) == false){
-                return true;
-            }
-            
-            else{
-                JOptionPane.showMessageDialog(null, "El usuario ya existe");
-                return false;
-            }
-        }  
-        else{
-            JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos");
-            return false;
-        }
-    }
+    
     public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni, boolean esVIP) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (correo.isEmpty() || correo.equals("Ingrese el correo") ||

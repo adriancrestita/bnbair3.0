@@ -1,7 +1,10 @@
 package ManejoDatos;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.TarjetaCredito;
@@ -14,7 +17,6 @@ public class AlmacenajeDatos {
 
         
         Serializador serializador = new Serializador();
-        Deserializador deserializador = new Deserializador();
 
         try {
             serializador.guardarCliente(cliente, "cliente.dat");
@@ -25,6 +27,23 @@ public class AlmacenajeDatos {
             e.printStackTrace();
         }
     }   
+    
+    public static void imprimirClientes(String archivo) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+            while (true) {
+                ClienteParticular cliente = (ClienteParticular) ois.readObject();
+                System.out.println("Cliente: " + cliente.getNombre() + ", Email: " + cliente.getCorreoElectronico() +
+                                   ", DNI: " + cliente.getDni() + ", Teléfono: " + cliente.getTelefono() +
+                                   ", VIP: " + (cliente.cmpVIP() ? "Sí" : "No"));
+            }
+        } catch (EOFException e) {
+            // Esta excepción se lanza cuando se alcanza el final del archivo.
+            System.out.println("Fin de la lista de clientes.");
+        } catch (Exception e) {
+            // Maneja otras posibles excepciones como ClassNotFoundException o IOException.
+            e.printStackTrace();
+        }
+    }
     
     /*
                     particular.setDni(jdni.getText().trim());
