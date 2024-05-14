@@ -63,13 +63,13 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     private void loadInmuebles() {
         panel.removeAll();
 
-        int startIndex = currentPage * 2;
-        int endIndex = Math.min(startIndex + 2, inmuebles.size());
+        int startIndex = currentPage * 4;
+        int endIndex = Math.min(startIndex + 4, inmuebles.size());
 
         for (int i = startIndex; i < endIndex; i++) {
             String nombreDestino = inmuebles.get(i);
             ImageIcon imagen = obtenerImagenPrincipal(nombreDestino);
-            String descripcion = "Descripción breve de " + nombreDestino + "\n" + "\n" + "\n" + "\n" + "\n" ;
+            String descripcion = "Descripción breve de " + nombreDestino;
 
             JPanel destinoPanel = createDestinoPanel(imagen, descripcion, nombreDestino);
             panel.add(destinoPanel);
@@ -88,6 +88,69 @@ public class FrameMenuParticular extends javax.swing.JFrame {
 
         revalidate();
         repaint();
+    }
+
+    private ImageIcon obtenerImagenPrincipal(String nombreDestino) {
+        String rutaImagen = IMAGENES_DESTINO_PATH + nombreDestino.replaceAll(" ", "") + ".JPG";
+        ImageIcon imagen = new ImageIcon(rutaImagen);
+        if (imagen != null) {
+            return imagen;
+        } else {
+            return null;
+        }
+    }
+
+    private void mostrarPopup(String nombreDestino) {
+        FrameDestinoSeleccionado destino = new FrameDestinoSeleccionado(nombreDestino);
+        destino.setVisible(true);
+        dispose();
+    }
+    
+    private void searchInmuebles(String searchText) {
+        panel.removeAll();
+
+        if (searchText.isEmpty()) {
+            loadInmuebles();
+            return;
+        }
+
+        boolean encontrado = false;
+        String searchTextNormalized = Normalizer.normalize(searchText, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+
+        for (String inmueble : inmuebles) {
+            String inmuebleNormalized = Normalizer.normalize(inmueble, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+
+            if (inmuebleNormalized.contains(searchTextNormalized)) {
+                ImageIcon imagen = obtenerImagenPrincipal(inmueble);
+                String descripcion = "Descripción breve de " + inmueble;
+
+                JPanel destinoPanel = createDestinoPanel(imagen, descripcion, inmueble);
+                panel.setLayout(new GridBagLayout());
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.insets = new Insets(10, 10, 10, 10);
+                panel.add(destinoPanel, gbc);
+
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            JLabel noResultsLabel = new JLabel("No se encontraron resultados para: " + searchText);
+            noResultsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            noResultsLabel.setVerticalAlignment(SwingConstants.CENTER);
+            panel.setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.insets = new Insets(10, 10, 10, 10);
+            panel.add(noResultsLabel, gbc);
+        }
+
+        revalidate();
+        repaint();
+        Buscador.setText(" 🔍 Buscador de destinos");
     }
 
     private JPanel createDestinoPanel(ImageIcon imagen, String descripcion, String nombreDestino) {
@@ -119,65 +182,6 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         });
 
         return panel;
-    }
-
-    private ImageIcon obtenerImagenPrincipal(String nombreDestino) {
-        String rutaImagen = IMAGENES_DESTINO_PATH + nombreDestino.replaceAll(" ", "") + ".JPG";
-        ImageIcon imagen = new ImageIcon(rutaImagen);
-        if (imagen != null) {
-            return imagen;
-        } else {
-            return null;
-        }
-    }
-
-    private void mostrarPopup(String nombreDestino) {
-        FrameDestinoSeleccionado destino = new FrameDestinoSeleccionado(nombreDestino);
-        destino.setVisible(true);
-        dispose();
-    }
-    
-    private void searchInmuebles(String searchText) {
-        panel.removeAll();
-
-        if (searchText.isEmpty()) {
-            // Si la búsqueda está vacía, mostrar todos los inmuebles en una cuadrícula de 2x3
-            loadInmuebles();
-            return;
-        }
-
-        boolean encontrado = false;
-
-        // Normalizar el texto de búsqueda
-        String searchTextNormalized = Normalizer.normalize(searchText, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
-
-        // Buscar el inmueble por nombre
-        for (String inmueble : inmuebles) {
-            // Normalizar el nombre del inmueble para comparar
-            String inmuebleNormalized = Normalizer.normalize(inmueble, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
-
-            if (inmuebleNormalized.contains(searchTextNormalized)) {
-                // Mostrar el inmueble encontrado en el centro del panel
-                JLabel resultLabel = new JLabel(inmueble);
-                resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                resultLabel.setVerticalAlignment(SwingConstants.CENTER);
-                panel.add(resultLabel);
-                encontrado = true;
-            }
-        }
-
-        // Si no se encuentra ningún inmueble, mostrar un mensaje
-        if (!encontrado) {
-            JLabel noResultsLabel = new JLabel("No se encontraron resultados para: " + searchText);
-            noResultsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            noResultsLabel.setVerticalAlignment(SwingConstants.CENTER);
-            panel.add(noResultsLabel);
-        }
-
-        // Actualizar la ventana
-        revalidate();
-        repaint();
-        Buscador.setText(" 🔍 Buscador de destinos");
     }
     
     //Lee el archivo donde se encuentran todos los destinos disponibles y los carga en el arraylist
