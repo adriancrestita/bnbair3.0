@@ -68,10 +68,15 @@ public class FrameRegistro extends javax.swing.JFrame {
         camposDeTexto.put("jtitular", jtitular);
         camposDeTexto.put("jnumtarj", jnumtarj);
         camposDeTexto.put("jfcaducidad", jfcaducidad);
-
+        
         for (int i = 0; i < nombresVariables.length; i++) {
+            
             JTextField campo = camposDeTexto.get(nombresVariables[i]);
             final String mensajeOriginal = mensajesOriginales[i];
+            
+            campo.putClientProperty("JTextField.placeholderText", mensajeOriginal);
+            campo.putClientProperty("JComponent.roundRect", true);
+            campo.setForeground(UIManager.getColor("TextField.foreground"));
 
             campo.addFocusListener(new FocusAdapter() {
                 @Override
@@ -115,18 +120,10 @@ public class FrameRegistro extends javax.swing.JFrame {
         jfcaducidad = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
-        jSeparator9 = new javax.swing.JSeparator();
         jAnfitrion = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         LabelLogo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jSeparator10 = new javax.swing.JSeparator();
         jdni = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -145,11 +142,11 @@ public class FrameRegistro extends javax.swing.JFrame {
         jtelefono.setBackground(new java.awt.Color(220, 154, 98));
         jtelefono.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jnombre.setBackground(new java.awt.Color(220, 154, 98));
         jnombre.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jnombre.setForeground(new java.awt.Color(204, 204, 204));
         jnombre.setText("Ingrese el nombre");
-        jnombre.setBorder(null);
+        jnombre.setActionCommand("<Not Set>");
+        jnombre.setAutoscrolls(false);
         jnombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jnombreActionPerformed(evt);
@@ -157,11 +154,9 @@ public class FrameRegistro extends javax.swing.JFrame {
         });
         jtelefono.add(jnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 178, -1));
 
-        jphonenumber.setBackground(new java.awt.Color(220, 154, 98));
         jphonenumber.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jphonenumber.setForeground(new java.awt.Color(204, 204, 204));
         jphonenumber.setText("Ingrese el teléfono");
-        jphonenumber.setBorder(null);
         jphonenumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jphonenumberActionPerformed(evt);
@@ -173,11 +168,9 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel11.setText("TITULAR DE LA TARJETA");
         jtelefono.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 170, -1));
 
-        jmailsign.setBackground(new java.awt.Color(220, 154, 98));
         jmailsign.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jmailsign.setForeground(new java.awt.Color(204, 204, 204));
         jmailsign.setText("Ingrese el correo");
-        jmailsign.setBorder(null);
         jmailsign.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmailsignActionPerformed(evt);
@@ -189,17 +182,13 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel12.setText("NUMERO DE TARJETA");
         jtelefono.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, -1, -1));
 
-        jpasswordsign.setBackground(new java.awt.Color(220, 154, 98));
         jpasswordsign.setForeground(new java.awt.Color(204, 204, 204));
         jpasswordsign.setText("Ingrese la contraseña");
-        jpasswordsign.setBorder(null);
         jtelefono.add(jpasswordsign, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 180, -1));
 
-        jnumtarj.setBackground(new java.awt.Color(220, 154, 98));
         jnumtarj.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jnumtarj.setForeground(new java.awt.Color(204, 204, 204));
         jnumtarj.setText("Ingrese el numero de tarjeta");
-        jnumtarj.setBorder(null);
         jnumtarj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jnumtarjActionPerformed(evt);
@@ -213,13 +202,13 @@ public class FrameRegistro extends javax.swing.JFrame {
                 bregistrarseActionPerformed(evt);
             }
         });
-        jtelefono.add(bregistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, -1, -1));
+        jtelefono.add(bregistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
 
-        jtitular.setBackground(new java.awt.Color(220, 154, 98));
+        jtitular.setEditable(false);
+        jtitular.setBackground(new java.awt.Color(255, 255, 255));
         jtitular.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jtitular.setForeground(new java.awt.Color(204, 204, 204));
         jtitular.setText("Ingrese el nombre del titular");
-        jtitular.setBorder(null);
         jtitular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtitularActionPerformed(evt);
@@ -235,11 +224,9 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel7.setText("FECHA DE CADUCIDAD");
         jtelefono.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 180, -1));
 
-        jfcaducidad.setBackground(new java.awt.Color(220, 154, 98));
         jfcaducidad.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jfcaducidad.setForeground(new java.awt.Color(204, 204, 204));
         jfcaducidad.setText("Ingrese la fecha de caducidad");
-        jfcaducidad.setBorder(null);
         jfcaducidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jfcaducidadActionPerformed(evt);
@@ -251,17 +238,10 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel8.setText("CONTRASEÑA");
         jtelefono.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
         jtelefono.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
-        jtelefono.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 180, 20));
-        jtelefono.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 180, 20));
-        jtelefono.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 180, 20));
-        jtelefono.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 180, 20));
-        jtelefono.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 180, 20));
-        jtelefono.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 380, 180, 20));
-        jtelefono.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 180, 20));
 
         jAnfitrion.setText("Registrarse como anfitrión");
         jAnfitrion.setActionCommand("VipJCheckBox");
-        jtelefono.add(jAnfitrion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, -1, -1));
+        jtelefono.add(jAnfitrion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -277,13 +257,10 @@ public class FrameRegistro extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 90, -1));
 
         jtelefono.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 510));
-        jtelefono.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 180, 20));
 
-        jdni.setBackground(new java.awt.Color(220, 154, 98));
         jdni.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jdni.setForeground(new java.awt.Color(204, 204, 204));
         jdni.setText("Ingrese el DNI");
-        jdni.setBorder(null);
         jdni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jdniActionPerformed(evt);
@@ -309,7 +286,12 @@ public class FrameRegistro extends javax.swing.JFrame {
 
         jesVIP.setText("Contratar servicio VIP");
         jesVIP.setActionCommand("VipJCheckBox");
-        jtelefono.add(jesVIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
+        jesVIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jesVIPActionPerformed(evt);
+            }
+        });
+        jtelefono.add(jesVIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
         jMenu1.setText("Inicio");
 
@@ -465,6 +447,10 @@ public class FrameRegistro extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_QuitActionPerformed
 
+    private void jesVIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jesVIPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jesVIPActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -522,14 +508,6 @@ public class FrameRegistro extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField jdni;
     private javax.swing.JCheckBox jesVIP;
     private javax.swing.JTextField jfcaducidad;

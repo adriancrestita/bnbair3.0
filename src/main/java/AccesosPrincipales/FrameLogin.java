@@ -32,11 +32,17 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel4.requestFocus(true);
         setTitle("JavaBnB");
         
+        // Configuración del placeholder de jmaillog
         jmaillog.putClientProperty("JTextField.placeholderText", "Introduzca el correo");
         jmaillog.putClientProperty("JComponent.roundRect", true);
-        
+
+        // Configuración del placeholder de jpasswordlog
         jpasswordlog.putClientProperty("JTextField.placeholderText", "Introduzca la contraseña");
         jpasswordlog.putClientProperty("JComponent.roundRect", true);
+
+        // Cambiar el color del texto a negro para jmaillog y jpasswordlog
+        jmaillog.setForeground(UIManager.getColor("TextField.foreground"));
+        jpasswordlog.setForeground(UIManager.getColor("TextField.foreground"));
     }
 
     /**

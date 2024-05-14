@@ -26,6 +26,7 @@ public class FrameInicio extends javax.swing.JFrame {
         FlatIntelliJLaf.setup();
         initComponents();
         setTitle("JavaBnB");
+        jLabel1.requestFocus(true);
     }
 
     /**
@@ -50,7 +51,6 @@ public class FrameInicio extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Registro.setText("Registrarse");
-        Registro.setBorder(null);
         Registro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RegistroActionPerformed(evt);
@@ -59,7 +59,6 @@ public class FrameInicio extends javax.swing.JFrame {
         jPanel1.add(Registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 130, 30));
 
         InicioSesion.setText("Iniciar Sesión");
-        InicioSesion.setBorder(null);
         InicioSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InicioSesionActionPerformed(evt);
