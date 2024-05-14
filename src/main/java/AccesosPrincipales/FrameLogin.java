@@ -74,6 +74,8 @@ public class FrameLogin extends javax.swing.JFrame {
         MenuBar = new javax.swing.JMenuBar();
         MenuInicio = new javax.swing.JMenu();
         PaginaInicial = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         MenuSalir = new javax.swing.JMenu();
         Quit = new javax.swing.JMenuItem();
 
@@ -189,6 +191,22 @@ public class FrameLogin extends javax.swing.JFrame {
             }
         });
         MenuInicio.add(PaginaInicial);
+
+        jMenuItem1.setText("particular");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MenuInicio.add(jMenuItem1);
+
+        jMenuItem2.setText("anfitrion");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        MenuInicio.add(jMenuItem2);
 
         MenuBar.add(MenuInicio);
 
@@ -330,6 +348,20 @@ public class FrameLogin extends javax.swing.JFrame {
         GestorClientes.imprimirTodosLosClientes();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        FrameMenuParticular particular = new FrameMenuParticular();
+        particular.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        FrameMenuAnfitrion anfitrion = new FrameMenuAnfitrion();
+        anfitrion.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -383,6 +415,8 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jmaillog;

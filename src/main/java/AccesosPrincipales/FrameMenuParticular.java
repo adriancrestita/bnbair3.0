@@ -31,11 +31,10 @@ public class FrameMenuParticular extends javax.swing.JFrame {
      * Creates new form FrameMenuParticular
      */
     
-    //declaración de variables
+    //declaración de variables                                      
     private List<String> inmuebles; // Lista de inmuebles disponibles
-    private int currentPage; // Página actual de resultados
     private final String IMAGENES_DESTINO_PATH = "src/main/java/ImagenesDestino/";
-    private final String DESTINO_PATH="";
+    private int currentPage; // Página actual de resultados
 
     public FrameMenuParticular() {
         initComponents();
@@ -45,28 +44,158 @@ public class FrameMenuParticular extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("JavaBnB");
         this.currentPage = 0;
-        
-        
+
         Buscador.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchInmuebles(Buscador.getText());
             }
         });
-        // Cargar los inmuebles al iniciar la ventana
+
+        initInmueblesPanels();
         loadInmuebles();
     }
-    // Método para cargar la imagen en el jlabel correspondiente
-    /*private ImageIcon obtenerImagen(String nombreDestino) {
+
+    private void initInmueblesPanels() {
+        panel.setLayout(new GridLayout(0, 2, 10, 10));
+    }
+
+    private void loadInmuebles() {
+        panel.removeAll();
+
+        int startIndex = currentPage * 4;
+        int endIndex = Math.min(startIndex + 4, inmuebles.size());
+
+        for (int i = startIndex; i < endIndex; i++) {
+            String nombreDestino = inmuebles.get(i);
+            ImageIcon imagen = obtenerImagenPrincipal(nombreDestino);
+            String descripcion = "Descripción breve de " + nombreDestino;
+
+            JPanel destinoPanel = createDestinoPanel(imagen, descripcion, nombreDestino);
+            panel.add(destinoPanel);
+        }
+
+        if (currentPage == 0) {
+            PrevPg.setVisible(false);
+            NextPg.setVisible(true);
+        } else if (endIndex >= inmuebles.size()) {
+            PrevPg.setVisible(true);
+            NextPg.setVisible(false);
+        } else {
+            PrevPg.setVisible(true);
+            NextPg.setVisible(true);
+        }
+
+        revalidate();
+        repaint();
+    }
+
+    private ImageIcon obtenerImagenPrincipal(String nombreDestino) {
         String rutaImagen = IMAGENES_DESTINO_PATH + nombreDestino.replaceAll(" ", "") + ".JPG";
-        File imagenFile = new File(rutaImagen);
-        if (imagenFile.exists()) {
-            return new ImageIcon(rutaImagen);
-        } 
-        else {
+        ImageIcon imagen = new ImageIcon(rutaImagen);
+        if (imagen != null) {
+            return imagen;
+        } else {
             return null;
         }
-    }*/
+    }
+
+    private void mostrarPopup(String nombreDestino) {
+        FrameDestinoSeleccionado destino = new FrameDestinoSeleccionado(nombreDestino);
+        destino.setVisible(true);
+        dispose();
+    }
+    
+    private void searchInmuebles(String searchText) {
+        panel.removeAll();
+
+        if (searchText.isEmpty()) {
+            loadInmuebles();
+            return;
+        }
+
+        boolean encontrado = false;
+        String searchTextNormalized = Normalizer.normalize(searchText, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+
+        for (String inmueble : inmuebles) {
+            String inmuebleNormalized = Normalizer.normalize(inmueble, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+
+            if (inmuebleNormalized.contains(searchTextNormalized)) {
+                ImageIcon imagen = obtenerImagenPrincipal(inmueble);
+                String descripcion = "Descripción breve de " + inmueble;
+
+                JPanel destinoPanel = createDestinoPanel(imagen, descripcion, inmueble);
+                panel.setLayout(new GridBagLayout());
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.insets = new Insets(10, 10, 10, 10);
+                panel.add(destinoPanel, gbc);
+
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            JLabel noResultsLabel = new JLabel("No se encontraron resultados para: " + searchText);
+            noResultsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            noResultsLabel.setVerticalAlignment(SwingConstants.CENTER);
+            panel.setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.insets = new Insets(10, 10, 10, 10);
+            panel.add(noResultsLabel, gbc);
+        }
+
+        revalidate();
+        repaint();
+        Buscador.setText(" 🔍 Buscador de destinos");
+    }
+
+    private JPanel createDestinoPanel(ImageIcon imagen, String descripcion, String nombreDestino) {
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBackground(new Color(220, 154, 98));
+
+        JLabel imagenLabel = new JLabel();
+        if (imagen != null) {
+            // Escalando la imagen para que sea más pequeña
+            Image scaledImage = imagen.getImage().getScaledInstance(200, 120, Image.SCALE_SMOOTH);
+            imagenLabel.setIcon(new ImageIcon(scaledImage));
+            imagenLabel.setHorizontalAlignment(JLabel.CENTER);
+            panel.add(imagenLabel, BorderLayout.NORTH);
+        } else {
+            imagenLabel.setText("<html><center>" + nombreDestino + "<br>(img)</center></html>");
+            imagenLabel.setHorizontalAlignment(JLabel.CENTER);
+            panel.add(imagenLabel, BorderLayout.NORTH);
+        }
+
+        JLabel descripcionLabel = new JLabel(descripcion);
+        descripcionLabel.setHorizontalAlignment(JLabel.CENTER);
+        panel.add(descripcionLabel, BorderLayout.CENTER);
+
+        // Agregando el ActionListener para mostrar una ventana emergente al hacer clic en el panel
+        panel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mostrarPopup(nombreDestino);
+            }
+        });
+
+        return panel;
+    }
+    
+    //Lee el archivo donde se encuentran todos los destinos disponibles y los carga en el arraylist
+    private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
+        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                // Agregar cada línea (nombre del inmueble) a la lista de inmuebles
+                inmuebles.add(linea);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }   //MÉTODO PARA LEER EL ARCHIVO CON INMUEBLES REGISTRADOS Y CARGARLOS AL ARRAYLIST
     
     // Método para ir a la siguiente página de resultados
     private void nextPage() {
@@ -84,152 +213,6 @@ public class FrameMenuParticular extends javax.swing.JFrame {
             loadInmuebles(); // Cargar la página anterior de resultados
         }
     }
-    // Método para escalar la imagen
-    private ImageIcon scaleImage(ImageIcon imageIcon, int width, int height) {
-        Image image = imageIcon.getImage();
-        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
-    }
-    private void loadInmuebles() {
-        panel.removeAll();
-
-        int startIndex = currentPage * 2; // Índice de inicio en la lista de inmuebles (2 para 2 filas y 2 columnas)
-        int endIndex = Math.min(startIndex + 2, inmuebles.size()); // Índice de fin en la lista de inmuebles
-
-        // Panel para mostrar los inmuebles en una cuadrícula de 2x2
-        JPanel gridPanel = new JPanel(new GridLayout(2, 2));
-        gridPanel.setBackground(new Color(220, 154, 98)); // Establecer el color de fondo
-
-        // Agregar etiquetas con las imágenes o nombres de los inmuebles al panel
-        for (int i = startIndex; i < endIndex; i++) {
-            String nombreDestino = inmuebles.get(i);
-            System.out.println(nombreDestino);
-            ImageIcon imagen = MetodosConsultaInmuebles.obtenerImagenPrincipal(MetodosConsultaInmuebles.primeraImagenInmueble(nombreDestino));
-            
-            // Crear un panel para contener la imagen y la descripción
-            JPanel panelInmueble = new JPanel(new BorderLayout());
-            panelInmueble.setBackground(new Color(220, 154, 98)); // Establecer el color de fondo
-
-            // Si no se encuentra la imagen, mostrar el nombre del destino
-            JLabel labelImagen;
-            if (imagen != null) {
-                // Escalar la imagen para que se ajuste al tamaño del JLabel
-                imagen = scaleImage(imagen, 250, 250);
-                labelImagen = new JLabel(imagen);
-            } else {
-                labelImagen = new JLabel(nombreDestino + " (img)");
-            }
-            
-            // Establecer un tamaño fijo para el JLabel de la imagen
-            labelImagen.setPreferredSize(new Dimension(250, 250));
-            
-             // Agregar un MouseListener para detectar clics en el JLabel
-            labelImagen.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    // Crear una instancia del nuevo JFrame con información sobre el destino seleccionado
-                    FrameDestinoSeleccionado infoInmueble = new FrameDestinoSeleccionado(nombreDestino);
-                    // Hacer visible el nuevo JFrame
-                    infoInmueble.setVisible(true);
-                    // Opcional: ocultar el JFrame actual
-                    dispose();
-                }
-            });
-            
-            // Agregar la imagen al panelInmueble en la parte izquierda
-            panelInmueble.add(labelImagen, BorderLayout.WEST);
-            
-            // Crear una breve descripción del lugar (cuando esté guardado la info en el txt, sacarla de ahi y listo)
-            JTextArea descripcion = new JTextArea();
-            descripcion.setText("Descripción breve de " + nombreDestino);
-            descripcion.setLineWrap(true);
-            descripcion.setWrapStyleWord(true);
-            descripcion.setEditable(false);
-            
-            // Agregar la descripción al panelInmueble en la parte derecha
-            panelInmueble.add(descripcion, BorderLayout.CENTER);
-            
-            // Agregar el panelInmueble a la cuadrícula
-            gridPanel.add(panelInmueble);
-            
-        }
-        // Establecer el tamaño del gridPanel igual al del panel principal
-        gridPanel.setPreferredSize(panel.getSize());
-
-        // Agregar el panel de cuadrícula al panel principal
-        panel.add(gridPanel);
-        
-        // Actualizar la visibilidad de los botones
-        if (currentPage == 0) {
-            PrevPg.setVisible(false);
-            NextPg.setVisible(true);
-        } else if (endIndex >= inmuebles.size()) {
-            PrevPg.setVisible(true);
-            NextPg.setVisible(false);
-        } else {
-            PrevPg.setVisible(true);
-            NextPg.setVisible(true);
-        }
-
-        // Actualizar la ventana
-        revalidate();
-        repaint();
-    }
-    private void searchInmuebles(String searchText) {
-        panel.removeAll();
-
-        if (searchText.isEmpty()) {
-            // Si la búsqueda está vacía, mostrar todos los inmuebles en una cuadrícula de 2x3
-            loadInmuebles();
-            return;
-        }
-
-        boolean encontrado = false;
-
-        // Normalizar el texto de búsqueda
-        String searchTextNormalized = Normalizer.normalize(searchText, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
-
-        // Buscar el inmueble por nombre
-        for (String inmueble : inmuebles) {
-            // Normalizar el nombre del inmueble para comparar
-            String inmuebleNormalized = Normalizer.normalize(inmueble, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
-
-            if (inmuebleNormalized.contains(searchTextNormalized)) {
-                // Mostrar el inmueble encontrado en el centro del panel
-                JLabel resultLabel = new JLabel(inmueble);
-                resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                resultLabel.setVerticalAlignment(SwingConstants.CENTER);
-                panel.add(resultLabel);
-                encontrado = true;
-            }
-        }
-
-        // Si no se encuentra ningún inmueble, mostrar un mensaje
-        if (!encontrado) {
-            JLabel noResultsLabel = new JLabel("No se encontraron resultados para: " + searchText);
-            noResultsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            noResultsLabel.setVerticalAlignment(SwingConstants.CENTER);
-            panel.add(noResultsLabel);
-        }
-
-        // Actualizar la ventana
-        revalidate();
-        repaint();
-        Buscador.setText(" 🔍 Buscador de destinos");
-    }
-    
-    //Lee el archivo donde se encuentran todos los destinos disponibles y los carga en el arraylist
-    private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                // Agregar cada línea (nombre del inmueble) a la lista de inmuebles
-                inmuebles.add(linea);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }   //MÉTODO PARA LEER EL ARCHIVO CON INMUEBLES REGISTRADOS Y CARGARLOS AL ARRAYLIST
     
     /**
      * This method is called from within the constructor to initialize the form.
