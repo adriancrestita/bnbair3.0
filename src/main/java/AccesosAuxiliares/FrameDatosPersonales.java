@@ -320,7 +320,7 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
     }//GEN-LAST:event_jesVIPActionPerformed
 
     private void bcambiodatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcambiodatosActionPerformed
-        VerificarDatos vd = new VerificarDatos();
+        /*VerificarDatos vd = new VerificarDatos();
         MetodosAuxiliares ma = new MetodosAuxiliares();
         ClienteParticular particular = new ClienteParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
         Anfitrion anf = new Anfitrion(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), ma.fechaActual(), false);
@@ -370,7 +370,7 @@ public class FrameDatosPersonales extends javax.swing.JFrame {
         fLog.setVisible(true);
         dispose();
         
-
+*/
     }//GEN-LAST:event_bcambiodatosActionPerformed
 
     private void jmailsignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmailsignActionPerformed

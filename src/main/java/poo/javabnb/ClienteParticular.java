@@ -3,7 +3,6 @@ package poo.javabnb;
 import ManejoDatos.Deserializador;
 import ManejoDatos.Serializador;
 import java.io.*;
-import static poo.javabnb.MetodosAuxiliares.elementosPorDato;
 
 public class ClienteParticular extends Usuario implements Serializable{
     
@@ -11,19 +10,6 @@ public class ClienteParticular extends Usuario implements Serializable{
     private static final long serialVersionUID = 1L;
     private boolean esVIP;
     
-    //Constructor
-     
-    //Constructor por defecto para poder deserializar 
-    public ClienteParticular() {
-        // Llamar al constructor de Usuario con valores por defecto
-        super();
-        this.esVIP = false;  // Valor por defecto, asumir no VIP
-    }
-    
-    public ClienteParticular(String dni, String nombre, String correoElectronico, String clave, String telefono, boolean esVIP) {
-        super(dni, nombre, correoElectronico, clave, telefono);
-        this.esVIP = esVIP;
-    }
     
     //Métodos getters y setters
     public String getDni() {
@@ -80,41 +66,8 @@ public class ClienteParticular extends Usuario implements Serializable{
         this.esVIP = esVIP;
     }
 
-    // Métodos específicos para ClienteParticular
-    public void guardarParticular() {
-        String linea = getNombre() + "," + getDni() + "," + getCorreoElectronico() + "," + getClave() + "," + getTelefono() + "," + getesVIP() + "\n";
-        try {
-            FileWriter myWriter = new FileWriter("datos_users.txt", true); //el true activa el append
-            myWriter.write(linea);
-            myWriter.close();
-          } 
-        catch (IOException e) {
-            System.out.println("Ha ocurrido un error");
-            e.printStackTrace();
-          }
-    }
-    
-    
-    
+    // Métodos específicos para ClienteParticular 
     public boolean cmpVIP(){
         return esVIP;   
-    }
-    
-    public static void busquedaDatosCliente(String correo){
-        try {
-            String archivo = "datos_users.txt";
-            String[] elementos = elementosPorDato(archivo, correo, 2);
-
-            if (elementos != null) {
-                for (String elemento : elementos) {
-                    System.out.println(elemento);
-                }
-            } else {
-                System.out.println("No se encontró ningun cliente con ese nombre.");
-            }
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

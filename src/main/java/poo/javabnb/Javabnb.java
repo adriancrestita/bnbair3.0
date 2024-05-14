@@ -2,6 +2,7 @@ package poo.javabnb;
 
 import AccesosPrincipales.FrameInicio;
 import AccesosPrincipales.FrameRegistro;
+import ManejoDatos.ArchivoUtil;
 import java.io.*; 
 import java.util.*;
  
@@ -14,6 +15,8 @@ public class Javabnb {
     }
     
     public static void main(String[] args) throws IOException {      
+        ArchivoUtil.inicializarArchivos();
+
         FrameInicio fi = new FrameInicio();
         fi.setVisible(true);
     }

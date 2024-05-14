@@ -11,7 +11,10 @@ import javax.swing.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import java.awt.Color;
+import java.io.IOException;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 /**
  *
@@ -236,11 +239,17 @@ public class FrameLogin extends javax.swing.JFrame {
                 dispose();
             }
             else{
-                // codigo para verificar que el correo es válido y acceder como particular o anfitrión
-                if(VerificarDatos.verificarInicioSesion(jmaillog.getText().trim(), jpasswordlog.getText().trim())){
-                    FrameMenuParticular menuParticular = new FrameMenuParticular();
-                    menuParticular.setVisible(true);
-                    dispose();
+                try {
+                    // codigo para verificar que el correo es válido y acceder como particular o anfitrión
+                    if(VerificarDatos.verificarInicioSesion(jmaillog.getText().trim(), jpasswordlog.getText().trim())){
+                        FrameMenuParticular menuParticular = new FrameMenuParticular();
+                        menuParticular.setVisible(true);
+                        dispose();
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }

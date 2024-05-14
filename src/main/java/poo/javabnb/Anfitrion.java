@@ -71,13 +71,14 @@ public class Anfitrion extends Usuario implements Serializable{
         this.telefono = telefono;
     }
     
-    public void setFechaRegistro(){
-        Date todayDate = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String fechaActual = sdf.format(todayDate);
+    public void setFechaRegistro(String fechaActual){
+        
         this.fechaRegistro = fechaActual;
     }
-
+    
+    public void setesSuperAnfitrion(boolean ser){
+        this.esSuperAnfitrion = ser;
+    }
     // Métodos específicos para Anfitrion
     
     public String cmpSuperAnfitrion(){

@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.*;
 
 import java.util.List;
-import static poo.javabnb.MetodosAuxiliares.elementosPorDato;
 
 public class Inmueble implements Serializable{
     
@@ -27,6 +26,7 @@ public class Inmueble implements Serializable{
     private static StringBuilder foto;
     private double calificacion;
     private Anfitrion anfi;
+    
     // Constructor
     public Inmueble(String titulo, String calle, int numero, int CP, String ciudad, int maxHuéspedes, int numHabitaciones, int numCamas, int numBaños, String tipoPropiedad, double precioNoche, String servicios, StringBuilder foto, double calificacion) {
         this.titulo = titulo;
@@ -174,38 +174,6 @@ public class Inmueble implements Serializable{
         "\nPrecio por noche: $" + precioNoche +
         "\nServicios: " + servicios +
         "\nCalificación: " + calificacion + "/5";
-    }
-    
-    public static void busquedaInmueble(String correo){
-        try {
-            String archivo = "datos_inmuebles.txt";
-            String[] elementos = elementosPorDato(archivo, correo, 0);
-
-            if (elementos != null) {
-                for (String elemento : elementos) {
-                    System.out.println(elemento);
-                }
-            } else {
-                System.out.println("No se encontró ningun cliente con ese nombre.");
-            }
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    
-    public void guardarInmueble() {
-        String linea = anfi.getCorreoElectronico() + "," + getTitulo() + "," + getCalle() + "," + String.valueOf(numero) + "," + String.valueOf(CP) + "," + getCiudad() + "," + String.valueOf(maxHuespedes) + "," + String.valueOf(numHabitaciones) + "," + String.valueOf(numCamas) + "," + String.valueOf(numBaños) + "," + getTipoPropiedad() + "," + String.valueOf(precioNoche) + "," + getServicios() + "," + String.valueOf(calificacion) + "\n";
-        try {
-            FileWriter myWriter = new FileWriter("datos_inmuebles.txt", true); //el true activa el append
-            myWriter.write(linea/*.getBytes(), StandardOpenOption.APPEND*/);
-            myWriter.close();
-          } 
-        catch (IOException e) {
-            System.out.println("Ha ocurrido un error");
-            e.printStackTrace();
-          }
     }
     
     // Método para actualizar la calificación basado en una nueva revisión
