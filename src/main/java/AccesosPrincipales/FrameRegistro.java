@@ -206,7 +206,6 @@ public class FrameRegistro extends javax.swing.JFrame {
         });
         jtelefono.add(bregistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
 
-        jtitular.setEditable(false);
         jtitular.setBackground(new java.awt.Color(255, 255, 255));
         jtitular.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jtitular.setForeground(new java.awt.Color(204, 204, 204));
