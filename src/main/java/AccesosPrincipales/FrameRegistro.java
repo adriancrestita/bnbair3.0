@@ -1,6 +1,8 @@
 package AccesosPrincipales;
 
-import ManejoDatos.AlmacenajeDatos;
+import ManejoDatos.GestorAnfitriones;
+import ManejoDatos.GestorClientes;
+import ManejoDatos.GestorTarjetas;
 import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
 import java.io.IOException;
@@ -365,12 +367,12 @@ public class FrameRegistro extends javax.swing.JFrame {
     private void jmailsignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmailsignActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jmailsignActionPerformed
-
+    private ClienteParticular particular;
+    private TarjetaCredito tj;
+    private Anfitrion anf;
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
         VerificarDatos vd = new VerificarDatos();
-        ClienteParticular particular = new ClienteParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled());
-        TarjetaCredito tj = new TarjetaCredito(jmailsign.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
         try{
             if(!jAnfitrion.isSelected()){
                 if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true){
@@ -386,8 +388,8 @@ public class FrameRegistro extends javax.swing.JFrame {
                    tj.setNombreTitular(jtitular.getText().trim());
                    tj.setNumeroTarjeta(jnumtarj.getText().trim());
 
-                   AlmacenajeDatos.guardarParticular(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jesVIP.isEnabled(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
-                   AlmacenajeDatos.imprimirClientes("cliente.dat");
+                   GestorClientes.añadirYGuardarCliente(particular);
+                   GestorTarjetas.añadirYGuardarTarjeta(tj);
                    
                    JOptionPane.showMessageDialog(null, "Registrado correctamente");
                    FrameLogin fLog = new FrameLogin();
@@ -395,21 +397,24 @@ public class FrameRegistro extends javax.swing.JFrame {
                    dispose();
                }   
             }
-            if(!jAnfitrion.isSelected()){
+            if(jAnfitrion.isSelected()){
                 if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true ){
                     //Asignamos valores a los atributos con los SET de Cliente Particular
-                    particular.setDni(jdni.getText().trim());
-                    particular.setNombre(jnombre.getText().trim());
-                    particular.setCorreoElectronico(jmailsign.getText().trim());
-                    particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
-                    particular.setTelefono(jphonenumber.getText().trim());
-                    particular.setesVIP(jAnfitrion.isSelected());
+                    anf.setDni(jdni.getText().trim());
+                    anf.setNombre(jnombre.getText().trim());
+                    anf.setCorreoElectronico(jmailsign.getText().trim());
+                    anf.setClave(String.valueOf(jpasswordsign.getText().trim()));
+                    anf.setTelefono(jphonenumber.getText().trim());
+                    anf.setesSuperAnfitrion(false);
+                    anf.setFechaRegistro(ma.fechaActual());
 
                     tj.setFechaCaducidad(jfcaducidad.getText().trim());
                     tj.setNombreTitular(jtitular.getText().trim());
                     tj.setNumeroTarjeta(jnumtarj.getText().trim());
 
-                    AlmacenajeDatos.guardarAnfitrion(jdni.getText(), jnombre.getText(), jmailsign.getText(), jpasswordsign.getText(), jphonenumber.getText(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim(), ma.fechaActual(),false);
+                    GestorAnfitriones.añadirYGuardarAnfitrion(anf);
+                    GestorTarjetas.añadirYGuardarTarjeta(tj);
+
 
                     FrameLogin fLog = new FrameLogin();
                     fLog.setVisible(true);
@@ -419,6 +424,8 @@ public class FrameRegistro extends javax.swing.JFrame {
         }
         catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FrameRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_bregistrarseActionPerformed

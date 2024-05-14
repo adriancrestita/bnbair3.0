@@ -83,23 +83,7 @@ public class MetodosAuxiliares {
         }
     }
     
-    public boolean validarFormulario(String titularTarjeta, String numeroTarjeta, String fechaCaducidad) throws IOException {        
-        // Validar que los campos no están vacíos ni tienen el texto por defecto
-        if (titularTarjeta.isEmpty() || titularTarjeta.equals("Ingrese el nombre del titular") ||
-            numeroTarjeta.isEmpty() || numeroTarjeta.equals("Ingrese el número de tarjeta") ||
-            fechaCaducidad.isEmpty() || fechaCaducidad.equals("Ingrese la fecha de caducidad")) {
-            return false;
-        }
-
-        // Verificar cada campo con sus respectivas funciones de validación
-        if((xLongitud(numeroTarjeta, 16) && esFechaCaducidadValida(fechaCaducidad)) == true){
-            return true;
-        }  
-        else{
-            JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos");
-            return false;
-        }
-    }
+    
     
     public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
@@ -120,77 +104,8 @@ public class MetodosAuxiliares {
             return false;
         }
     }
-    
-    public boolean inicioSesionValido(String correo, String contraseña) throws FileNotFoundException, IOException{
-        BufferedReader reader = null;
-        String[] elementos = null;
-        try {
-            reader = new BufferedReader(new FileReader("datos_users.txt"));
-            String lineaActual;
 
-            while ((lineaActual = reader.readLine()) != null) {
-                elementos = lineaActual.split(","); // Dividir la línea por comas
-                if (elementos.length > 0 && elementos[2].equals(correo) && elementos[3].equals(contraseña)) {
-                    return true; // Retorna true si coincide
-                }
-            }
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
-
-        return false; // Retorna false si no se encuentra cliente que coincida
-    }
-
-    public static String[] elementosPorDato(String archivo, String correo, int posicion) throws IOException{
-        BufferedReader reader = null;
-        String[] elementos = null;
-
-        try {
-            reader = new BufferedReader(new FileReader(archivo));
-            String lineaActual;
-
-            while ((lineaActual = reader.readLine()) != null) {
-                elementos = lineaActual.split(","); // Dividir la línea por comas
-                if (elementos.length > 0 && elementos[posicion].equals(correo)) {
-                    return elementos; // Retorna los elementos si el primer dato coincide
-                }
-            }
-        } 
-        finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
-        return null; // Retorna null si no se encuentra ninguna línea que coincida
-    }
-    
-    public static int lineaCliente(String correo, String archivo) throws IOException{
-        BufferedReader reader = null;
-        String[] elementos = null;
-        int lineNumber = 0;  // Inicializar contador de líneas
-
-
-        try {
-            reader = new BufferedReader(new FileReader(archivo));
-            String lineaActual;
-
-            while ((lineaActual = reader.readLine()) != null) {
-                lineNumber++;
-                elementos = lineaActual.split(","); // Dividir la línea por comas
-                if (elementos.length > 0 && elementos[2].equals(correo)) {
-                    return lineNumber; // Retorna los elementos si el primer dato coincide
-                }
-            }
-        } 
-        finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
-        return 0; // Retorna null si no se encuentra ninguna línea que coincida
-    }
+   
 }
     
     

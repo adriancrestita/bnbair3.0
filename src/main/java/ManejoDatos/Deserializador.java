@@ -13,20 +13,12 @@ import poo.javabnb.TarjetaCredito;
 
 public class Deserializador {
     
-    public static ArrayList<ClienteParticular> leerClientes() {
+    public static ArrayList<ClienteParticular> leerClientes() throws IOException, ClassNotFoundException {
         ArrayList<ClienteParticular> clientes = new ArrayList<>();
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("cliente.dat"))) {
-            Object obj;
-            while ((obj = ois.readObject()) != null) {
-                if (obj instanceof ClienteParticular) {
-                    clientes.add((ClienteParticular) obj);
-                }
-            }
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("clientes.dat"))) {
+            clientes = (ArrayList<ClienteParticular>) ois.readObject();
         } catch (EOFException e) {
-            // Fin del archivo alcanzado
-            JOptionPane.showMessageDialog(null, "Usuario no registrado");
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Manejar la excepción si el archivo está vacío
         }
         return clientes;
     }

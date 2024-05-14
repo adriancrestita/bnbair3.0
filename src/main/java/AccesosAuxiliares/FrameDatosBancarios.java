@@ -2,6 +2,7 @@ package AccesosAuxiliares;
 
 import AccesosPrincipales.FrameInicio;
 import AccesosPrincipales.FrameLogin;
+import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.ImageIcon;
@@ -272,10 +273,11 @@ public class FrameDatosBancarios extends javax.swing.JFrame {
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
         TarjetaCredito tj = new TarjetaCredito(particular.getCorreoElectronico().trim(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
+        VerificarDatos vd = new VerificarDatos();
         try{
-            if((ma.validarFormulario(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true){
-                //Asignamos valores a los atributos con los SET de TarjetaCredito
-                tj.reemplazarLinea(particular.getCorreoElectronico(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
+            if((vd.validarTarjeta(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true){
+
+                //Añadir metodo para modificar los datos
                 JOptionPane.showMessageDialog(null, "Cambios guardados correctamente");
 
                 FrameLogin fLog = new FrameLogin();
