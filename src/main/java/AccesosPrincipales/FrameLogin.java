@@ -4,6 +4,7 @@ package AccesosPrincipales;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import ManejoDatos.GestorClientes;
 import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
 import javax.swing.JOptionPane;
@@ -69,6 +70,7 @@ public class FrameLogin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         MenuInicio = new javax.swing.JMenu();
         PaginaInicial = new javax.swing.JMenuItem();
@@ -167,6 +169,14 @@ public class FrameLogin extends javax.swing.JFrame {
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 90, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 500));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, -1));
 
         MenuInicio.setText("Inicio");
 
@@ -321,6 +331,11 @@ public class FrameLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jpasswordlogFocusLost
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        GestorClientes.imprimirTodosLosClientes();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -368,6 +383,7 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JMenuItem Quit;
     private javax.swing.JButton blogin;
     private javax.swing.JButton bsignin;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
