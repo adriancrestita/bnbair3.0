@@ -272,7 +272,7 @@ public class FrameDatosBancarios extends javax.swing.JFrame {
 
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
-        TarjetaCredito tj = new TarjetaCredito(particular.getCorreoElectronico().trim(), jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim());
+        //TarjetaCredito tj = new TarjetaCredito();
         VerificarDatos vd = new VerificarDatos();
         try{
             if((vd.validarTarjeta(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true){

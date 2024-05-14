@@ -1,6 +1,5 @@
 package poo.javabnb;
 
-import ManejoDatos.Deserializador;
 import ManejoDatos.Serializador;
 import java.io.*;
 
@@ -10,6 +9,14 @@ public class ClienteParticular extends Usuario implements Serializable{
     private static final long serialVersionUID = 1L;
     private boolean esVIP;
     
+    public ClienteParticular(String dni, String nombre, String correo, String clave, String telefono, boolean esVIP){
+        this.dni=dni;
+        this.nombre=nombre;
+        this.correoElectronico=correo;
+        this.clave=clave;
+        this.telefono=telefono;
+        this.esVIP=esVIP;
+    }
     
     //Métodos getters y setters
     public String getDni() {

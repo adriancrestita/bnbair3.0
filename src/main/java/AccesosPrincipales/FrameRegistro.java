@@ -206,7 +206,6 @@ public class FrameRegistro extends javax.swing.JFrame {
         });
         jtelefono.add(bregistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, -1, -1));
 
-        jtitular.setBackground(new java.awt.Color(255, 255, 255));
         jtitular.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jtitular.setForeground(new java.awt.Color(204, 204, 204));
         jtitular.setText("Ingrese el nombre del titular");
@@ -357,25 +356,18 @@ public class FrameRegistro extends javax.swing.JFrame {
         try{
             if(!jAnfitrion.isSelected()){
                 if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true){
-                   //Asignamos valores a los atributos con los SET de Cliente Particular
-                   particular.setDni(jdni.getText().trim());
-                   particular.setNombre(jnombre.getText().trim());
-                   particular.setCorreoElectronico(jmailsign.getText().trim());
-                   particular.setClave(String.valueOf(jpasswordsign.getText().trim()));
-                   particular.setTelefono(jphonenumber.getText().trim());
-                   particular.setesVIP(jesVIP.isSelected());
-
-                   tj.setFechaCaducidad(jfcaducidad.getText().trim());
-                   tj.setNombreTitular(jtitular.getText().trim());
-                   tj.setNumeroTarjeta(jnumtarj.getText().trim());
-
-                   GestorClientes.añadirYGuardarCliente(particular);
-                   GestorTarjetas.añadirYGuardarTarjeta(tj);
+                    
+                    //ClienteParticular particular = new ClienteParticular();
+                    GestorClientes.guardarDatos(jdni.getText().trim(), jnombre.getText().trim(), jmailsign.getText().trim(), jpasswordsign.getText().trim(), jphonenumber.getText().trim(), jesVIP.isSelected());
+                    
+                    //TarjetaCredito tj = new TarjetaCredito();
+                    GestorTarjetas.guardarDatos(jfcaducidad.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim());
                    
-                   JOptionPane.showMessageDialog(null, "Registrado correctamente");
-                   FrameLogin fLog = new FrameLogin();
-                   fLog.setVisible(true);
-                   dispose();
+                   
+                    JOptionPane.showMessageDialog(null, "Registrado correctamente");
+                    FrameLogin fLog = new FrameLogin();
+                    fLog.setVisible(true);
+                    dispose();
                }   
             }
             if(jAnfitrion.isSelected()){

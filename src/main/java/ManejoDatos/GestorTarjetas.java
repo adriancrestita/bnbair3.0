@@ -44,9 +44,10 @@ public class GestorTarjetas {
         ArrayList<TarjetaCredito> tarjetas = leerTarjetas();
         tarjetas.add(tarjeta);
         guardarTarjetas(tarjetas);
+        cargarTarjetas();
     }
     
-    public ArrayList<TarjetaCredito> cargarTarjetas() throws IOException, ClassNotFoundException {
+    public static ArrayList<TarjetaCredito> cargarTarjetas() throws IOException, ClassNotFoundException {
         ArrayList<TarjetaCredito> tarjetas = new ArrayList<>();
         File archivoTarjetas = new File("tarjetas.dat");
         if (archivoTarjetas.exists() && archivoTarjetas.length() > 0) {
@@ -59,5 +60,14 @@ public class GestorTarjetas {
             System.out.println("El archivo no existe o está vacío. Se inicializará una lista nueva.");
         }
         return tarjetas;
+    }
+    
+    public static void guardarDatos(String fcad, String titular, String numtarj) throws IOException, ClassNotFoundException{
+        TarjetaCredito tj = new TarjetaCredito(fcad, titular, numtarj);
+        /*tj.setFechaCaducidad(fcad);
+        tj.setNombreTitular(titular);
+        tj.setNumeroTarjeta(numtarj);*/
+        
+        añadirYGuardarTarjeta(tj);
     }
 }
