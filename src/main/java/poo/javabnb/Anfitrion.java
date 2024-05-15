@@ -16,11 +16,15 @@ public class Anfitrion extends Usuario implements Serializable{
     private boolean esSuperAnfitrion;
     
     //Constructor
-    /*public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono, String fechaRegistro, boolean superAnfitrion) {
-        super(dni, nombre, correoElectronico, clave, telefono); 
+    public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono, String fechaRegistro, boolean superAnfitrion) {
+        this.dni=dni;
+        this.nombre=nombre;
+        this.correoElectronico=correoElectronico;
+        this.clave=clave;
+        this.telefono=telefono;
         this.fechaRegistro = fechaRegistro;
         this.esSuperAnfitrion = superAnfitrion;
-    }*/
+    }
     
     //Getters
     public String getDni() {

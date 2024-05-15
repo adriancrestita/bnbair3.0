@@ -2,72 +2,54 @@ package ManejoDatos;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import poo.javabnb.TarjetaCredito;
 
 public class GestorTarjetas {
+    private List<TarjetaCredito> tarjetas;
+    private final String FILENAME = "tarjetas.dat";
 
-    /**
-     * Guarda una lista de tarjetas de crédito en un archivo .dat.
-     *
-     * @param tarjetas Lista de tarjetas de crédito a guardar.
-     * @param archivo El nombre del archivo donde se guardarán las tarjetas.
-     */
-    public static void guardarTarjetas(ArrayList<TarjetaCredito> tarjetas) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("clientes.dat"))) {
-            oos.writeObject(tarjetas);
-        }
-    }
-
-    /**
-     * Lee las tarjetas de crédito desde un archivo .dat.
-     *
-     * @param archivo El nombre del archivo de donde leer las tarjetas.
-     * @return Lista de tarjetas de crédito leída del archivo.
-     */
-    public static ArrayList<TarjetaCredito> leerTarjetas() throws IOException, ClassNotFoundException {
-        ArrayList<TarjetaCredito> tarjetas = new ArrayList<>();
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tarjetas.dat"))) {
-            tarjetas = (ArrayList<TarjetaCredito>) ois.readObject();
-        } catch (EOFException e) {
-            // Manejar la excepción si el archivo está vacío
-        }
-        return tarjetas;
-    }
-
-    /**
-     * Añade una nueva tarjeta a la lista y guarda el cambio.
-     *
-     * @param tarjeta La nueva tarjeta a añadir.
-     * @param archivo El nombre del archivo donde se guardarán las tarjetas.
-     */
-    public static void añadirYGuardarTarjeta(TarjetaCredito tarjeta) throws IOException, ClassNotFoundException {
-        ArrayList<TarjetaCredito> tarjetas = leerTarjetas();
-        tarjetas.add(tarjeta);
-        guardarTarjetas(tarjetas);
+    public GestorTarjetas() {
+        tarjetas = new ArrayList<>();
         cargarTarjetas();
     }
-    
-    public static ArrayList<TarjetaCredito> cargarTarjetas() throws IOException, ClassNotFoundException {
-        ArrayList<TarjetaCredito> tarjetas = new ArrayList<>();
-        File archivoTarjetas = new File("tarjetas.dat");
-        if (archivoTarjetas.exists() && archivoTarjetas.length() > 0) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tarjetas.dat"))) {
-                tarjetas = (ArrayList<TarjetaCredito>) ois.readObject();
-            } catch (EOFException e) {
-                // Archivo puede estar vacío, manejar apropiadamente
-            }
-        } else {
-            System.out.println("El archivo no existe o está vacío. Se inicializará una lista nueva.");
-        }
+
+    public void agregarTarjeta(TarjetaCredito tarjeta) {
+        tarjetas.add(tarjeta);
+        guardarTarjetas();
+    }
+
+    public List<TarjetaCredito> obtenerTarjetas() {
         return tarjetas;
     }
-    
-    public static void guardarDatos(String fcad, String titular, String numtarj) throws IOException, ClassNotFoundException{
-        TarjetaCredito tj = new TarjetaCredito(fcad, titular, numtarj);
-        /*tj.setFechaCaducidad(fcad);
-        tj.setNombreTitular(titular);
-        tj.setNumeroTarjeta(numtarj);*/
-        
-        añadirYGuardarTarjeta(tj);
+
+    private void guardarTarjetas() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
+            oos.writeObject(tarjetas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void cargarTarjetas() {
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
+        Object obj = ois.readObject();
+        if (obj instanceof List) {
+            List<?> tempList = (List<?>) obj;
+            for (Object item : tempList) {
+                if (item instanceof TarjetaCredito) {
+                    tarjetas.add((TarjetaCredito) item);
+                } else {
+                    throw new ClassCastException("Invalid object type in tarjetas.dat");
+                }
+            }
+        } else {
+            throw new ClassCastException("Invalid data format in tarjetas.dat");
+        }
+    } catch (FileNotFoundException e) {
+        // File not found, no problem as it will be created when saving
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+}
 }

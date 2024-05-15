@@ -1,6 +1,6 @@
 package AccesosPrincipales;
 
-import ManejoDatos.GestorAnfitriones;
+import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorClientes;
 import ManejoDatos.GestorTarjetas;
 import ManejoDatos.VerificarDatos;
@@ -54,10 +54,19 @@ public class FrameRegistro extends javax.swing.JFrame {
     };
     
     private HashMap<String, JTextField> camposDeTexto = new HashMap<>();
+    private GestorClientes gestorClientes;
+    private GestorTarjetas gestorTarjetas;
+    private GestorAnfitrion gestorAnfitrion;
 
     
     public FrameRegistro() {
         initComponents();
+        
+        gestorClientes = new GestorClientes();
+        gestorTarjetas = new GestorTarjetas();
+        gestorAnfitrion = new GestorAnfitrion();
+
+        
         jLabel6.requestFocus(true);
         setTitle("JavaBnB");
         
@@ -122,7 +131,6 @@ public class FrameRegistro extends javax.swing.JFrame {
         jfcaducidad = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jAnfitrion = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         LabelLogo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -132,6 +140,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jesVIP = new javax.swing.JCheckBox();
+        jTipoCliente = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Inicio = new javax.swing.JMenuItem();
@@ -239,10 +248,6 @@ public class FrameRegistro extends javax.swing.JFrame {
         jtelefono.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
         jtelefono.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, -1, -1));
 
-        jAnfitrion.setText("Registrarse como anfitrión");
-        jAnfitrion.setActionCommand("VipJCheckBox");
-        jtelefono.add(jAnfitrion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
-
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -292,6 +297,14 @@ public class FrameRegistro extends javax.swing.JFrame {
             }
         });
         jtelefono.add(jesVIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
+
+        jTipoCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Anfitrion" }));
+        jTipoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTipoClienteActionPerformed(evt);
+            }
+        });
+        jtelefono.add(jTipoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, -1, -1));
 
         jMenu1.setText("Inicio");
 
@@ -353,52 +366,55 @@ public class FrameRegistro extends javax.swing.JFrame {
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
         VerificarDatos vd = new VerificarDatos();
+        String selectedItem = (String) jTipoCliente.getSelectedItem();
+
         try{
-            if(!jAnfitrion.isSelected()){
-                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true){
-                    
-                    //ClienteParticular particular = new ClienteParticular();
-                    GestorClientes.guardarDatos(jdni.getText().trim(), jnombre.getText().trim(), jmailsign.getText().trim(), jpasswordsign.getText().trim(), jphonenumber.getText().trim(), jesVIP.isSelected());
-                    
-                    //TarjetaCredito tj = new TarjetaCredito();
-                    GestorTarjetas.guardarDatos(jfcaducidad.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim());
+            if ("Cliente".equals(selectedItem)) {
+                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim()) == true) && (vd.validarTarjeta(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim()) == true)){
                    
-                   
-                    JOptionPane.showMessageDialog(null, "Registrado correctamente");
+                    // Crear instancia de ClienteParticular          
+                    ClienteParticular nuevoCliente = new ClienteParticular(jdni.getText().trim(), jnombre.getText().trim(), jmailsign.getText().trim(), jpasswordsign.getText().trim(), jphonenumber.getText().trim(), jesVIP.isSelected());
+            
+                    // Crear instancia de TarjetaCredito
+                    TarjetaCredito nuevaTarjeta = new TarjetaCredito(jfcaducidad.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim());
+
+                    // Agregar cliente y tarjeta a los gestores
+                    gestorClientes.agregarCliente(nuevoCliente);
+                    gestorTarjetas.agregarTarjeta(nuevaTarjeta);
+                    JOptionPane.showMessageDialog(this, "Registrado correctamente");
                     FrameLogin fLog = new FrameLogin();
                     fLog.setVisible(true);
                     dispose();
-               }   
-            }
-            if(jAnfitrion.isSelected()){
-                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim())) == true ){
-                    //Asignamos valores a los atributos con los SET de Cliente Particular
-                    anf.setDni(jdni.getText().trim());
-                    anf.setNombre(jnombre.getText().trim());
-                    anf.setCorreoElectronico(jmailsign.getText().trim());
-                    anf.setClave(String.valueOf(jpasswordsign.getText().trim()));
-                    anf.setTelefono(jphonenumber.getText().trim());
-                    anf.setesSuperAnfitrion(false);
-                    anf.setFechaRegistro(ma.fechaActual());
+                } 
+                else{
+                    JOptionPane.showMessageDialog(this, "Datos inválidos. Por favor, verifique los campos e intente nuevamente.");
+                }
+            } 
+            
+            else if ("Anfitrión".equals(selectedItem)) {
+                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim()) == true) && (vd.validarTarjeta(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim()) == true)){
+                    
+                    //Crear instancia de Anfitrion
+                    Anfitrion nuevoAnfitrion = new Anfitrion(jdni.getText().trim(), jnombre.getText().trim(), jmailsign.getText().trim(), jpasswordsign.getText().trim(), jphonenumber.getText().trim(), ma.fechaActual(), false);
+                    
+                    // Crear instancia de TarjetaCredito                  
+                    TarjetaCredito nuevaTarjeta = new TarjetaCredito(jfcaducidad.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim());
 
-                    tj.setFechaCaducidad(jfcaducidad.getText().trim());
-                    tj.setNombreTitular(jtitular.getText().trim());
-                    tj.setNumeroTarjeta(jnumtarj.getText().trim());
-
-                    GestorAnfitriones.añadirYGuardarAnfitrion(anf);
-                    GestorTarjetas.añadirYGuardarTarjeta(tj);
-
-
+                    // Agregar anfitrion y tarjeta a los gestores
+                    gestorAnfitrion.agregarAnfitrion(nuevoAnfitrion);
+                    gestorTarjetas.agregarTarjeta(nuevaTarjeta);
+                    JOptionPane.showMessageDialog(this, "Registro correctamente");
                     FrameLogin fLog = new FrameLogin();
                     fLog.setVisible(true);
                     dispose();
                 }
-            }
+                else{
+                    JOptionPane.showMessageDialog(this, "Datos inválidos. Por favor, verifique los campos e intente nuevamente.");
+                }
+            }  
         }
         catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al validar el registro: " + e.getMessage());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrameRegistro.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error al validar el registro: " + e.getMessage());
         }
         
     }//GEN-LAST:event_bregistrarseActionPerformed
@@ -449,6 +465,20 @@ public class FrameRegistro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jesVIPActionPerformed
 
+    private void jTipoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTipoClienteActionPerformed
+     
+        String selectedItem = (String) jTipoCliente.getSelectedItem();
+         if ("Cliente".equals(selectedItem)) {
+                // Mostrar el botón si se selecciona "Cliente"
+                jesVIP.setVisible(true);
+                System.out.println("Seleccionaste Cliente.");
+            } else if ("Anfitrion".equals(selectedItem)) {
+                // Ocultar el botón si se selecciona "Anfitrión"
+                jesVIP.setVisible(false);
+                System.out.println("Seleccionaste Anfitrión.");
+            }
+    }//GEN-LAST:event_jTipoClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -490,7 +520,6 @@ public class FrameRegistro extends javax.swing.JFrame {
     private javax.swing.JLabel LabelLogo;
     private javax.swing.JMenuItem Quit;
     private javax.swing.JButton bregistrarse;
-    private javax.swing.JCheckBox jAnfitrion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -506,6 +535,7 @@ public class FrameRegistro extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JComboBox<String> jTipoCliente;
     private javax.swing.JTextField jdni;
     private javax.swing.JCheckBox jesVIP;
     private javax.swing.JTextField jfcaducidad;

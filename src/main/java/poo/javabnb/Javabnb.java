@@ -3,7 +3,9 @@ package poo.javabnb;
 import AccesosPrincipales.FrameInicio;
 import AccesosPrincipales.FrameRegistro;
 import ManejoDatos.ArchivoUtil;
+import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorClientes;
+import ManejoDatos.GestorInmuebles;
 import ManejoDatos.GestorTarjetas;
 import java.io.*; 
 import java.util.*;
@@ -17,22 +19,31 @@ public class Javabnb {
     }
     
     public static void main(String[] args) throws IOException {      
+        //Creamos los .dat si todavia no existen
         ArchivoUtil.inicializarArchivos();
         
+        
+        // Inicializamos los gestores
         GestorClientes gestorClientes = new GestorClientes();
         GestorTarjetas gestorTarjetas = new GestorTarjetas();
-       
+        GestorInmuebles gestorInmuebles = new GestorInmuebles();
+        GestorAnfitrion gestorAnfitrion = new GestorAnfitrion();
 
-        try {
-            ArrayList<ClienteParticular> clientes = gestorClientes.cargarClientes();
-            ArrayList<TarjetaCredito> tarjetas = gestorTarjetas.cargarTarjetas();
-            System.out.println("Clientes y tarjetas cargados exitosamente.");
-            // Aquí puedes seguir con la inicialización de tu aplicación usando las listas cargadas
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error al cargar los datos.");
-            e.printStackTrace();
-        }
+        // Cargar los datos desde los archivos .dat
+        System.out.println("Cargando datos de clientes...");
+        gestorClientes.obtenerClientes().forEach(cliente -> System.out.println(cliente.getCorreoElectronico()));
 
+        System.out.println("Cargando datos de tarjetas...");
+        gestorTarjetas.obtenerTarjetas().forEach(tarjeta -> System.out.println(tarjeta.getNumeroTarjeta()));
+
+        System.out.println("Cargando datos de inmuebles...");
+        gestorInmuebles.obtenerInmuebles().forEach(inmueble -> System.out.println(inmueble.getTitulo()));
+
+        System.out.println("Cargando datos de anfitriones...");
+        gestorAnfitrion.obtenerAnfitriones().forEach(anfitrion -> System.out.println(anfitrion.getCorreoElectronico()));
+
+        
+        
         FrameInicio fi = new FrameInicio();
         fi.setVisible(true);
     }

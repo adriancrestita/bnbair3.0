@@ -1,6 +1,5 @@
 package poo.javabnb;
 
-import ManejoDatos.Serializador;
 import java.io.*;
 
 public class ClienteParticular extends Usuario implements Serializable{

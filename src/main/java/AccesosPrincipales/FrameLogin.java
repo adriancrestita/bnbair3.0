@@ -4,6 +4,7 @@ package AccesosPrincipales;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import AccesosPrincipales.FrameAdmin;
 import ManejoDatos.GestorClientes;
 import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
@@ -17,6 +18,8 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
+import poo.javabnb.Anfitrion;
+import poo.javabnb.ClienteParticular;
 /**
  *
  * @author crestas
@@ -70,7 +73,6 @@ public class FrameLogin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         MenuInicio = new javax.swing.JMenu();
         PaginaInicial = new javax.swing.JMenuItem();
@@ -172,14 +174,6 @@ public class FrameLogin extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 500));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, -1));
-
         MenuInicio.setText("Inicio");
 
         ImageIcon inicio = new ImageIcon("src/main/java/com/images/logo2icon.png");
@@ -248,34 +242,48 @@ public class FrameLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jmaillogActionPerformed
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
-        // TODO add your handling code here:
-        if(jmaillog.getText().equals("")||jmaillog.getText().equals(mensajeOriginalCorreo)){
-            if(jpasswordlog.getText().equals("")||jpasswordlog.getText().equals(mensajeOriginalContraseña)){
-                JOptionPane.showMessageDialog(null, "Rellene el correo y la contraseña");
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Rellene el correo");
-            }
+       String email = jmaillog.getText();
+    String password = new String(jpasswordlog.getPassword());
+
+    if (email.equals("") || email.equals(mensajeOriginalCorreo)) {
+        if (password.equals("") || password.equals(mensajeOriginalContraseña)) {
+            JOptionPane.showMessageDialog(this, "Rellene el correo y la contraseña");
+        } else {
+            JOptionPane.showMessageDialog(this, "Rellene el correo");
         }
-        else if(jpasswordlog.getText().equals("")||jpasswordlog.getText().equals(mensajeOriginalContraseña)){
-            JOptionPane.showMessageDialog(null, "Rellene la contraseña");
-        }
-        else {
-            if (jmaillog.getText().equals("admin@javabnb.com")&&(jpasswordlog.getText().equals("admin"))){
-                FrameAdmin pantallaAdmin= new FrameAdmin();
-                pantallaAdmin.setVisible(true);
+    } else if (password.equals("") || password.equals(mensajeOriginalContraseña)) {
+        JOptionPane.showMessageDialog(this, "Rellene la contraseña");
+    } else {
+        if (email.equals("admin@javabnb.com") && password.equals("admin")) {
+            FrameAdmin pantallaAdmin = new FrameAdmin();
+            pantallaAdmin.setVisible(true);
+            dispose();
+        } else {
+            // Primero, intentamos iniciar sesión como Cliente
+            ClienteParticular cliente = VerificarDatos.iniciarSesionCliente(email, password);
+            if (cliente != null) {
+                JOptionPane.showMessageDialog(this, "Inicio de sesión de cliente exitoso. Bienvenido " + cliente.getNombre() + "!");
+                FrameMenuParticular pantallaCliente = new FrameMenuParticular();
+                pantallaCliente.setVisible(true);
                 dispose();
+                return;
             }
-            else{
-                // codigo para verificar que el correo es válido y acceder como particular o anfitrión
-                if(VerificarDatos.verificarUsuarioYLogin(jmaillog.getText().trim(), jpasswordlog.getText().trim())){
-                    FrameMenuParticular menuParticular = new FrameMenuParticular();
-                    menuParticular.setVisible(true);
-                    dispose();
-                }
-                
+
+            // Si no es Cliente, intentamos iniciar sesión como Anfitrión
+            Anfitrion anfitrion = VerificarDatos.iniciarSesionAnfitrion(email, password);
+            if (anfitrion != null) {
+                JOptionPane.showMessageDialog(this, "Inicio de sesión de anfitrión exitoso. Bienvenido " + anfitrion.getNombre() + "!");
+                FrameMenuAnfitrion pantallaAnfitrion = new FrameMenuAnfitrion();
+                pantallaAnfitrion.setVisible(true);
+                dispose();
+                return;
             }
+
+            // Si no es Cliente ni Anfitrión, mostramos un mensaje de error
+            JOptionPane.showMessageDialog(this, "Credenciales incorrectas.");
         }
+    }  
+
     }//GEN-LAST:event_bloginActionPerformed
 
     private void bsigninActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsigninActionPerformed
@@ -343,11 +351,6 @@ public class FrameLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jpasswordlogFocusLost
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        GestorClientes.imprimirTodosLosClientes();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         FrameMenuParticular particular = new FrameMenuParticular();
@@ -409,7 +412,6 @@ public class FrameLogin extends javax.swing.JFrame {
     private javax.swing.JMenuItem Quit;
     private javax.swing.JButton blogin;
     private javax.swing.JButton bsignin;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

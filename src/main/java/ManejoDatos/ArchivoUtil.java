@@ -35,5 +35,8 @@ public class ArchivoUtil {
     public static void inicializarArchivos() {
         asegurarArchivoExiste("clientes.dat");
         asegurarArchivoExiste("tarjetas.dat");
+        asegurarArchivoExiste("anfitriones.dat");
+        asegurarArchivoExiste("inmuebles.dat");
+
     }
 }
