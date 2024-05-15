@@ -69,7 +69,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         i3toi2 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        finalizar = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         precioNoche = new javax.swing.JSlider();
         jLabel17 = new javax.swing.JLabel();
@@ -269,13 +269,13 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         });
         jPanel3.add(i3toi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
 
-        jButton2.setText("Finalizar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        finalizar.setText("Finalizar");
+        finalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                finalizarActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
+        jPanel3.add(finalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
 
         jLabel15.setText("Precio por noche");
         jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 118, -1, -1));
@@ -421,7 +421,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         int price = precioNoche.getValue();
         labelPrice.setText(String.valueOf(price));
     }//GEN-LAST:event_precioNocheStateChanged
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarActionPerformed
         // TODO add your handling code here:
         try (FileWriter writer = new FileWriter("image_paths.txt", true)) { // Crea o abre el archivo para añadir texto al final
             writer.write(tituloInmueble.getText().trim() + "," + paths.trim() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
@@ -440,7 +440,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         }
         
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_finalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -492,12 +492,12 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private javax.swing.JTextField ciudadInmueble;
     private javax.swing.JRadioButton cocina;
     private javax.swing.JTextField cpInmueble;
+    private javax.swing.JButton finalizar;
     private javax.swing.JButton i1toi2;
     private javax.swing.JButton i2toi1;
     private javax.swing.JButton i2toi3;
     private javax.swing.JButton i3toi2;
     private javax.swing.JButton imagenesInmueble;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
