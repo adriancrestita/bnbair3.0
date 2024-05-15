@@ -20,6 +20,7 @@ public class Javabnb {
     
     public static void main(String[] args) throws IOException {      
         //Creamos los .dat si todavia no existen
+        
         ArchivoUtil.inicializarArchivos();
         
         

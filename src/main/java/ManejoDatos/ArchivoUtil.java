@@ -5,11 +5,6 @@ import java.io.IOException;
 
 public class ArchivoUtil {
 
-    /**
-     * Asegura que un archivo exista. Si no existe, lo crea.
-     *
-     * @param nombreArchivo El nombre del archivo a verificar y crear si no existe.
-     */
     public static void asegurarArchivoExiste(String nombreArchivo) {
         File archivo = new File(nombreArchivo);
         if (!archivo.exists()) {
@@ -29,14 +24,31 @@ public class ArchivoUtil {
         }
     }
 
-    /**
-     * Método para inicializar los archivos necesarios para la aplicación.
-     */
     public static void inicializarArchivos() {
         asegurarArchivoExiste("clientes.dat");
         asegurarArchivoExiste("tarjetas.dat");
         asegurarArchivoExiste("anfitriones.dat");
         asegurarArchivoExiste("inmuebles.dat");
+    }
 
+    public static void resetFiles() {
+        String[] archivos = {"clientes.dat", "tarjetas.dat", "anfitriones.dat", "inmuebles.dat"};
+        for (String archivo : archivos) {
+            File file = new File(archivo);
+            if (file.exists()) {
+                boolean deleted = file.delete();
+                if (deleted) {
+                    System.out.println("Archivo borrado: " + archivo);
+                } else {
+                    System.out.println("No se pudo borrar el archivo: " + archivo);
+                }
+            } else {
+                System.out.println("El archivo no existe: " + archivo);
+            }
+        }
+        asegurarArchivoExiste("clientes.dat");
+        asegurarArchivoExiste("tarjetas.dat");
+        asegurarArchivoExiste("anfitriones.dat");
+        asegurarArchivoExiste("inmuebles.dat");
     }
 }

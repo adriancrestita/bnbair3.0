@@ -59,28 +59,28 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         tipoInmueble = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        maxHuespedes = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        numHabitaciones = new javax.swing.JSpinner();
         jLabel12 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
+        numCamas = new javax.swing.JSpinner();
         jLabel13 = new javax.swing.JLabel();
-        jSpinner4 = new javax.swing.JSpinner();
+        numBaños = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         i3toi2 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        sliderPrice = new javax.swing.JSlider();
+        precioNoche = new javax.swing.JSlider();
         jLabel17 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
+        wifi = new javax.swing.JRadioButton();
+        aireAcondicionado = new javax.swing.JRadioButton();
+        cocina = new javax.swing.JRadioButton();
+        calefaccion = new javax.swing.JRadioButton();
+        lavadora = new javax.swing.JRadioButton();
+        aparcamiento = new javax.swing.JRadioButton();
+        piscina = new javax.swing.JRadioButton();
+        zonaTrabajo = new javax.swing.JRadioButton();
         labelPrice = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -188,70 +188,70 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         jLabel10.setText("Máximo de huespedes");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 194, -1, -1));
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        jSpinner1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jSpinner1.setValue(1);
-        jSpinner1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        maxHuespedes.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        maxHuespedes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        maxHuespedes.setValue(1);
+        maxHuespedes.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jSpinner1AncestorAdded(evt);
+                maxHuespedesAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanel2.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 217, -1, -1));
+        jPanel2.add(maxHuespedes, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 217, -1, -1));
 
         jLabel11.setText("Número de habitaciones");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 194, -1, -1));
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        jSpinner2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jSpinner2.setValue(1);
-        jSpinner2.addAncestorListener(new javax.swing.event.AncestorListener() {
+        numHabitaciones.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        numHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        numHabitaciones.setValue(1);
+        numHabitaciones.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jSpinner2AncestorAdded(evt);
+                numHabitacionesAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanel2.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 217, -1, -1));
+        jPanel2.add(numHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 217, -1, -1));
 
         jLabel12.setText("Número de camas");
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 258, -1, -1));
 
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        jSpinner3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jSpinner3.setValue(1);
-        jSpinner3.addAncestorListener(new javax.swing.event.AncestorListener() {
+        numCamas.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        numCamas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        numCamas.setValue(1);
+        numCamas.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jSpinner3AncestorAdded(evt);
+                numCamasAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanel2.add(jSpinner3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 281, -1, -1));
+        jPanel2.add(numCamas, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 281, -1, -1));
 
         jLabel13.setText("Número de baños");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 258, -1, -1));
 
-        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        jSpinner4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jSpinner4.setValue(1);
-        jSpinner4.addAncestorListener(new javax.swing.event.AncestorListener() {
+        numBaños.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        numBaños.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        numBaños.setValue(1);
+        numBaños.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jSpinner4AncestorAdded(evt);
+                numBañosAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanel2.add(jSpinner4, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 281, -1, -1));
+        jPanel2.add(numBaños, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 281, -1, -1));
 
         jTabbedPane1.addTab("tab2", jPanel2);
 
@@ -280,53 +280,53 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         jLabel15.setText("Precio por noche");
         jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 118, -1, -1));
 
-        sliderPrice.setMajorTickSpacing(1);
-        sliderPrice.setMaximum(1000);
-        sliderPrice.setMinimum(1);
-        sliderPrice.setMinorTickSpacing(1);
-        sliderPrice.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        sliderPrice.addAncestorListener(new javax.swing.event.AncestorListener() {
+        precioNoche.setMajorTickSpacing(1);
+        precioNoche.setMaximum(1000);
+        precioNoche.setMinimum(1);
+        precioNoche.setMinorTickSpacing(1);
+        precioNoche.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        precioNoche.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                sliderPriceAncestorAdded(evt);
+                precioNocheAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        sliderPrice.addChangeListener(new javax.swing.event.ChangeListener() {
+        precioNoche.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sliderPriceStateChanged(evt);
+                precioNocheStateChanged(evt);
             }
         });
-        jPanel3.add(sliderPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
+        jPanel3.add(precioNoche, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
         jLabel17.setText("Servicios");
         jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 173, -1, -1));
 
-        jRadioButton1.setText("Wifi");
-        jPanel3.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 199, -1, -1));
+        wifi.setText("Wifi");
+        jPanel3.add(wifi, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 199, -1, -1));
 
-        jRadioButton2.setText("Aire Acondicionado");
-        jPanel3.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 226, -1, -1));
+        aireAcondicionado.setText("Aire Acondicionado");
+        jPanel3.add(aireAcondicionado, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 226, -1, -1));
 
-        jRadioButton3.setText("Cocina");
-        jPanel3.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 280, -1, -1));
+        cocina.setText("Cocina");
+        jPanel3.add(cocina, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 280, -1, -1));
 
-        jRadioButton4.setText("Calefacción");
-        jPanel3.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 253, -1, -1));
+        calefaccion.setText("Calefacción");
+        jPanel3.add(calefaccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 253, -1, -1));
 
-        jRadioButton5.setText("Lavadora");
-        jPanel3.add(jRadioButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 199, -1, -1));
+        lavadora.setText("Lavadora");
+        jPanel3.add(lavadora, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 199, -1, -1));
 
-        jRadioButton6.setText("Aparcamiento");
-        jPanel3.add(jRadioButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 226, -1, -1));
+        aparcamiento.setText("Aparcamiento");
+        jPanel3.add(aparcamiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 226, -1, -1));
 
-        jRadioButton7.setText("Piscina");
-        jPanel3.add(jRadioButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 253, -1, -1));
+        piscina.setText("Piscina");
+        jPanel3.add(piscina, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 253, -1, -1));
 
-        jRadioButton8.setText("Zona de trabajo");
-        jPanel3.add(jRadioButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 280, -1, -1));
+        zonaTrabajo.setText("Zona de trabajo");
+        jPanel3.add(zonaTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 280, -1, -1));
 
         labelPrice.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.add(labelPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 50, 20));
@@ -390,37 +390,37 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
 
     }//GEN-LAST:event_i2toi1ActionPerformed
 
-    private void jSpinner1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner1AncestorAdded
+    private void maxHuespedesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_maxHuespedesAncestorAdded
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_jSpinner1AncestorAdded
+    }//GEN-LAST:event_maxHuespedesAncestorAdded
 
-    private void jSpinner2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner2AncestorAdded
+    private void numHabitacionesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numHabitacionesAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_jSpinner2AncestorAdded
+    }//GEN-LAST:event_numHabitacionesAncestorAdded
 
-    private void jSpinner3AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner3AncestorAdded
+    private void numCamasAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numCamasAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_jSpinner3AncestorAdded
+    }//GEN-LAST:event_numCamasAncestorAdded
 
-    private void jSpinner4AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner4AncestorAdded
+    private void numBañosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numBañosAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_jSpinner4AncestorAdded
+    }//GEN-LAST:event_numBañosAncestorAdded
 
     private void i3toi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_i3toi2ActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.setSelectedIndex(1);
     }//GEN-LAST:event_i3toi2ActionPerformed
 
-    private void sliderPriceAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_sliderPriceAncestorAdded
+    private void precioNocheAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_precioNocheAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_sliderPriceAncestorAdded
+    }//GEN-LAST:event_precioNocheAncestorAdded
 
-    private void sliderPriceStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderPriceStateChanged
+    private void precioNocheStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_precioNocheStateChanged
         // TODO add your handling code here:
-        int price = sliderPrice.getValue();
+        int price = precioNoche.getValue();
         labelPrice.setText(String.valueOf(price));
-    }//GEN-LAST:event_sliderPriceStateChanged
+    }//GEN-LAST:event_precioNocheStateChanged
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try (FileWriter writer = new FileWriter("image_paths.txt", true)) { // Crea o abre el archivo para añadir texto al final
@@ -485,8 +485,12 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton aireAcondicionado;
+    private javax.swing.JRadioButton aparcamiento;
+    private javax.swing.JRadioButton calefaccion;
     private javax.swing.JTextField calleInmueble;
     private javax.swing.JTextField ciudadInmueble;
+    private javax.swing.JRadioButton cocina;
     private javax.swing.JTextField cpInmueble;
     private javax.swing.JButton i1toi2;
     private javax.swing.JButton i2toi1;
@@ -513,23 +517,19 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel labelPrice;
+    private javax.swing.JRadioButton lavadora;
+    private javax.swing.JSpinner maxHuespedes;
+    private javax.swing.JSpinner numBaños;
+    private javax.swing.JSpinner numCamas;
+    private javax.swing.JSpinner numHabitaciones;
     private javax.swing.JTextField numeroInmueble;
-    private javax.swing.JSlider sliderPrice;
+    private javax.swing.JRadioButton piscina;
+    private javax.swing.JSlider precioNoche;
     private javax.swing.JComboBox<String> tipoInmueble;
     private javax.swing.JTextField tituloInmueble;
+    private javax.swing.JRadioButton wifi;
+    private javax.swing.JRadioButton zonaTrabajo;
     // End of variables declaration//GEN-END:variables
 }
