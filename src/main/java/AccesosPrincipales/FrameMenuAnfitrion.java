@@ -36,7 +36,10 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         newInmueble = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -53,22 +56,23 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bienvenido");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ImageIcon d = new ImageIcon("src/main/java/com/images/logo2rec.png");
         jLabel9.setIcon(d);
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 106, 125));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 80, 80));
 
         jLabel11.setBackground(new java.awt.Color(80, 0, 0));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(80, 0, 0));
         jLabel11.setText("JAVABNB");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 90, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 90, 20));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 500));
+        jButton1.setText("Mis Inmuebles");
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
 
         newInmueble.setText("Crear Inmueble");
         newInmueble.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +80,25 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
                 newInmuebleActionPerformed(evt);
             }
         });
-        jPanel1.add(newInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, -1, -1));
+        jPanel2.add(newInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, -1, -1));
+
+        jButton2.setText("Perfil");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 100, -1));
+
+        jButton3.setText("Cerrar Sesión");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 500));
 
         jMenu1.setText("Inicio");
 
@@ -114,7 +136,7 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,6 +165,14 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
         dci.setLocationRelativeTo(this);
         dci.setVisible(true);
     }//GEN-LAST:event_newInmuebleActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,6 +210,9 @@ public class FrameMenuAnfitrion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel9;

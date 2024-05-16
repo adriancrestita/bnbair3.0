@@ -4,23 +4,20 @@
  */
 package AccesosAuxiliares;
 
-import AccesosPrincipales.MetodosConsultaInmuebles;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import poo.javabnb.Anfitrion;
-import poo.javabnb.Inmueble;
 
 /**
  *
- * @author crestas
+ * @author adria
  */
 public class DialogCrearInmuebles extends javax.swing.JDialog {
 
     /**
-     * Creates new form DialogCrearInmuebles
+     * Creates new form CrearInmuebles
+     * @param parent
+     * @param modal
      */
     public DialogCrearInmuebles(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -41,103 +38,76 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tituloInmueble = new javax.swing.JTextField();
-        calleInmueble = new javax.swing.JTextField();
-        numeroInmueble = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        calleInmueble = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        numeroInmueble = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cpInmueble = new javax.swing.JTextField();
-        ciudadInmueble = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        ciudadInmueble = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         imagenesInmueble = new javax.swing.JButton();
-        i1toi2 = new javax.swing.JButton();
+        siguiente1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        i2toi3 = new javax.swing.JButton();
-        i2toi1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         tipoInmueble = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         maxHuespedes = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
-        numHabitaciones = new javax.swing.JSpinner();
-        jLabel12 = new javax.swing.JLabel();
         numCamas = new javax.swing.JSpinner();
+        jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        numHabitaciones = new javax.swing.JSpinner();
         numBaños = new javax.swing.JSpinner();
+        atras2 = new javax.swing.JButton();
+        siguiente2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        i3toi2 = new javax.swing.JButton();
-        finalizar = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         precioNoche = new javax.swing.JSlider();
-        jLabel17 = new javax.swing.JLabel();
-        wifi = new javax.swing.JRadioButton();
-        aireAcondicionado = new javax.swing.JRadioButton();
-        cocina = new javax.swing.JRadioButton();
-        calefaccion = new javax.swing.JRadioButton();
-        lavadora = new javax.swing.JRadioButton();
-        aparcamiento = new javax.swing.JRadioButton();
-        piscina = new javax.swing.JRadioButton();
-        zonaTrabajo = new javax.swing.JRadioButton();
-        labelPrice = new javax.swing.JLabel();
+        precioEtiqueta = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        servicioWifi = new javax.swing.JRadioButton();
+        servicioAC = new javax.swing.JRadioButton();
+        servicioCalefacción = new javax.swing.JRadioButton();
+        servicioCocina = new javax.swing.JRadioButton();
+        servicioLavadora = new javax.swing.JRadioButton();
+        servicioAparcamiento = new javax.swing.JRadioButton();
+        servicioPiscina = new javax.swing.JRadioButton();
+        servicioZonaTrabajo = new javax.swing.JRadioButton();
+        atras3 = new javax.swing.JButton();
+        finalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setMaximumSize(new java.awt.Dimension(550, 450));
-        jPanel1.setMinimumSize(new java.awt.Dimension(550, 450));
-        jPanel1.setPreferredSize(new java.awt.Dimension(550, 450));
-        jPanel1.setSize(new java.awt.Dimension(550, 450));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("NUEVO INMUEBLE");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 62, -1, -1));
 
-        jLabel2.setText("Título");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 123, -1, -1));
+        jLabel2.setText("Titulo");
 
-        tituloInmueble.setText("tituloInmueble");
-        tituloInmueble.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tituloInmuebleActionPerformed(evt);
-            }
-        });
-        jPanel1.add(tituloInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 146, -1, -1));
-
-        calleInmueble.setText("jTextField3");
-        jPanel1.add(calleInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 210, -1, -1));
-
-        numeroInmueble.setText("jTextField4");
-        jPanel1.add(numeroInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
-
-        jLabel4.setText("Numero");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 187, -1, -1));
+        tituloInmueble.setText("jTextField1");
 
         jLabel3.setText("Calle");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 187, -1, -1));
+
+        calleInmueble.setText("jTextField2");
+
+        jLabel4.setText("Numero");
+
+        numeroInmueble.setText("jTextField3");
 
         jLabel5.setText("C.P.");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 251, -1, -1));
 
-        cpInmueble.setText("cpInmueble");
-        jPanel1.add(cpInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 274, -1, -1));
-
-        ciudadInmueble.setText("jTextField5");
-        ciudadInmueble.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ciudadInmuebleActionPerformed(evt);
-            }
-        });
-        jPanel1.add(ciudadInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 274, -1, -1));
+        cpInmueble.setText("jTextField4");
 
         jLabel6.setText("Ciudad");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 251, -1, -1));
+
+        ciudadInmueble.setText("jTextField5");
 
         jLabel7.setText("Introduzca imagenes del inmueble");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 323, -1, -1));
 
         imagenesInmueble.setText("Examinar archivos locales");
         imagenesInmueble.addActionListener(new java.awt.event.ActionListener() {
@@ -145,48 +115,103 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
                 imagenesInmuebleActionPerformed(evt);
             }
         });
-        jPanel1.add(imagenesInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 346, 190, -1));
 
-        i1toi2.setText("Siguiente");
-        i1toi2.addActionListener(new java.awt.event.ActionListener() {
+        siguiente1.setText("Siguiente");
+        siguiente1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                i1toi2ActionPerformed(evt);
+                siguiente1ActionPerformed(evt);
             }
         });
-        jPanel1.add(i1toi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(calleInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(tituloInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1)
+                            .addComponent(numeroInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(224, 224, 224))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(285, 285, 285))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cpInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ciudadInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(251, 251, 251))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(imagenesInmueble, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(siguiente1)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel1)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tituloInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(calleInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numeroInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cpInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ciudadInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(imagenesInmueble)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addComponent(siguiente1)
+                .addContainerGap())
+        );
 
         jTabbedPane1.addTab("tab1", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setText("NUEVO INMUEBLE");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 62, -1, -1));
 
-        i2toi3.setText("Siguiente");
-        i2toi3.addActionListener(new java.awt.event.ActionListener() {
+        jLabel9.setText("Tipo de propiedad");
+
+        tipoInmueble.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Casa", "Apartamento" }));
+        tipoInmueble.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                i2toi3ActionPerformed(evt);
+                tipoInmuebleActionPerformed(evt);
             }
         });
-        jPanel2.add(i2toi3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
-
-        i2toi1.setText("Atrás");
-        i2toi1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                i2toi1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(i2toi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
-
-        jLabel9.setText("Tipo de Propiedad");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 118, -1, -1));
-
-        tipoInmueble.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Casa ", "Apartamento", " " }));
-        jPanel2.add(tipoInmueble, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 141, -1, -1));
 
         jLabel10.setText("Máximo de huespedes");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 194, -1, -1));
 
         maxHuespedes.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         maxHuespedes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -200,27 +225,8 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanel2.add(maxHuespedes, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 217, -1, -1));
 
         jLabel11.setText("Número de habitaciones");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 194, -1, -1));
-
-        numHabitaciones.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        numHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        numHabitaciones.setValue(1);
-        numHabitaciones.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                numHabitacionesAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jPanel2.add(numHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 217, -1, -1));
-
-        jLabel12.setText("Número de camas");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 258, -1, -1));
 
         numCamas.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         numCamas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -234,10 +240,23 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanel2.add(numCamas, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 281, -1, -1));
+
+        jLabel12.setText("Número de camas");
 
         jLabel13.setText("Número de baños");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 258, -1, -1));
+
+        numHabitaciones.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        numHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        numHabitaciones.setValue(1);
+        numHabitaciones.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                numHabitacionesAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         numBaños.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         numBaños.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -251,34 +270,95 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanel2.add(numBaños, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 281, -1, -1));
+
+        atras2.setText("Atras");
+        atras2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atras2ActionPerformed(evt);
+            }
+        });
+
+        siguiente2.setText("Siguiente");
+        siguiente2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguiente2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(224, 224, 224))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tipoInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(maxHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(numCamas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(77, 77, 77)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(numBaños, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel11)
+                                    .addComponent(numHabitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 108, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(atras2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(siguiente2)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel8)
+                .addGap(51, 51, 51)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tipoInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(maxHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numHabitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numCamas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numBaños, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(atras2)
+                    .addComponent(siguiente2))
+                .addContainerGap())
+        );
 
         jTabbedPane1.addTab("tab2", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel14.setText("NUEVO INMUEBLE");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 62, -1, -1));
-
-        i3toi2.setText("Atrás");
-        i3toi2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                i3toi2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(i3toi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
-
-        finalizar.setText("Finalizar");
-        finalizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                finalizarActionPerformed(evt);
-            }
-        });
-        jPanel3.add(finalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, -1, -1));
 
         jLabel15.setText("Precio por noche");
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 118, -1, -1));
 
         precioNoche.setMajorTickSpacing(1);
         precioNoche.setMaximum(1000);
@@ -299,58 +379,129 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
                 precioNocheStateChanged(evt);
             }
         });
-        jPanel3.add(precioNoche, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
-        jLabel17.setText("Servicios");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 173, -1, -1));
+        precioEtiqueta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        wifi.setText("Wifi");
-        jPanel3.add(wifi, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 199, -1, -1));
+        jLabel16.setText("Servicios");
 
-        aireAcondicionado.setText("Aire Acondicionado");
-        jPanel3.add(aireAcondicionado, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 226, -1, -1));
+        servicioWifi.setText("Wifi");
 
-        cocina.setText("Cocina");
-        jPanel3.add(cocina, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 280, -1, -1));
+        servicioAC.setText("Aire Acondicionado");
 
-        calefaccion.setText("Calefacción");
-        jPanel3.add(calefaccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 253, -1, -1));
+        servicioCalefacción.setText("Calefacción");
 
-        lavadora.setText("Lavadora");
-        jPanel3.add(lavadora, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 199, -1, -1));
+        servicioCocina.setText("Cocina");
 
-        aparcamiento.setText("Aparcamiento");
-        jPanel3.add(aparcamiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 226, -1, -1));
+        servicioLavadora.setText("Lavadora");
 
-        piscina.setText("Piscina");
-        jPanel3.add(piscina, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 253, -1, -1));
+        servicioAparcamiento.setText("Aparcamiento");
 
-        zonaTrabajo.setText("Zona de trabajo");
-        jPanel3.add(zonaTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 280, -1, -1));
+        servicioPiscina.setText("Piscina");
 
-        labelPrice.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(labelPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 50, 20));
+        servicioZonaTrabajo.setText("Zona de trabajo");
+
+        atras3.setText("Atras");
+        atras3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atras3ActionPerformed(evt);
+            }
+        });
+
+        finalizar.setText("Finalizar");
+        finalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finalizarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addComponent(precioNoche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel15)
+                                        .addGap(59, 59, 59)
+                                        .addComponent(precioEtiqueta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(servicioWifi)
+                                    .addComponent(servicioAC)
+                                    .addComponent(servicioCocina)
+                                    .addComponent(servicioCalefacción))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(servicioPiscina)
+                                    .addComponent(servicioZonaTrabajo)
+                                    .addComponent(servicioAparcamiento)
+                                    .addComponent(servicioLavadora)))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14)
+                        .addGap(35, 35, 35)))
+                .addGap(189, 189, 189))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(atras3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(finalizar)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel14)
+                .addGap(50, 50, 50)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(precioEtiqueta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(precioNoche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(servicioWifi)
+                    .addComponent(servicioLavadora))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(servicioAC)
+                    .addComponent(servicioAparcamiento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(servicioCalefacción)
+                    .addComponent(servicioPiscina))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(servicioCocina)
+                    .addComponent(servicioZonaTrabajo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(atras3)
+                    .addComponent(finalizar))
+                .addContainerGap())
+        );
 
         jTabbedPane1.addTab("tab3", jPanel3);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 550, 480));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 550, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tituloInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloInmuebleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tituloInmuebleActionPerformed
-
-    private void ciudadInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ciudadInmuebleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ciudadInmuebleActionPerformed
     private String paths = "";
     private File[] files;
     private int result;
-
     private void imagenesInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenesInmuebleActionPerformed
-        // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true); // Permite seleccionar múltiples archivos
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // Solo archivos, no directorios
@@ -370,47 +521,40 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
             }
         } else if (result == JFileChooser.CANCEL_OPTION) {
             JOptionPane.showMessageDialog(null, "No se encontró ningún archivo");
-        }
+        } 
     }//GEN-LAST:event_imagenesInmuebleActionPerformed
 
-    private void i1toi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_i1toi2ActionPerformed
-        // TODO add your handling code here:
+    private void siguiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguiente1ActionPerformed
         jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_i1toi2ActionPerformed
+    }//GEN-LAST:event_siguiente1ActionPerformed
 
-    private void i2toi3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_i2toi3ActionPerformed
+    private void tipoInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoInmuebleActionPerformed
         // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(2);
-
-    }//GEN-LAST:event_i2toi3ActionPerformed
-
-    private void i2toi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_i2toi1ActionPerformed
-        // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(0);
-
-    }//GEN-LAST:event_i2toi1ActionPerformed
+    }//GEN-LAST:event_tipoInmuebleActionPerformed
 
     private void maxHuespedesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_maxHuespedesAncestorAdded
         // TODO add your handling code here:
-
     }//GEN-LAST:event_maxHuespedesAncestorAdded
-
-    private void numHabitacionesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numHabitacionesAncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_numHabitacionesAncestorAdded
 
     private void numCamasAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numCamasAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_numCamasAncestorAdded
 
+    private void numHabitacionesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numHabitacionesAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numHabitacionesAncestorAdded
+
     private void numBañosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numBañosAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_numBañosAncestorAdded
 
-    private void i3toi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_i3toi2ActionPerformed
-        // TODO add your handling code here:
-        jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_i3toi2ActionPerformed
+    private void atras2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras2ActionPerformed
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_atras2ActionPerformed
+
+    private void siguiente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguiente2ActionPerformed
+        jTabbedPane1.setSelectedIndex(2);
+    }//GEN-LAST:event_siguiente2ActionPerformed
 
     private void precioNocheAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_precioNocheAncestorAdded
         // TODO add your handling code here:
@@ -419,27 +563,15 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private void precioNocheStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_precioNocheStateChanged
         // TODO add your handling code here:
         int price = precioNoche.getValue();
-        labelPrice.setText(String.valueOf(price));
+        precioEtiqueta.setText(String.valueOf(price));
     }//GEN-LAST:event_precioNocheStateChanged
+
+    private void atras3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras3ActionPerformed
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_atras3ActionPerformed
+
     private void finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarActionPerformed
         // TODO add your handling code here:
-        try (FileWriter writer = new FileWriter("image_paths.txt", true)) { // Crea o abre el archivo para añadir texto al final
-            writer.write(tituloInmueble.getText().trim() + "," + paths.trim() + "\n"); // Escribe todas las rutas en una sola línea en el archivo de texto
-            System.out.println(paths.trim());
-            JOptionPane.showMessageDialog(null, "Inmueble creado correctamente");
-            
-            if (result == JFileChooser.APPROVE_OPTION) {
-                MetodosConsultaInmuebles.saveImages(files);
-            } else {
-                System.out.println("No se seleccionaron archivos.");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Ha ocurrido un error al escribir en el archivo");
-            e.printStackTrace();
-        }
-        
-        dispose();
     }//GEN-LAST:event_finalizarActionPerformed
 
     /**
@@ -468,6 +600,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(DialogCrearInmuebles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -485,18 +618,12 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton aireAcondicionado;
-    private javax.swing.JRadioButton aparcamiento;
-    private javax.swing.JRadioButton calefaccion;
+    private javax.swing.JButton atras2;
+    private javax.swing.JButton atras3;
     private javax.swing.JTextField calleInmueble;
     private javax.swing.JTextField ciudadInmueble;
-    private javax.swing.JRadioButton cocina;
     private javax.swing.JTextField cpInmueble;
     private javax.swing.JButton finalizar;
-    private javax.swing.JButton i1toi2;
-    private javax.swing.JButton i2toi1;
-    private javax.swing.JButton i2toi3;
-    private javax.swing.JButton i3toi2;
     private javax.swing.JButton imagenesInmueble;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -505,7 +632,7 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -518,18 +645,24 @@ public class DialogCrearInmuebles extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel labelPrice;
-    private javax.swing.JRadioButton lavadora;
     private javax.swing.JSpinner maxHuespedes;
     private javax.swing.JSpinner numBaños;
     private javax.swing.JSpinner numCamas;
     private javax.swing.JSpinner numHabitaciones;
     private javax.swing.JTextField numeroInmueble;
-    private javax.swing.JRadioButton piscina;
+    private javax.swing.JLabel precioEtiqueta;
     private javax.swing.JSlider precioNoche;
+    private javax.swing.JRadioButton servicioAC;
+    private javax.swing.JRadioButton servicioAparcamiento;
+    private javax.swing.JRadioButton servicioCalefacción;
+    private javax.swing.JRadioButton servicioCocina;
+    private javax.swing.JRadioButton servicioLavadora;
+    private javax.swing.JRadioButton servicioPiscina;
+    private javax.swing.JRadioButton servicioWifi;
+    private javax.swing.JRadioButton servicioZonaTrabajo;
+    private javax.swing.JButton siguiente1;
+    private javax.swing.JButton siguiente2;
     private javax.swing.JComboBox<String> tipoInmueble;
     private javax.swing.JTextField tituloInmueble;
-    private javax.swing.JRadioButton wifi;
-    private javax.swing.JRadioButton zonaTrabajo;
     // End of variables declaration//GEN-END:variables
 }
