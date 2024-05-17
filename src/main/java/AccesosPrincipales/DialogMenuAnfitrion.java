@@ -187,7 +187,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
             .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
                 .addGap(229, 229, 229)
                 .addComponent(jLabel1)
-                .addContainerGap(296, Short.MAX_VALUE))
+                .addContainerGap(286, Short.MAX_VALUE))
         );
         PanelMisInmueblesLayout.setVerticalGroup(
             PanelMisInmueblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -694,7 +694,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                             .addGroup(PanelPerfilLayout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(VIPSuperAnfitrion)))))
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         PanelPerfilLayout.setVerticalGroup(
             PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -743,7 +743,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("tab3", PanelPerfil);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, -40, 610, 540));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, -40, 600, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
