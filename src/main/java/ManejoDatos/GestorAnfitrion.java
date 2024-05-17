@@ -34,11 +34,14 @@ public class GestorAnfitrion {
     }
 
     private void guardarAnfitriones() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
-            oos.writeObject(anfitriones);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        try{
+           FileOutputStream fos = new FileOutputStream("anfitriones.dat");
+           ObjectOutputStream oos = new ObjectOutputStream(fos);
+           oos.writeObject(anfitriones);
+           oos.close();
+       }catch(Exception e){
+           System.out.println(e);
+       }
     }
 
     private void cargarAnfitriones() {

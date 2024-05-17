@@ -17,9 +17,11 @@ public class TarjetaCredito implements Serializable{
     private String nombreTitular;
     private String numeroTarjeta;
     private String fechaCaducidad;
+    private String correo;
     
     //Constructor
-    public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad) {
+    public TarjetaCredito(String correo, String nombreTitular, String numeroTarjeta, String fechaCaducidad) {
+        this.correo = correo;
         this.nombreTitular = nombreTitular;
         this.numeroTarjeta = numeroTarjeta;
         this.fechaCaducidad = fechaCaducidad;
@@ -37,6 +39,10 @@ public class TarjetaCredito implements Serializable{
     public String getNumeroTarjeta() {
         return numeroTarjeta;
     }
+    
+    public String getCorreo() {
+        return correo;
+    }
 
     public void setNumeroTarjeta(String numeroTarjeta) {
         this.numeroTarjeta = numeroTarjeta;
@@ -50,6 +56,7 @@ public class TarjetaCredito implements Serializable{
         this.fechaCaducidad = fechaCaducidad;
     }
     
-    
-   
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }  
 }

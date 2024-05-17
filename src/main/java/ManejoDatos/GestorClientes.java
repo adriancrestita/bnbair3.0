@@ -30,11 +30,6 @@ public class GestorClientes {
     }
 
     private void guardarClientes() {
-       /* try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
-            oos.writeObject(clientes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
        try{
            FileOutputStream fos = new FileOutputStream("clientes.dat");
            ObjectOutputStream oos = new ObjectOutputStream(fos);

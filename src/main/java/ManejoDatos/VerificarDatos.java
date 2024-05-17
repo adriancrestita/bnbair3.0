@@ -145,7 +145,7 @@ public class VerificarDatos {
         }
 
         // Verificar cada campo con sus respectivas funciones de validación
-        if(verificarRegistroCliente(correo) == true){
+        if(verificarRegistroCliente(correo) == true || verificarRegistroAnfitrion(correo) == true){
             if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
                     return true;
             }
