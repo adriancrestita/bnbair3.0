@@ -5,7 +5,9 @@
 package AccesosPrincipales;
 
 
+import java.awt.Image;
 import java.io.File;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -21,6 +23,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     public DialogMenuAnfitrion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setResizable(false);
     }
 
     /**
@@ -33,11 +36,12 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         buttonInmuebles = new javax.swing.JButton();
         buttonCrear = new javax.swing.JButton();
         buttonPerfil = new javax.swing.JButton();
         buttonCerrarSesion = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         PanelMisInmuebles = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -113,8 +117,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-
-        jLabel2.setText("JAVABNB");
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonInmuebles.setText("Mis Inmuebles");
         buttonInmuebles.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +125,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 buttonInmueblesActionPerformed(evt);
             }
         });
+        jPanel1.add(buttonInmuebles, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 311, 111, -1));
 
         buttonCrear.setText("Crear Inmueble");
         buttonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +133,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 buttonCrearActionPerformed(evt);
             }
         });
+        jPanel1.add(buttonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 352, -1, -1));
 
         buttonPerfil.setText("Mi Perfil");
         buttonPerfil.addActionListener(new java.awt.event.ActionListener() {
@@ -136,41 +141,23 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 buttonPerfilActionPerformed(evt);
             }
         });
+        jPanel1.add(buttonPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 393, 111, -1));
 
         buttonCerrarSesion.setText("Cerrar Sesion");
+        jPanel1.add(buttonCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 434, 111, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(66, 66, 66))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonInmuebles, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCrear)
-                    .addComponent(buttonPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jLabel2)
-                .addGap(83, 83, 83)
-                .addComponent(buttonInmuebles)
-                .addGap(18, 18, 18)
-                .addComponent(buttonCrear)
-                .addGap(18, 18, 18)
-                .addComponent(buttonPerfil)
-                .addGap(18, 18, 18)
-                .addComponent(buttonCerrarSesion)
-                .addContainerGap(180, Short.MAX_VALUE))
-        );
+        ImageIcon d = new ImageIcon("src/main/java/com/images/logo2rec.png");
+        Image img = d.getImage();
+        Image scaledImg = img.getScaledInstance(125, 127, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImg);
+        jLabel29.setIcon(scaledIcon);
+        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 125, 127));
+
+        jLabel30.setBackground(new java.awt.Color(80, 0, 0));
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(80, 0, 0));
+        jLabel30.setText("JAVABNB");
+        jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 90, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 500));
 
@@ -746,6 +733,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, -40, 600, 540));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void VIPSuperAnfitrionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIPSuperAnfitrionActionPerformed
@@ -910,7 +898,6 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -920,7 +907,9 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
