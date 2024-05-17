@@ -19,9 +19,14 @@ public class GestorAnfitrion {
         cargarAnfitriones();
     }
 
-    public void agregarAnfitrion(Anfitrion anfitrion) {
-        anfitriones.add(anfitrion);
-        guardarAnfitriones();
+    public void agregarAnfitrion(Anfitrion anfi) {
+        if (anfi.getCorreoElectronico() == null || anfi.getCorreoElectronico().isEmpty()) {
+            throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
+        }
+        else{
+            anfitriones.add(anfi);
+            guardarAnfitriones();  
+        }  
     }
 
     public List<Anfitrion> obtenerAnfitriones() {

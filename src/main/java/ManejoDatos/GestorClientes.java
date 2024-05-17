@@ -16,12 +16,14 @@ public class GestorClientes {
     }
 
     public void agregarCliente(ClienteParticular cliente) {
-    if (cliente.getCorreoElectronico() == null || cliente.getCorreoElectronico().isEmpty()) {
-        throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
+        if (cliente.getCorreoElectronico() == null || cliente.getCorreoElectronico().isEmpty()) {
+            throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
+        }
+        else{
+            clientes.add(cliente);
+            guardarClientes();  
+        }  
     }
-    clientes.add(cliente);
-    guardarClientes();
-}
 
     public List<ClienteParticular> obtenerClientes() {
         return clientes;

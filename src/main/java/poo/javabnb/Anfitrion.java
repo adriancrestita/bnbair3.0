@@ -7,10 +7,15 @@ import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.Date;
 
-public class Anfitrion extends Usuario implements Serializable{
+public class Anfitrion implements Serializable{
 
 
     //Atributos
+    protected String dni;
+    protected String nombre;
+    protected String correoElectronico;
+    protected String clave;
+    protected String telefono;
     private static final long serialVersionUID = 1L;
     private String fechaRegistro; //LocalDate para el registro en hora actual
     private boolean esSuperAnfitrion;
@@ -22,7 +27,6 @@ public class Anfitrion extends Usuario implements Serializable{
         this.correoElectronico=correoElectronico;
         this.clave=clave;
         this.telefono=telefono;
-        //super(dni,nombre,correoElectronico,clave,telefono);
         this.fechaRegistro = fechaRegistro;
         this.esSuperAnfitrion = superAnfitrion;
     }

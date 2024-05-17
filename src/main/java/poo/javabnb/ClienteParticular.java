@@ -2,9 +2,14 @@ package poo.javabnb;
 
 import java.io.*;
 
-public class ClienteParticular extends Usuario implements Serializable{
+public class ClienteParticular implements Serializable{
     
     //Atributos
+    protected String dni;
+    protected String nombre;
+    protected String correoElectronico;
+    protected String clave;
+    protected String telefono;
     private static final long serialVersionUID = 1L;
     private boolean esVIP;
     
@@ -14,7 +19,6 @@ public class ClienteParticular extends Usuario implements Serializable{
         this.correoElectronico=correo;
         this.clave=clave;
         this.telefono=telefono;
-        //super(dni,nombre,correo,clave,telefono);
         this.esVIP=esVIP;
     }
     
