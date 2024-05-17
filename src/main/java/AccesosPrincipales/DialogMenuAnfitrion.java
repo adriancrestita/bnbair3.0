@@ -827,6 +827,12 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
 
     private void finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarActionPerformed
         // TODO add your handling code here:
+        int huespedes = (int) maxHuespedes.getValue();
+        int baños = (int) numBaños.getValue();
+        int camas = (int) numCamas.getValue();
+        int habitaciones = (int) numHabitaciones.getValue();
+
+
     }//GEN-LAST:event_finalizarActionPerformed
 
     /**
