@@ -22,6 +22,7 @@ public class Anfitrion extends Usuario implements Serializable{
         this.correoElectronico=correoElectronico;
         this.clave=clave;
         this.telefono=telefono;
+        //super(dni,nombre,correoElectronico,clave,telefono);
         this.fechaRegistro = fechaRegistro;
         this.esSuperAnfitrion = superAnfitrion;
     }

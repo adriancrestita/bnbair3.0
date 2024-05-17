@@ -273,7 +273,7 @@ public class FrameLogin extends javax.swing.JFrame {
             Anfitrion anfitrion = VerificarDatos.iniciarSesionAnfitrion(email, password);
             if (anfitrion != null) {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión de anfitrión exitoso. Bienvenido " + anfitrion.getNombre() + "!");
-                FrameMenuAnfitrion pantallaAnfitrion = new FrameMenuAnfitrion();
+                DialogMenuAnfitrion pantallaAnfitrion = new DialogMenuAnfitrion(FrameLogin.this, true);
                 pantallaAnfitrion.setVisible(true);
                 dispose();
                 return;
@@ -360,7 +360,7 @@ public class FrameLogin extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        FrameMenuAnfitrion anfitrion = new FrameMenuAnfitrion();
+        DialogMenuAnfitrion anfitrion = new DialogMenuAnfitrion(FrameLogin.this, true);
         anfitrion.setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed

@@ -32,12 +32,21 @@ public class GestorInmuebles {
     }
 
     private void cargarInmuebles() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
-            inmuebles = (List<Inmueble>) ois.readObject();
-        } catch (FileNotFoundException e) {
-            // File not found, no problem as it will be created when saving
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        try{
+            FileInputStream fis = new FileInputStream("clientes.dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Object obj = ois.readObject();
+
+            if(obj instanceof List) {
+                List tempList = (List) obj;
+                tempList.stream().forEach(object -> {
+                    if(object instanceof Inmueble) {
+                        inmuebles.add((Inmueble) object);
+                    }
+                });
+            }
+        }catch(Exception e){
+            System.out.println(e);
         }
     }
 }

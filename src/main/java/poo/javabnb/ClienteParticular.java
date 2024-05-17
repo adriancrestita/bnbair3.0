@@ -14,6 +14,7 @@ public class ClienteParticular extends Usuario implements Serializable{
         this.correoElectronico=correo;
         this.clave=clave;
         this.telefono=telefono;
+        //super(dni,nombre,correo,clave,telefono);
         this.esVIP=esVIP;
     }
     

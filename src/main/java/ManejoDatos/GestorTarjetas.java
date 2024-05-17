@@ -24,32 +24,32 @@ public class GestorTarjetas {
     }
 
     private void guardarTarjetas() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
-            oos.writeObject(tarjetas);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        try{
+           FileOutputStream fos = new FileOutputStream("tarjetas.dat");
+           ObjectOutputStream oos = new ObjectOutputStream(fos);
+           oos.writeObject(tarjetas);
+           oos.close();
+       }catch(Exception e){
+           System.out.println(e);
+       }
     }
 
     private void cargarTarjetas() {
-    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILENAME))) {
-        Object obj = ois.readObject();
-        if (obj instanceof List) {
-            List<?> tempList = (List<?>) obj;
-            for (Object item : tempList) {
-                if (item instanceof TarjetaCredito) {
-                    tarjetas.add((TarjetaCredito) item);
-                } else {
-                    throw new ClassCastException("Invalid object type in tarjetas.dat");
-                }
+        try{
+            FileInputStream fis = new FileInputStream("clientes.dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Object obj = ois.readObject();
+
+            if(obj instanceof List) {
+                List tempList = (List) obj;
+                tempList.stream().forEach(object -> {
+                    if(object instanceof TarjetaCredito) {
+                        tarjetas.add((TarjetaCredito) object);
+                    }
+                });
             }
-        } else {
-            throw new ClassCastException("Invalid data format in tarjetas.dat");
+        }catch(Exception e){
+            System.out.println(e);
         }
-    } catch (FileNotFoundException e) {
-        // File not found, no problem as it will be created when saving
-    } catch (IOException | ClassNotFoundException e) {
-        e.printStackTrace();
     }
-}
 }
