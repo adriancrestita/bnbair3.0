@@ -12,6 +12,7 @@ import poo.javabnb.*;
 import java.lang.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
+import java.awt.Image;
 import java.util.Collections;
 import poo.javabnb.*;
 import java.lang.*;
@@ -251,9 +252,12 @@ public class FrameRegistro extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ImageIcon a = new ImageIcon("src/main/java/com/images/logo2rec.png");
-        LabelLogo.setIcon(a);
-        jPanel2.add(LabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 106, 125));
+        ImageIcon d = new ImageIcon("src/main/java/com/images/logo2rec.png");
+        Image img = d.getImage();
+        Image scaledImg = img.getScaledInstance(125, 127, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImg);
+        LabelLogo.setIcon(scaledIcon);
+        jPanel2.add(LabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 125, 127));
 
         jLabel1.setBackground(new java.awt.Color(80, 0, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N

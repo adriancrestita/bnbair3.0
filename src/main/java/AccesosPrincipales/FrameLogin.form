@@ -247,11 +247,11 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel9">
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon a = new ImageIcon(&quot;src/main/java/com/images/logo2rec.png&quot;);&#xd;&#xa;jLabel9.setIcon(a);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon d = new ImageIcon(&quot;src/main/java/com/images/logo2rec.png&quot;);&#xd;&#xa;Image img = d.getImage();&#xd;&#xa;Image scaledImg = img.getScaledInstance(125, 127, Image.SCALE_SMOOTH);&#xd;&#xa;ImageIcon scaledIcon = new ImageIcon(scaledImg);&#xd;&#xa;jLabel9.setIcon(scaledIcon);"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="70" y="60" width="106" height="125"/>
+                  <AbsoluteConstraints x="60" y="60" width="125" height="127"/>
                 </Constraint>
               </Constraints>
             </Component>

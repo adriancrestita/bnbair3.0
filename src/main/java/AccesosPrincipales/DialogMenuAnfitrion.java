@@ -144,6 +144,11 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         jPanel1.add(buttonPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 393, 111, -1));
 
         buttonCerrarSesion.setText("Cerrar Sesion");
+        buttonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCerrarSesionActionPerformed(evt);
+            }
+        });
         jPanel1.add(buttonCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 434, 111, -1));
 
         ImageIcon d = new ImageIcon("src/main/java/com/images/logo2rec.png");
@@ -834,6 +839,13 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_finalizarActionPerformed
+
+    private void buttonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        FrameInicio inicio = new FrameInicio();
+        inicio.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_buttonCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments

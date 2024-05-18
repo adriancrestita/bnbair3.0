@@ -13,6 +13,7 @@ import javax.swing.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
 import java.awt.Color;
+import java.awt.Image;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -162,9 +163,12 @@ public class FrameLogin extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ImageIcon a = new ImageIcon("src/main/java/com/images/logo2rec.png");
-        jLabel9.setIcon(a);
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 106, 125));
+        ImageIcon d = new ImageIcon("src/main/java/com/images/logo2rec.png");
+        Image img = d.getImage();
+        Image scaledImg = img.getScaledInstance(125, 127, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImg);
+        jLabel9.setIcon(scaledIcon);
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 125, 127));
 
         jLabel1.setBackground(new java.awt.Color(80, 0, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
@@ -353,7 +357,7 @@ public class FrameLogin extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        FrameMenuParticular particular = new FrameMenuParticular();
+        DialogMenuParticular particular = new DialogMenuParticular(FrameLogin.this, true);
         particular.setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed

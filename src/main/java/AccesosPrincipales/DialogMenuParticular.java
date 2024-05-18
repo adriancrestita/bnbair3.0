@@ -30,12 +30,16 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        buttonInmuebles = new javax.swing.JButton();
-        buttonCrear = new javax.swing.JButton();
+        buttonInmuebleDispo = new javax.swing.JButton();
+        buttonMisReservas = new javax.swing.JButton();
         buttonPerfil = new javax.swing.JButton();
         buttonCerrarSesion = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        panelExplorarReservas = new javax.swing.JPanel();
+        panelMisReservas = new javax.swing.JPanel();
+        panelMiPerfil = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -43,21 +47,21 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        buttonInmuebles.setText("Mis Inmuebles");
-        buttonInmuebles.addActionListener(new java.awt.event.ActionListener() {
+        buttonInmuebleDispo.setText("Explorar Reservas");
+        buttonInmuebleDispo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonInmueblesActionPerformed(evt);
+                buttonInmuebleDispoActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonInmuebles, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 311, 111, -1));
+        jPanel1.add(buttonInmuebleDispo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 130, -1));
 
-        buttonCrear.setText("Crear Inmueble");
-        buttonCrear.addActionListener(new java.awt.event.ActionListener() {
+        buttonMisReservas.setText("Mis Reservas");
+        buttonMisReservas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCrearActionPerformed(evt);
+                buttonMisReservasActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 352, -1, -1));
+        jPanel1.add(buttonMisReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 130, -1));
 
         buttonPerfil.setText("Mi Perfil");
         buttonPerfil.addActionListener(new java.awt.event.ActionListener() {
@@ -65,39 +69,59 @@ public class DialogMenuParticular extends javax.swing.JDialog {
                 buttonPerfilActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 393, 111, -1));
+        jPanel1.add(buttonPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 130, -1));
 
         buttonCerrarSesion.setText("Cerrar Sesion");
-        jPanel1.add(buttonCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 434, 111, -1));
+        buttonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCerrarSesionActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 130, -1));
 
         ImageIcon d = new ImageIcon("src/main/java/com/images/logo2rec.png");
         jLabel29.setIcon(d);
         jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 106, 125));
 
-        jLabel30.setBackground(new java.awt.Color(80, 0, 0));
+        jLabel30.setBackground(new java.awt.Color(0, 0, 0));
         jLabel30.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(80, 0, 0));
         jLabel30.setText("JAVABNB");
         jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 90, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 500));
 
+        jTabbedPane1.addTab("tab1", panelExplorarReservas);
+        jTabbedPane1.addTab("tab2", panelMisReservas);
+
+        panelMiPerfil.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.addTab("tab3", panelMiPerfil);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, -40, 590, 540));
+
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonInmueblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInmueblesActionPerformed
-//        jTabbedPane1.setSelectedIndex(0);
-        //DialogCrearInmuebles dci = new DialogCrearInmuebles();
+    private void buttonInmuebleDispoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInmuebleDispoActionPerformed
+        jTabbedPane1.setSelectedIndex(0);
 
-    }//GEN-LAST:event_buttonInmueblesActionPerformed
+    }//GEN-LAST:event_buttonInmuebleDispoActionPerformed
 
-    private void buttonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCrearActionPerformed
-//        jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_buttonCrearActionPerformed
+    private void buttonMisReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMisReservasActionPerformed
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_buttonMisReservasActionPerformed
 
     private void buttonPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPerfilActionPerformed
-//        jTabbedPane1.setSelectedIndex(2);
+        jTabbedPane1.setSelectedIndex(2);
     }//GEN-LAST:event_buttonPerfilActionPerformed
+
+    private void buttonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        FrameInicio inicio = new FrameInicio();
+        inicio.setVisible(true);
+        
+    }//GEN-LAST:event_buttonCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,11 +167,15 @@ public class DialogMenuParticular extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCerrarSesion;
-    private javax.swing.JButton buttonCrear;
-    private javax.swing.JButton buttonInmuebles;
+    private javax.swing.JButton buttonInmuebleDispo;
+    private javax.swing.JButton buttonMisReservas;
     private javax.swing.JButton buttonPerfil;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel panelExplorarReservas;
+    private javax.swing.JPanel panelMiPerfil;
+    private javax.swing.JPanel panelMisReservas;
     // End of variables declaration//GEN-END:variables
 }
