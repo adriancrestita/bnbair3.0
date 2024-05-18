@@ -90,11 +90,11 @@ public class FrameLogin extends javax.swing.JFrame {
         jLabel4.setBackground(new java.awt.Color(204, 204, 255));
         jLabel4.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
         jLabel4.setText("INICIAR SESIÓN");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("CORREO");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 70, 20));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 70, 20));
 
         jmaillog.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jmaillog.setForeground(new java.awt.Color(204, 204, 204));
@@ -112,7 +112,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 jmaillogActionPerformed(evt);
             }
         });
-        jPanel1.add(jmaillog, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 210, -1));
+        jPanel1.add(jmaillog, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 210, -1));
 
         blogin.setText("ENTRAR");
         blogin.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -125,7 +125,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 bloginActionPerformed(evt);
             }
         });
-        jPanel1.add(blogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
+        jPanel1.add(blogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, -1, -1));
 
         bsignin.setText("REGISTRARSE");
         bsignin.addActionListener(new java.awt.event.ActionListener() {
@@ -133,11 +133,11 @@ public class FrameLogin extends javax.swing.JFrame {
                 bsigninActionPerformed(evt);
             }
         });
-        jPanel1.add(bsignin, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, -1, -1));
+        jPanel1.add(bsignin, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("CONTRASEÑA");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, 20));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 230, -1, 20));
 
         jpasswordlog.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jpasswordlog.setForeground(new java.awt.Color(204, 204, 204));
@@ -150,7 +150,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 jpasswordlogFocusLost(evt);
             }
         });
-        jPanel1.add(jpasswordlog, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 210, -1));
+        jPanel1.add(jpasswordlog, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, 210, -1));
 
         MostrarContraseña.setText("Mostrar contraseña");
         MostrarContraseña.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +158,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 MostrarContraseñaActionPerformed(evt);
             }
         });
-        jPanel1.add(MostrarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, -1, -1));
+        jPanel1.add(MostrarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 300, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(169, 116, 81));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -172,11 +172,10 @@ public class FrameLogin extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(80, 0, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(80, 0, 0));
         jLabel1.setText("JAVABNB");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 90, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 240, 500));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 500));
 
         MenuInicio.setText("Inicio");
 
@@ -228,7 +227,7 @@ public class FrameLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -454,7 +454,7 @@ public class FrameMenuParticular extends javax.swing.JFrame {
 
     private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
         // TODO add your handling code here:
-        if (Buscador.getText().equals(" 🔍 Buscador de destinos")){
+        if (Buscador.getText().equals("🔍 Buscador de destinos")){
             Buscador.setText("");
         }
     }//GEN-LAST:event_BuscadorActionPerformed

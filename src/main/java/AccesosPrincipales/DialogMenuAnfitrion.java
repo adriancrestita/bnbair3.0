@@ -24,6 +24,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setResizable(false);
+        setTitle("JavaBnB");
     }
 
     /**
@@ -116,7 +117,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(169, 116, 81));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         buttonInmuebles.setText("Mis Inmuebles");
@@ -160,7 +161,6 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
 
         jLabel30.setBackground(new java.awt.Color(80, 0, 0));
         jLabel30.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(80, 0, 0));
         jLabel30.setText("JAVABNB");
         jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 90, -1));
 
