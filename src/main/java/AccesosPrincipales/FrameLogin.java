@@ -4,7 +4,6 @@ package AccesosPrincipales;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-import AccesosPrincipales.FrameAdmin;
 import ManejoDatos.GestorClientes;
 import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
@@ -258,7 +257,7 @@ public class FrameLogin extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Rellene la contraseña");
     } else {
         if (email.equals("admin@javabnb.com") && password.equals("admin")) {
-            DialogMenuAdmin pantallaAdmin = new DialogMenuAdmin(FrameLogin.this, true);
+            DialogMenuAdmin1 pantallaAdmin = new DialogMenuAdmin1(FrameLogin.this, true);
             pantallaAdmin.setVisible(true);
             dispose();
         } else {

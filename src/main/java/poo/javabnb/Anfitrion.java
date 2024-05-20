@@ -92,10 +92,10 @@ public class Anfitrion implements Serializable{
     
     public String cmpSuperAnfitrion(){
         if(esSuperAnfitrion == true){
-            return "Es Super Anfitrion";
+            return "Super Anfitrion";
         }
         else{
-            return "No es Super Anfitrion";
+            return "No Super Anfitrion";
         }
     }
 }
