@@ -6,6 +6,10 @@ package AccesosPrincipales;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import ManejoDatos.*;
+import java.util.ArrayList;
+import java.util.List;
+import poo.javabnb.*;
 
 /**
  *
@@ -20,6 +24,13 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("JavaBnB");
+        
+        GestorInmuebles gestorInmuebles = new GestorInmuebles();
+        
+        List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
+        
+        //System.out.println(listaInmuebles.get(0).getTitulo());
+        
     }
 
     /**
