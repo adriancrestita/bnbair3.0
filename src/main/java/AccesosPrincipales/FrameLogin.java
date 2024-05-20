@@ -258,7 +258,7 @@ public class FrameLogin extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Rellene la contraseña");
     } else {
         if (email.equals("admin@javabnb.com") && password.equals("admin")) {
-            FrameAdmin pantallaAdmin = new FrameAdmin();
+            DialogMenuAdmin pantallaAdmin = new DialogMenuAdmin(FrameLogin.this, true);
             pantallaAdmin.setVisible(true);
             dispose();
         } else {
