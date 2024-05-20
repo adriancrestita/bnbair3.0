@@ -22,8 +22,8 @@ public class Alquiler {
     }
 
     private void calcularCostoTotal() {
-        long diasEstancia = fechaEntrada.until(fechaSalida).getDays();
-        costoTotal = diasEstancia * inmueble.getPrecioNoche();
+        int diasEstancia = fechaEntrada.until(fechaSalida).getDays();
+        costoTotal = diasEstancia * Integer.parseInt(inmueble.getPrecioNoche());
         if (esVIP) {
             costoTotal *= 0.9; // Descuento del 10% para clientes VIP
         }

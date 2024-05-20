@@ -36,12 +36,7 @@ public class ArchivoUtil {
         for (String archivo : archivos) {
             File file = new File(archivo);
             if (file.exists()) {
-                boolean deleted = file.delete();
-                if (deleted) {
-                    System.out.println("Archivo borrado: " + archivo);
-                } else {
-                    System.out.println("No se pudo borrar el archivo: " + archivo);
-                }
+                file.delete();
             } else {
                 System.out.println("El archivo no existe: " + archivo);
             }

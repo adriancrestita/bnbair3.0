@@ -3,7 +3,6 @@ package ManejoDatos;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import poo.javabnb.ClienteParticular;
 
 public class GestorClientes {

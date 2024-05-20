@@ -161,5 +161,22 @@ public class VerificarDatos {
             return false;
         }
     }
+    
+    public static boolean validarInmueble(String titulo, String calle, String numero, String cp, String ciudad, String precio){
+        if (titulo.isEmpty() || titulo.equals("Ingrese el titulo") ||
+            numero.isEmpty() || numero.equals("Ingrese el numero") ||
+            calle.isEmpty() || calle.equals("Introduce la calle") ||
+            ciudad.isEmpty() || ciudad.equals("Ingrese la ciudad") ||
+            precio.isEmpty() || precio.equals("") ||
+            cp.isEmpty() || cp.equals("Ingrese el C.P.")) {
+            return false;
+        }
+        else{
+            if(Integer.parseInt(numero)>0 && cp.length()==5 && Integer.parseInt(precio)>0){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

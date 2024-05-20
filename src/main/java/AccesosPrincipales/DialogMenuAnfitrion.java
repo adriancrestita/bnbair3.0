@@ -5,26 +5,91 @@
 package AccesosPrincipales;
 
 
+import ManejoDatos.GestorInmuebles;
+import ManejoDatos.VerificarDatos;
 import java.awt.Image;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import poo.javabnb.Inmueble;
 
 /**
  *
  * @author adria
  */
 public class DialogMenuAnfitrion extends javax.swing.JDialog {
+    private GestorInmuebles gestorInmuebles;
+    
+    private String[] nombresVariables = {
+        "tituloInmueble",
+        "calleInmueble",
+        "numeroInmueble",
+        "cpInmueble",
+        "ciudadInmueble",
+    };
 
+    private String[] mensajesOriginales = {
+        "Ingrese el titulo",
+        "Ingrese la calle",
+        "Ingrese el número",
+        "Ingrese el CP",
+        "Ingrese la ciudad",
+    };
+    
+    private HashMap<String, JTextField> camposDeTexto = new HashMap<>();
     /**
      * Creates new form DialogMenuAnfitrion
      */
     public DialogMenuAnfitrion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        gestorInmuebles = new GestorInmuebles();
+
         setResizable(false);
         setTitle("JavaBnB");
+        
+        // Agregamos los campos de texto al HashMap
+        camposDeTexto.put("tituloInmueble", tituloInmueble);
+        camposDeTexto.put("calleInmueble", calleInmueble);
+        camposDeTexto.put("numeroInmueble", numeroInmueble);
+        camposDeTexto.put("cpInmueble", cpInmueble);
+        camposDeTexto.put("ciudadInmueble", ciudadInmueble);
+        
+        
+        for (int i = 0; i < nombresVariables.length; i++) {
+            
+            JTextField campo = camposDeTexto.get(nombresVariables[i]);
+            final String mensajeOriginal = mensajesOriginales[i];
+            
+            campo.putClientProperty("JTextField.placeholderText", mensajeOriginal);
+            campo.putClientProperty("JComponent.roundRect", true);
+            campo.setForeground(UIManager.getColor("TextField.foreground"));
+
+            campo.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (campo.getText().equals(mensajeOriginal)) {
+                        campo.setText("");
+                    }
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (campo.getText().isEmpty()) {
+                        campo.setText(mensajeOriginal);
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -126,7 +191,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 buttonInmueblesActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonInmuebles, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 311, 111, -1));
+        jPanel1.add(buttonInmuebles, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 311, 120, -1));
 
         buttonCrear.setText("Crear Inmueble");
         buttonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +199,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 buttonCrearActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 352, -1, -1));
+        jPanel1.add(buttonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 352, 120, -1));
 
         buttonPerfil.setText("Mi Perfil");
         buttonPerfil.addActionListener(new java.awt.event.ActionListener() {
@@ -142,15 +207,15 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 buttonPerfilActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 393, 111, -1));
+        jPanel1.add(buttonPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 393, 120, -1));
 
-        buttonCerrarSesion.setText("Cerrar Sesion");
+        buttonCerrarSesion.setText("Cerrar Sesión");
         buttonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonCerrarSesionActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 434, 111, -1));
+        jPanel1.add(buttonCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 434, 120, -1));
 
         ImageIcon d = new ImageIcon("src/main/java/com/images/logo2rec.png");
         Image img = d.getImage();
@@ -179,14 +244,14 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
             .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
                 .addGap(229, 229, 229)
                 .addComponent(jLabel1)
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addContainerGap(273, Short.MAX_VALUE))
         );
         PanelMisInmueblesLayout.setVerticalGroup(
             PanelMisInmueblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(jLabel1)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addContainerGap(435, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab1", PanelMisInmuebles);
@@ -200,23 +265,38 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
 
         jLabel8.setText("Titulo");
 
-        tituloInmueble.setText("jTextField1");
+        tituloInmueble.setForeground(new java.awt.Color(204, 204, 204));
+        tituloInmueble.setText("Ingrese el titulo");
+        tituloInmueble.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tituloInmuebleActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Calle");
 
-        calleInmueble.setText("jTextField2");
+        calleInmueble.setForeground(new java.awt.Color(204, 204, 204));
+        calleInmueble.setText("Ingrese la calle");
+        calleInmueble.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calleInmuebleActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Numero");
 
-        numeroInmueble.setText("jTextField3");
+        numeroInmueble.setForeground(new java.awt.Color(204, 204, 204));
+        numeroInmueble.setText("Ingrese el número");
 
         jLabel14.setText("C.P.");
 
-        cpInmueble.setText("jTextField4");
+        cpInmueble.setForeground(new java.awt.Color(204, 204, 204));
+        cpInmueble.setText("Ingrese el CP");
 
         jLabel15.setText("Ciudad");
 
-        ciudadInmueble.setText("jTextField5");
+        ciudadInmueble.setForeground(new java.awt.Color(204, 204, 204));
+        ciudadInmueble.setText("Ingrese la ciudad");
 
         jLabel16.setText("Introduzca imagenes del inmueble");
 
@@ -239,39 +319,48 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(155, 155, 155)
+                .addGap(111, 111, 111)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(calleInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(tituloInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel6)
-                            .addComponent(numeroInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(224, 224, 224))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel15)
-                        .addGap(285, 285, 285))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cpInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ciudadInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(251, 251, 251))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(imagenesInmueble, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(imagenesInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(339, 339, 339))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(186, 186, 186)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(278, 278, 278))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cpInmueble, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(calleInmueble))
+                        .addGap(407, 407, 407))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(tituloInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel6))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(215, 215, 215)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel15)
+                                    .addComponent(numeroInmueble)
+                                    .addComponent(ciudadInmueble, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(187, 187, 187))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(siguiente1)
-                .addContainerGap())
+                .addGap(44, 44, 44))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,7 +391,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(imagenesInmueble)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(siguiente1)
                 .addContainerGap())
         );
@@ -528,37 +617,36 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel28)
-                                    .addComponent(precioNoche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(jLabel27)
-                                        .addGap(59, 59, 59)
-                                        .addComponent(precioEtiqueta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(servicioWifi)
-                                    .addComponent(servicioAC)
-                                    .addComponent(servicioCocina)
-                                    .addComponent(servicioCalefacción))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(servicioPiscina)
-                                    .addComponent(servicioZonaTrabajo)
-                                    .addComponent(servicioAparcamiento)
-                                    .addComponent(servicioLavadora)))))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel26)
-                        .addGap(35, 35, 35)))
-                .addGap(189, 189, 189))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(105, 105, 105)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel28)
+                                .addComponent(precioNoche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(jLabel27)
+                                    .addGap(59, 59, 59)
+                                    .addComponent(precioEtiqueta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(0, 305, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(servicioWifi)
+                                .addComponent(servicioAC)
+                                .addComponent(servicioCocina)
+                                .addComponent(servicioCalefacción))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(servicioPiscina)
+                                .addComponent(servicioZonaTrabajo)
+                                .addComponent(servicioAparcamiento)
+                                .addComponent(servicioLavadora))
+                            .addGap(208, 208, 208))))
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel26)
+                    .addGap(224, 224, 224)))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(atras3)
@@ -579,7 +667,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 .addComponent(precioNoche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel28)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(servicioWifi)
                     .addComponent(servicioLavadora))
@@ -595,7 +683,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(servicioCocina)
                     .addComponent(servicioZonaTrabajo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(atras3)
                     .addComponent(finalizar))
@@ -748,7 +836,6 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private void buttonInmueblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInmueblesActionPerformed
         jTabbedPane1.setSelectedIndex(0);
         //DialogCrearInmuebles dci = new DialogCrearInmuebles();
-       
     }//GEN-LAST:event_buttonInmueblesActionPerformed
 
     private void buttonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCrearActionPerformed
@@ -758,7 +845,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private void buttonPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPerfilActionPerformed
         jTabbedPane1.setSelectedIndex(2);
     }//GEN-LAST:event_buttonPerfilActionPerformed
-    private String paths = "";
+    private ArrayList<String> paths;
     private File[] files;
     private int result;
     private void imagenesInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenesInmuebleActionPerformed
@@ -771,13 +858,8 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             files = fileChooser.getSelectedFiles(); // Obtiene los archivos seleccionados
-
-            for (int i = 0; i < files.length; i++) {
-                paths += files[i].getName();
-                // Añadir ";" después de cada elemento excepto el último
-                if (i < files.length - 1) {
-                    paths += ",";
-                }
+            for (File file : files) {
+                paths.add(file.getName());
             }
         } else if (result == JFileChooser.CANCEL_OPTION) {
             JOptionPane.showMessageDialog(null, "No se encontró ningún archivo");
@@ -829,15 +911,60 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private void atras3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atras3ActionPerformed
         jTabbedPane2.setSelectedIndex(1);
     }//GEN-LAST:event_atras3ActionPerformed
-
     private void finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarActionPerformed
         // TODO add your handling code here:
-        int huespedes = (int) maxHuespedes.getValue();
-        int baños = (int) numBaños.getValue();
-        int camas = (int) numCamas.getValue();
-        int habitaciones = (int) numHabitaciones.getValue();
+        String titulo = tituloInmueble.getText().trim();
+        String calle = calleInmueble.getText().trim();
+        String ciudad = ciudadInmueble.getText().trim();
+        String CP = cpInmueble.getText().trim();
+        String huespedes = String.valueOf(maxHuespedes.getValue());
+        String tipo = (String) tipoInmueble.getSelectedItem();
+        String baños = String.valueOf(numBaños.getValue());
+        String camas = String.valueOf(numCamas.getValue());
+        String habitaciones = String.valueOf(numHabitaciones.getValue());
+        String numero = numeroInmueble.getText().trim();
+        String precio = String.valueOf(precioNoche.getValue());
+        ArrayList servicios = new ArrayList<String>();
+        
+        if(servicioAC.isSelected()){
+            servicios.add("Aire Acondicionado");
+        } 
+        if(servicioAparcamiento.isSelected()){
+            servicios.add("Aparcamiento");
+        }
+        if(servicioCalefacción.isSelected()){
+            servicios.add("Calefacción");
+        } 
+        if(servicioCocina.isSelected()){
+            servicios.add("Cocina");
+        }
+        if(servicioLavadora.isSelected()){
+            servicios.add("Lavadora");
+        } 
+        if(servicioPiscina.isSelected()){
+            servicios.add("Piscina");
+        }
+        if(servicioWifi.isSelected()){
+            servicios.add("Wifi");
+        } 
+        if(servicioZonaTrabajo.isSelected()){
+            servicios.add("Zona de trabajo");
+        }
+        
+        if(VerificarDatos.validarInmueble(titulo, calle, numero, CP, ciudad, precio)){
+            List<String> initialElements = Arrays.asList(calle, numero, ciudad, CP);       
+            ArrayList<String> direccion = new ArrayList<>(initialElements);        
 
+            Inmueble nuevoInmueble = new Inmueble("hola", titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, paths);
+            gestorInmuebles.agregarInmueble(nuevoInmueble);  
+            MetodosConsultaInmuebles.saveImages(files);
+            JOptionPane.showMessageDialog(this, "Creado correctamente");
+            jTabbedPane1.setSelectedIndex(0);
 
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Los datos introducidos no son validos");
+        }       
     }//GEN-LAST:event_finalizarActionPerformed
 
     private void buttonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCerrarSesionActionPerformed
@@ -846,6 +973,14 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         inicio.setVisible(true);
         dispose();
     }//GEN-LAST:event_buttonCerrarSesionActionPerformed
+
+    private void tituloInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloInmuebleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tituloInmuebleActionPerformed
+
+    private void calleInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calleInmuebleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calleInmuebleActionPerformed
 
     /**
      * @param args the command line arguments

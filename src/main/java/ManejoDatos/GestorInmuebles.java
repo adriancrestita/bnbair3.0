@@ -6,32 +6,40 @@ import java.util.List;
 import poo.javabnb.Inmueble;
 
 public class GestorInmuebles {
-    private List<Inmueble> inmuebles;
-    private final String FILENAME = "inmuebles.dat";
+    private static List<Inmueble> inmuebles;
+    private static final String FILENAME = "inmuebles.dat";
 
     public GestorInmuebles() {
         inmuebles = new ArrayList<>();
         cargarInmuebles();
     }
 
-    public void agregarInmueble(Inmueble inmueble) {
-        inmuebles.add(inmueble);
-        guardarInmuebles();
+    public static void agregarInmueble(Inmueble inmueble) {
+        if (inmueble.getTitulo() == null || inmueble.getTitulo().isEmpty()) {
+            throw new IllegalArgumentException("El titulo no puede estar vacío");
+        }
+        else{
+            inmuebles.add(inmueble);
+            guardarInmuebles();  
+        }  
     }
-
-    public List<Inmueble> obtenerInmuebles() {
+    
+    public static List<Inmueble> obtenerInmuebles() {
         return inmuebles;
     }
 
-    private void guardarInmuebles() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
-            oos.writeObject(inmuebles);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private static void guardarInmuebles() {
+        try{
+           FileOutputStream fos = new FileOutputStream("inmuebles.dat");
+           ObjectOutputStream oos = new ObjectOutputStream(fos);
+           oos.writeObject(inmuebles);
+           oos.close();
+       }catch(Exception e){
+           System.out.println(e);
+       }        
     }
 
-    private void cargarInmuebles() {
+    private static void cargarInmuebles() {
         try{
             FileInputStream fis = new FileInputStream("clientes.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -44,9 +52,11 @@ public class GestorInmuebles {
                         inmuebles.add((Inmueble) object);
                     }
                 });
-            }
+              }
         }catch(Exception e){
             System.out.println(e);
-        }
+            System.out.println(e);
+
+        }    
     }
 }

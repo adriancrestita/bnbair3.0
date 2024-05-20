@@ -12,28 +12,28 @@ public class Inmueble implements Serializable{
     //Atributos
     private static final long serialVersionUID = 1L;
     private String titulo;
+    private String correo;
+    private ArrayList<String> direccion;
     private String calle;
-    private int numero;
-    private int CP;
+    private String numero;
+    private String CP;
     private String ciudad;
-    private int maxHuespedes;
-    private int numHabitaciones;
-    private int numCamas;
-    private int numBaños;
+    private String maxHuespedes;
+    private String numHabitaciones;
+    private String numCamas;
+    private String numBaños;
     private String tipoPropiedad;
-    private double precioNoche;
-    private String servicios;
-    private static StringBuilder foto;
+    private String precioNoche;
+    private ArrayList<String> servicios;
+    private ArrayList<String> imagePaths;
     private double calificacion;
     private Anfitrion anfi;
     
     // Constructor
-    public Inmueble(String titulo, String calle, int numero, int CP, String ciudad, int maxHuéspedes, int numHabitaciones, int numCamas, int numBaños, String tipoPropiedad, double precioNoche, String servicios, StringBuilder foto, double calificacion) {
+    public Inmueble(String correo, String titulo, ArrayList<String> direccion, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios, ArrayList<String> imagePaths) {
+        this.correo = correo;
         this.titulo = titulo;
-        this.calle = calle;
-        this.numero = numero;
-        this.CP = CP;
-        this.ciudad = ciudad;
+        this.direccion = direccion;
         this.maxHuespedes = maxHuespedes;
         this.numHabitaciones = numHabitaciones;
         this.numCamas = numCamas;
@@ -41,11 +41,33 @@ public class Inmueble implements Serializable{
         this.tipoPropiedad = tipoPropiedad;
         this.precioNoche = precioNoche;
         this.servicios = servicios;
-        this.foto = foto;
-        this.calificacion = calificacion;
+        this.imagePaths = imagePaths;
+    }
+    
+    public Inmueble(String correo, String titulo, String calle, String numero, String ciudad, String CP, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios) {
+        this.correo = correo;
+        this.titulo = titulo;
+        this.calle = calle;
+        this.numero = numero;
+        this.ciudad = ciudad;
+        this.CP = CP;
+        this.maxHuespedes = maxHuespedes;
+        this.numHabitaciones = numHabitaciones;
+        this.numCamas = numCamas;
+        this.numBaños = numBaños;
+        this.tipoPropiedad = tipoPropiedad;
+        this.precioNoche = precioNoche;
+        this.servicios = servicios;
     }
 
     // Getters y Setters
+    public String getCorreo() {
+        return correo;
+    }
+    
+    public void setCorreo(String correo){
+        this.correo = correo;
+    }
     public String getTitulo() {
         return titulo;
     }
@@ -62,19 +84,19 @@ public class Inmueble implements Serializable{
         this.calle = calle;
     }
     
-    public int getNumero(){
+    public String getNumero(){
         return numero;
     }
     
-    public void setNumero(int numero){
+    public void setNumero(String numero){
         this.numero = numero;
     }
     
-    public int getCP(){
+    public String getCP(){
         return CP;
     }
     
-    public void setCP(int CP){
+    public void setCP(String CP){
         this.CP = CP;
     }
     
@@ -82,39 +104,40 @@ public class Inmueble implements Serializable{
         return ciudad;
     }
     
-    public void setNumero(String ciudad){
+    
+    public void setCiudad(String ciudad){
         this.ciudad = ciudad;
     }
 
-    public int getMaxHuespedes() {
+    public String getMaxHuespedes() {
         return maxHuespedes;
     }
 
-    public void setMaxHuéspedes(int maxHuéspedes) {
+    public void setMaxHuéspedes(String maxHuéspedes) {
         this.maxHuespedes = maxHuéspedes;
     }
 
-    public int getNumHabitaciones() {
+    public String getNumHabitaciones() {
         return numHabitaciones;
     }
 
-    public void setNumHabitaciones(int numHabitaciones) {
+    public void setNumHabitaciones(String numHabitaciones) {
         this.numHabitaciones = numHabitaciones;
     }
 
-    public int getNumCamas() {
+    public String getNumCamas() {
         return numCamas;
     }
 
-    public void setNumCamas(int numCamas) {
+    public void setNumCamas(String numCamas) {
         this.numCamas = numCamas;
     }
 
-    public int getNumBaños() {
+    public String getNumBaños() {
         return numBaños;
     }
 
-    public void setNumBaños(int numBaños) {
+    public void setNumBaños(String numBaños) {
         this.numBaños = numBaños;
     }
 
@@ -126,33 +149,21 @@ public class Inmueble implements Serializable{
         this.tipoPropiedad = tipoPropiedad;
     }
 
-    public double getPrecioNoche() {
+    public String getPrecioNoche() {
         return precioNoche;
     }
 
-    public void setPrecioNoche(double precioNoche) {
+    public void setPrecioNoche(String precioNoche) {
         this.precioNoche = precioNoche;
     }
 
-    public String getServicios() {
+    public ArrayList<String> getServicios() {
         return servicios;
     }
 
-    public void setServicios(String servicios) {
+    public void setServicios(ArrayList<String> servicios) {
         this.servicios = servicios;
     }
-
-    public static StringBuilder getFoto() {
-        return foto;
-    }
-
-    public static void setFoto(StringBuilder foto) {
-        setFoto(foto);
-    }
-
-    /*public void setFoto(StringBuilder foto) {
-        this.foto = foto;
-    }*/
 
     public double getCalificacion() {
         return calificacion;
@@ -161,6 +172,12 @@ public class Inmueble implements Serializable{
     public void setCalificacion(double calificacion) {
         this.calificacion = calificacion;
     }
+    
+    public ArrayList<String> getDireccion() {
+        return direccion;
+    }
+    
+   
 
     // Método para mostrar información del inmueble
     public String mostrarInformacion() {
