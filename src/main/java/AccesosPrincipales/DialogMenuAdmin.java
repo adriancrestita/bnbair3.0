@@ -1,19 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+
 package AccesosPrincipales;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import ManejoDatos.GestorInmuebles;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
+import ManejoDatos.GestorUsuarios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.stream.Collectors;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 
@@ -23,220 +21,116 @@ import java.util.ArrayList;
  */
 public class DialogMenuAdmin extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DialogMenuAdmin
-     */
-    private ArrayList<String> titulosInmuebles; // Variable para almacenar los destinos
-    private ArrayList<String> titulosReservas; // Variable para almacenar los destinos
-    private ArrayList<String> titulosUsuarios; // Variable para almacenar los destinos
-    
+    private GestorUsuarios gestorUsuarios;
+    private GestorInmuebles gestorInmuebles;
+
+    private DefaultTableModel tableModel1;
+    private DefaultTableModel tableModel2;
+    private DefaultTableModel tableModel3;
+
+
     
     public DialogMenuAdmin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("JavaBnB");
-        titulosInmuebles = new ArrayList<>(); // Inicializa la lista de destinos
-        cargarInmueblesDesdeArchivo("inmuebles.txt");
-        cargarReservasDesdeArchivo("reservas.txt");
-        cargarUsuariosDesdeArchivo("Users.txt");
-        mostrarInmuebles();
-        mostrarReservas();
-        mostrarUsuarios();
         
-        //Buscador de Inmuebles
-        // Crea un nuevo JScrollPane y agrega el panel de inmuebles
-        JScrollPane panelInmuebles = new JScrollPane(panelDeInmuebles);
-        // Establece la política de desplazamiento vertical
-        panelInmuebles.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        // Agrega el JScrollPane al panel jPanel2
-        jPanel2.add(panelInmuebles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 550, 400));
+        //TABLA USUARIOS
+        gestorUsuarios = new GestorUsuarios();
+        String[] columnNames = {"Tipo de Usuario", "Nombre", "Correo", "Telefono", "DNI", "Estatus"};
+        tableModel1 = new DefaultTableModel(columnNames, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace todas las celdas no editables
+            }     
+        };
         
-        // Agrega un ActionListener al buscador
+        tablaUsuarios.setModel(tableModel1);
+                
+        List<Object[]> usuarios = GestorUsuarios.obtenerTodosLosUsuarios();
+        for (Object[] usuario : usuarios) {
+            tableModel1.addRow(usuario);
+        }
+        
+        // TABLA INMUEBLES
+        gestorInmuebles = new GestorInmuebles();
+        String[] columnNames2 = {"Correo Anfitrion", "Titulo", "Dirección", "Tipo Propiedad", "Máximo Huéspedes", "Precio Noche", "Servicios"};
+        tableModel2 = new DefaultTableModel(columnNames2,0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace todas las celdas no editables
+            }     
+        };
+        
+        tablaInmuebles.setModel(tableModel2);
+                
+        List<Object[]> inmuebles = GestorInmuebles.obtenerTodosLosInmuebles();
+        for (Object[] inmueble : inmuebles) {
+            tableModel2.addRow(inmueble);
+        }
+        
+        // TABLA RESERVAS
+        /*gestorInmuebles = new GestorInmuebles();
+        
+        tableModel2 = new DefaultTableModel(new Object[][]{}, new String[]{
+            "Correo Anfitrion", "Titulo", "Dirección", "Tipo Propiedad", "Máximo Huéspedes", "Precio Noche", 
+            "Servicios"
+        });
+        
+        tablaInmuebles.setModel(tableModel2);
+                
+        List<Object[]> inmuebles = GestorInmuebles.obtenerTodosLosInmuebles();
+        for (Object[] inmueble : inmuebles) {
+            tableModel2.addRow(inmueble);
+        }
+        */
+        
+        //FOCUS  de los tres buscadores
         Buscador.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buscarDestinos();
                 jLabel29.requestFocus(true);
                 Buscador.setText(" 🔍 Buscador de destinos");
             }
         });
         
-        //Buscador de reservas
-        // Crea un nuevo JScrollPane y agrega el panel de inmuebles
-        JScrollPane panelReservas = new JScrollPane(panelDeReservas);
-        // Establece la política de desplazamiento vertical
-        panelReservas.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        // Agrega el JScrollPane al panel jPanel2
-        jPanel3.add(panelReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 550, 400));
-        
-        // Agrega un ActionListener al buscador
         Buscador1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buscarUsuarios();
                 jLabel29.requestFocus(true);
-                Buscador1.setText(" 🔍 Buscador de destinos");
+                Buscador1.setText(" 🔍 Buscador de Reservas");
             }
         });
         
-        //Buscador de Usuarios
-        // Crea un nuevo JScrollPane y agrega el panel de usuarios
-        JScrollPane panelUser = new JScrollPane(panelDeUsuarios);
-        // Establece la política de desplazamiento vertical
-        panelUser.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        // Agrega el JScrollPane al panel jPanel4
-        jPanel4.add(panelUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 550, 400));
-
-        // Agrega un ActionListener al buscador
         Buscador2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buscarUsuarios();
                 jLabel29.requestFocus(true);
                 Buscador2.setText(" 🔍 Buscador de Usuarios");
             }
         });
+        
     
-    }  
     
-    private void cargarInmueblesDesdeArchivo(String nombreArchivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                // Agregar el destino al ArrayList de destinos
-                titulosInmuebles.add(linea);
+        //CODIGO BUSCADOR USUARIOS
+        Buscador2.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterTable(Buscador2.getText());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void mostrarInmuebles() {
-        panelDeInmuebles.removeAll(); // Limpiar el panel
-        panelDeInmuebles.setLayout(new GridLayout(0, 1)); // Establecer GridLayout
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterTable(Buscador2.getText());
+            }
 
-        // Agregar un JLabel para cada destino
-        for (String destino : titulosInmuebles) {
-            JLabel label = new JLabel(destino);
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            panelDeInmuebles.add(label);
-        }
-
-        // Actualizar el panel
-        panelDeInmuebles.revalidate();
-        panelDeInmuebles.repaint();
-    }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterTable(Buscador2.getText());
+            }
+        });
     
-    private void buscarDestinos() {
-        String filtro = Buscador.getText().trim().toLowerCase();
-        panelDeInmuebles.removeAll(); // Limpiar el panel
-
-        // Filtrar los destinos según el texto de búsqueda
-        for (String destino : titulosInmuebles) {
-            if (destino.toLowerCase().contains(filtro)) {
-                JLabel label = new JLabel(destino);
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-                panelDeInmuebles.add(label);
-            }
-        }
-
-        // Actualizar el panel
-        panelDeInmuebles.revalidate();
-        panelDeInmuebles.repaint();
     }
-    
-    private void cargarReservasDesdeArchivo(String nombreArchivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            titulosReservas = new ArrayList<>(); // Inicializa la lista de reservas
-            while ((linea = br.readLine()) != null) {
-                titulosReservas.add(linea);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void mostrarReservas() {
-        panelDeReservas.removeAll(); // Limpiar el panel
-        panelDeReservas.setLayout(new GridLayout(0, 1)); // Establecer GridLayout
-
-        // Agregar un JLabel para cada reserva
-        for (String reserva : titulosReservas) {
-            JLabel label = new JLabel(reserva);
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            panelDeReservas.add(label);
-        }
-
-        // Actualizar el panel
-        panelDeReservas.revalidate();
-        panelDeReservas.repaint();
-    }
-
-    private void buscarReservas() {
-        String filtro = Buscador1.getText().trim().toLowerCase();
-        panelDeReservas.removeAll(); // Limpiar el panel
-
-        // Filtrar las reservas según el texto de búsqueda
-        for (String reserva : titulosReservas) {
-            if (reserva.toLowerCase().contains(filtro)) {
-                JLabel label = new JLabel(reserva);
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-                panelDeReservas.add(label);
-            }
-        }
-
-        // Actualizar el panel
-        panelDeReservas.revalidate();
-        panelDeReservas.repaint();
-    }
-    
-    private void cargarUsuariosDesdeArchivo(String nombreArchivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(nombreArchivo))) {
-            String linea;
-            titulosUsuarios = new ArrayList<>(); // Inicializa la lista de usuarios
-            while ((linea = br.readLine()) != null) {
-                titulosUsuarios.add(linea);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void mostrarUsuarios() {
-        panelDeUsuarios.removeAll(); // Limpiar el panel
-        panelDeUsuarios.setLayout(new GridLayout(0, 1)); // Establecer GridLayout
-
-        // Agregar un JLabel para cada usuario
-        for (String usuario : titulosUsuarios) {
-            JLabel label = new JLabel(usuario);
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            panelDeUsuarios.add(label);
-        }
-
-        // Actualizar el panel
-        panelDeUsuarios.revalidate();
-        panelDeUsuarios.repaint();
-    }
-
-    private void buscarUsuarios() {
-        String filtro = Buscador2.getText().trim().toLowerCase();
-        panelDeUsuarios.removeAll(); // Limpiar el panel
-
-        // Filtrar los usuarios según el texto de búsqueda
-        for (String usuario : titulosUsuarios) {
-            if (usuario.toLowerCase().contains(filtro)) {
-                JLabel label = new JLabel(usuario);
-                label.setHorizontalAlignment(SwingConstants.CENTER);
-                panelDeUsuarios.add(label);
-            }
-        }
-
-        // Actualizar el panel
-        panelDeUsuarios.revalidate();
-        panelDeUsuarios.repaint();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -254,21 +148,24 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         buttonReservas = new javax.swing.JButton();
         buttonInmuebles = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
+        consultaInmuebles = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Buscador = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        panelDeInmuebles = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaInmuebles = new javax.swing.JTable();
+        consultaReservas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         Buscador1 = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
-        panelDeReservas = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaReservas = new javax.swing.JTable();
+        consultaUsuarios = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         Buscador2 = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
-        panelDeUsuarios = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -322,14 +219,14 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 500));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        consultaInmuebles.setBackground(new java.awt.Color(255, 255, 255));
+        consultaInmuebles.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Consulta de Inmuebles");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
+        consultaInmuebles.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
 
         Buscador.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
-        Buscador.setText(" 🔍 Buscador de destinos");
+        Buscador.setText(" 🔍 Buscador de Destinos");
         Buscador.setBorder(null);
         Buscador.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -344,22 +241,38 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 BuscadorActionPerformed(evt);
             }
         });
-        jPanel2.add(Buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
+        consultaInmuebles.add(Buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
+        consultaInmuebles.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
 
-        panelDeInmuebles.setBackground(new java.awt.Color(255, 255, 255));
-        panelDeInmuebles.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(panelDeInmuebles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 550, 400));
+        tablaInmuebles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Correo Anfitrión", "Titulo", "Dirección", "Tipo Propiedad", "Máximo Huéspedes", "Precio Noche", "Servicios"
+            }
+        ));
+        jScrollPane3.setViewportView(tablaInmuebles);
+        if (tablaInmuebles.getColumnModel().getColumnCount() > 0) {
+            tablaInmuebles.getColumnModel().getColumn(0).setResizable(false);
+        }
 
-        jTabbedPane1.addTab("tab1", jPanel2);
+        consultaInmuebles.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 390));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jTabbedPane1.addTab("tab1", consultaInmuebles);
+
+        consultaReservas.setBackground(new java.awt.Color(255, 255, 255));
+        consultaReservas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Consulta de Reservas");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
+        consultaReservas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
 
         Buscador1.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         Buscador1.setText(" 🔍 Buscador de Reservas");
@@ -377,22 +290,35 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 Buscador1ActionPerformed(evt);
             }
         });
-        jPanel3.add(Buscador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
+        consultaReservas.add(Buscador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
+        consultaReservas.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
 
-        panelDeReservas.setBackground(new java.awt.Color(255, 255, 255));
-        panelDeReservas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(panelDeReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 550, 400));
+        tablaReservas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre Anfitrion", "Nombre Cliente", "Correo Cliente", "Teléfono Cliente", "DNI Cliente", "Estatus Cliente"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaReservas);
 
-        jTabbedPane1.addTab("tab2", jPanel3);
+        consultaReservas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 390));
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jTabbedPane1.addTab("tab2", consultaReservas);
+
+        consultaUsuarios.setBackground(new java.awt.Color(255, 255, 255));
+        consultaUsuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setText("Consulta de Usuarios");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
+        consultaUsuarios.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
 
         Buscador2.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         Buscador2.setText(" 🔍 Buscador de Usuarios");
@@ -410,23 +336,55 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 Buscador2ActionPerformed(evt);
             }
         });
-        jPanel4.add(Buscador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
+        consultaUsuarios.add(Buscador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel4.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
+        consultaUsuarios.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
 
-        panelDeUsuarios.setBackground(new java.awt.Color(255, 255, 255));
-        panelDeUsuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel4.add(panelDeUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 550, 400));
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Tipo Usuario", "Nombre", "Correo Electrónico", "Teléfono", "DNI", "Estatus"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaUsuarios);
 
-        jTabbedPane1.addTab("tab3", jPanel4);
+        consultaUsuarios.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 390));
+
+        jTabbedPane1.addTab("tab3", consultaUsuarios);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, -50, 590, 550));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void filterTable(String query) {
+        List<Object[]> inmuebles = gestorInmuebles.obtenerTodosLosInmuebles();
+        List<Object[]> filteredInmuebles = inmuebles.stream()
+                .filter(inmueble -> {
+                    for (Object field : inmueble) {
+                        if (field.toString().toLowerCase().contains(query.toLowerCase())) {
+                            return true;
+                        }
+                    }
+                    return false;
+                })
+                .collect(Collectors.toList());
 
+        tableModel2.setRowCount(0); // Limpia la tabla
+        for (Object[] inmueble : filteredInmuebles) {
+            tableModel2.addRow(inmueble);
+        }
+    }
+    
     private void buttonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUserActionPerformed
         jTabbedPane1.setSelectedIndex(2);
         //DialogCrearInmuebles dci = new DialogCrearInmuebles();
@@ -460,13 +418,13 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
     private void BuscadorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BuscadorFocusLost
         // TODO add your handling code here:
         if (Buscador.getText().equals("")){
-            Buscador.setText(" 🔍 Buscador de destinos");
+            Buscador.setText(" 🔍 Buscador de Reservas");
         }
     }//GEN-LAST:event_BuscadorFocusLost
 
     private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
         // TODO add your handling code here:
-        if (Buscador.getText().equals(" 🔍 Buscador de destinos")){
+        if (Buscador.getText().equals(" 🔍 Buscador de Usuarios")){
             Buscador.setText("");
         }
     }//GEN-LAST:event_BuscadorActionPerformed
@@ -521,6 +479,9 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -545,21 +506,24 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
     private javax.swing.JButton buttonInmuebles;
     private javax.swing.JButton buttonReservas;
     private javax.swing.JButton buttonUser;
+    private javax.swing.JPanel consultaInmuebles;
+    private javax.swing.JPanel consultaReservas;
+    private javax.swing.JPanel consultaUsuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JPanel panelDeInmuebles;
-    private javax.swing.JPanel panelDeReservas;
-    private javax.swing.JPanel panelDeUsuarios;
+    private javax.swing.JTable tablaInmuebles;
+    private javax.swing.JTable tablaReservas;
+    private javax.swing.JTable tablaUsuarios;
     // End of variables declaration//GEN-END:variables
 }

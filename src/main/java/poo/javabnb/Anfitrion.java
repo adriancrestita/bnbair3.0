@@ -13,7 +13,7 @@ public class Anfitrion implements Serializable{
     //Atributos
     protected String dni;
     protected String nombre;
-    protected String correoElectronico;
+    protected static String correoElectronico;
     protected String clave;
     protected String telefono;
     private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class Anfitrion implements Serializable{
         return nombre;
     }
 
-    public String getCorreoElectronico() {
+    public static String getCorreoElectronico() {
         return correoElectronico;
     }
 

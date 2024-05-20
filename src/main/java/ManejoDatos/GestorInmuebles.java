@@ -41,7 +41,7 @@ public class GestorInmuebles {
 
     private static void cargarInmuebles() {
         try{
-            FileInputStream fis = new FileInputStream("clientes.dat");
+            FileInputStream fis = new FileInputStream("inmuebles.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);
             Object obj = ois.readObject();
 
@@ -58,5 +58,17 @@ public class GestorInmuebles {
             System.out.println(e);
 
         }    
+    }
+    
+    public static List<Object[]> obtenerTodosLosInmuebles() {
+        List<Object[]> listainmuebles = new ArrayList<>();
+
+        for (Inmueble inmueble : inmuebles) {
+            listainmuebles.add(new Object[]{
+                inmueble.getCorreo(), inmueble.getTitulo(), inmueble.getDireccion(), inmueble.getTipoPropiedad(), inmueble.getMaxHuespedes(),
+                inmueble.getPrecioNoche(), inmueble.getServicios() 
+            });
+        }
+        return listainmuebles;
     }
 }

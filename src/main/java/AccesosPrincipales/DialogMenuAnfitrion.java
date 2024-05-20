@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
 
 /**
@@ -901,7 +902,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private void precioNocheAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_precioNocheAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_precioNocheAncestorAdded
-
+    private static String correo;
     private void precioNocheStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_precioNocheStateChanged
         // TODO add your handling code here:
         int price = precioNoche.getValue();
@@ -955,7 +956,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
             List<String> initialElements = Arrays.asList(calle, numero, ciudad, CP);       
             ArrayList<String> direccion = new ArrayList<>(initialElements);        
 
-            Inmueble nuevoInmueble = new Inmueble("hola", titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, paths);
+            Inmueble nuevoInmueble = new Inmueble(Anfitrion.getCorreoElectronico(), titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, paths);
             gestorInmuebles.agregarInmueble(nuevoInmueble);  
             MetodosConsultaInmuebles.saveImages(files);
             JOptionPane.showMessageDialog(this, "Creado correctamente");
