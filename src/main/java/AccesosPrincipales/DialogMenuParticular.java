@@ -7,6 +7,8 @@ package AccesosPrincipales;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import ManejoDatos.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +51,18 @@ public class DialogMenuParticular extends javax.swing.JDialog {
             //crea un jlabel en el scrollpane con información acerca del inmueble
             String textoInmueble = inmueble.getTitulo()+" C/"+inmueble.getCalle()+", "+inmueble.getCiudad()+" "+inmueble.getCP()+" "+inmueble.getPrecioNoche()+"€/noche Valoración: "+inmueble.getCalificacion()+"/5";
             JLabel label = new JLabel(textoInmueble);
+            
+            // Añadir MouseListener para capturar clics en el JLabel
+            label.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Acción al hacer clic en el JLabel
+                    FrameDestinoSeleccionado destino = new FrameDestinoSeleccionado(inmueble);
+                    destino.setVisible(true);
+                    setVisible(false);
+                }
+            });
+            
             panel.add(label);
             
         }

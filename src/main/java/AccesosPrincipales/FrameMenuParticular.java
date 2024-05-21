@@ -101,9 +101,9 @@ public class FrameMenuParticular extends javax.swing.JFrame {
     }
 
     private void mostrarPopup(String nombreDestino) {
-        FrameDestinoSeleccionado destino = new FrameDestinoSeleccionado(nombreDestino);
+        /*FrameDestinoSeleccionado destino = new FrameDestinoSeleccionado(nombreDestino);
         destino.setVisible(true);
-        dispose();
+        dispose();*/
     }
     
     private void searchInmuebles(String searchText) {
