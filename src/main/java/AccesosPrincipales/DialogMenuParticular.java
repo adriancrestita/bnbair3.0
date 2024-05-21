@@ -26,6 +26,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
      */
     GestorInmuebles gestorInmuebles = new GestorInmuebles();
     List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
+    String PATH_IMAGENES="src/main/java/ImagenesDestino/";
     
     public DialogMenuParticular(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -49,6 +50,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
             String textoInmueble = inmueble.getTitulo()+" C/"+inmueble.getCalle()+", "+inmueble.getCiudad()+" "+inmueble.getCP()+" "+inmueble.getPrecioNoche()+"€/noche Valoración: "+inmueble.getCalificacion()+"/5";
             JLabel label = new JLabel(textoInmueble);
             panel.add(label);
+            
         }
 
         scrollPane.setViewportView(panel);
