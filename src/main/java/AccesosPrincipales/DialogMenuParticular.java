@@ -7,8 +7,14 @@ package AccesosPrincipales;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import ManejoDatos.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import poo.javabnb.*;
 
 /**
@@ -20,17 +26,53 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     /**
      * Creates new form DialogMenuParticular
      */
+    GestorInmuebles gestorInmuebles = new GestorInmuebles();
+    List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
+    String PATH_IMAGENES="src/main/java/ImagenesDestino/";
+    
     public DialogMenuParticular(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("JavaBnB");
         
-        GestorInmuebles gestorInmuebles = new GestorInmuebles();
         
-        List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
         
-        //System.out.println(listaInmuebles.get(0).getTitulo());
+        agregarInmueblesAlScrollPane(listaInmuebles, scrollPaneReservas);
+    }
+    
+    private void agregarInmueblesAlScrollPane(List<Inmueble> listaInmuebles, JScrollPane scrollPane) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new javax.swing.BoxLayout(panel, javax.swing.BoxLayout.Y_AXIS));
         
+        for (Inmueble inmueble : listaInmuebles) {
+            
+            //crea un jlabel en el scrollpane con información acerca del inmueble
+            String textoInmueble = inmueble.getTitulo()+" C/"+inmueble.getCalle()+", "+inmueble.getCiudad()+" "+inmueble.getCP()+" "+inmueble.getPrecioNoche()+"€/noche Valoración: "+inmueble.getCalificacion()+"/5";
+            JLabel label = new JLabel(textoInmueble);
+            
+            // Añadir MouseListener para capturar clics en el JLabel
+            label.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Acción al hacer clic en el JLabel
+                    FrameDestinoSeleccionado destino = new FrameDestinoSeleccionado(inmueble);
+                    destino.setVisible(true);
+                    setVisible(false);
+                }
+            });
+            
+            panel.add(label);
+            
+        }
+
+        scrollPane.setViewportView(panel);
+    }
+    
+    // Método para filtrar inmuebles por ciudad
+    private List<Inmueble> filtrarInmuebles(List<Inmueble> listaInmuebles, String query) {
+        return listaInmuebles.stream()
+                .filter(inmueble -> inmueble.getCiudad().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -52,6 +94,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         panelExplorarReservas = new javax.swing.JPanel();
         buscador = new javax.swing.JTextField();
+        scrollPaneReservas = new javax.swing.JScrollPane();
         panelMisReservas = new javax.swing.JPanel();
         panelMiPerfil = new javax.swing.JPanel();
         PanelPerfil = new javax.swing.JPanel();
@@ -148,6 +191,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
             }
         });
         panelExplorarReservas.add(buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 570, -1));
+        panelExplorarReservas.add(scrollPaneReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 550, 430));
 
         jTabbedPane1.addTab("tab1", panelExplorarReservas);
 
@@ -332,6 +376,11 @@ public class DialogMenuParticular extends javax.swing.JDialog {
 
     private void buscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscadorActionPerformed
         // TODO add your handling code here:
+        String query = buscador.getText();
+        List<Inmueble> listaFiltrada = filtrarInmuebles(listaInmuebles, query);
+        agregarInmueblesAlScrollPane(listaFiltrada, scrollPaneReservas);
+        jLabel30.requestFocus(true);
+        buscador.setText("🔍 Buscador de destinos");
     }//GEN-LAST:event_buscadorActionPerformed
 
     /**
@@ -409,5 +458,6 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     private javax.swing.JPanel panelExplorarReservas;
     private javax.swing.JPanel panelMiPerfil;
     private javax.swing.JPanel panelMisReservas;
+    private javax.swing.JScrollPane scrollPaneReservas;
     // End of variables declaration//GEN-END:variables
 }
