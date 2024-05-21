@@ -134,7 +134,7 @@ public class VerificarDatos {
         }
     }
     
-    public boolean validarRegistro(String correo, String nombre, String contraseña, String telefono, String dni) throws IOException {        
+    public boolean validarRegistro(String correo, String nombre, String contraseña, String telefono, String dni, String tipo) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
             nombre.isEmpty() || nombre.equals("Ingrese el nombre") ||
@@ -145,9 +145,16 @@ public class VerificarDatos {
         }
 
         // Verificar cada campo con sus respectivas funciones de validación
-        if(verificarRegistroCliente(correo) == true || verificarRegistroAnfitrion(correo) == true){
-            if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
-                    return true;
+        if("Anfitrión".equals(tipo)){
+            if(verificarRegistroAnfitrion(correo) == true){
+                if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
+                        return true;
+                }
+
+                else{
+                    JOptionPane.showMessageDialog(null, "Los datos introducidos no son válidos");
+                    return false;
+                }    
             }
 
             else{
@@ -155,12 +162,28 @@ public class VerificarDatos {
                 return false;
             }    
         }
-          
-        else{
-            JOptionPane.showMessageDialog(null, "Los datos introducidos no son validos");
-            return false;
+        if("Cliente".equals(tipo)){
+            if(verificarRegistroCliente(correo) == true){
+                if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
+                        return true;
+                }
+
+                else{
+                    JOptionPane.showMessageDialog(null, "Los datos introducidos no son válidos");
+                    return false;
+                }    
+            }
+
+            else{
+                JOptionPane.showMessageDialog(null, "El usuario ya existe");
+                return false;
+            }    
         }
+        else{
+            return false;
+        }  
     }
+    
     
     public static boolean validarInmueble(String titulo, String calle, String numero, String cp, String ciudad, String precio){
         if (titulo.isEmpty() || titulo.equals("Ingrese el titulo") ||

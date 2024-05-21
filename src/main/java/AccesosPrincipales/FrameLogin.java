@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import poo.javabnb.Anfitrion;
 import poo.javabnb.ClienteParticular;
+import poo.javabnb.Sesion;
 /**
  *
  * @author crestas
@@ -244,7 +245,7 @@ public class FrameLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jmaillogActionPerformed
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
-       String email = jmaillog.getText();
+    String email = jmaillog.getText();
     String password = new String(jpasswordlog.getPassword());
 
     if (email.equals("") || email.equals(mensajeOriginalCorreo)) {
@@ -265,6 +266,7 @@ public class FrameLogin extends javax.swing.JFrame {
             ClienteParticular cliente = VerificarDatos.iniciarSesionCliente(email, password);
             if (cliente != null) {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión de cliente exitoso. Bienvenido " + cliente.getNombre() + "!");
+                Sesion.iniciarSesion(email);
                 FrameMenuParticular pantallaCliente = new FrameMenuParticular();
                 pantallaCliente.setVisible(true);
                 dispose();
@@ -275,6 +277,7 @@ public class FrameLogin extends javax.swing.JFrame {
             Anfitrion anfitrion = VerificarDatos.iniciarSesionAnfitrion(email, password);
             if (anfitrion != null) {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión de anfitrión exitoso. Bienvenido " + anfitrion.getNombre() + "!");
+                Sesion.iniciarSesion(email);
                 DialogMenuAnfitrion pantallaAnfitrion = new DialogMenuAnfitrion(FrameLogin.this, true);
                 pantallaAnfitrion.setVisible(true);
                 dispose();

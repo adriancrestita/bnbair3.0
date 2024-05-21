@@ -374,13 +374,13 @@ public class FrameRegistro extends javax.swing.JFrame {
 
         try{
             if ("Cliente".equals(selectedItem)) {
-                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim()) == true) && (vd.validarTarjeta(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim()) == true)){
+                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(), jTipoCliente.getSelectedItem().toString()) == true) && (vd.validarTarjeta(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim()) == true)){
                    
                     // Crear instancia de ClienteParticular          
                     ClienteParticular nuevoCliente = new ClienteParticular(jdni.getText().trim(), jnombre.getText().trim(), jmailsign.getText().trim(), jpasswordsign.getText().trim(), jphonenumber.getText().trim(), jesVIP.isSelected());
             
                     // Crear instancia de TarjetaCredito
-                    TarjetaCredito nuevaTarjeta = new TarjetaCredito(jmailsign.getText().trim(), jfcaducidad.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim());
+                    TarjetaCredito nuevaTarjeta = new TarjetaCredito(jmailsign.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(), jfcaducidad.getText().trim());
 
                     // Agregar cliente y tarjeta a los gestores
                     gestorClientes.agregarCliente(nuevoCliente);
@@ -396,13 +396,13 @@ public class FrameRegistro extends javax.swing.JFrame {
             } 
             
             if ("Anfitrión".equals(selectedItem)) {
-                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim()) == true) && (vd.validarTarjeta(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim()) == true)){
+                if((vd.validarRegistro(jmailsign.getText().trim(),jnombre.getText().trim(),jpasswordsign.getText().trim(),jphonenumber.getText().trim(),jdni.getText().trim(), jTipoCliente.getSelectedItem().toString()) == true) && (vd.validarTarjeta(jtitular.getText().trim(),jnumtarj.getText().trim(),jfcaducidad.getText().trim()) == true)){
                     
                     //Crear instancia de Anfitrion
                     Anfitrion nuevoAnfitrion = new Anfitrion(jdni.getText().trim(), jnombre.getText().trim(), jmailsign.getText().trim(), jpasswordsign.getText().trim(), jphonenumber.getText().trim(), ma.fechaActual(), false);
                     
                     // Crear instancia de TarjetaCredito                  
-                    TarjetaCredito nuevaTarjeta = new TarjetaCredito(jmailsign.getText().trim(), jfcaducidad.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim());
+                    TarjetaCredito nuevaTarjeta = new TarjetaCredito(jmailsign.getText().trim(),jtitular.getText().trim(),jnumtarj.getText().trim(), jfcaducidad.getText().trim());
 
                     // Agregar anfitrion y tarjeta a los gestores
                     gestorAnfitrion.agregarAnfitrion(nuevoAnfitrion);

@@ -8,8 +8,7 @@ public class Inmueble implements Serializable{
     
     //Atributos
     private static final long serialVersionUID = 1L;
-    private transient Anfitrion Anfitrion;
-    private String CorreoAnfitrion;
+    private String correoAnfitrion;
     private String titulo;
     private ArrayList<String> direccion;
     private String calle;
@@ -30,8 +29,8 @@ public class Inmueble implements Serializable{
     private Anfitrion anfi;
     
     // Constructor
-    public Inmueble(Anfitrion anfitrion, String titulo, ArrayList<String> direccion, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios, ArrayList<String> imagePaths) {
-        this.Anfitrion = anfitrion;
+    public Inmueble(String correoAnfitrion, String titulo, ArrayList<String> direccion, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios, ArrayList<String> imagePaths) {
+        this.correoAnfitrion = correoAnfitrion;
         this.titulo = titulo;
         this.direccion = direccion;
         this.maxHuespedes = maxHuespedes;
@@ -51,32 +50,17 @@ public class Inmueble implements Serializable{
         
     }
     
-    public Inmueble(Anfitrion anfitrion, String titulo, String calle, String numero, String ciudad, String CP, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios) {
-        this.Anfitrion = anfitrion;
-        this.titulo = titulo;
-        this.calle = calle;
-        this.numero = numero;
-        this.ciudad = ciudad;
-        this.CP = CP;
-        this.maxHuespedes = maxHuespedes;
-        this.numHabitaciones = numHabitaciones;
-        this.numCamas = numCamas;
-        this.numBaños = numBaños;
-        this.tipoPropiedad = tipoPropiedad;
-        this.precioNoche = precioNoche;
-        this.servicios = servicios;
-        this.numCalif=0;
-    }
+    
 
     // Getters y Setters
     public String getCorreoAnfitrion() {    
-        return CorreoAnfitrion;
+        return correoAnfitrion;
     }
-    
-    public void setAnfitrion(Anfitrion anfitrion){
-        this.CorreoAnfitrion =  anfitrion.getCorreoElectronico();
-        Anfitrion = anfitrion;
-    }
+//    
+//    public void setAnfitrion(Anfitrion anfitrion){
+//        this.CorreoAnfitrion =  anfitrion.getCorreoElectronico();
+//        Anfitrion = anfitrion;
+//    }
     
     public String getTitulo() {
         return titulo;

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
+import poo.javabnb.Sesion;
 
 /**
  *
@@ -847,9 +848,10 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private void buttonPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPerfilActionPerformed
         jTabbedPane1.setSelectedIndex(2);
     }//GEN-LAST:event_buttonPerfilActionPerformed
-    private ArrayList<String> paths;
+    private List<String> paths;
     private File[] files;
     private int result;
+    private ArrayList<String> imagePaths;
     private void imagenesInmuebleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenesInmuebleActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true); // Permite seleccionar múltiples archivos
@@ -857,7 +859,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image files", "jpg", "png", "gif", "bmp")); // Filtra solo archivos de imagen
 
         result = fileChooser.showOpenDialog(null); // Muestra el diálogo del selector de archivos
-
+        paths = new ArrayList<>();
         if (result == JFileChooser.APPROVE_OPTION) {
             files = fileChooser.getSelectedFiles(); // Obtiene los archivos seleccionados
             for (File file : files) {
@@ -866,6 +868,9 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         } else if (result == JFileChooser.CANCEL_OPTION) {
             JOptionPane.showMessageDialog(null, "No se encontró ningún archivo");
         }
+        
+        imagePaths = (ArrayList<String>) paths;
+        
     }//GEN-LAST:event_imagenesInmuebleActionPerformed
 
     private void siguiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguiente1ActionPerformed
@@ -956,8 +961,8 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
             ArrayList<String> direccion = new ArrayList<>(initialElements);        
             
             
-            Inmueble nuevoInmueble = new Inmueble(anfitrion, titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, paths);
-            nuevoInmueble.setAnfitrion(anfitrion);
+            Inmueble nuevoInmueble = new Inmueble(Sesion.obtenerCorreoUsuario(), titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, imagePaths);
+            //nuevoInmueble.setAnfitrion(anfitrion);
             gestorInmuebles.agregarInmueble(nuevoInmueble);  
             MetodosConsultaInmuebles.saveImages(files);
             JOptionPane.showMessageDialog(this, "Creado correctamente");

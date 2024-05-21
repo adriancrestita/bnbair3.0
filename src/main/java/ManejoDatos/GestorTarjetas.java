@@ -56,4 +56,13 @@ public class GestorTarjetas {
             System.out.println(e);
         }
     }
+    
+    public String obtenerNumeroTarjeta(String correo) {
+        for (TarjetaCredito tarjeta : tarjetas) {
+            if (tarjeta.getCorreo().equals(correo)) {
+                return tarjeta.getNumeroTarjeta();
+            }
+        }
+        return "No disponible";
+    }
 }

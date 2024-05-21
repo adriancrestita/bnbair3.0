@@ -32,16 +32,16 @@ public class Javabnb {
 
         // Cargar los datos desde los archivos .dat
         System.out.println("Cargando datos de clientes...");
-        gestorClientes.obtenerClientes().forEach(cliente -> System.out.println(cliente.getCorreoElectronico()));
+        //gestorClientes.obtenerClientes().forEach(cliente -> System.out.println(cliente.getCorreoElectronico()));
 
         System.out.println("Cargando datos de tarjetas...");
-        gestorTarjetas.obtenerTarjetas().forEach(tarjeta -> System.out.println(tarjeta.getNumeroTarjeta()));
+        //gestorTarjetas.obtenerTarjetas().forEach(tarjeta -> System.out.println(tarjeta.getNumeroTarjeta()));
 
         System.out.println("Cargando datos de inmuebles...");
-        gestorInmuebles.obtenerInmuebles().forEach(inmueble -> System.out.println(inmueble.getTitulo()));
+        //gestorInmuebles.obtenerInmuebles().forEach(inmueble -> System.out.println(inmueble.getTitulo()));
 
         System.out.println("Cargando datos de anfitriones...");
-        gestorAnfitrion.obtenerAnfitriones().forEach(anfitrion -> System.out.println(anfitrion.getCorreoElectronico()));
+        //gestorAnfitrion.obtenerAnfitriones().forEach(anfitrion -> System.out.println(anfitrion.getCorreoElectronico()));
 
         
         

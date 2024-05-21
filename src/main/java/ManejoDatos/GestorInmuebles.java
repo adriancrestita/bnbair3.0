@@ -66,7 +66,7 @@ public class GestorInmuebles {
         
         for (Inmueble inmueble : inmuebles) {
             listainmuebles.add(new Object[]{
-                "correoAnfitrion", inmueble.getTitulo(), inmueble.getDireccionAsString(), inmueble.getTipoPropiedad(), inmueble.getMaxHuespedes(),
+                inmueble.getCorreoAnfitrion(), inmueble.getTitulo(), inmueble.getDireccionAsString(), inmueble.getTipoPropiedad(), inmueble.getMaxHuespedes(),
                 inmueble.getPrecioNoche() + "€", inmueble.getServiciosAsString() 
             });
         }
