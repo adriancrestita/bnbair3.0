@@ -42,6 +42,12 @@ public class Inmueble implements Serializable{
         this.precioNoche = precioNoche;
         this.servicios = servicios;
         this.imagePaths = imagePaths;
+        //Separar la información de la dirección
+        this.calle=direccion.get(0);
+        this.numero=direccion.get(1);
+        this.ciudad=direccion.get(2);
+        this.CP=direccion.get(3);
+        
     }
     
     public Inmueble(String correo, String titulo, String calle, String numero, String ciudad, String CP, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios) {
@@ -77,6 +83,9 @@ public class Inmueble implements Serializable{
     }
 
     public String getCalle() {
+        if (calle==null){
+            this.calle=direccion.get(0);
+        }
         return calle;
     }
 
@@ -85,6 +94,9 @@ public class Inmueble implements Serializable{
     }
     
     public String getNumero(){
+        if (numero==null){
+            this.numero=direccion.get(1);
+        }
         return numero;
     }
     
@@ -93,6 +105,9 @@ public class Inmueble implements Serializable{
     }
     
     public String getCP(){
+        if (CP==null){
+            this.CP=direccion.get(3);
+        }
         return CP;
     }
     
@@ -101,6 +116,9 @@ public class Inmueble implements Serializable{
     }
     
     public String getCiudad(){
+        if (ciudad==null){
+            this.ciudad=direccion.get(2);
+        }
         return ciudad;
     }
     
@@ -177,12 +195,24 @@ public class Inmueble implements Serializable{
         return direccion;
     }
     
+    private void verificarDireccion(){
+        this.calle=direccion.get(0);
+        this.numero=direccion.get(1);
+        this.ciudad=direccion.get(2);
+        this.CP=direccion.get(3);
+    }
+    
    
 
     // Método para mostrar información del inmueble
     public String mostrarInformacion() {
+        
+        if((calle==null)||(numero==null)||(CP==null)||(ciudad==null)){
+            verificarDireccion();
+        }
+        
         return "\nInmueble: " + titulo +
-        "\nDirección: " + calle + "," + numero + "," + CP + "," + ciudad +
+        "\nDirección: " + calle + " " + numero + ", " + CP + ", " + ciudad +
         "\nMáximo de huéspedes: " + maxHuespedes +
         "\nNúmero de habitaciones: " + numHabitaciones +
         "\nNúmero de camas: " + numCamas +
