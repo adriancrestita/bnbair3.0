@@ -137,9 +137,15 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         }
     }
     
-    private void actualizarPrecio() throws ParseException {
-        double totalCost = calcularPrecio(fechaInicial, fechaFinal, costeNoche);
-        jLabel32.setText(String.valueOf(totalCost) + "€");
+    private void actualizarPrecio() {
+        try {
+            double totalCost = calcularPrecio(fechaInicial, fechaFinal, costeNoche);
+            jLabel32.setText(String.valueOf(totalCost) + "€");
+        } catch (ParseException e) {
+            // Manejar todas las excepciones aquí, sin imprimirlas en la consola
+        } catch (Exception e) {
+            // Manejar cualquier otra excepción aquí, sin imprimirla en la consola
+        }
     }
 
     private static double calcularPrecio(JFormattedTextField textField1, JFormattedTextField textField2, double costPerNight) throws ParseException {
