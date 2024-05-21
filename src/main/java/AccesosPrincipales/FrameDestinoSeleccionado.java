@@ -5,8 +5,11 @@
 package AccesosPrincipales;
 
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import poo.javabnb.Inmueble;
 
 /**
@@ -28,6 +31,59 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
         jLabel13.setText(inmueble.getTitulo());
+        jLabel19.setText(inmueble.direccionToString());
+        jLabel20.setText("Huéspedes máximos "+inmueble.getMaxHuespedes());
+        jLabel21.setText("Número de habitaciones: "+inmueble.getNumHabitaciones());
+        jLabel22.setText("Número de camas: "+inmueble.getNumCamas()); 
+        jLabel23.setText("Número de baños: "+inmueble.getNumBaños());
+        jLabel28.setText(inmueble.getCalificacion()+"/5");
+        jLabel29.setText(inmueble.getNumCalif()+" valoraciones");
+        
+        
+        ArrayList <String> servicios = inmueble.getServicios();
+        
+        setServicios(servicios);
+        
+        
+        int numMaxHuespedes = Integer.parseInt(inmueble.getMaxHuespedes());
+        
+        numHuespedes.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                checkSpinnerValue(numHuespedes , numMaxHuespedes);
+            }
+        });
+    }
+    
+    //Método para identificar los servicios del inmueble
+    private void setServicios(ArrayList<String> servicios){
+        for (int i=0; i<servicios.size();i++){
+            
+            String servicio= servicios.get(i);
+            
+            switch (servicio){
+                case "Aire Acondicionado" -> servicioAC.setSelected(true);
+                case "Aparcamiento" -> servicioAparcamiento.setSelected(true);
+                case "Calefacción" -> servicioCalefaccion.setSelected(true);
+                case "Cocina" -> servicioCocina.setSelected(true);
+                case "Lavadora" -> servicioLavadora.setSelected(true);
+                case "Piscina" -> servicioPiscina.setSelected(true);
+                case "Wifi" -> servicioWifi.setSelected(true);
+                case "Zona de trabajo" -> servicioZonaTrabajo.setSelected(true); 
+            }
+        }
+        
+    }
+    
+    // Método para verificar el valor del spinner con un máximo
+    private void checkSpinnerValue(JSpinner spinner, int maxValue) {
+        int value = (int) spinner.getValue();
+        if (value > maxValue) {
+            spinner.setValue(maxValue);
+        }
+        else if (value < 1) {
+            spinner.setValue(1);
+        }
     }
     
     /**
@@ -71,7 +127,14 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         jPanel7 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        servicioWifi = new javax.swing.JRadioButton();
+        servicioLavadora = new javax.swing.JRadioButton();
+        servicioAC = new javax.swing.JRadioButton();
+        servicioAparcamiento = new javax.swing.JRadioButton();
+        servicioCalefaccion = new javax.swing.JRadioButton();
+        servicioPiscina = new javax.swing.JRadioButton();
+        servicioCocina = new javax.swing.JRadioButton();
+        servicioZonaTrabajo = new javax.swing.JRadioButton();
         jLabel33 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel34 = new javax.swing.JLabel();
@@ -88,6 +151,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jScrollPane2.getVerticalScrollBar().setUnitIncrement(20);
         jScrollPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -164,10 +228,9 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel27.setText("Valoracion ");
 
-        jLabel28.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        jLabel28.setText("*");
+        jLabel28.setText("dada");
 
-        jLabel29.setText("numero de valoraciones");
+        jLabel29.setText("número de valoraciones");
 
         jButton4.setText("LLEGADA");
 
@@ -204,29 +267,54 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setText("Mostrar los __ servicios");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setLayout(new java.awt.GridLayout(4, 2, 20, 20));
+
+        servicioWifi.setText("Wifi");
+        servicioWifi.setEnabled(false);
+        servicioWifi.setFocusCycleRoot(true);
+        servicioWifi.setFocusable(false);
+        jPanel7.add(servicioWifi);
+
+        servicioLavadora.setText("Lavadora");
+        servicioLavadora.setEnabled(false);
+        servicioLavadora.setFocusable(false);
+        jPanel7.add(servicioLavadora);
+
+        servicioAC.setText("Aire acondicionado");
+        servicioAC.setEnabled(false);
+        servicioAC.setFocusable(false);
+        servicioAC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                servicioACActionPerformed(evt);
             }
         });
+        jPanel7.add(servicioAC);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(348, Short.MAX_VALUE)
-                .addComponent(jButton7)
-                .addContainerGap())
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(181, Short.MAX_VALUE)
-                .addComponent(jButton7)
-                .addContainerGap())
-        );
+        servicioAparcamiento.setText("Aparcamiento");
+        servicioAparcamiento.setEnabled(false);
+        servicioAparcamiento.setFocusable(false);
+        jPanel7.add(servicioAparcamiento);
+
+        servicioCalefaccion.setText("Calefaccion");
+        servicioCalefaccion.setEnabled(false);
+        servicioCalefaccion.setFocusable(false);
+        jPanel7.add(servicioCalefaccion);
+
+        servicioPiscina.setText("Piscina");
+        servicioPiscina.setEnabled(false);
+        servicioPiscina.setFocusable(false);
+        jPanel7.add(servicioPiscina);
+
+        servicioCocina.setText("Cocina");
+        servicioCocina.setEnabled(false);
+        servicioCocina.setFocusable(false);
+        jPanel7.add(servicioCocina);
+
+        servicioZonaTrabajo.setText("Zona de trabajo");
+        servicioZonaTrabajo.setEnabled(false);
+        servicioZonaTrabajo.setFocusable(false);
+        jPanel7.add(servicioZonaTrabajo);
 
         jLabel33.setText("Servicios del alojamiento:");
 
@@ -283,8 +371,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                                     .addComponent(jLabel23)
                                     .addComponent(jLabel21)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jLabel28)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel27)
                                 .addGap(37, 37, 37)
                                 .addComponent(jLabel29))
@@ -321,7 +409,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel30)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(numHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(numHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                             .addComponent(jButton4)
                                             .addGap(18, 18, 18)
@@ -420,7 +508,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                     .addComponent(jLabel42))
                 .addGap(64, 64, 64)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel1);
@@ -456,9 +544,9 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void servicioACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicioACActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_servicioACActionPerformed
 
     /**
      * @param args the command line arguments
@@ -500,7 +588,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -542,5 +629,13 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSpinner numHuespedes;
+    private javax.swing.JRadioButton servicioAC;
+    private javax.swing.JRadioButton servicioAparcamiento;
+    private javax.swing.JRadioButton servicioCalefaccion;
+    private javax.swing.JRadioButton servicioCocina;
+    private javax.swing.JRadioButton servicioLavadora;
+    private javax.swing.JRadioButton servicioPiscina;
+    private javax.swing.JRadioButton servicioWifi;
+    private javax.swing.JRadioButton servicioZonaTrabajo;
     // End of variables declaration//GEN-END:variables
 }

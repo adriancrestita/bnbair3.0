@@ -46,8 +46,6 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         
         for (Inmueble inmueble : listaInmuebles) {
             
-            System.out.println(inmueble.mostrarInformacion());
-            
             //crea un jlabel en el scrollpane con información acerca del inmueble
             String textoInmueble = inmueble.getTitulo()+" C/"+inmueble.getCalle()+", "+inmueble.getCiudad()+" "+inmueble.getCP()+" "+inmueble.getPrecioNoche()+"€/noche Valoración: "+inmueble.getCalificacion()+"/5";
             JLabel label = new JLabel(textoInmueble);

@@ -27,6 +27,7 @@ public class Inmueble implements Serializable{
     private ArrayList<String> servicios;
     private ArrayList<String> imagePaths;
     private double calificacion;
+    private int numCalif;
     private Anfitrion anfi;
     
     // Constructor
@@ -42,6 +43,7 @@ public class Inmueble implements Serializable{
         this.precioNoche = precioNoche;
         this.servicios = servicios;
         this.imagePaths = imagePaths;
+        this.numCalif=0;
         //Separar la información de la dirección
         this.calle=direccion.get(0);
         this.numero=direccion.get(1);
@@ -64,6 +66,7 @@ public class Inmueble implements Serializable{
         this.tipoPropiedad = tipoPropiedad;
         this.precioNoche = precioNoche;
         this.servicios = servicios;
+        this.numCalif=0;
     }
 
     // Getters y Setters
@@ -188,7 +191,15 @@ public class Inmueble implements Serializable{
     }
 
     public void setCalificacion(double calificacion) {
-        this.calificacion = calificacion;
+        this.calificacion=calificacion;
+    }
+    
+    public void califMedia(double calificacionNew){
+        this.calificacion = ((calificacion*numCalif)+calificacionNew)/(numCalif++);
+        numCalif ++;
+    }
+    public int getNumCalif(){
+        return numCalif;
     }
     
     public ArrayList<String> getDireccion() {
@@ -200,6 +211,13 @@ public class Inmueble implements Serializable{
         this.numero=direccion.get(1);
         this.ciudad=direccion.get(2);
         this.CP=direccion.get(3);
+    }
+    
+    public String direccionToString(){
+        if((calle==null)||(numero==null)||(CP==null)||(ciudad==null)){
+            verificarDireccion();
+        }
+        return calle+" "+numero+", "+ciudad+" "+CP;
     }
     
    
