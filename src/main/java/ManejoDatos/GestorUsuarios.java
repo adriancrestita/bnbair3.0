@@ -37,14 +37,14 @@ public class GestorUsuarios {
         for (ClienteParticular cliente : clientes) {
             usuarios.add(new Object[]{
                 "Cliente", cliente.getNombre(), cliente.getCorreoElectronico(),
-                cliente.getTelefono(), cliente.getDni(), cliente.cmpVIP() ? "VIP" : "No VIP"
+                cliente.getTelefono(), cliente.getDni(), "NUMERO TARJETA CLIENTE", cliente.cmpVIP() ? "VIP" : "No VIP", ""
             });
         }
 
         for (Anfitrion anfitrion : anfitriones) {
             usuarios.add(new Object[]{
                 "Anfitrion", anfitrion.getNombre(), anfitrion.getCorreoElectronico(),
-                anfitrion.getTelefono(), anfitrion.getDni(), anfitrion.cmpSuperAnfitrion()
+                anfitrion.getTelefono(), anfitrion.getDni(), "NUMERO TARJETA ANFITRION",anfitrion.cmpSuperAnfitrion(), anfitrion.getFechaRegistro()
             });
         }
 

@@ -15,8 +15,12 @@ public class GestorTarjetas {
     }
 
     public void agregarTarjeta(TarjetaCredito tarjeta) {
-        tarjetas.add(tarjeta);
-        guardarTarjetas();
+        if (tarjeta.getCorreo() == null || tarjeta.getCorreo().isEmpty()) {
+            throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
+        } else {
+            tarjetas.add(tarjeta);
+            guardarTarjetas();
+        }
     }
 
     public List<TarjetaCredito> obtenerTarjetas() {
@@ -24,31 +28,31 @@ public class GestorTarjetas {
     }
 
     private void guardarTarjetas() {
-        try{
-           FileOutputStream fos = new FileOutputStream("tarjetas.dat");
-           ObjectOutputStream oos = new ObjectOutputStream(fos);
-           oos.writeObject(tarjetas);
-           oos.close();
-       }catch(Exception e){
-           System.out.println(e);
-       }
+        try {
+            FileOutputStream fos = new FileOutputStream(FILENAME);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(tarjetas);
+            oos.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     private void cargarTarjetas() {
-        try{
-            FileInputStream fis = new FileInputStream("clientes.dat");
+        try {
+            FileInputStream fis = new FileInputStream(FILENAME);
             ObjectInputStream ois = new ObjectInputStream(fis);
             Object obj = ois.readObject();
 
-            if(obj instanceof List) {
+            if (obj instanceof List) {
                 List tempList = (List) obj;
                 tempList.stream().forEach(object -> {
-                    if(object instanceof TarjetaCredito) {
+                    if (object instanceof TarjetaCredito) {
                         tarjetas.add((TarjetaCredito) object);
                     }
                 });
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

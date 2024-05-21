@@ -1,18 +1,16 @@
 package poo.javabnb;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.io.Serializable;
 import java.util.*;
-
-import java.util.List;
 
 public class Inmueble implements Serializable{
     
     //Atributos
     private static final long serialVersionUID = 1L;
+    private transient Anfitrion Anfitrion;
+    private String CorreoAnfitrion;
     private String titulo;
-    private String correo;
     private ArrayList<String> direccion;
     private String calle;
     private String numero;
@@ -27,11 +25,10 @@ public class Inmueble implements Serializable{
     private ArrayList<String> servicios;
     private ArrayList<String> imagePaths;
     private double calificacion;
-    private Anfitrion anfi;
     
     // Constructor
-    public Inmueble(String correo, String titulo, ArrayList<String> direccion, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios, ArrayList<String> imagePaths) {
-        this.correo = correo;
+    public Inmueble(Anfitrion anfitrion, String titulo, ArrayList<String> direccion, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios, ArrayList<String> imagePaths) {
+        this.Anfitrion = anfitrion;
         this.titulo = titulo;
         this.direccion = direccion;
         this.maxHuespedes = maxHuespedes;
@@ -44,8 +41,8 @@ public class Inmueble implements Serializable{
         this.imagePaths = imagePaths;
     }
     
-    public Inmueble(String correo, String titulo, String calle, String numero, String ciudad, String CP, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios) {
-        this.correo = correo;
+    public Inmueble(Anfitrion anfitrion, String titulo, String calle, String numero, String ciudad, String CP, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios) {
+        this.Anfitrion = anfitrion;
         this.titulo = titulo;
         this.calle = calle;
         this.numero = numero;
@@ -61,13 +58,15 @@ public class Inmueble implements Serializable{
     }
 
     // Getters y Setters
-    public String getCorreo() {
-        return correo;
+    public String getCorreoAnfitrion() {    
+        return CorreoAnfitrion;
     }
     
-    public void setCorreo(String correo){
-        this.correo = correo;
+    public void setAnfitrion(Anfitrion anfitrion){
+        this.CorreoAnfitrion =  anfitrion.getCorreoElectronico();
+        Anfitrion = anfitrion;
     }
+    
     public String getTitulo() {
         return titulo;
     }
@@ -175,6 +174,14 @@ public class Inmueble implements Serializable{
     
     public ArrayList<String> getDireccion() {
         return direccion;
+    }
+    
+    public String getDireccionAsString() {
+        return String.join(", ", direccion);
+    }
+
+    public String getServiciosAsString() {
+        return String.join(", ", servicios);
     }
     
    

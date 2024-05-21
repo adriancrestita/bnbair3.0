@@ -1,4 +1,4 @@
-
+    
 package AccesosPrincipales;
 
 import ManejoDatos.GestorInmuebles;
@@ -9,9 +9,19 @@ import java.util.List;
 import ManejoDatos.GestorUsuarios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
+import poo.javabnb.Inmueble;
 
 
 
@@ -23,10 +33,26 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
 
     private GestorUsuarios gestorUsuarios;
     private GestorInmuebles gestorInmuebles;
-
     private DefaultTableModel tableModel1;
     private DefaultTableModel tableModel2;
     private DefaultTableModel tableModel3;
+    private JPopupMenu menuContextual;
+    private List<Inmueble> listaInmuebles;
+
+
+    private String[] nombresVariables = {
+        "Buscador",
+        "Buscador1",
+        "Buscador2"
+    };
+
+    private String[] mensajesOriginales = {
+        " 🔍 Buscador de Inmuebles",
+        " 🔍 Buscador de Reservas",
+        " 🔍 Buscador de Usuarios",
+    };
+    
+    private HashMap<String, JTextField> camposDeTexto = new HashMap<>();
 
 
     
@@ -35,9 +61,53 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         initComponents();
         setTitle("JavaBnB");
         
+        
+        listaInmuebles = gestorInmuebles.obtenerInmuebles();
+
+        
+        // Agregamos los campos de texto al HashMap
+        camposDeTexto.put("Buscador", Buscador);
+        camposDeTexto.put("Buscador1", Buscador1);
+        camposDeTexto.put("Buscador2", Buscador2);     
+        
+        for (int i = 0; i < nombresVariables.length; i++) {
+            
+            JTextField campo = camposDeTexto.get(nombresVariables[i]);
+            final String mensajeOriginal = mensajesOriginales[i];
+            
+            campo.putClientProperty("JTextField.placeholderText", mensajeOriginal);
+            campo.putClientProperty("JComponent.roundRect", true);
+            campo.setForeground(UIManager.getColor("TextField.foreground"));
+
+            campo.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (campo.getText().equals(mensajeOriginal)) {
+                        campo.setText("");
+                    }
+                    JTextField previousFocusOwner = campo;
+
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (campo.getText().isEmpty()) {
+                        campo.setText(mensajeOriginal);
+                    }
+                    Component previousFocusOwner = e.getOppositeComponent();
+
+                }
+                
+                
+            });
+        }
+
+        /*--------------------------------------------------------------------------------*/        
         //TABLA USUARIOS
         gestorUsuarios = new GestorUsuarios();
-        String[] columnNames = {"Tipo de Usuario", "Nombre", "Correo", "Telefono", "DNI", "Estatus"};
+        String[] columnNames = {"Tipo de Usuario", "Nombre", "Correo", "Telefono", "DNI", "Numero Tarjeta", "Estatus", "Fecha Registro"};
+        
+        //Fija un modo no editable del contenido de las celdas de la tabla
         tableModel1 = new DefaultTableModel(columnNames, 0){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -46,15 +116,46 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         };
         
         tablaUsuarios.setModel(tableModel1);
-                
+        tablaUsuarios.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        //Carga los .dat a la tabla        
         List<Object[]> usuarios = GestorUsuarios.obtenerTodosLosUsuarios();
         for (Object[] usuario : usuarios) {
             tableModel1.addRow(usuario);
         }
         
+        // Hacer las barras de scroll invisibles pero funcionales
+        jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        
+        // Ajuste de tamaño de las columnas
+        TableColumnModel columnModel1 = tablaUsuarios.getColumnModel();
+        for (int column = 0; column < tablaUsuarios.getColumnCount(); column++) {
+            int width = 15; // Mínimo ancho
+            // Obtener el ancho del encabezado
+            TableColumn tableColumn = columnModel1.getColumn(column);
+            TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
+            if (headerRenderer == null) {
+                headerRenderer = tablaUsuarios.getTableHeader().getDefaultRenderer();
+            }
+            Component headerComp = headerRenderer.getTableCellRendererComponent(
+                tablaUsuarios, tableColumn.getHeaderValue(), false, false, 0, 0);
+            width = headerComp.getPreferredSize().width;
+
+            // Obtener el ancho máximo de la columna (datos)
+            for (int row = 0; row < tablaUsuarios.getRowCount(); row++) {
+                TableCellRenderer renderer = tablaUsuarios.getCellRenderer(row, column);
+                Component comp = tablaUsuarios.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            columnModel1.getColumn(column).setPreferredWidth(width);
+        }
+        /*--------------------------------------------------------------------------------*/
         // TABLA INMUEBLES
         gestorInmuebles = new GestorInmuebles();
         String[] columnNames2 = {"Correo Anfitrion", "Titulo", "Dirección", "Tipo Propiedad", "Máximo Huéspedes", "Precio Noche", "Servicios"};
+        
+        //Fija un modo no editable del contenido de las celdas de la tabla 
         tableModel2 = new DefaultTableModel(columnNames2,0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -63,12 +164,44 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         };
         
         tablaInmuebles.setModel(tableModel2);
-                
+        tablaInmuebles.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
+        //Carga el .dat a la tabla
         List<Object[]> inmuebles = GestorInmuebles.obtenerTodosLosInmuebles();
         for (Object[] inmueble : inmuebles) {
             tableModel2.addRow(inmueble);
+        }      
+        
+        // Hacer las barras de scroll invisibles pero funcionales
+        jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane3.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        
+        // Ajuste de tamaño de las columnas
+        TableColumnModel columnModel3 = tablaInmuebles.getColumnModel();
+        for (int column = 0; column < tablaInmuebles.getColumnCount(); column++) {
+            int width = 15; // Mínimo ancho
+            // Obtener el ancho del encabezado
+            TableColumn tableColumn = columnModel3.getColumn(column);
+            TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
+            if (headerRenderer == null) {
+                headerRenderer = tablaInmuebles.getTableHeader().getDefaultRenderer();
+            }
+            Component headerComp = headerRenderer.getTableCellRendererComponent(
+                tablaInmuebles, tableColumn.getHeaderValue(), false, false, 0, 0);
+            width = headerComp.getPreferredSize().width;
+
+            // Obtener el ancho máximo de la columna (datos)
+            for (int row = 0; row < tablaInmuebles.getRowCount(); row++) {
+                TableCellRenderer renderer = tablaInmuebles.getCellRenderer(row, column);
+                Component comp = tablaInmuebles.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            columnModel3.getColumn(column).setPreferredWidth(width);
         }
         
+
+        
+        /*--------------------------------------------------------------------------------*/        
         // TABLA RESERVAS
         /*gestorInmuebles = new GestorInmuebles();
         
@@ -85,48 +218,22 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         }
         */
         
-        //FOCUS  de los tres buscadores
-        Buscador.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jLabel29.requestFocus(true);
-                Buscador.setText(" 🔍 Buscador de destinos");
-            }
-        });
-        
-        Buscador1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jLabel29.requestFocus(true);
-                Buscador1.setText(" 🔍 Buscador de Reservas");
-            }
-        });
-        
-        Buscador2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jLabel29.requestFocus(true);
-                Buscador2.setText(" 🔍 Buscador de Usuarios");
-            }
-        });
-        
-    
-    
-        //CODIGO BUSCADOR USUARIOS
+        /*--------------------------------------------------------------------------------*/   
+        //CODIGO BUSCADOR INMUEBLES
         Buscador2.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                filterTable(Buscador2.getText());
+                filterTable(Buscador.getText());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                filterTable(Buscador2.getText());
+                filterTable(Buscador.getText());
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                filterTable(Buscador2.getText());
+                filterTable(Buscador.getText());
             }
         });
     
@@ -226,7 +333,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         consultaInmuebles.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
 
         Buscador.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
-        Buscador.setText(" 🔍 Buscador de Destinos");
+        Buscador.setText(" 🔍 Buscador de Inmuebles");
         Buscador.setBorder(null);
         Buscador.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -248,21 +355,18 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
 
         tablaInmuebles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Correo Anfitrión", "Titulo", "Dirección", "Tipo Propiedad", "Máximo Huéspedes", "Precio Noche", "Servicios"
+                "Correo Anfitrion", "Titulo", "Dirección", "Tipo", "Nº Camas", "Nº Habitaciones", "Nº Baños", "Máx Huéspedes", "Precio Noche", "Servicios"
             }
         ));
         jScrollPane3.setViewportView(tablaInmuebles);
-        if (tablaInmuebles.getColumnModel().getColumnCount() > 0) {
-            tablaInmuebles.getColumnModel().getColumn(0).setResizable(false);
-        }
 
         consultaInmuebles.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 390));
 
@@ -343,15 +447,15 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Tipo Usuario", "Nombre", "Correo Electrónico", "Teléfono", "DNI", "Estatus"
+                "Tipo Usuario", "Nombre", "Correo Electrónico", "Teléfono", "DNI", "Numero Tarjeta", "Estatus", "Fecha Registro"
             }
         ));
         jScrollPane1.setViewportView(tablaUsuarios);
@@ -384,7 +488,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             tableModel2.addRow(inmueble);
         }
     }
-    
+
     private void buttonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUserActionPerformed
         jTabbedPane1.setSelectedIndex(2);
         //DialogCrearInmuebles dci = new DialogCrearInmuebles();
