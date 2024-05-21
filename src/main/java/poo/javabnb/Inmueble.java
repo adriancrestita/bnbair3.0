@@ -179,10 +179,6 @@ public class Inmueble implements Serializable{
         this.calificacion=calificacion;
     }
     
-    public void califMedia(double calificacionNew){
-        this.calificacion = ((calificacion*numCalif)+calificacionNew)/(numCalif++);
-        numCalif ++;
-    }
     public int getNumCalif(){
         return numCalif;
     }
@@ -235,7 +231,8 @@ public class Inmueble implements Serializable{
     }
     
     // Método para actualizar la calificación basado en una nueva revisión
-    public void actualizarCalificacion(double nuevaCalificacion) {
-        this.calificacion = (this.calificacion + nuevaCalificacion) / 2; // Puede variar según cómo quieras calcular la media
+    public void actualizarCalificacion(double calificacionNew) {
+        this.calificacion = ((calificacion*numCalif)+calificacionNew)/(numCalif++); //hace la media aritmética de todas las calificaciones
+        numCalif ++;
     }
 }

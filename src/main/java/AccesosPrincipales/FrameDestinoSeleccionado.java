@@ -5,12 +5,22 @@
 package AccesosPrincipales;
 
 import java.awt.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import poo.javabnb.Inmueble;
+import javax.swing.text.DateFormatter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 
 /**
  *
@@ -21,6 +31,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     /**
      * Creates new form FrameDestinoSeleccionado
      */
+    
+    private double costeNoche;
     
     public FrameDestinoSeleccionado(){
         initComponents();
@@ -38,6 +50,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel23.setText("Número de baños: "+inmueble.getNumBaños());
         jLabel28.setText(inmueble.getCalificacion()+"/5");
         jLabel29.setText(inmueble.getNumCalif()+" valoraciones");
+        jLabel26.setText("Precio por noche: "+inmueble.getPrecioNoche()+"€");
+        costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
         
         
         ArrayList <String> servicios = inmueble.getServicios();
@@ -53,7 +67,44 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 checkSpinnerValue(numHuespedes , numMaxHuespedes);
             }
         });
+        
+        // Agregar DocumentListener al textField1
+        fechaInicial.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                actualizarPrecio();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                actualizarPrecio();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                actualizarPrecio();
+            }
+        });
+
+        // Agregar DocumentListener al textField2
+        fechaFinal.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                actualizarPrecio();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                actualizarPrecio();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                actualizarPrecio();
+            }
+        });
     }
+    
     
     //Método para identificar los servicios del inmueble
     private void setServicios(ArrayList<String> servicios){
@@ -84,6 +135,33 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         else if (value < 1) {
             spinner.setValue(1);
         }
+    }
+    
+    private void actualizarPrecio() {
+        try {
+            double totalCost = calcularPrecio(fechaInicial, fechaFinal, costeNoche);
+            jLabel32.setText(String.valueOf(totalCost) + "€");
+        } catch (ParseException e) {
+            // Manejar todas las excepciones aquí, sin imprimirlas en la consola
+        } catch (Exception e) {
+            // Manejar cualquier otra excepción aquí, sin imprimirla en la consola
+        }
+    }
+
+    private static double calcularPrecio(JFormattedTextField textField1, JFormattedTextField textField2, double costPerNight) throws ParseException {
+        String date1 = textField1.getText();
+        String date2 = textField2.getText();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate = format.parse(date1);
+        Date endDate = format.parse(date2);
+        long difference = endDate.getTime() - startDate.getTime();
+        int daysBetween = (int) (difference / (1000 * 60 * 60 * 24));
+        if (daysBetween < 0) {
+            System.out.println("La fecha de fin debe ser posterior a la fecha de inicio.");
+            return 0;
+        }
+        double totalCost = daysBetween * costPerNight;
+        return totalCost;
     }
     
     /**
@@ -137,8 +215,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         servicioZonaTrabajo = new javax.swing.JRadioButton();
         jLabel33 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
@@ -148,6 +224,11 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        fechaInicial = new javax.swing.JFormattedTextField();
+        fechaFinal = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -318,10 +399,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel33.setText("Servicios del alojamiento:");
 
-        jLabel34.setText("CALENDARIO MES N");
-
-        jLabel35.setText("CALENDARIO MES N+1");
-
         jLabel36.setText("Contactame");
 
         jLabel37.setText("Nombre anfitrion");
@@ -336,30 +413,37 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel42.setText("jLabel32");
 
+        jPanel3.setLayout(new java.awt.GridLayout(2, 2, 100, 15));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Fecha Inicial");
+        jPanel3.add(jLabel2);
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Fecha Final");
+        jPanel3.add(jLabel3);
+
+        fechaInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        fechaInicial.setText("00/0/0000");
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = currentDate.format(formatter);
+        fechaInicial.setText(formattedDate);
+        jPanel3.add(fechaInicial);
+
+        fechaFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        fechaFinal.setText("30/11/02");
+        fechaFinal.setText(formattedDate);
+        jPanel3.add(fechaFinal);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel36)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel33))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel37)
-                                    .addComponent(jLabel38)
-                                    .addComponent(jLabel39))
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel42)
-                                    .addComponent(jLabel41)
-                                    .addComponent(jLabel40))))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -415,14 +499,25 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                                             .addGap(18, 18, 18)
                                             .addComponent(jButton5)))))
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(26, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(jLabel34)
-                .addGap(221, 221, 221)
-                .addComponent(jLabel35)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel36)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel33))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel37)
+                                    .addComponent(jLabel38)
+                                    .addComponent(jLabel39))
+                                .addGap(39, 39, 39)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel42)
+                                    .addComponent(jLabel41)
+                                    .addComponent(jLabel40)))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,11 +581,9 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel34)
-                    .addComponent(jLabel35))
-                .addGap(94, 94, 94)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel36)
@@ -508,7 +601,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                     .addComponent(jLabel42))
                 .addGap(64, 64, 64)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel1);
@@ -584,6 +677,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField fechaFinal;
+    private javax.swing.JFormattedTextField fechaInicial;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -596,6 +691,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -606,12 +702,11 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
@@ -621,6 +716,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel42;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
