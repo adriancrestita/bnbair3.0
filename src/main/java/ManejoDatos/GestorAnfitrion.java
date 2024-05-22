@@ -94,4 +94,13 @@ public class GestorAnfitrion {
             System.out.println("No se encontró un cliente con el correo especificado.");
         }
     }
+    public Anfitrion obtenerCliente(String correo) {
+        cargarAnfitriones(); // Asegúrate de cargar los datos más recientes
+        for (Anfitrion anfitrion : anfitriones) {
+            if (anfitrion.getCorreoElectronico().equals(correo)) {
+                return anfitrion;
+            }
+        }
+        return null; // Retornar null si no se encuentra el cliente
+    }
 }
