@@ -20,28 +20,7 @@ public class Reservas {
     private Inmueble inmueble;
     private TarjetaCredito tj;
     
-    /*
-    public Reservas(String correoAnfitrion, String correoCliente, String tituloInmueble, List<String> direccionInmueble,
-                    String fechaEntrada, String fechaSalida, String huespedes, String precioNoche, String precioTotal,
-                    String tarjetaCliente, String tarjetaInmueble, Anfitrion anfitrion, ClienteParticular particular,
-                    Inmueble inmueble, TarjetaCredito tj) {
-        this.correoAnfitrion = correoAnfitrion;
-        this.correoCliente = correoCliente;
-        this.tituloInmueble = tituloInmueble;
-        this.direccionInmueble = direccionInmueble;
-        this.fechaEntrada = fechaEntrada;
-        this.fechaSalida = fechaSalida;
-        this.huespedes = huespedes;
-        this.precioNoche = precioNoche;
-        this.precioTotal = precioTotal;
-        this.tarjetaCliente = tarjetaCliente;
-        this.tarjetaInmueble = tarjetaInmueble;
-        this.anfitrion = anfitrion;
-        this.particular = particular;
-        this.inmueble = inmueble;
-        this.tj = tj;
-    }
-    */
+    
     // Getters and Setters for each attribute
     public String getCorreoAnfitrion() {
         return correoAnfitrion;
