@@ -610,27 +610,21 @@
                     <Property name="text" type="java.lang.String" value="Fecha Final"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="fechaInicial">
+                <Component class="javax.swing.JButton" name="botonFechaInicial">
                   <Properties>
-                    <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                      <Format subtype="1" type="1"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="00/0/0000"/>
+                    <Property name="text" type="java.lang.String" value="Elige la fecha Inicial"/>
                   </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="LocalDate currentDate = LocalDate.now();&#xd;&#xa;DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy&quot;);&#xd;&#xa;String formattedDate = currentDate.format(formatter);&#xd;&#xa;fechaInicial.setText(formattedDate);"/>
-                  </AuxValues>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonFechaInicialActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JFormattedTextField" name="fechaFinal">
+                <Component class="javax.swing.JButton" name="botonFechaFinal">
                   <Properties>
-                    <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                      <Format subtype="1" type="1"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="30/11/02"/>
+                    <Property name="text" type="java.lang.String" value="Elige la fecha Final"/>
                   </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="fechaFinal.setText(formattedDate);"/>
-                  </AuxValues>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonFechaFinalActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

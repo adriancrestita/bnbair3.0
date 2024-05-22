@@ -11,7 +11,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import poo.javabnb.Inmueble;
 import javax.swing.text.DateFormatter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -20,6 +19,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import poo.javabnb.Anfitrion;
+import poo.javabnb.Inmueble;
 
 
 /**
@@ -33,6 +37,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
      */
     
     private double costeNoche;
+    private JDateChooser dateChooser1, dateChooser2;
+    private Anfitrion anfiInmueble;
     
     public FrameDestinoSeleccionado(){
         initComponents();
@@ -42,7 +48,15 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     public FrameDestinoSeleccionado(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
+        anfiInmueble = inmueble.getAnfi();// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
+        
+        //establecer la información acerca del destino y anfitrión seleccionado
+        //jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
+        //jLabel40.setText(anfiInmueble.getNombre());
+        //jLabel41.setText(anfiInmueble.getCorreoElectronico());
+        //jLabel42.setText(anfiInmueble.getTelefono());
         jLabel13.setText(inmueble.getTitulo());
+        
         jLabel19.setText(inmueble.direccionToString());
         jLabel20.setText("Huéspedes máximos "+inmueble.getMaxHuespedes());
         jLabel21.setText("Número de habitaciones: "+inmueble.getNumHabitaciones());
@@ -53,6 +67,14 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel26.setText("Precio por noche: "+inmueble.getPrecioNoche()+"€");
         costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
         
+        dateChooser1 = new JDateChooser();
+        dateChooser2 = new JDateChooser();
+        
+        // Configurar rango de fechas seleccionables para el segundo JDateChooser
+        dateChooser2.setSelectableDateRange(null, null);
+
+        // Configurar el primer JDateChooser para que no se puedan seleccionar fechas anteriores a hoy
+        dateChooser1.setSelectableDateRange(new Date(), null);
         
         ArrayList <String> servicios = inmueble.getServicios();
         
@@ -67,44 +89,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 checkSpinnerValue(numHuespedes , numMaxHuespedes);
             }
         });
-        
-        // Agregar DocumentListener al textField1
-        fechaInicial.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                actualizarPrecio();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                actualizarPrecio();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                actualizarPrecio();
-            }
-        });
-
-        // Agregar DocumentListener al textField2
-        fechaFinal.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                actualizarPrecio();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                actualizarPrecio();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                actualizarPrecio();
-            }
-        });
     }
-    
     
     //Método para identificar los servicios del inmueble
     private void setServicios(ArrayList<String> servicios){
@@ -126,6 +111,17 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         
     }
     
+    //Método para calcular los días entre 2 fechas, y multiplicarlo por el precio por noche
+    private void updateDaysLabel() {
+        Date date1 = dateChooser1.getDate();
+        Date date2 = dateChooser2.getDate();
+        if (date1 != null && date2 != null) {
+            long diff = Math.abs(date2.getTime() - date1.getTime());
+            long diffDays = diff / (24 * 60 * 60 * 1000);
+            jLabel32.setText(String.valueOf(diffDays*costeNoche)+"€");
+        }
+    }
+    
     // Método para verificar el valor del spinner con un máximo
     private void checkSpinnerValue(JSpinner spinner, int maxValue) {
         int value = (int) spinner.getValue();
@@ -135,33 +131,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         else if (value < 1) {
             spinner.setValue(1);
         }
-    }
-    
-    private void actualizarPrecio() {
-        try {
-            double totalCost = calcularPrecio(fechaInicial, fechaFinal, costeNoche);
-            jLabel32.setText(String.valueOf(totalCost) + "€");
-        } catch (ParseException e) {
-            // Manejar todas las excepciones aquí, sin imprimirlas en la consola
-        } catch (Exception e) {
-            // Manejar cualquier otra excepción aquí, sin imprimirla en la consola
-        }
-    }
-
-    private static double calcularPrecio(JFormattedTextField textField1, JFormattedTextField textField2, double costPerNight) throws ParseException {
-        String date1 = textField1.getText();
-        String date2 = textField2.getText();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date startDate = format.parse(date1);
-        Date endDate = format.parse(date2);
-        long difference = endDate.getTime() - startDate.getTime();
-        int daysBetween = (int) (difference / (1000 * 60 * 60 * 24));
-        if (daysBetween < 0) {
-            System.out.println("La fecha de fin debe ser posterior a la fecha de inicio.");
-            return 0;
-        }
-        double totalCost = daysBetween * costPerNight;
-        return totalCost;
     }
     
     /**
@@ -227,8 +196,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        fechaInicial = new javax.swing.JFormattedTextField();
-        fechaFinal = new javax.swing.JFormattedTextField();
+        botonFechaInicial = new javax.swing.JButton();
+        botonFechaFinal = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -423,18 +392,21 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel3.setText("Fecha Final");
         jPanel3.add(jLabel3);
 
-        fechaInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        fechaInicial.setText("00/0/0000");
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String formattedDate = currentDate.format(formatter);
-        fechaInicial.setText(formattedDate);
-        jPanel3.add(fechaInicial);
+        botonFechaInicial.setText("Elige la fecha Inicial");
+        botonFechaInicial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFechaInicialActionPerformed(evt);
+            }
+        });
+        jPanel3.add(botonFechaInicial);
 
-        fechaFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        fechaFinal.setText("30/11/02");
-        fechaFinal.setText(formattedDate);
-        jPanel3.add(fechaFinal);
+        botonFechaFinal.setText("Elige la fecha Final");
+        botonFechaFinal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFechaFinalActionPerformed(evt);
+            }
+        });
+        jPanel3.add(botonFechaFinal);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -641,6 +613,29 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_servicioACActionPerformed
 
+    private void botonFechaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFechaInicialActionPerformed
+        // TODO add your handling code here:
+        int result = JOptionPane.showConfirmDialog(null, dateChooser1, "Seleccione una fecha", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    Date selectedDate = dateChooser1.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    jLabel2.setText("Fecha seleccionada: " + sdf.format(selectedDate));
+                    dateChooser2.setMinSelectableDate(selectedDate);
+                    updateDaysLabel();
+                }
+    }//GEN-LAST:event_botonFechaInicialActionPerformed
+
+    private void botonFechaFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFechaFinalActionPerformed
+        // TODO add your handling code here:
+        int result = JOptionPane.showConfirmDialog(null, dateChooser2, "Seleccione una fecha", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    Date selectedDate = dateChooser2.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    jLabel3.setText("Fecha seleccionada: " + sdf.format(selectedDate));
+                    updateDaysLabel();
+                }
+    }//GEN-LAST:event_botonFechaFinalActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -677,8 +672,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField fechaFinal;
-    private javax.swing.JFormattedTextField fechaInicial;
+    private javax.swing.JButton botonFechaFinal;
+    private javax.swing.JButton botonFechaInicial;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

@@ -195,6 +195,11 @@ public class Inmueble implements Serializable{
         return String.join(", ", servicios);
     }
     
+    public Anfitrion getAnfi(){
+        return anfi;
+    }
+    
+    //Otros métodos de utilidad
     private void verificarDireccion(){
         this.calle=direccion.get(0);
         this.numero=direccion.get(1);
@@ -209,8 +214,6 @@ public class Inmueble implements Serializable{
         return calle+" "+numero+", "+ciudad+" "+CP;
     }
     
-   
-
     // Método para mostrar información del inmueble
     public String mostrarInformacion() {
         

@@ -267,7 +267,7 @@ public class FrameLogin extends javax.swing.JFrame {
             if (cliente != null) {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión de cliente exitoso. Bienvenido " + cliente.getNombre() + "!");
                 Sesion.iniciarSesion(email);
-                FrameMenuParticular pantallaCliente = new FrameMenuParticular();
+                DialogMenuParticular pantallaCliente = new DialogMenuParticular(FrameLogin.this, true);
                 pantallaCliente.setVisible(true);
                 dispose();
                 return;
