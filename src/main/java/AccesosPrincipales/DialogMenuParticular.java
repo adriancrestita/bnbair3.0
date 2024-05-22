@@ -458,7 +458,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         if (response == JOptionPane.YES_OPTION) {
             // Acción cuando se pulsa "Aceptar"
             ClienteParticular cambioCliente = new ClienteParticular(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(), vip.isSelected());
-            gestorClientes.actualizarCliente(Sesion.obtenerCorreoUsuario(), cambioCliente);
+            gestorClientes.modificarCliente(Sesion.obtenerCorreoUsuario(), cambioCliente);
             JOptionPane.showMessageDialog(frame, "Los cambios se han guardado.");
         } else if (response == JOptionPane.NO_OPTION) {
             // Acción cuando se pulsa "Cancelar"

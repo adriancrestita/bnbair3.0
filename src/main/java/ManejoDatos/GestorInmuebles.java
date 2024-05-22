@@ -40,7 +40,7 @@ public class GestorInmuebles {
        }        
     }
 
-    private static void cargarInmuebles() {
+    public static void cargarInmuebles() {
         try{
             FileInputStream fis = new FileInputStream("inmuebles.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);

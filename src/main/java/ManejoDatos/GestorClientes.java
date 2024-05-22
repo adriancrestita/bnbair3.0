@@ -3,11 +3,12 @@ package ManejoDatos;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.Sesion;
 
 public class GestorClientes {
-    private List<ClienteParticular> clientes;
+    private static List<ClienteParticular> clientes;
     private final String FILENAME = "clientes.dat";
     
     public GestorClientes() {
@@ -40,7 +41,7 @@ public class GestorClientes {
        }        
     }
 
-    private void cargarClientes() {
+    public static void cargarClientes() {
         try{
             FileInputStream fis = new FileInputStream("clientes.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -69,9 +70,20 @@ public class GestorClientes {
         return null; // Retornar null si no se encuentra el cliente
     }
     
-    public boolean actualizarCliente(String correo, ClienteParticular clienteActualizado) {
+    public void actualizarClientes(){
+        
+    }
+    public boolean modificarCliente(String correo, ClienteParticular clienteActualizado) {
         cargarClientes(); // Asegúrate de cargar los datos más recientes
-        for (int i = 0; i < clientes.size(); i++) {
+        ClienteParticular cliente = obtenerCliente(correo);
+        cliente.setClave(clienteActualizado.getClave());
+        cliente.setNombre(clienteActualizado.getNombre());
+        cliente.setCorreoElectronico(clienteActualizado.getCorreoElectronico());
+        cliente.setTelefono(clienteActualizado.getTelefono());
+        cliente.setesVIP(clienteActualizado.cmpVIP());
+        guardarClientes();
+        imprimirClientes();
+        /*for (int i = 0; i < clientes.size(); i++) {
             if (clientes.get(i).getCorreoElectronico().equals(correo)) {
                 clientes.set(i, clienteActualizado);
                 guardarClientes();
@@ -81,7 +93,16 @@ public class GestorClientes {
                 
                 return true; // Cliente actualizado
             }
+        }*/
+        return true; // Cliente no encontrado
+    }
+    public void imprimirClientes() {
+        for (ClienteParticular cliente : clientes) {
+            System.out.println("Nombre: " + cliente.getNombre());
+            System.out.println("Correo Electrónico: " + cliente.getCorreoElectronico());
+            System.out.println("Teléfono: " + cliente.getTelefono());
+            System.out.println("VIP: " + (cliente.cmpVIP() ? "Sí" : "No"));
+            System.out.println("-----------------------------");
         }
-        return false; // Cliente no encontrado
     }
 }
