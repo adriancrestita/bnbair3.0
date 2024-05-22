@@ -62,4 +62,36 @@ public class GestorAnfitrion {
             System.out.println(e);
         }
     }
+    
+    public void eliminarAnfitrion(String correo) {
+        if (correo == null || correo.isEmpty()) {
+            throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
+        } else {
+            boolean removed = anfitriones.removeIf(cliente -> cliente.getCorreoElectronico().equals(correo));
+            if (removed) {
+                guardarAnfitriones();
+                cargarAnfitriones();
+                System.out.println("Cliente eliminado con éxito.");
+            } else {
+                System.out.println("No se encontró un cliente con el correo especificado.");
+            }
+        }
+    }
+    public void modificarCliente(String correo, Anfitrion nuevoAnfitrion) {
+        boolean encontrado = false;
+        for (int i = 0; i < anfitriones.size(); i++) {
+            if (anfitriones.get(i).getCorreoElectronico().equals(correo)) {
+                anfitriones.set(i, nuevoAnfitrion);
+                encontrado = true;
+                break;
+            }
+        }
+        if (encontrado) {
+            guardarAnfitriones();
+            cargarAnfitriones();
+            System.out.println("Cliente modificado con éxito.");
+        } else {
+            System.out.println("No se encontró un cliente con el correo especificado.");
+        }
+    }
 }

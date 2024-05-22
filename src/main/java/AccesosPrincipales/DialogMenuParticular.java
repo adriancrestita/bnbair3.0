@@ -10,11 +10,13 @@ import ManejoDatos.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import poo.javabnb.*;
 
 /**
@@ -26,9 +28,10 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     /**
      * Creates new form DialogMenuParticular
      */
-    GestorInmuebles gestorInmuebles = new GestorInmuebles();
-    List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
-    String PATH_IMAGENES="src/main/java/ImagenesDestino/";
+    private GestorInmuebles gestorInmuebles = new GestorInmuebles();
+    private List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
+    private String PATH_IMAGENES="src/main/java/ImagenesDestino/";
+    
     
     public DialogMenuParticular(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -117,6 +120,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         VIPSuperAnfitrion = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
         labelDNI1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -244,6 +248,13 @@ public class DialogMenuParticular extends javax.swing.JDialog {
 
         labelDNI1.setText("_____________");
 
+        jButton1.setText("Modificar Datos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelPerfilLayout = new javax.swing.GroupLayout(PanelPerfil);
         PanelPerfil.setLayout(PanelPerfilLayout);
         PanelPerfilLayout.setHorizontalGroup(
@@ -277,8 +288,9 @@ public class DialogMenuParticular extends javax.swing.JDialog {
                             .addComponent(jLabel13)
                             .addGroup(PanelPerfilLayout.createSequentialGroup()
                                 .addGap(30, 30, 30)
-                                .addComponent(VIPSuperAnfitrion)))))
-                .addContainerGap(173, Short.MAX_VALUE))
+                                .addComponent(VIPSuperAnfitrion))
+                            .addComponent(jButton1))))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         PanelPerfilLayout.setVerticalGroup(
             PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,9 +331,12 @@ public class DialogMenuParticular extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelDNI)))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelDNI1)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PanelPerfilLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelDNI1))
+                    .addComponent(jButton1))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
@@ -383,6 +398,12 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         buscador.setText("🔍 Buscador de destinos");
     }//GEN-LAST:event_buscadorActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FrameDatos md = new FrameDatos();
+        md.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -433,6 +454,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     private javax.swing.JButton buttonInmuebleDispo;
     private javax.swing.JButton buttonMisReservas;
     private javax.swing.JButton buttonPerfil;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

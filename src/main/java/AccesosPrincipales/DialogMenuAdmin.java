@@ -1,6 +1,8 @@
     
 package AccesosPrincipales;
 
+import ManejoDatos.GestorAnfitrion;
+import ManejoDatos.GestorClientes;
 import ManejoDatos.GestorInmuebles;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -38,6 +40,10 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
     private DefaultTableModel tableModel3;
     private JPopupMenu menuContextual;
     private List<Inmueble> listaInmuebles;
+    private JPopupMenu popupMenu1;
+    private JMenuItem deleteMenuItem1;
+    private JPopupMenu popupMenu2;
+    private JMenuItem deleteMenuItem2;
 
 
     private String[] nombresVariables = {
@@ -128,6 +134,16 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
         
+        // Configurar el Popup Menu
+        popupMenu1 = new JPopupMenu();
+        deleteMenuItem1 = new JMenuItem("Eliminar usuario");
+        popupMenu1.add(deleteMenuItem1);
+        
+        // Asignar el Popup Menu a la tabla
+        tablaUsuarios.setComponentPopupMenu(popupMenu1);
+        
+        
+        
         // Ajuste de tamaño de las columnas
         TableColumnModel columnModel1 = tablaUsuarios.getColumnModel();
         for (int column = 0; column < tablaUsuarios.getColumnCount(); column++) {
@@ -175,6 +191,14 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         jScrollPane3.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+       
+        // Configurar el Popup Menu
+        popupMenu2 = new JPopupMenu();
+        deleteMenuItem2 = new JMenuItem("Eliminar Inmueble");
+        popupMenu2.add(deleteMenuItem2);
+        
+        // Asignar el Popup Menu a la tabla
+        tablaInmuebles.setComponentPopupMenu(popupMenu2);
         
         // Ajuste de tamaño de las columnas
         TableColumnModel columnModel3 = tablaInmuebles.getColumnModel();
@@ -488,6 +512,27 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             tableModel2.addRow(inmueble);
         }
     }
+    /*
+    private void eliminarClienteSeleccionado() {
+        int selectedRow = tablaUsuarios.getSelectedRow();
+        if (selectedRow != -1) {
+            String tipoUsuario = (String) tablaUsuarios.getValueAt(selectedRow, 0);
+            String correo = (String) tablaUsuarios.getValueAt(selectedRow, 2);
+            if(("Cliente").equals(tipoUsuario)){
+                GestorClientes.eliminarCliente(correo);
+                ((DefaultTableModel) tablaUsuarios.getModel()).removeRow(selectedRow);
+                JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.");
+            }
+            if(("Anfitrión").equals(tipoUsuario)){
+                GestorAnfitrion.eliminarAnfitrion(correo);
+                ((DefaultTableModel) tablaUsuarios.getModel()).removeRow(selectedRow);
+                JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
+        }
+    }
+    */
 
     private void buttonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUserActionPerformed
         jTabbedPane1.setSelectedIndex(2);
