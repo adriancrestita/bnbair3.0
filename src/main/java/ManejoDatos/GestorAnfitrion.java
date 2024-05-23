@@ -114,24 +114,23 @@ public class GestorAnfitrion {
         return false;
     }
     
-    public static void eliminarAnfitrion(String correo) {
-        boolean eliminado = false;
+    public static List<Anfitrion> eliminarAnfitrion(String correo) {
+        List<Anfitrion> anfitrionesMod = new ArrayList<>();
         try {
-            List<Anfitrion> anfitrionesMod = deserializarUsuarios();
+            anfitrionesMod = deserializarUsuarios();
+
             for (int i = 0; i < anfitrionesMod.size(); i++) {
-                Anfitrion anfitrion = anfitrionesMod.get(i);
-                if (anfitrion.getCorreoElectronico().equals(correo)) {
+                Anfitrion cp = anfitrionesMod.get(i);
+                if (cp.getCorreoElectronico().equals(correo)) {
                     anfitrionesMod.remove(i);
-                    eliminado = true;
+                    guardarAnfitriones(anfitrionesMod);
                     break;
                 }
             }
-            if (eliminado) {
-                guardarAnfitriones(anfitrionesMod);
-            }
+            
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error al eliminar el usuario: " + ex.getMessage());
         }
-        //return eliminado;
+        return anfitrionesMod;
     }
 }

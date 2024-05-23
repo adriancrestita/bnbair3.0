@@ -27,6 +27,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+import poo.javabnb.Anfitrion;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.Inmueble;
 
@@ -72,13 +73,6 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("JavaBnB");
-        gestorInmuebles.cargarInmuebles();
-        
-        
-        //GestorAnfitrion.cargarAnfitriones();
-        
-        listaInmuebles = gestorInmuebles.obtenerInmuebles();
-
         
         // Agregamos los campos de texto al HashMap
         camposDeTexto.put("Buscador", Buscador);
@@ -136,8 +130,10 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         
         tablaUsuarios.setModel(tableModel1);
         tablaUsuarios.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-       
-        cargarListaUsuarios(gestorClientes.obtenerClientes());
+        
+        //Cargamos los clientes y los usuarios
+        cargarListaClientes(gestorClientes.obtenerClientes());
+        cargarListaAnfitriones(gestorAnfitrion.obtenerAnfitriones());
         
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
@@ -161,17 +157,19 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 
                 //Si es un cliente 
                 if("Cliente".equals(tipoClienteSeleccionado)){
-                    List<ClienteParticular> prueba20= GestorClientes.eliminarCliente(correoClienteSeleccionado);
+                    List<ClienteParticular> clien = GestorClientes.eliminarCliente(correoClienteSeleccionado);
                     GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
-                    cargarListaUsuarios(prueba20);
+                    cargarListaClientes(clien);
 
                     
                 }
                 
                 //Si es un anfitrion elimina anfitrion
                 if("Anfitrion".equals(tipoClienteSeleccionado)){
-                    GestorAnfitrion.eliminarAnfitrion(correoClienteSeleccionado);
+                    List<Anfitrion> anfs =GestorAnfitrion.eliminarAnfitrion(correoClienteSeleccionado);
                     GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
+                    cargarListaAnfitriones(anfs);
+
                 }
 
                 
@@ -554,7 +552,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         }
     }
     
-    private void cargarListaUsuarios(List<ClienteParticular> clientes){
+    private void cargarListaClientes(List<ClienteParticular> clientes){
         //Vacio el contenido de la tabla
         vaciarTabla(tableModel1);
         
@@ -567,6 +565,18 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 cliente.getTelefono(), cliente.getDni(), numeroTarjeta, cliente.cmpVIP() ? "VIP" : "No VIP", ""};
             tableModel1.addRow(fila);
            
+        }
+        
+        
+    }
+    
+    private void cargarListaAnfitriones(List<Anfitrion> anfitriones){
+        vaciarTabla(tableModel1);
+        for (Anfitrion anfitrion : anfitriones) {
+            String numeroTarjeta = gestorTarjetas.obtenerNumeroTarjeta(anfitrion.getCorreoElectronico());
+            Object[] fila = {"Anfitrion", anfitrion.getNombre(), anfitrion.getCorreoElectronico(),
+                anfitrion.getTelefono(), anfitrion.getDni(), numeroTarjeta, anfitrion.cmpSuperAnfitrion(), anfitrion.getFechaRegistro()};
+            tableModel1.addRow(fila);
         }
     }
 
