@@ -44,7 +44,7 @@ public class GestorAnfitrion {
        }
     }
 
-    private void cargarAnfitriones() {
+    public void cargarAnfitriones() {
         try{
             FileInputStream fis = new FileInputStream("anfitriones.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);

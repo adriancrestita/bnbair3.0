@@ -3,10 +3,12 @@ package ManejoDatos;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import poo.javabnb.ClienteParticular;
+import poo.javabnb.Sesion;
 
 public class GestorClientes {
-    private List<ClienteParticular> clientes;
+    private static List<ClienteParticular> clientes;
     private final String FILENAME = "clientes.dat";
     
     public GestorClientes() {
@@ -39,7 +41,7 @@ public class GestorClientes {
        }        
     }
 
-    private void cargarClientes() {
+    public static void cargarClientes() {
         try{
             FileInputStream fis = new FileInputStream("clientes.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -58,23 +60,8 @@ public class GestorClientes {
         }    
     }
     
-    public void eliminarCliente(String correo) {
-        if (correo == null || correo.isEmpty()) {
-            throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
-        } else {
-            boolean removed = clientes.removeIf(cliente -> cliente.getCorreoElectronico().equals(correo));
-            if (removed) {
-                guardarClientes();
-                cargarClientes();
-                System.out.println("Cliente eliminado con éxito.");
-            } else {
-                System.out.println("No se encontró un cliente con el correo especificado.");
-            }
-        }
-    }
-    
     public ClienteParticular obtenerCliente(String correo) {
-        cargarClientes(); // Asegúrate de cargar los datos más recientes
+        cargarClientes(); // Se asegura de cargar los datos más recientes
         for (ClienteParticular cliente : clientes) {
             if (cliente.getCorreoElectronico().equals(correo)) {
                 return cliente;
@@ -83,21 +70,39 @@ public class GestorClientes {
         return null; // Retornar null si no se encuentra el cliente
     }
     
-    public void modificarCliente(String correo, ClienteParticular nuevoCliente) {
-        boolean encontrado = false;
-        for (int i = 0; i < clientes.size(); i++) {
+    public void actualizarClientes(){
+        
+    }
+    public boolean modificarCliente(String correo, ClienteParticular clienteActualizado) {
+        cargarClientes(); // Asegúrate de cargar los datos más recientes
+        ClienteParticular cliente = obtenerCliente(correo);
+        cliente.setClave(clienteActualizado.getClave());
+        cliente.setNombre(clienteActualizado.getNombre());
+        cliente.setCorreoElectronico(clienteActualizado.getCorreoElectronico());
+        cliente.setTelefono(clienteActualizado.getTelefono());
+        cliente.setesVIP(clienteActualizado.cmpVIP());
+        guardarClientes();
+        imprimirClientes();
+        /*for (int i = 0; i < clientes.size(); i++) {
             if (clientes.get(i).getCorreoElectronico().equals(correo)) {
-                clientes.set(i, nuevoCliente);
-                encontrado = true;
-                break;
+                clientes.set(i, clienteActualizado);
+                guardarClientes();
+                
+                //En caso de cambiar el correo actualiza el correo del usuario que ha iniciado sesion
+                Sesion.iniciarSesion(clienteActualizado.getCorreoElectronico());
+                
+                return true; // Cliente actualizado
             }
-        }
-        if (encontrado) {
-            guardarClientes();
-            cargarClientes();
-            System.out.println("Cliente modificado con éxito.");
-        } else {
-            System.out.println("No se encontró un cliente con el correo especificado.");
+        }*/
+        return true; // Cliente no encontrado
+    }
+    public void imprimirClientes() {
+        for (ClienteParticular cliente : clientes) {
+            System.out.println("Nombre: " + cliente.getNombre());
+            System.out.println("Correo Electrónico: " + cliente.getCorreoElectronico());
+            System.out.println("Teléfono: " + cliente.getTelefono());
+            System.out.println("VIP: " + (cliente.cmpVIP() ? "Sí" : "No"));
+            System.out.println("-----------------------------");
         }
     }
 }

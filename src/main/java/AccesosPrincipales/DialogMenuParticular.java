@@ -7,13 +7,16 @@ package AccesosPrincipales;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import ManejoDatos.*;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -32,6 +35,10 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     private List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
     private String PATH_IMAGENES="src/main/java/ImagenesDestino/";
     
+    private ClienteParticular cliente;
+    private GestorClientes gestorClientes = new GestorClientes();
+    
+    
     
     public DialogMenuParticular(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -40,7 +47,20 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         
         
         
+        //Seteamos el objeto cliente del usuario que está utilizado la aplicación
+        cliente = gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario());
+
+        
         agregarInmueblesAlScrollPane(listaInmuebles, scrollPaneReservas);
+        
+        //SET DE LOS TEXTFIELD CON LOS DATOS DEL CLIENTE
+        nombre.setText(cliente.getNombre());
+        correo.setText(cliente.getCorreoElectronico());
+        contraseña.setText(cliente.getClave());
+        telefono.setText(cliente.getTelefono());
+        dni.setText(cliente.getDni());
+        vip.setSelected(cliente.cmpVIP());
+
     }
     
     private void agregarInmueblesAlScrollPane(List<Inmueble> listaInmuebles, JScrollPane scrollPane) {
@@ -77,7 +97,8 @@ public class DialogMenuParticular extends javax.swing.JDialog {
                 .filter(inmueble -> inmueble.getCiudad().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
-
+    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,24 +124,25 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         PanelPerfil = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        labelNombre = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        labelCorreo = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        labelContraseña = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        labelDNI = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        labelTitular = new javax.swing.JLabel();
-        labelNumero = new javax.swing.JLabel();
-        labelCaducidad = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        VIPSuperAnfitrion = new javax.swing.JCheckBox();
+        vip = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
-        labelDNI1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        cambioDatos = new javax.swing.JButton();
+        nombre = new javax.swing.JTextField();
+        correo = new javax.swing.JTextField();
+        contraseña = new javax.swing.JTextField();
+        dni = new javax.swing.JTextField();
+        telefono = new javax.swing.JTextField();
+        titular = new javax.swing.JTextField();
+        numtarj = new javax.swing.JTextField();
+        fcad = new javax.swing.JTextField();
+        editButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -210,48 +232,63 @@ public class DialogMenuParticular extends javax.swing.JDialog {
 
         jLabel5.setText("Nombre:");
 
-        labelNombre.setText("______________");
-
         jLabel7.setText("Correo Electronico:");
-
-        labelCorreo.setText("______________");
 
         jLabel9.setText("Contraseña:");
 
-        labelContraseña.setText("_____________");
-
         jLabel11.setText("DNI:");
 
-        labelDNI.setText("_____________");
-
-        jLabel13.setText("Titular Tarjeta");
-
-        labelTitular.setText("______________");
-
-        labelNumero.setText("______________");
-
-        labelCaducidad.setText("______________");
+        jLabel13.setText("Titular Tarjeta:");
 
         jLabel17.setText("Numero Tarjeta:");
 
         jLabel18.setText("Fecha Caducidad:");
 
-        jLabel19.setText("VIP/SuperAnfitrion");
+        jLabel19.setText("VIP");
 
-        VIPSuperAnfitrion.addActionListener(new java.awt.event.ActionListener() {
+        vip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VIPSuperAnfitrionActionPerformed(evt);
+                vipActionPerformed(evt);
             }
         });
 
         jLabel12.setText("Telefono:");
 
-        labelDNI1.setText("_____________");
-
-        jButton1.setText("Modificar Datos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cambioDatos.setText("Cambiar Datos");
+        cambioDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cambioDatosActionPerformed(evt);
+            }
+        });
+
+        nombre.setFocusable(false);
+
+        correo.setFocusable(false);
+
+        contraseña.setFocusable(false);
+
+        dni.setFocusable(false);
+
+        telefono.setFocusable(false);
+
+        titular.setFocusable(false);
+
+        numtarj.setFocusable(false);
+
+        fcad.setFocusable(false);
+
+        editButton.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        editButton.setSelected(true);
+        editButton.setText("🔒");
+        editButton.setBorder(null);
+        editButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                editButtonStateChanged(evt);
+            }
+        });
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
             }
         });
 
@@ -260,84 +297,92 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         PanelPerfilLayout.setHorizontalGroup(
             PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPerfilLayout.createSequentialGroup()
-                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(134, 134, 134)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(PanelPerfilLayout.createSequentialGroup()
-                        .addGap(259, 259, 259)
-                        .addComponent(jLabel4))
-                    .addGroup(PanelPerfilLayout.createSequentialGroup()
-                        .addGap(119, 119, 119)
-                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5)
-                            .addComponent(labelNombre)
-                            .addComponent(labelCorreo)
-                            .addComponent(labelContraseña)
                             .addComponent(jLabel7)
                             .addComponent(jLabel9)
                             .addComponent(jLabel11)
-                            .addComponent(labelDNI)
                             .addComponent(jLabel12)
-                            .addComponent(labelDNI1))
-                        .addGap(108, 108, 108)
+                            .addComponent(nombre)
+                            .addComponent(correo)
+                            .addComponent(contraseña)
+                            .addComponent(dni)
+                            .addComponent(telefono, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
                         .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel19)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel17)
-                            .addComponent(labelCaducidad)
-                            .addComponent(labelNumero)
-                            .addComponent(labelTitular)
-                            .addComponent(jLabel13)
                             .addGroup(PanelPerfilLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(VIPSuperAnfitrion))
-                            .addComponent(jButton1))))
-                .addContainerGap(158, Short.MAX_VALUE))
+                                .addGap(83, 83, 83)
+                                .addComponent(editButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cambioDatos))
+                            .addGroup(PanelPerfilLayout.createSequentialGroup()
+                                .addGap(88, 88, 88)
+                                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(vip)
+                                    .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel19)
+                                        .addComponent(jLabel18)
+                                        .addComponent(jLabel17)
+                                        .addComponent(jLabel13)
+                                        .addComponent(titular)
+                                        .addComponent(numtarj)
+                                        .addComponent(fcad, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))))))
+                    .addGroup(PanelPerfilLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(140, 140, 140)))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
         PanelPerfilLayout.setVerticalGroup(
             PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPerfilLayout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(VIPSuperAnfitrion)
-                    .addGroup(PanelPerfilLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(60, 60, 60)
-                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelNombre)
-                            .addComponent(labelTitular))
-                        .addGap(18, 18, 18)
-                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel17))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelCorreo)
-                            .addComponent(labelNumero))
-                        .addGap(18, 18, 18)
-                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel18))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelContraseña)
-                            .addComponent(labelCaducidad))
-                        .addGap(18, 18, 18)
-                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel19))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelDNI)))
+                .addComponent(jLabel4)
+                .addGap(19, 19, 19)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(titular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numtarj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fcad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(vip))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel12)
+                .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelPerfilLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelDNI1))
-                    .addComponent(jButton1))
-                .addContainerGap(67, Short.MAX_VALUE))
+                        .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelPerfilLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cambioDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         panelMiPerfil.add(PanelPerfil);
@@ -371,9 +416,9 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         
     }//GEN-LAST:event_buttonCerrarSesionActionPerformed
 
-    private void VIPSuperAnfitrionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VIPSuperAnfitrionActionPerformed
+    private void vipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vipActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_VIPSuperAnfitrionActionPerformed
+    }//GEN-LAST:event_vipActionPerformed
 
     private void buscadorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buscadorFocusGained
         // TODO add your handling code here:
@@ -398,11 +443,89 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         buscador.setText("🔍 Buscador de destinos");
     }//GEN-LAST:event_buscadorActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void cambioDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioDatosActionPerformed
         // TODO add your handling code here:
-        FrameDatos md = new FrameDatos();
-        md.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        JFrame frame = new JFrame("Confirm Dialog Example");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+        
+        int response = JOptionPane.showConfirmDialog(frame,
+                "¿Desea guardar los cambios establecidos?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        
+        if (response == JOptionPane.YES_OPTION) {
+            // Acción cuando se pulsa "Aceptar"
+            ClienteParticular cambioCliente = new ClienteParticular(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(), vip.isSelected());
+            gestorClientes.modificarCliente(Sesion.obtenerCorreoUsuario(), cambioCliente);
+            JOptionPane.showMessageDialog(frame, "Los cambios se han guardado.");
+        } else if (response == JOptionPane.NO_OPTION) {
+            // Acción cuando se pulsa "Cancelar"
+            JOptionPane.showMessageDialog(frame, "Los cambios no se han guardado.");
+        }
+    
+    }//GEN-LAST:event_cambioDatosActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        // TODO add your handling code here:
+        if(editButton.isSelected()){
+            editButton.setBackground(Color.white);
+            editButton.setText("🔒");
+            
+            //Hacemos que los text field sean editables desactivado el modo editable
+            nombre.setEditable(false);
+            correo.setEditable(false);
+            contraseña.setEditable(false);
+            telefono.setEditable(false);
+            dni.setEditable(false);
+            titular.setEditable(false);
+            numtarj.setEditable(false);
+            fcad.setEditable(false);
+            vip.setEnabled(false);
+            
+            //Hacemos que no se pueda hacer focus al text field
+            nombre.setFocusable(false);
+            correo.setFocusable(false);
+            contraseña.setFocusable(false);
+            telefono.setFocusable(false);
+            dni.setFocusable(false);
+            titular.setFocusable(false);
+            numtarj.setFocusable(false);
+            fcad.setFocusable(false);
+        }
+        else{
+            editButton.setBackground(Color.white);
+            editButton.setText("🔓");
+            
+            //Hacemos que los text field sean editables activado el modo editable
+            nombre.setEditable(true);
+            correo.setEditable(true);
+            contraseña.setEditable(true);
+            telefono.setEditable(true);
+            dni.setEditable(true);
+            vip.setEnabled(true);
+            titular.setEditable(true);
+            numtarj.setEditable(true);
+            fcad.setEditable(true);
+            
+            //Hacemos que no se pueda hacer focus al text field
+            nombre.setFocusable(true);
+            correo.setFocusable(true);
+            contraseña.setFocusable(true);
+            telefono.setFocusable(true);
+            dni.setFocusable(true);
+            titular.setFocusable(true);
+            numtarj.setFocusable(true);
+            fcad.setFocusable(true);
+            
+
+        }
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void editButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_editButtonStateChanged
+        
+    }//GEN-LAST:event_editButtonStateChanged
 
     /**
      * @param args the command line arguments
@@ -448,13 +571,17 @@ public class DialogMenuParticular extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelPerfil;
-    private javax.swing.JCheckBox VIPSuperAnfitrion;
     private javax.swing.JTextField buscador;
     private javax.swing.JButton buttonCerrarSesion;
     private javax.swing.JButton buttonInmuebleDispo;
     private javax.swing.JButton buttonMisReservas;
     private javax.swing.JButton buttonPerfil;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton cambioDatos;
+    private javax.swing.JTextField contraseña;
+    private javax.swing.JTextField correo;
+    private javax.swing.JTextField dni;
+    private javax.swing.JToggleButton editButton;
+    private javax.swing.JTextField fcad;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -469,17 +596,14 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel labelCaducidad;
-    private javax.swing.JLabel labelContraseña;
-    private javax.swing.JLabel labelCorreo;
-    private javax.swing.JLabel labelDNI;
-    private javax.swing.JLabel labelDNI1;
-    private javax.swing.JLabel labelNombre;
-    private javax.swing.JLabel labelNumero;
-    private javax.swing.JLabel labelTitular;
+    private javax.swing.JTextField nombre;
+    private javax.swing.JTextField numtarj;
     private javax.swing.JPanel panelExplorarReservas;
     private javax.swing.JPanel panelMiPerfil;
     private javax.swing.JPanel panelMisReservas;
     private javax.swing.JScrollPane scrollPaneReservas;
+    private javax.swing.JTextField telefono;
+    private javax.swing.JTextField titular;
+    private javax.swing.JCheckBox vip;
     // End of variables declaration//GEN-END:variables
 }
