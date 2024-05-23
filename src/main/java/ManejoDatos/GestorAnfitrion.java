@@ -77,7 +77,7 @@ public class GestorAnfitrion {
             }
         }
     }
-    public void modificarCliente(String correo, Anfitrion nuevoAnfitrion) {
+    public void modificarAnfitrion(String correo, Anfitrion nuevoAnfitrion) {
         boolean encontrado = false;
         for (int i = 0; i < anfitriones.size(); i++) {
             if (anfitriones.get(i).getCorreoElectronico().equals(correo)) {
@@ -94,7 +94,7 @@ public class GestorAnfitrion {
             System.out.println("No se encontró un cliente con el correo especificado.");
         }
     }
-    public Anfitrion obtenerCliente(String correo) {
+    public Anfitrion obtenerAnfitrion(String correo) {
         cargarAnfitriones(); // Asegúrate de cargar los datos más recientes
         for (Anfitrion anfitrion : anfitriones) {
             if (anfitrion.getCorreoElectronico().equals(correo)) {

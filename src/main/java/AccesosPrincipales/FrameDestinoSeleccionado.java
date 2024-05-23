@@ -4,6 +4,7 @@
  */
 package AccesosPrincipales;
 
+import ManejoDatos.GestorAnfitrion;
 import java.awt.*;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -39,6 +40,9 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private double costeNoche;
     private JDateChooser dateChooser1, dateChooser2;
     private Anfitrion anfiInmueble;
+    private GestorAnfitrion gestorAnfitrion;
+    private ArrayList<String> imagePaths;
+    private String rutaImgs="src/main/java/ImagenesDestino/";
     
     public FrameDestinoSeleccionado(){
         initComponents();
@@ -48,24 +52,27 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     public FrameDestinoSeleccionado(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
-        anfiInmueble = inmueble.getAnfi();// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
+        gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
+        anfiInmueble = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
+        imagePaths = inmueble.getImages();
         
         //establecer la información acerca del destino y anfitrión seleccionado
-        //jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
-        //jLabel40.setText(anfiInmueble.getNombre());
-        //jLabel41.setText(anfiInmueble.getCorreoElectronico());
-        //jLabel42.setText(anfiInmueble.getTelefono());
+        jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
+        jLabel40.setText(anfiInmueble.getNombre());
+        jLabel41.setText(anfiInmueble.getCorreoElectronico());
+        jLabel42.setText(anfiInmueble.getTelefono());
         jLabel13.setText(inmueble.getTitulo());
-        
         jLabel19.setText(inmueble.direccionToString());
         jLabel20.setText("Huéspedes máximos "+inmueble.getMaxHuespedes());
         jLabel21.setText("Número de habitaciones: "+inmueble.getNumHabitaciones());
         jLabel22.setText("Número de camas: "+inmueble.getNumCamas()); 
         jLabel23.setText("Número de baños: "+inmueble.getNumBaños());
-        jLabel28.setText(inmueble.getCalificacion()+"/5");
+        jLabel27.setText("Valoración: "+inmueble.getCalificacion()+"/5");
         jLabel29.setText(inmueble.getNumCalif()+" valoraciones");
         jLabel26.setText("Precio por noche: "+inmueble.getPrecioNoche()+"€");
         costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
+        
+        updateImagePanel(jPanel2, imagePaths);
         
         dateChooser1 = new JDateChooser();
         dateChooser2 = new JDateChooser();
@@ -89,6 +96,28 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 checkSpinnerValue(numHuespedes , numMaxHuespedes);
             }
         });
+    }
+    
+    //Método para añadir las imágenes al jpanel
+   private void updateImagePanel(JPanel imagePanel, ArrayList<String> imagePaths) {
+        imagePanel.removeAll();
+
+        int size = imagePaths.size();
+        if (size == 0) {
+            JLabel noImagesLabel = new JLabel("Imagenes no disponibles");
+            imagePanel.add(noImagesLabel);
+        } else {
+                ImageIcon originalIcon = new ImageIcon(rutaImgs+imagePaths.get(0));
+                Image originalImage = originalIcon.getImage();
+                Image scaledImage = originalImage.getScaledInstance(637, 358, Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                
+                JLabel imageLabel = new JLabel(scaledIcon);
+                imagePanel.add(imageLabel);
+        }
+
+        imagePanel.revalidate();
+        imagePanel.repaint();
     }
     
     //Método para identificar los servicios del inmueble
@@ -118,7 +147,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         if (date1 != null && date2 != null) {
             long diff = Math.abs(date2.getTime() - date1.getTime());
             long diffDays = diff / (24 * 60 * 60 * 1000);
-            jLabel32.setText(String.valueOf(diffDays*costeNoche)+"€");
+            jLabel31.setText(String.valueOf(diffDays*costeNoche)+"€");
         }
     }
     
@@ -150,8 +179,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel18 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -163,10 +190,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jLabel30 = new javax.swing.JLabel();
         numHuespedes = new javax.swing.JSpinner();
         jLabel31 = new javax.swing.JLabel();
@@ -175,13 +199,21 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jPanel7 = new javax.swing.JPanel();
         servicioWifi = new javax.swing.JRadioButton();
+        jLabel11 = new javax.swing.JLabel();
         servicioLavadora = new javax.swing.JRadioButton();
+        jLabel6 = new javax.swing.JLabel();
         servicioAC = new javax.swing.JRadioButton();
+        jLabel10 = new javax.swing.JLabel();
         servicioAparcamiento = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
         servicioCalefaccion = new javax.swing.JRadioButton();
+        jLabel4 = new javax.swing.JLabel();
         servicioPiscina = new javax.swing.JRadioButton();
+        jLabel8 = new javax.swing.JLabel();
         servicioCocina = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
         servicioZonaTrabajo = new javax.swing.JRadioButton();
+        jLabel9 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
@@ -198,6 +230,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         botonFechaInicial = new javax.swing.JButton();
         botonFechaFinal = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -228,37 +262,9 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel17.setText("<3");
 
-        jLabel18.setText("IMAGENES");
-
-        jButton3.setText("MOSTRAR TODAS IMAGENES");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(287, 287, 287)
-                .addComponent(jLabel18)
-                .addContainerGap(350, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(27, 27, 27))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(25, 25, 25))
-        );
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setMinimumSize(new java.awt.Dimension(10, 10));
+        jPanel2.setLayout(new java.awt.GridLayout());
 
         jLabel19.setText("Localidad, Pais");
 
@@ -278,18 +284,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel27.setText("Valoracion ");
 
-        jLabel28.setText("dada");
-
         jLabel29.setText("número de valoraciones");
-
-        jButton4.setText("LLEGADA");
-
-        jButton5.setText("SALIDA");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
 
         jLabel30.setText("Huespedes");
 
@@ -318,53 +313,91 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         });
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setLayout(new java.awt.GridLayout(4, 2, 20, 20));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        servicioWifi.setText("Wifi");
         servicioWifi.setEnabled(false);
         servicioWifi.setFocusCycleRoot(true);
         servicioWifi.setFocusable(false);
-        jPanel7.add(servicioWifi);
+        servicioWifi.setMaximumSize(new java.awt.Dimension(5, 20));
+        servicioWifi.setMinimumSize(new java.awt.Dimension(5, 20));
+        servicioWifi.setPreferredSize(new java.awt.Dimension(5, 20));
+        jPanel7.add(servicioWifi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 102, -1));
 
-        servicioLavadora.setText("Lavadora");
+        jLabel11.setText("Wifi");
+        jPanel7.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 102, 20));
+
         servicioLavadora.setEnabled(false);
         servicioLavadora.setFocusable(false);
-        jPanel7.add(servicioLavadora);
+        servicioLavadora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                servicioLavadoraActionPerformed(evt);
+            }
+        });
+        jPanel7.add(servicioLavadora, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 102, -1));
 
-        servicioAC.setText("Aire acondicionado");
+        jLabel6.setText("Lavadora");
+        jPanel7.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 102, 20));
+
         servicioAC.setEnabled(false);
         servicioAC.setFocusable(false);
+        servicioAC.setMaximumSize(new java.awt.Dimension(5, 20));
+        servicioAC.setMinimumSize(new java.awt.Dimension(5, 20));
+        servicioAC.setPreferredSize(new java.awt.Dimension(5, 20));
         servicioAC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 servicioACActionPerformed(evt);
             }
         });
-        jPanel7.add(servicioAC);
+        jPanel7.add(servicioAC, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 102, -1));
 
-        servicioAparcamiento.setText("Aparcamiento");
+        jLabel10.setText("Aire acondicionado");
+        jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, 20));
+
         servicioAparcamiento.setEnabled(false);
         servicioAparcamiento.setFocusable(false);
-        jPanel7.add(servicioAparcamiento);
+        jPanel7.add(servicioAparcamiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 102, -1));
 
-        servicioCalefaccion.setText("Calefaccion");
+        jLabel5.setText("Aparcamiento");
+        jPanel7.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 102, 20));
+
         servicioCalefaccion.setEnabled(false);
         servicioCalefaccion.setFocusable(false);
-        jPanel7.add(servicioCalefaccion);
+        servicioCalefaccion.setMaximumSize(new java.awt.Dimension(5, 20));
+        servicioCalefaccion.setMinimumSize(new java.awt.Dimension(5, 20));
+        servicioCalefaccion.setPreferredSize(new java.awt.Dimension(5, 20));
+        jPanel7.add(servicioCalefaccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 102, -1));
 
-        servicioPiscina.setText("Piscina");
+        jLabel4.setText("Calefaccion");
+        jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 102, 20));
+
         servicioPiscina.setEnabled(false);
         servicioPiscina.setFocusable(false);
-        jPanel7.add(servicioPiscina);
+        jPanel7.add(servicioPiscina, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 102, -1));
 
-        servicioCocina.setText("Cocina");
+        jLabel8.setText("Pisicina");
+        jPanel7.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 102, 20));
+
         servicioCocina.setEnabled(false);
         servicioCocina.setFocusable(false);
-        jPanel7.add(servicioCocina);
+        servicioCocina.setMaximumSize(new java.awt.Dimension(5, 20));
+        servicioCocina.setMinimumSize(new java.awt.Dimension(5, 20));
+        servicioCocina.setPreferredSize(new java.awt.Dimension(5, 20));
+        servicioCocina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                servicioCocinaActionPerformed(evt);
+            }
+        });
+        jPanel7.add(servicioCocina, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 102, -1));
 
-        servicioZonaTrabajo.setText("Zona de trabajo");
+        jLabel7.setText("Cocina");
+        jPanel7.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 102, 20));
+
         servicioZonaTrabajo.setEnabled(false);
         servicioZonaTrabajo.setFocusable(false);
-        jPanel7.add(servicioZonaTrabajo);
+        jPanel7.add(servicioZonaTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 102, -1));
+
+        jLabel9.setText("Zona de trabajo");
+        jPanel7.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 102, 20));
 
         jLabel33.setText("Servicios del alojamiento:");
 
@@ -382,7 +415,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel42.setText("jLabel32");
 
-        jPanel3.setLayout(new java.awt.GridLayout(2, 2, 100, 15));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new java.awt.GridLayout(2, 2, 85, 15));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Fecha Inicial");
@@ -392,7 +426,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel3.setText("Fecha Final");
         jPanel3.add(jLabel3);
 
-        botonFechaInicial.setText("Elige la fecha Inicial");
+        botonFechaInicial.setText("LLegada");
         botonFechaInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonFechaInicialActionPerformed(evt);
@@ -400,13 +434,20 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         });
         jPanel3.add(botonFechaInicial);
 
-        botonFechaFinal.setText("Elige la fecha Final");
+        botonFechaFinal.setText("Salida");
         botonFechaFinal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonFechaFinalActionPerformed(evt);
             }
         });
         jPanel3.add(botonFechaFinal);
+
+        jButton3.setText("MOSTRAR TODAS IMAGENES");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -417,63 +458,18 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 .addGap(70, 70, 70)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel20)
-                                    .addComponent(jLabel22))
-                                .addGap(47, 47, 47)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23)
-                                    .addComponent(jLabel21)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel28)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel27)
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel29))
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel14))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(402, 402, 402)
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel17))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel24)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator2)
-                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
-                                    .addComponent(jButton6)
-                                    .addComponent(jSeparator4)
-                                    .addComponent(jSeparator6)
-                                    .addComponent(jSeparator5))
-                                .addGap(91, 91, 91)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel26)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel31)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel32))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel30)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(numHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jButton4)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jButton5)))))
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(26, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel31)
+                                    .addGap(82, 82, 82)
+                                    .addComponent(jLabel32))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel26)
+                                        .addComponent(jLabel30))
+                                    .addGap(26, 26, 26)
+                                    .addComponent(numHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel36)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -488,8 +484,50 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                                     .addComponent(jLabel42)
                                     .addComponent(jLabel41)
                                     .addComponent(jLabel40)))
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                            .addComponent(jSeparator1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel14))
+                            .addComponent(jLabel24)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                                .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel19)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel20)
+                                                    .addComponent(jLabel22)
+                                                    .addComponent(jLabel27))
+                                                .addGap(47, 47, 47)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel29)
+                                                    .addComponent(jLabel23)
+                                                    .addComponent(jLabel21))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton3))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(402, 402, 402)
+                                        .addComponent(jLabel16))
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel17)))
+                        .addContainerGap(106, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -504,45 +542,32 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                     .addComponent(jLabel16)
                     .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel19)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel21))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel21)))
+                    .addComponent(jButton3))
+                .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel23)
                     .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27)
                     .addComponent(jLabel29))
+                .addGap(9, 9, 9)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel26))
+                .addComponent(jLabel24)
+                .addGap(22, 22, 22)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5)
-                            .addComponent(jButton4))
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel30)
-                            .addComponent(numHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addGap(22, 22, 22)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel32)
-                            .addComponent(jLabel31))))
+                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
                 .addGap(18, 18, 18)
@@ -555,6 +580,18 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel26)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(jLabel31))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -573,7 +610,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                     .addComponent(jLabel42))
                 .addGap(64, 64, 64)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel1);
@@ -597,10 +634,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void numHuespedesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numHuespedesAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_numHuespedesAncestorAdded
@@ -619,7 +652,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 if (result == JOptionPane.OK_OPTION) {
                     Date selectedDate = dateChooser1.getDate();
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                    jLabel2.setText("Fecha seleccionada: " + sdf.format(selectedDate));
+                    jLabel2.setText(sdf.format(selectedDate));
                     dateChooser2.setMinSelectableDate(selectedDate);
                     updateDaysLabel();
                 }
@@ -631,10 +664,18 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 if (result == JOptionPane.OK_OPTION) {
                     Date selectedDate = dateChooser2.getDate();
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                    jLabel3.setText("Fecha seleccionada: " + sdf.format(selectedDate));
+                    jLabel3.setText(sdf.format(selectedDate));
                     updateDaysLabel();
                 }
     }//GEN-LAST:event_botonFechaFinalActionPerformed
+
+    private void servicioCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicioCocinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_servicioCocinaActionPerformed
+
+    private void servicioLavadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicioLavadoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_servicioLavadoraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -675,16 +716,15 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JButton botonFechaFinal;
     private javax.swing.JButton botonFechaInicial;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -695,7 +735,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
@@ -706,14 +745,21 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
