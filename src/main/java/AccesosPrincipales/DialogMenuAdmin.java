@@ -27,6 +27,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+import poo.javabnb.ClienteParticular;
 import poo.javabnb.Inmueble;
 
 
@@ -62,7 +63,9 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
     };
     
     private HashMap<String, JTextField> camposDeTexto = new HashMap<>();
-
+    private GestorClientes gestorClientes;
+    private GestorAnfitrion gestorAnfitrion;
+    private GestorTarjetas gestorTarjetas;
 
     
     public DialogMenuAdmin(java.awt.Frame parent, boolean modal) {
@@ -70,7 +73,8 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         initComponents();
         setTitle("JavaBnB");
         gestorInmuebles.cargarInmuebles();
-        GestorClientes.cargarClientes();
+        
+        
         //GestorAnfitrion.cargarAnfitriones();
         
         listaInmuebles = gestorInmuebles.obtenerInmuebles();
@@ -126,14 +130,14 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             }     
         };
         
+        gestorClientes = new GestorClientes();
+        gestorAnfitrion = new GestorAnfitrion();
+        gestorTarjetas = new GestorTarjetas();
+        
         tablaUsuarios.setModel(tableModel1);
         tablaUsuarios.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        //Carga los .dat a la tabla        
-        List<Object[]> usuarios = GestorUsuarios.obtenerTodosLosUsuarios();
-        for (Object[] usuario : usuarios) {
-            tableModel1.addRow(usuario);
-        }
+       
+        cargarListaUsuarios(gestorClientes.obtenerClientes());
         
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
@@ -154,46 +158,26 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 int selectedRow = tablaUsuarios.getSelectedRow();
                 String tipoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 0);
                 String correoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
+                
+                //Si es un cliente 
                 if("Cliente".equals(tipoClienteSeleccionado)){
-                    GestorClientes.eliminarCliente(correoClienteSeleccionado);
+                    List<ClienteParticular> prueba20= GestorClientes.eliminarCliente(correoClienteSeleccionado);
                     GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
+                    cargarListaUsuarios(prueba20);
+
+                    
                 }
+                
+                //Si es un anfitrion elimina anfitrion
                 if("Anfitrion".equals(tipoClienteSeleccionado)){
                     GestorAnfitrion.eliminarAnfitrion(correoClienteSeleccionado);
-                    GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);               
+                    GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
                 }
-                vaciarTabla(tableModel1);
-//                try {
-//                    GestorAnfitrion.deserializarUsuarios();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                
-//                try {
-//                    GestorClientes.deserializarUsuarios();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                try {
-//                    GestorTarjetas.deserializarTarjetas();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                }
+
                 
-                List<Object[]> usuarios = GestorUsuarios.obtenerTodosLosUsuarios();
-                    for (Object[] usuario : usuarios) {
-                        tableModel1.addRow(usuario);
-                        
-                    }
+                
             }
         });
-        
         
         
         // Ajuste de tamaño de las columnas
@@ -256,6 +240,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         TableColumnModel columnModel3 = tablaInmuebles.getColumnModel();
         for (int column = 0; column < tablaInmuebles.getColumnCount(); column++) {
             int width = 15; // Mínimo ancho
+            
             // Obtener el ancho del encabezado
             TableColumn tableColumn = columnModel3.getColumn(column);
             TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
@@ -568,27 +553,22 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             tableModel2.addRow(inmueble);
         }
     }
-    /*
-    private void eliminarClienteSeleccionado() {
-        int selectedRow = tablaUsuarios.getSelectedRow();
-        if (selectedRow != -1) {
-            String tipoUsuario = (String) tablaUsuarios.getValueAt(selectedRow, 0);
-            String correo = (String) tablaUsuarios.getValueAt(selectedRow, 2);
-            if(("Cliente").equals(tipoUsuario)){
-                GestorClientes.eliminarCliente(correo);
-                ((DefaultTableModel) tablaUsuarios.getModel()).removeRow(selectedRow);
-                JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.");
-            }
-            if(("Anfitrión").equals(tipoUsuario)){
-                GestorAnfitrion.eliminarAnfitrion(correo);
-                ((DefaultTableModel) tablaUsuarios.getModel()).removeRow(selectedRow);
-                JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
+    
+    private void cargarListaUsuarios(List<ClienteParticular> clientes){
+        //Vacio el contenido de la tabla
+        vaciarTabla(tableModel1);
+        
+        //Cargamos los usuarios en una lista
+        //List<ClienteParticular> clientes = gestorClientes.obtenerClientes();
+        for (ClienteParticular cliente : clientes) {
+            
+            String numeroTarjeta = gestorTarjetas.obtenerNumeroTarjeta(cliente.getCorreoElectronico());
+            Object[] fila = {"Cliente", cliente.getNombre(), cliente.getCorreoElectronico(),
+                cliente.getTelefono(), cliente.getDni(), numeroTarjeta, cliente.cmpVIP() ? "VIP" : "No VIP", ""};
+            tableModel1.addRow(fila);
+           
         }
     }
-    */
 
     private void buttonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUserActionPerformed
         jTabbedPane1.setSelectedIndex(2);
