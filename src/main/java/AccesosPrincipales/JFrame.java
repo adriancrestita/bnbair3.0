@@ -14,6 +14,13 @@ public class JFrame extends javax.swing.JFrame {
      * Creates new form JFrame
      */
     public JFrame() {
+        this("Confirm Dialog Example");
+    }
+
+    /**
+     * Creates new form JFrame
+     */
+    public JFrame(String confirm_Dialog_Example) {
         initComponents();
     }
 

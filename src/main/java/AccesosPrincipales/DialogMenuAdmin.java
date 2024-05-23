@@ -4,6 +4,7 @@ package AccesosPrincipales;
 import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorClientes;
 import ManejoDatos.GestorInmuebles;
+import ManejoDatos.GestorTarjetas;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -15,7 +16,10 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -44,7 +48,6 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
     private JMenuItem deleteMenuItem1;
     private JPopupMenu popupMenu2;
     private JMenuItem deleteMenuItem2;
-
 
     private String[] nombresVariables = {
         "Buscador",
@@ -141,6 +144,53 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         
         // Asignar el Popup Menu a la tabla
         tablaUsuarios.setComponentPopupMenu(popupMenu1);
+        
+        //Asignamos el metodo de eliminar cuando se pulse el boton
+        deleteMenuItem1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tablaUsuarios.getSelectedRow();
+                String tipoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 0);
+                String correoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
+                if("Cliente".equals(tipoClienteSeleccionado)){
+                    GestorClientes.eliminarCliente(correoClienteSeleccionado);
+                    GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
+                }
+                if("Anfitrion".equals(tipoClienteSeleccionado)){
+                    GestorAnfitrion.eliminarAnfitrion(correoClienteSeleccionado);
+                    GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);               
+                }
+                vaciarTabla(tableModel1);
+//                try {
+//                    GestorAnfitrion.deserializarUsuarios();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                
+//                try {
+//                    GestorClientes.deserializarUsuarios();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                try {
+//                    GestorTarjetas.deserializarTarjetas();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (ClassNotFoundException ex) {
+//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                
+                List<Object[]> usuarios = GestorUsuarios.obtenerTodosLosUsuarios();
+                    for (Object[] usuario : usuarios) {
+                        tableModel1.addRow(usuario);
+                        
+                    }
+            }
+        });
         
         
         
@@ -493,7 +543,11 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+    private static void vaciarTabla(DefaultTableModel modeloTabla) {
+        while(modeloTabla.getRowCount() > 0){
+            modeloTabla.removeRow(0);
+        }
+    }
     private void filterTable(String query) {
         List<Object[]> inmuebles = gestorInmuebles.obtenerTodosLosInmuebles();
         List<Object[]> filteredInmuebles = inmuebles.stream()

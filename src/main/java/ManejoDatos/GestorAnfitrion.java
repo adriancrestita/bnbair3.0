@@ -43,6 +43,17 @@ public class GestorAnfitrion {
            System.out.println(e);
        }
     }
+    
+    private static void guardarAnfitriones(List<Anfitrion> array) {
+       try{
+           FileOutputStream fos = new FileOutputStream("anfitriones.dat");
+           ObjectOutputStream oos = new ObjectOutputStream(fos);
+           oos.writeObject(array);
+           oos.close();
+       }catch(Exception e){
+           System.out.println(e);
+       }        
+    }
 
     private void cargarAnfitriones() {
         try{
@@ -63,38 +74,7 @@ public class GestorAnfitrion {
         }
     }
     
-    public void eliminarAnfitrion(String correo) {
-        if (correo == null || correo.isEmpty()) {
-            throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
-        } else {
-            boolean removed = anfitriones.removeIf(cliente -> cliente.getCorreoElectronico().equals(correo));
-            if (removed) {
-                guardarAnfitriones();
-                cargarAnfitriones();
-                System.out.println("Cliente eliminado con éxito.");
-            } else {
-                System.out.println("No se encontró un cliente con el correo especificado.");
-            }
-        }
-    }
-    public void modificarCliente(String correo, Anfitrion nuevoAnfitrion) {
-        boolean encontrado = false;
-        for (int i = 0; i < anfitriones.size(); i++) {
-            if (anfitriones.get(i).getCorreoElectronico().equals(correo)) {
-                anfitriones.set(i, nuevoAnfitrion);
-                encontrado = true;
-                break;
-            }
-        }
-        if (encontrado) {
-            guardarAnfitriones();
-            cargarAnfitriones();
-            System.out.println("Cliente modificado con éxito.");
-        } else {
-            System.out.println("No se encontró un cliente con el correo especificado.");
-        }
-    }
-    public Anfitrion obtenerCliente(String correo) {
+    public Anfitrion obtenerAnfitrion(String correo) {
         cargarAnfitriones(); // Asegúrate de cargar los datos más recientes
         for (Anfitrion anfitrion : anfitriones) {
             if (anfitrion.getCorreoElectronico().equals(correo)) {
@@ -102,5 +82,56 @@ public class GestorAnfitrion {
             }
         }
         return null; // Retornar null si no se encuentra el cliente
+    }
+    
+    public static List<Anfitrion> deserializarUsuarios() throws IOException, ClassNotFoundException {
+        File file = new File("anfitriones.dat");
+        if (!file.exists()) {
+            return new ArrayList<>();
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("anfitriones.dat"))) {
+            return (List<Anfitrion>) ois.readObject();
+        }
+    }
+    
+    
+    public static boolean modificarAnfitrion(String correoOriginal, Anfitrion anfitrion) {
+        try {
+            List<Anfitrion> anfitrionesMod = deserializarUsuarios();
+
+            for (int i = 0; i < anfitrionesMod.size(); i++) {
+                Anfitrion cp = anfitrionesMod.get(i);
+                if (cp.getCorreoElectronico().equals(correoOriginal)) {
+                    anfitrionesMod.set(i, anfitrion);
+                    guardarAnfitriones(anfitrionesMod);
+                    return true; //cliente actualizado
+                }
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error al modificar el usuario: " + ex.getMessage());
+        }
+        return false;
+    }
+    
+    public static void eliminarAnfitrion(String correo) {
+        boolean eliminado = false;
+        try {
+            List<Anfitrion> anfitrionesMod = deserializarUsuarios();
+            for (int i = 0; i < anfitrionesMod.size(); i++) {
+                Anfitrion anfitrion = anfitrionesMod.get(i);
+                if (anfitrion.getCorreoElectronico().equals(correo)) {
+                    anfitrionesMod.remove(i);
+                    eliminado = true;
+                    break;
+                }
+            }
+            if (eliminado) {
+                guardarAnfitriones(anfitrionesMod);
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error al eliminar el usuario: " + ex.getMessage());
+        }
+        //return eliminado;
     }
 }

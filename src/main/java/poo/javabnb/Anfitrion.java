@@ -31,6 +31,16 @@ public class Anfitrion implements Serializable{
         this.esSuperAnfitrion = superAnfitrion;
     }
     
+    public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono, boolean superAnfitrion) {
+        this.dni=dni;
+        this.nombre=nombre;
+        this.correoElectronico=correoElectronico;
+        this.clave=clave;
+        this.telefono=telefono;
+        this.fechaRegistro = fechaRegistro;
+        this.esSuperAnfitrion = superAnfitrion;
+    }
+    
     //Getters
     public String getDni() {
         return dni;
@@ -88,7 +98,10 @@ public class Anfitrion implements Serializable{
     public void setesSuperAnfitrion(boolean ser){
         this.esSuperAnfitrion = ser;
     }
-    // Métodos específicos para Anfitrion
+
+    public boolean getEsSuperAnfitrion(){
+        return esSuperAnfitrion;
+    }
     
     public String cmpSuperAnfitrion(){
         if(esSuperAnfitrion == true){

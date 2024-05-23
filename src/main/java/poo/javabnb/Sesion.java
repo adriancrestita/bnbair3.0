@@ -1,5 +1,7 @@
 package poo.javabnb;
 
+import ManejoDatos.GestorAnfitrion;
+
 public class Sesion {
     // Atributo estático para mantener el correo del usuario que ha iniciado sesión
     private static String correoUsuario;
@@ -13,5 +15,4 @@ public class Sesion {
     public static String obtenerCorreoUsuario() {
         return correoUsuario;
     }
-    
 }

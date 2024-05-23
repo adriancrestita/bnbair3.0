@@ -39,8 +39,20 @@ public class GestorClientes {
            System.out.println(e);
        }        
     }
+    
+    private static void guardarClientes(List<ClienteParticular> array) {
+       try{
+           FileOutputStream fos = new FileOutputStream("clientes.dat");
+           ObjectOutputStream oos = new ObjectOutputStream(fos);
+           oos.writeObject(array);
+           oos.close();
+       }catch(Exception e){
+           System.out.println(e);
+       }        
+    }
 
-    private void cargarClientes() {
+
+    public void cargarClientes() {
         try{
             FileInputStream fis = new FileInputStream("clientes.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -59,6 +71,17 @@ public class GestorClientes {
         }    
     }
     
+    public static List<ClienteParticular> deserializarUsuarios() throws IOException, ClassNotFoundException {
+        File file = new File("clientes.dat");
+        if (!file.exists()) {
+            return new ArrayList<>();
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("clientes.dat"))) {
+            return (List<ClienteParticular>) ois.readObject();
+        }
+    }
+    
     public ClienteParticular obtenerCliente(String correo) {
         cargarClientes(); // Se asegura de cargar los datos más recientes
         for (ClienteParticular cliente : clientes) {
@@ -69,19 +92,37 @@ public class GestorClientes {
         return null; // Retornar null si no se encuentra el cliente
     }
     
-    public boolean actualizarCliente(String correo, ClienteParticular clienteActualizado) {
-        cargarClientes(); // Asegúrate de cargar los datos más recientes
-        for (int i = 0; i < clientes.size(); i++) {
-            if (clientes.get(i).getCorreoElectronico().equals(correo)) {
-                clientes.set(i, clienteActualizado);
-                guardarClientes();
-                
-                //En caso de cambiar el correo actualiza el correo del usuario que ha iniciado sesion
-                Sesion.iniciarSesion(clienteActualizado.getCorreoElectronico());
-                
-                return true; // Cliente actualizado
+    public static boolean modificarCliente(String correoOriginal, ClienteParticular cliente) {
+        try {
+            List<ClienteParticular> clientesMod = deserializarUsuarios();
+
+            for (int i = 0; i < clientesMod.size(); i++) {
+                ClienteParticular cp = clientesMod.get(i);
+                if (cp.getCorreoElectronico().equals(correoOriginal)) {
+                    clientesMod.set(i, cliente);
+                    guardarClientes(clientesMod);
+                    return true; //cliente actualizado
+                }
             }
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error al modificar el usuario: " + ex.getMessage());
         }
-        return false; // Cliente no encontrado
+        return false;
+    }
+    
+    public static void eliminarCliente(String correo) {
+        try {
+            List<ClienteParticular> clientesMod = deserializarUsuarios();
+
+            for (int i = 0; i < clientesMod.size(); i++) {
+                ClienteParticular cp = clientesMod.get(i);
+                if (cp.getCorreoElectronico().equals(correo)) {
+                    clientesMod.remove(i);
+                    guardarClientes(clientesMod);
+                }
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error al eliminar el usuario: " + ex.getMessage());
+        }
     }
 }

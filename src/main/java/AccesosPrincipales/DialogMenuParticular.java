@@ -37,6 +37,9 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     
     private ClienteParticular cliente;
     private GestorClientes gestorClientes = new GestorClientes();
+    private GestorTarjetas gestorTarjetas;
+    private TarjetaCredito tj;
+
     
     
     
@@ -45,10 +48,12 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         initComponents();
         setTitle("JavaBnB");
         
+        gestorTarjetas = new GestorTarjetas();  
         
         
-        //Seteamos el objeto cliente del usuario que está utilizado la aplicación
+        //Seteamos el objeto cliente y tarjeta del usuario que está utilizado la aplicación
         cliente = gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario());
+        tj = gestorTarjetas.obtenerTarjeta(Sesion.obtenerCorreoUsuario());
 
         
         agregarInmueblesAlScrollPane(listaInmuebles, scrollPaneReservas);
@@ -60,6 +65,9 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         telefono.setText(cliente.getTelefono());
         dni.setText(cliente.getDni());
         vip.setSelected(cliente.cmpVIP());
+        titular.setText(tj.getNombreTitular());
+        numtarj.setText(tj.getNumeroTarjeta());
+        fcad.setText(tj.getFechaCaducidad());
 
     }
     
@@ -457,8 +465,16 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         
         if (response == JOptionPane.YES_OPTION) {
             // Acción cuando se pulsa "Aceptar"
+            
+            //Modifico los datos del cliente
             ClienteParticular cambioCliente = new ClienteParticular(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(), vip.isSelected());
-            gestorClientes.actualizarCliente(Sesion.obtenerCorreoUsuario(), cambioCliente);
+            gestorClientes.modificarCliente(Sesion.obtenerCorreoUsuario(), cambioCliente);
+            
+            //Modifico los cambios de las tarjetas
+            TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
+            gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
+            
+            Sesion.iniciarSesion(dni.getText());
             JOptionPane.showMessageDialog(frame, "Los cambios se han guardado.");
         } else if (response == JOptionPane.NO_OPTION) {
             // Acción cuando se pulsa "Cancelar"
