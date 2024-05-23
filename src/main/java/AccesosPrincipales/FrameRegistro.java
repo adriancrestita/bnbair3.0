@@ -12,6 +12,7 @@ import poo.javabnb.*;
 import java.lang.*;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLaf;
+import java.awt.Color;
 import java.awt.Image;
 import java.util.Collections;
 import poo.javabnb.*;
@@ -142,6 +143,7 @@ public class FrameRegistro extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jesVIP = new javax.swing.JCheckBox();
         jTipoCliente = new javax.swing.JComboBox<>();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Inicio = new javax.swing.JMenuItem();
@@ -309,6 +311,22 @@ public class FrameRegistro extends javax.swing.JFrame {
             }
         });
         jtelefono.add(jTipoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, -1, -1));
+
+        ImageIcon s = new ImageIcon("src/main/java/com/images/ojoTachado.png");
+        Image image = s.getImage();
+        Image scaledImage = image.getScaledInstance(30, 23, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcono = new ImageIcon(scaledImage);
+        jToggleButton1.setIcon(scaledIcono);
+        jToggleButton1.setBackground(new java.awt.Color(220, 154, 98));
+        jToggleButton1.setBorder(null);
+        jToggleButton1.setFocusPainted(false);
+        jToggleButton1.setFocusable(false);
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jtelefono.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, 30, 30));
 
         jMenu1.setText("Inicio");
 
@@ -483,6 +501,33 @@ public class FrameRegistro extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_jTipoClienteActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        if (jToggleButton1.isSelected()){
+            //Cambiar la imagen
+            ImageIcon ojoAbierto = new ImageIcon("src/main/java/com/images/ojoAbierto.png");
+            Image img = ojoAbierto.getImage();
+            Image scaledImg = img.getScaledInstance(30, 23, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImg);
+            jToggleButton1.setIcon(scaledIcon);
+            jToggleButton1.setText("");
+            
+            jpasswordsign.setEchoChar((char)0); // Mostrar texto plano
+        }
+        else{
+            //Cambiar la imagen
+            ImageIcon ojoAbierto = new ImageIcon("src/main/java/com/images/ojoTachado.png");
+            Image img = ojoAbierto.getImage();
+            Image scaledImg = img.getScaledInstance(30, 23, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImg);
+            jToggleButton1.setIcon(scaledIcon);
+            jToggleButton1.setText("");
+                        
+            jpasswordsign.setEchoChar('•'); // Ocultar la contraseña
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -540,6 +585,7 @@ public class FrameRegistro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> jTipoCliente;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField jdni;
     private javax.swing.JCheckBox jesVIP;
     private javax.swing.JTextField jfcaducidad;

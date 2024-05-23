@@ -3,11 +3,12 @@ package ManejoDatos;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.Sesion;
 
 public class GestorClientes {
-    private List<ClienteParticular> clientes;
+    private static List<ClienteParticular> clientes;
     private final String FILENAME = "clientes.dat";
     
     public GestorClientes() {
@@ -51,8 +52,7 @@ public class GestorClientes {
        }        
     }
 
-
-    public void cargarClientes() {
+    public static void cargarClientes() {
         try{
             FileInputStream fis = new FileInputStream("clientes.dat");
             ObjectInputStream ois = new ObjectInputStream(fis);

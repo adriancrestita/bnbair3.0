@@ -199,6 +199,9 @@ public class Inmueble implements Serializable{
         return anfi;
     }
     
+    public ArrayList<String> getImages(){
+        return imagePaths;
+    }
     //Otros métodos de utilidad
     private void verificarDireccion(){
         this.calle=direccion.get(0);
@@ -211,7 +214,7 @@ public class Inmueble implements Serializable{
         if((calle==null)||(numero==null)||(CP==null)||(ciudad==null)){
             verificarDireccion();
         }
-        return calle+" "+numero+", "+ciudad+" "+CP;
+        return "C/"+calle+" "+numero+", "+ciudad+", "+CP;
     }
     
     // Método para mostrar información del inmueble

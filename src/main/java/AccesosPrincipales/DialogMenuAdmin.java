@@ -69,7 +69,9 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("JavaBnB");
-        
+        gestorInmuebles.cargarInmuebles();
+        GestorClientes.cargarClientes();
+        //GestorAnfitrion.cargarAnfitriones();
         
         listaInmuebles = gestorInmuebles.obtenerInmuebles();
 
