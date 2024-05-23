@@ -19,6 +19,8 @@ public class Anfitrion implements Serializable{
     private static final long serialVersionUID = 1L;
     private String fechaRegistro; //LocalDate para el registro en hora actual
     private boolean esSuperAnfitrion;
+    private int totalValoraciones;
+    private float mediaValoraciones=0;
     
     //Constructor
     public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono, String fechaRegistro, boolean superAnfitrion) {
@@ -59,6 +61,15 @@ public class Anfitrion implements Serializable{
     public boolean getesSuperAnfitrion(){
         return esSuperAnfitrion;
     }
+    
+    public int getValoraciones(){
+        return totalValoraciones;
+    }
+    
+    public float getMediaValoraciones(){
+        return mediaValoraciones;
+    }
+    
     // Setters
     public void setDni(String dni) {
         this.dni = dni;
@@ -88,7 +99,18 @@ public class Anfitrion implements Serializable{
     public void setesSuperAnfitrion(boolean ser){
         this.esSuperAnfitrion = ser;
     }
+    
     // Métodos específicos para Anfitrion
+
+    public void modificarValoraciones(double calificacionNew){
+        
+        this.mediaValoraciones = (float) (((mediaValoraciones*totalValoraciones)+calificacionNew)/(totalValoraciones++)); //hace la media aritmética de todas las calificaciones
+        totalValoraciones++;
+        
+        if (mediaValoraciones<=4){
+            esSuperAnfitrion=true;
+        }
+    }
     
     public String cmpSuperAnfitrion(){
         if(esSuperAnfitrion == true){
