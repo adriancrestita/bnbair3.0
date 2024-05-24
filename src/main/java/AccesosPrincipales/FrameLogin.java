@@ -265,7 +265,6 @@ public class FrameLogin extends javax.swing.JFrame {
             // Primero, intentamos iniciar sesión como Cliente
             ClienteParticular cliente = VerificarDatos.iniciarSesionCliente(email, password);
             if (cliente != null) {
-                JOptionPane.showMessageDialog(this, "Inicio de sesión de cliente exitoso. Bienvenido " + cliente.getNombre() + "!");
                 Sesion.iniciarSesion(email);
                 DialogMenuParticular pantallaCliente = new DialogMenuParticular(FrameLogin.this, true);
                 pantallaCliente.setVisible(true);
@@ -276,7 +275,6 @@ public class FrameLogin extends javax.swing.JFrame {
             // Si no es Cliente, intentamos iniciar sesión como Anfitrión
             Anfitrion anfitrion = VerificarDatos.iniciarSesionAnfitrion(email, password);
             if (anfitrion != null) {
-                JOptionPane.showMessageDialog(this, "Inicio de sesión de anfitrión exitoso. Bienvenido " + anfitrion.getNombre() + "!");
                 Sesion.iniciarSesion(email);
                 DialogMenuAnfitrion pantallaAnfitrion = new DialogMenuAnfitrion(FrameLogin.this, true);
                 pantallaAnfitrion.setVisible(true);

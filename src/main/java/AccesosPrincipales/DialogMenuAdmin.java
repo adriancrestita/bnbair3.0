@@ -51,19 +51,8 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
     private JPopupMenu popupMenu2;
     private JMenuItem deleteMenuItem2;
 
-    private String[] nombresVariables = {
-        "Buscador",
-        "Buscador1",
-        "Buscador2"
-    };
 
-    private String[] mensajesOriginales = {
-        " 🔍 Buscador de Inmuebles",
-        " 🔍 Buscador de Reservas",
-        " 🔍 Buscador de Usuarios",
-    };
     
-    private HashMap<String, JTextField> camposDeTexto = new HashMap<>();
     private GestorClientes gestorClientes;
     private GestorAnfitrion gestorAnfitrion;
     private GestorTarjetas gestorTarjetas;
@@ -73,43 +62,6 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("JavaBnB");
-        
-        // Agregamos los campos de texto al HashMap
-        camposDeTexto.put("Buscador", Buscador);
-        camposDeTexto.put("Buscador1", Buscador1);
-        camposDeTexto.put("Buscador2", Buscador2);     
-        
-        for (int i = 0; i < nombresVariables.length; i++) {
-            
-            JTextField campo = camposDeTexto.get(nombresVariables[i]);
-            final String mensajeOriginal = mensajesOriginales[i];
-            
-            campo.putClientProperty("JTextField.placeholderText", mensajeOriginal);
-            campo.putClientProperty("JComponent.roundRect", true);
-            campo.setForeground(UIManager.getColor("TextField.foreground"));
-
-            campo.addFocusListener(new FocusAdapter() {
-                @Override
-                public void focusGained(FocusEvent e) {
-                    if (campo.getText().equals(mensajeOriginal)) {
-                        campo.setText("");
-                    }
-                    JTextField previousFocusOwner = campo;
-
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (campo.getText().isEmpty()) {
-                        campo.setText(mensajeOriginal);
-                    }
-                    Component previousFocusOwner = e.getOppositeComponent();
-
-                }
-                
-                
-            });
-        }
 
         /*--------------------------------------------------------------------------------*/        
         //TABLA USUARIOS
@@ -177,7 +129,6 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             }
         });
         
-        
         // Ajuste de tamaño de las columnas
         TableColumnModel columnModel1 = tablaUsuarios.getColumnModel();
         for (int column = 0; column < tablaUsuarios.getColumnCount(); column++) {
@@ -200,6 +151,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             }
             columnModel1.getColumn(column).setPreferredWidth(width);
         }
+        
         /*--------------------------------------------------------------------------------*/
         // TABLA INMUEBLES
         gestorInmuebles = new GestorInmuebles();
@@ -213,10 +165,11 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             }     
         };
         
+        //Setea el model de la tabla y hacemos que no se pueda hacer resize
         tablaInmuebles.setModel(tableModel2);
         tablaInmuebles.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         
-        //Carga el .dat a la tabla
+        //Carga el .dat a la tabla por primera vez
         cargarListaInmuebles(gestorInmuebles.obtenerInmuebles());
    
         
@@ -237,16 +190,16 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tablaInmuebles.getSelectedRow();
-                String correoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
+                String correoInmuebleSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
                 
-                //Si es un cliente 
-                List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoClienteSeleccionado);
+                //Elimina el inmueble de la lista y recargue los datos de la tabla
+                List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado);
                 cargarListaInmuebles(inm);          
                 
             }
         });
         
-        // Ajuste de tamaño de las columnas
+        // Ajuste de tamaño de las columnas para que se vea todo al completo
         TableColumnModel columnModel3 = tablaInmuebles.getColumnModel();
         for (int column = 0; column < tablaInmuebles.getColumnCount(); column++) {
             int width = 15; // Mínimo ancho
@@ -270,8 +223,6 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             columnModel3.getColumn(column).setPreferredWidth(width);
         }
         
-
-        
         /*--------------------------------------------------------------------------------*/        
         /*// TABLA RESERVAS
         gestorInmuebles = new GestorInmuebles();
@@ -289,24 +240,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         */
         
         /*--------------------------------------------------------------------------------*/   
-        //CODIGO BUSCADOR INMUEBLES
-        Buscador2.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                filterTable(Buscador.getText());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filterTable(Buscador.getText());
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                filterTable(Buscador.getText());
-            }
-        });
-    
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -539,30 +473,14 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    //Vacía el contenido de la tabla
     private static void vaciarTabla(DefaultTableModel modeloTabla) {
         while(modeloTabla.getRowCount() > 0){
             modeloTabla.removeRow(0);
         }
     }
-    private void filterTable(String query) {
-        List<Object[]> inmuebles = gestorInmuebles.obtenerTodosLosInmuebles();
-        List<Object[]> filteredInmuebles = inmuebles.stream()
-                .filter(inmueble -> {
-                    for (Object field : inmueble) {
-                        if (field.toString().toLowerCase().contains(query.toLowerCase())) {
-                            return true;
-                        }
-                    }
-                    return false;
-                })
-                .collect(Collectors.toList());
-
-        tableModel2.setRowCount(0); // Limpia la tabla
-        for (Object[] inmueble : filteredInmuebles) {
-            tableModel2.addRow(inmueble);
-        }
-    }
     
+    //Cargamos los clientes en una lista
     private void cargarListaClientes(List<ClienteParticular> clientes){
         //Vacio el contenido de la tabla
         vaciarTabla(tableModel1);
@@ -576,8 +494,6 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             tableModel1.addRow(fila);
            
         }
-        
-        
     }
     
     //Cargamos los anfitriones en una lista
@@ -590,6 +506,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             tableModel1.addRow(fila);
         }
     }
+    
     //Cargamos los inmuebles en una lista
     private void cargarListaInmuebles(List<Inmueble> inmuebles){
         vaciarTabla(tableModel2);
