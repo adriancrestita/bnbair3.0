@@ -217,10 +217,8 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         tablaInmuebles.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         
         //Carga el .dat a la tabla
-        List<Object[]> inmuebles = GestorInmuebles.obtenerTodosLosInmuebles();
-        for (Object[] inmueble : inmuebles) {
-            tableModel2.addRow(inmueble);
-        }      
+        cargarListaInmuebles(gestorInmuebles.obtenerInmuebles());
+   
         
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
@@ -233,6 +231,20 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         
         // Asignar el Popup Menu a la tabla
         tablaInmuebles.setComponentPopupMenu(popupMenu2);
+        
+        //Asignamos el metodo de eliminar cuando se pulse el boton
+        deleteMenuItem2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tablaInmuebles.getSelectedRow();
+                String correoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
+                
+                //Si es un cliente 
+                List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoClienteSeleccionado);
+                cargarListaInmuebles(inm);          
+                
+            }
+        });
         
         // Ajuste de tamaño de las columnas
         TableColumnModel columnModel3 = tablaInmuebles.getColumnModel();
@@ -261,8 +273,8 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
 
         
         /*--------------------------------------------------------------------------------*/        
-        // TABLA RESERVAS
-        /*gestorInmuebles = new GestorInmuebles();
+        /*// TABLA RESERVAS
+        gestorInmuebles = new GestorInmuebles();
         
         tableModel2 = new DefaultTableModel(new Object[][]{}, new String[]{
             "Correo Anfitrion", "Titulo", "Dirección", "Tipo Propiedad", "Máximo Huéspedes", "Precio Noche", 
@@ -274,7 +286,6 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         List<Object[]> inmuebles = GestorInmuebles.obtenerTodosLosInmuebles();
         for (Object[] inmueble : inmuebles) {
             tableModel2.addRow(inmueble);
-        }
         */
         
         /*--------------------------------------------------------------------------------*/   
@@ -556,8 +567,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         //Vacio el contenido de la tabla
         vaciarTabla(tableModel1);
         
-        //Cargamos los usuarios en una lista
-        //List<ClienteParticular> clientes = gestorClientes.obtenerClientes();
+        //Cargamos los clientes en una lista
         for (ClienteParticular cliente : clientes) {
             
             String numeroTarjeta = gestorTarjetas.obtenerNumeroTarjeta(cliente.getCorreoElectronico());
@@ -570,6 +580,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         
     }
     
+    //Cargamos los anfitriones en una lista
     private void cargarListaAnfitriones(List<Anfitrion> anfitriones){
         vaciarTabla(tableModel1);
         for (Anfitrion anfitrion : anfitriones) {
@@ -578,6 +589,14 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 anfitrion.getTelefono(), anfitrion.getDni(), numeroTarjeta, anfitrion.cmpSuperAnfitrion(), anfitrion.getFechaRegistro()};
             tableModel1.addRow(fila);
         }
+    }
+    //Cargamos los inmuebles en una lista
+    private void cargarListaInmuebles(List<Inmueble> inmuebles){
+        vaciarTabla(tableModel2);
+        for (Inmueble inmueble : inmuebles) {
+            Object [] fila = {inmueble.getCorreoAnfitrion(), inmueble.getTitulo(), inmueble.getDireccion(), inmueble.getTipoPropiedad(), inmueble.getMaxHuespedes(), inmueble.getPrecioNoche(), inmueble.getServicios()};
+            tableModel2.addRow(fila);
+        }            
     }
 
     private void buttonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUserActionPerformed
