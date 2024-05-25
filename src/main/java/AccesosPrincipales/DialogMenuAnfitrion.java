@@ -11,6 +11,7 @@ import ManejoDatos.GestorInmuebles;
 import ManejoDatos.GestorTarjetas;
 import ManejoDatos.VerificarDatos;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -24,6 +25,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import poo.javabnb.Anfitrion;
 import poo.javabnb.ClienteParticular;
 
@@ -41,6 +43,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private TarjetaCredito tj;
     private GestorAnfitrion gestorAnfitrion;
     private GestorTarjetas gestorTarjetas;
+    private DefaultTableModel tableModel;
     
     private String[] nombresVariables = {
         "tituloInmueble",
@@ -120,6 +123,39 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 }
             });
         }
+        
+        /*-----------------------------------------*/
+        //Tabla de inmuebles del anfitrión
+        gestorInmuebles = new GestorInmuebles();
+        String[] nombreColumna = {"Título", "Precio noche", "Valoracion"};
+        tableModel = new DefaultTableModel(nombreColumna, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace todas las celdas no editables
+            }
+        };
+        tablaInmuebles.setModel(tableModel);
+        cargarListaInmuebles(gestorInmuebles.obtenerInmuebles());
+        jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+    }
+    
+    //Carga los inmuebles del anfitrión registrado
+    private void cargarListaInmuebles(List<Inmueble> inmuebles){
+        vaciarTabla(tableModel);
+        for (Inmueble inmueble : inmuebles) {
+            if (inmueble.getCorreoAnfitrion().equals(Sesion.obtenerCorreoUsuario())){
+                Object [] fila = {inmueble.getTitulo(), inmueble.getPrecioNoche(), inmueble.getCalificacion()};
+                tableModel.addRow(fila);
+            }
+        }
+    }
+    
+    //Vacía el contenido de la tabla
+    private static void vaciarTabla(DefaultTableModel modeloTabla) {
+        while(modeloTabla.getRowCount() > 0){
+            modeloTabla.removeRow(0);
+        }
     }
 
     /**
@@ -141,6 +177,8 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         PanelMisInmuebles = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaInmuebles = new javax.swing.JTable();
         PanelCrearInmueble = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -270,6 +308,34 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
 
         jLabel1.setText("MIS INMUEBLES");
 
+        tablaInmuebles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Título", "Precio/Noche", "Valoración"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaInmuebles);
+
         javax.swing.GroupLayout PanelMisInmueblesLayout = new javax.swing.GroupLayout(PanelMisInmuebles);
         PanelMisInmuebles.setLayout(PanelMisInmueblesLayout);
         PanelMisInmueblesLayout.setHorizontalGroup(
@@ -277,14 +343,20 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
             .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
                 .addGap(229, 229, 229)
                 .addComponent(jLabel1)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMisInmueblesLayout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         PanelMisInmueblesLayout.setVerticalGroup(
             PanelMisInmueblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(jLabel1)
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab1", PanelMisInmuebles);
@@ -818,14 +890,13 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                                 .addGap(88, 88, 88)
                                 .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(superAnfitrion)
-                                    .addGroup(PanelPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel19)
-                                        .addComponent(jLabel18)
-                                        .addComponent(jLabel17)
-                                        .addComponent(jLabel13)
-                                        .addComponent(titular, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(numtarj, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(fcad, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel18)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jLabel13)
+                                    .addComponent(titular, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(numtarj, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fcad, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(PanelPerfilLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(140, 140, 140)))
@@ -1236,6 +1307,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JSpinner maxHuespedes;
@@ -1259,6 +1331,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     private javax.swing.JButton siguiente1;
     private javax.swing.JButton siguiente2;
     private javax.swing.JCheckBox superAnfitrion;
+    private javax.swing.JTable tablaInmuebles;
     private javax.swing.JTextField telefono;
     private javax.swing.JComboBox<String> tipoInmueble;
     private javax.swing.JTextField titular;
