@@ -120,7 +120,11 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         }
         
     }
-    
+    /**
+     * Analiza las estrellas selecionadas por el usuario
+     * @param rating
+     * @return devuelve el numero de estrellas seleccionadas
+     */
     private int setRating(int rating) {
         for (int i = 0; i < stars.length; i++) {
             if (i < rating) {
@@ -132,7 +136,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         return calificacion = rating;
     }
     
-    //Método para añadir las imágenes al jpanel
+    /**
+     * Método para añadir las imágenes al jpanel
+     * @param imagePaths 
+     */
     private void updateImagePanel(ArrayList<String> imagePaths) {
         jPanel2.removeAll();
 
@@ -154,7 +161,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jPanel2.repaint();
     }
     
-    //Método para identificar los servicios del inmueble
+    /**
+     * Método para identificar los servicios del inmueble
+     * @param servicios 
+     */
     private void setServicios(ArrayList<String> servicios){
         for (int i=0; i<servicios.size();i++){
             
@@ -190,7 +200,9 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         
     }
     
-    //Método para calcular los días entre 2 fechas, y multiplicarlo por el precio por noche
+    /**
+     * Método para calcular los días entre 2 fechas, y multiplicarlo por el precio por noche
+     */
     private void updateDaysLabel() {
         Date date1 = dateChooser1.getDate();
         Date date2 = dateChooser2.getDate();
@@ -201,7 +213,11 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         }
     }
     
-    // Método para verificar el valor del spinner con un máximo
+    /**
+     * Método para verificar el valor del spinner con un máximo, dado por el numero de huespedes máximo
+     * @param spinner
+     * @param maxValue 
+     */
     private void checkSpinnerValue(JSpinner spinner, int maxValue) {
         int value = (int) spinner.getValue();
         if (value > maxValue) {
