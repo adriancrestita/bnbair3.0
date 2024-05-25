@@ -809,7 +809,9 @@ public class ModificacionDestino extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado,);
+        String correoInmuebleSeleccionado = "";
+        String titulo = "";
+        List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado, titulo);
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
