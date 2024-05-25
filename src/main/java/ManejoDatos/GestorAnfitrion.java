@@ -18,32 +18,34 @@ public class GestorAnfitrion {
         anfitriones = new ArrayList<>();
         cargarAnfitriones();
     }
-
+    
+    /**
+     * Dado un objeto de anfitrion, añade el mismo a anfitriones.dat y lo guarda
+     * @param anfi 
+     */
     public void agregarAnfitrion(Anfitrion anfi) {
         if (anfi.getCorreoElectronico() == null || anfi.getCorreoElectronico().isEmpty()) {
             throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
         }
         else{
             anfitriones.add(anfi);
-            guardarAnfitriones();  
+            guardarAnfitriones(obtenerAnfitriones());  
         }  
     }
-
+    
+    /**
+     * 
+     * @return de la lista de todos los objetos de anfitriones 
+     */
     public List<Anfitrion> obtenerAnfitriones() {
         return anfitriones;
     }
-
-    private void guardarAnfitriones() {
-        try{
-           FileOutputStream fos = new FileOutputStream("anfitriones.dat");
-           ObjectOutputStream oos = new ObjectOutputStream(fos);
-           oos.writeObject(anfitriones);
-           oos.close();
-       }catch(Exception e){
-           System.out.println(e);
-       }
-    }
     
+    
+    /**
+     * Guarda los anfitriones en anfitriones.dat una vez proporcionada una List de anfitriones
+     * @param array 
+     */
     private static void guardarAnfitriones(List<Anfitrion> array) {
        try{
            FileOutputStream fos = new FileOutputStream("anfitriones.dat");
@@ -54,7 +56,10 @@ public class GestorAnfitrion {
            System.out.println(e);
        }        
     }
-
+    
+    /**
+     * Carga todos los anfitriones en el programa obteniendo los archivos desde anfitriones.dat
+     */
     public void cargarAnfitriones() {
         try{
             FileInputStream fis = new FileInputStream("anfitriones.dat");
@@ -74,6 +79,11 @@ public class GestorAnfitrion {
         }
     }
     
+    /**
+     * Dado un correo, busca entre todos los anfitriones hasta encontrar el deseado
+     * @param correo
+     * @return el objeto del Anfitrion buscado
+     */
     public Anfitrion obtenerAnfitrion(String correo) {
         cargarAnfitriones(); // Asegúrate de cargar los datos más recientes
         for (Anfitrion anfitrion : anfitriones) {
@@ -84,7 +94,13 @@ public class GestorAnfitrion {
         return null; // Retornar null si no se encuentra el cliente
     }
     
-    public static List<Anfitrion> deserializarUsuarios() throws IOException, ClassNotFoundException {
+    /**
+     * Deserializa el .dat de anfitriones para poder trabajar con él directamente desde el .dat
+     * @return la lista de Anfitriones
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
+    public static List<Anfitrion> deserializarAnfitriones() throws IOException, ClassNotFoundException {
         File file = new File("anfitriones.dat");
         if (!file.exists()) {
             return new ArrayList<>();
@@ -95,10 +111,15 @@ public class GestorAnfitrion {
         }
     }
     
-    
+    /**
+     * Método encargado de modificar un objeto de Anfitrion ya existente en el .dat dado el objeto modificado y carga la lista modificada
+     * @param correoOriginal
+     * @param anfitrion
+     * @return true/false para saber si se ha cumplido el proceso
+     */
     public static boolean modificarAnfitrion(String correoOriginal, Anfitrion anfitrion) {
         try {
-            List<Anfitrion> anfitrionesMod = deserializarUsuarios();
+            List<Anfitrion> anfitrionesMod = deserializarAnfitriones();
 
             for (int i = 0; i < anfitrionesMod.size(); i++) {
                 Anfitrion cp = anfitrionesMod.get(i);
@@ -114,10 +135,15 @@ public class GestorAnfitrion {
         return false;
     }
     
+    /**
+     * Método similar a modificar, pero que elimina directamente el objeto 
+     * @param correo
+     * @return lista de anfitriones actualizada para poder guardarlo posteriormente
+     */
     public static List<Anfitrion> eliminarAnfitrion(String correo) {
         List<Anfitrion> anfitrionesMod = new ArrayList<>();
         try {
-            anfitrionesMod = deserializarUsuarios();
+            anfitrionesMod = deserializarAnfitriones();
 
             for (int i = 0; i < anfitrionesMod.size(); i++) {
                 Anfitrion cp = anfitrionesMod.get(i);

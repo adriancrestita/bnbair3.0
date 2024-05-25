@@ -4,7 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class ArchivoUtil {
-
+    
+    /**
+     * Método que se encarga de que si un archivo no existe, lo cree
+     * 
+     * @param nombreArchivo 
+     */
     public static void asegurarArchivoExiste(String nombreArchivo) {
         File archivo = new File(nombreArchivo);
         if (!archivo.exists()) {
@@ -32,7 +37,10 @@ public class ArchivoUtil {
         asegurarArchivoExiste("reservas.dat");
         asegurarArchivoExiste("valoraciones.dat");
     }
-
+    
+    /**
+     * Método que resetea los archivos utilizados a lo largo del programa
+     */
     public static void resetFiles() {
         String[] archivos = {"clientes.dat", "tarjetas.dat", "anfitriones.dat", "inmuebles.dat", "reservas.dat", "valoraciones.dat"};
         for (String archivo : archivos) {

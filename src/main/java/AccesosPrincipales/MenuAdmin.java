@@ -250,20 +250,14 @@ public class MenuAdmin extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         consultaInmuebles = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        Buscador = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaInmuebles = new javax.swing.JTable();
         consultaReservas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        Buscador1 = new javax.swing.JTextField();
-        jSeparator4 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaReservas = new javax.swing.JTable();
         consultaUsuarios = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        Buscador2 = new javax.swing.JTextField();
-        jSeparator5 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
 
@@ -325,27 +319,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         jLabel1.setText("Consulta de Inmuebles");
         consultaInmuebles.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
 
-        Buscador.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
-        Buscador.setText(" 🔍 Buscador de Inmuebles");
-        Buscador.setBorder(null);
-        Buscador.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                BuscadorFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                BuscadorFocusLost(evt);
-            }
-        });
-        Buscador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuscadorActionPerformed(evt);
-            }
-        });
-        consultaInmuebles.add(Buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
-
-        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        consultaInmuebles.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
-
         tablaInmuebles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -371,27 +344,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         jLabel2.setText("Consulta de Reservas");
         consultaReservas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
 
-        Buscador1.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
-        Buscador1.setText(" 🔍 Buscador de Reservas");
-        Buscador1.setBorder(null);
-        Buscador1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                Buscador1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                Buscador1FocusLost(evt);
-            }
-        });
-        Buscador1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Buscador1ActionPerformed(evt);
-            }
-        });
-        consultaReservas.add(Buscador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
-
-        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        consultaReservas.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
-
         tablaReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -416,27 +368,6 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         jLabel3.setText("Consulta de Usuarios");
         consultaUsuarios.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 39, -1, -1));
-
-        Buscador2.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
-        Buscador2.setText(" 🔍 Buscador de Usuarios");
-        Buscador2.setBorder(null);
-        Buscador2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                Buscador2FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                Buscador2FocusLost(evt);
-            }
-        });
-        Buscador2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Buscador2ActionPerformed(evt);
-            }
-        });
-        consultaUsuarios.add(Buscador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, -1));
-
-        jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        consultaUsuarios.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 550, 20));
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -528,51 +459,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         jTabbedPane1.setSelectedIndex(0);
     }//GEN-LAST:event_buttonInmueblesActionPerformed
 
-    private void BuscadorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BuscadorFocusGained
-        // TODO add your handling code here:
-        if (Buscador.getText().equals(" 🔍 Buscador de destinos")){
-            Buscador.setText("");
-        }
-    }//GEN-LAST:event_BuscadorFocusGained
-
-    private void BuscadorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BuscadorFocusLost
-        // TODO add your handling code here:
-        if (Buscador.getText().equals("")){
-            Buscador.setText(" 🔍 Buscador de Reservas");
-        }
-    }//GEN-LAST:event_BuscadorFocusLost
-
-    private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
-        // TODO add your handling code here:
-        if (Buscador.getText().equals(" 🔍 Buscador de Usuarios")){
-            Buscador.setText("");
-        }
-    }//GEN-LAST:event_BuscadorActionPerformed
-
-    private void Buscador1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Buscador1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Buscador1FocusGained
-
-    private void Buscador1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Buscador1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Buscador1FocusLost
-
-    private void Buscador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Buscador1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Buscador1ActionPerformed
-
-    private void Buscador2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Buscador2FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Buscador2FocusGained
-
-    private void Buscador2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Buscador2FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Buscador2FocusLost
-
-    private void Buscador2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Buscador2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Buscador2ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -623,9 +509,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Buscador;
-    private javax.swing.JTextField Buscador1;
-    private javax.swing.JTextField Buscador2;
     private javax.swing.JButton buttonCerrarSesion;
     private javax.swing.JButton buttonInmuebles;
     private javax.swing.JButton buttonReservas;
@@ -642,9 +525,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tablaInmuebles;
     private javax.swing.JTable tablaReservas;

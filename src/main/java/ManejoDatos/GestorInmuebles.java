@@ -40,7 +40,7 @@ public class GestorInmuebles {
        }        
     }
     
-    private static void guardarInmuebles(List<Inmueble> array) {
+    public static void guardarInmuebles(List<Inmueble> array) {
        try{
            FileOutputStream fos = new FileOutputStream("inmuebles.dat");
            ObjectOutputStream oos = new ObjectOutputStream(fos);
