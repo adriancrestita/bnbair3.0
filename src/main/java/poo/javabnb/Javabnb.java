@@ -1,7 +1,7 @@
 package poo.javabnb;
 
-import AccesosPrincipales.FrameInicio;
-import AccesosPrincipales.FrameRegistro;
+import AccesosPrincipales.Inicio;
+import AccesosPrincipales.Registro;
 import ManejoDatos.ArchivoUtil;
 import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorClientes;
@@ -45,7 +45,7 @@ public class Javabnb {
 
         
         
-        FrameInicio fi = new FrameInicio();
+        Inicio fi = new Inicio();
         fi.setVisible(true);
     }
 

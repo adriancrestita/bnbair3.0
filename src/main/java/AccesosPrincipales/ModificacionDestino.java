@@ -6,23 +6,13 @@ package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
 import java.awt.*;
-import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.DateFormatter;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import com.toedter.calendar.JDateChooser;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
 import java.awt.event.MouseAdapter;
@@ -33,7 +23,7 @@ import java.awt.event.MouseEvent;
  *
  * @author hugos
  */
-public class FrameDestinoSeleccionado extends javax.swing.JFrame {
+public class ModificacionDestino extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameDestinoSeleccionado
@@ -50,12 +40,12 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private JLabel[] stars;
     private int calificacion;
     
-    public FrameDestinoSeleccionado(){
+    public ModificacionDestino(){
         initComponents();
     }
     
     // Constructor con destino seleccionado
-    public FrameDestinoSeleccionado(Inmueble inmueble) {
+    public ModificacionDestino(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
@@ -820,20 +810,23 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameDestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificacionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameDestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificacionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameDestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificacionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameDestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificacionDestino.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameDestinoSeleccionado().setVisible(true);
+                new ModificacionDestino().setVisible(true);
             }
         });
     }

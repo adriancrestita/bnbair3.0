@@ -12,21 +12,9 @@ import java.util.List;
 import ManejoDatos.GestorUsuarios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
 import poo.javabnb.Anfitrion;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.Inmueble;
@@ -37,7 +25,7 @@ import poo.javabnb.Inmueble;
  *
  * @author Usuario
  */
-public class DialogMenuAdmin extends javax.swing.JDialog {
+public class MenuAdmin extends javax.swing.JFrame {
 
     private GestorUsuarios gestorUsuarios;
     private GestorInmuebles gestorInmuebles;
@@ -58,8 +46,8 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
     private GestorTarjetas gestorTarjetas;
 
     
-    public DialogMenuAdmin(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public MenuAdmin() {
+        super();
         initComponents();
         setTitle("JavaBnB");
 
@@ -524,7 +512,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
 
     private void buttonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCerrarSesionActionPerformed
         // TODO add your handling code here:
-        FrameInicio inicio = new FrameInicio();
+        Inicio inicio = new Inicio();
         inicio.setVisible(true);
         dispose();
     }//GEN-LAST:event_buttonCerrarSesionActionPerformed
@@ -601,14 +589,18 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -617,7 +609,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogMenuAdmin dialog = new DialogMenuAdmin(new javax.swing.JFrame(), true);
+                MenuAdmin dialog = new MenuAdmin();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

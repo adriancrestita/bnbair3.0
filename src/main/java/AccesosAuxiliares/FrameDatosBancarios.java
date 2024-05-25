@@ -1,7 +1,7 @@
 package AccesosAuxiliares;
 
-import AccesosPrincipales.FrameInicio;
-import AccesosPrincipales.FrameLogin;
+import AccesosPrincipales.Inicio;
+import AccesosPrincipales.Login;
 import ManejoDatos.VerificarDatos;
 import java.awt.event.*;
 import java.io.IOException;
@@ -246,13 +246,13 @@ public class FrameDatosBancarios extends javax.swing.JFrame {
 
     private void InicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioActionPerformed
         // TODO add your handling code here:
-        FrameInicio inicio = new FrameInicio();
+        Inicio inicio = new Inicio();
         inicio.setVisible(true);
     }//GEN-LAST:event_InicioActionPerformed
 
     private void InicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSesionActionPerformed
         // TODO add your handling code here:
-        FrameLogin login = new FrameLogin();
+        Login login = new Login();
         login.setVisible(true);
         dispose();
     }//GEN-LAST:event_InicioSesionActionPerformed
@@ -280,7 +280,7 @@ public class FrameDatosBancarios extends javax.swing.JFrame {
                 //Añadir metodo para modificar los datos
                 JOptionPane.showMessageDialog(null, "Cambios guardados correctamente");
 
-                FrameLogin fLog = new FrameLogin();
+                Login fLog = new Login();
                 fLog.setVisible(true);
                 dispose();
             }

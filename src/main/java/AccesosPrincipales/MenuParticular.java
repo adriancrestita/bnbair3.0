@@ -10,8 +10,6 @@ import ManejoDatos.*;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JFrame;
@@ -19,14 +17,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import poo.javabnb.*;
 
 /**
  *
  * @author Usuario
  */
-public class DialogMenuParticular extends javax.swing.JDialog {
+public class MenuParticular extends javax.swing.JFrame {
 
     /**
      * Creates new form DialogMenuParticular
@@ -43,8 +40,8 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     
     
     
-    public DialogMenuParticular(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public MenuParticular() {
+        super();
         initComponents();
         setTitle("JavaBnB");
         
@@ -86,7 +83,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     // Acción al hacer clic en el JLabel
-                    FrameDestinoSeleccionado destino = new FrameDestinoSeleccionado(inmueble);
+                    DestinoSeleccionado destino = new DestinoSeleccionado(inmueble);
                     destino.setVisible(true);
                     setVisible(false);
                 }
@@ -419,7 +416,7 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     private void buttonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCerrarSesionActionPerformed
         // TODO add your handling code here:
         dispose();
-        FrameInicio inicio = new FrameInicio();
+        Inicio inicio = new Inicio();
         inicio.setVisible(true);
         
     }//GEN-LAST:event_buttonCerrarSesionActionPerformed
@@ -427,29 +424,6 @@ public class DialogMenuParticular extends javax.swing.JDialog {
     private void vipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vipActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_vipActionPerformed
-
-    private void buscadorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buscadorFocusGained
-        // TODO add your handling code here:
-        if (buscador.getText().equals("🔍 Buscador de destinos")){
-            buscador.setText("");
-        }
-    }//GEN-LAST:event_buscadorFocusGained
-
-    private void buscadorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buscadorFocusLost
-        // TODO add your handling code here:
-        if (buscador.getText().equals("")){
-            buscador.setText("🔍 Buscador de destinos");
-        }
-    }//GEN-LAST:event_buscadorFocusLost
-
-    private void buscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscadorActionPerformed
-        // TODO add your handling code here:
-        String query = buscador.getText();
-        List<Inmueble> listaFiltrada = filtrarInmuebles(listaInmuebles, query);
-        agregarInmueblesAlScrollPane(listaFiltrada, scrollPaneReservas);
-        jLabel30.requestFocus(true);
-        buscador.setText("🔍 Buscador de destinos");
-    }//GEN-LAST:event_buscadorActionPerformed
 
     private void cambioDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioDatosActionPerformed
         // TODO add your handling code here:
@@ -543,6 +517,29 @@ public class DialogMenuParticular extends javax.swing.JDialog {
         
     }//GEN-LAST:event_editButtonStateChanged
 
+    private void buscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscadorActionPerformed
+        // TODO add your handling code here:
+        String query = buscador.getText();
+        List<Inmueble> listaFiltrada = filtrarInmuebles(listaInmuebles, query);
+        agregarInmueblesAlScrollPane(listaFiltrada, scrollPaneReservas);
+        jLabel30.requestFocus(true);
+        buscador.setText("🔍 Buscador de destinos");
+    }//GEN-LAST:event_buscadorActionPerformed
+
+    private void buscadorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buscadorFocusLost
+        // TODO add your handling code here:
+        if (buscador.getText().equals("")){
+            buscador.setText("🔍 Buscador de destinos");
+        }
+    }//GEN-LAST:event_buscadorFocusLost
+
+    private void buscadorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_buscadorFocusGained
+        // TODO add your handling code here:
+        if (buscador.getText().equals("🔍 Buscador de destinos")){
+            buscador.setText("");
+        }
+    }//GEN-LAST:event_buscadorFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -560,20 +557,21 @@ public class DialogMenuParticular extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuParticular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogMenuParticular dialog = new DialogMenuParticular(new javax.swing.JFrame(), true);
+                MenuParticular dialog = new MenuParticular();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
