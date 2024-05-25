@@ -39,6 +39,17 @@ public class GestorInmuebles {
            System.out.println(e);
        }        
     }
+    
+    private static void guardarInmuebles(List<Inmueble> array) {
+       try{
+           FileOutputStream fos = new FileOutputStream("inmuebles.dat");
+           ObjectOutputStream oos = new ObjectOutputStream(fos);
+           oos.writeObject(array);
+           oos.close();
+       }catch(Exception e){
+           System.out.println(e);
+       }        
+    }
 
     public static void cargarInmuebles() {
         try{
@@ -71,5 +82,36 @@ public class GestorInmuebles {
             });
         }
         return listainmuebles;
+    }
+    
+    public static List<Inmueble> eliminarInmueble(String correo) {
+        List<Inmueble> inmueblesMod = new ArrayList<>();
+        try {
+            inmueblesMod = deserializarInmuebles();
+
+            for (int i = 0; i < inmueblesMod.size(); i++) {
+                Inmueble inm = inmueblesMod.get(i);
+                if (inm.getCorreoAnfitrion().equals(correo)) {
+                    inmueblesMod.remove(i);
+                    guardarInmuebles(inmueblesMod);
+                    break;
+                }
+            }
+            
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error al eliminar el usuario: " + ex.getMessage());
+        }
+        return inmueblesMod;
+    }
+    
+    public static List<Inmueble> deserializarInmuebles() throws IOException, ClassNotFoundException {
+        File file = new File("inmuebles.dat");
+        if (!file.exists()) {
+            return new ArrayList<>();
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("inmuebles.dat"))) {
+            return (List<Inmueble>) ois.readObject();
+        }
     }
 }

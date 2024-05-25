@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+<Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
@@ -911,15 +911,13 @@
                                           <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="superAnfitrion" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="jLabel19" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="titular" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
-                                                  <Component id="numtarj" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
-                                                  <Component id="fcad" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jLabel19" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="titular" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
+                                              <Component id="numtarj" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
+                                              <Component id="fcad" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>

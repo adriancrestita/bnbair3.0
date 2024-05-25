@@ -6,7 +6,6 @@ package AccesosPrincipales;
 
 
 import ManejoDatos.GestorAnfitrion;
-import ManejoDatos.GestorClientes;
 import ManejoDatos.GestorInmuebles;
 import ManejoDatos.GestorTarjetas;
 import ManejoDatos.VerificarDatos;
@@ -25,7 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import poo.javabnb.Anfitrion;
-import poo.javabnb.ClienteParticular;
 
 import poo.javabnb.Inmueble;
 import poo.javabnb.Sesion;
@@ -35,7 +33,7 @@ import poo.javabnb.TarjetaCredito;
  *
  * @author adria
  */
-public class DialogMenuAnfitrion extends javax.swing.JDialog {
+public class MenuAnfitrion extends javax.swing.JFrame {
     private GestorInmuebles gestorInmuebles;
     private Anfitrion anfitrion;
     private TarjetaCredito tj;
@@ -62,8 +60,8 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
     /**
      * Creates new form DialogMenuAnfitrion
      */
-    public DialogMenuAnfitrion(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public MenuAnfitrion() {
+        super();
         initComponents();
         gestorInmuebles = new GestorInmuebles();
         gestorAnfitrion = new GestorAnfitrion();
@@ -1032,7 +1030,7 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
 
     private void buttonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCerrarSesionActionPerformed
         // TODO add your handling code here:
-        FrameInicio inicio = new FrameInicio();
+        Inicio inicio = new Inicio();
         inicio.setVisible(true);
         dispose();
     }//GEN-LAST:event_buttonCerrarSesionActionPerformed
@@ -1157,20 +1155,21 @@ public class DialogMenuAnfitrion extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAnfitrion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAnfitrion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAnfitrion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAnfitrion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAnfitrion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAnfitrion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAnfitrion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAnfitrion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogMenuAnfitrion dialog = new DialogMenuAnfitrion(new javax.swing.JFrame(), true);
+                MenuAnfitrion dialog = new MenuAnfitrion();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

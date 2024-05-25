@@ -5,38 +5,24 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
-import ManejoDatos.GestorClientes;
 import java.awt.*;
-import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.DateFormatter;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import com.toedter.calendar.JDateChooser;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import poo.javabnb.ClienteParticular;
-import poo.javabnb.Sesion;
-
 
 /**
  *
  * @author hugos
  */
-public class FrameDestinoSeleccionado extends javax.swing.JFrame {
+public class DestinoSeleccionado extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameDestinoSeleccionado
@@ -48,31 +34,22 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private GestorAnfitrion gestorAnfitrion;
     private ArrayList<String> imagePaths;
     private String rutaImgs="src/main/java/ImagenesDestino/";
-    private int imagen;
+    private int imagen=0;
     private int rating = 0;
     private JLabel[] stars;
     private int calificacion;
-    private Inmueble inmueble;
-    private JPanel imagePanel;
     
-    private ClienteParticular cliente;
-    private GestorClientes gestorClientes = new GestorClientes();
-    
-    public FrameDestinoSeleccionado(){
+    public DestinoSeleccionado(){
         initComponents();
     }
     
     // Constructor con destino seleccionado
-    public FrameDestinoSeleccionado(Inmueble inmueble) {
-        this.inmueble=inmueble;
-        cliente = gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario());
+    public DestinoSeleccionado(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
         anfiInmueble = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
         imagePaths = inmueble.getImages();
-        imagen=0;
-        System.out.println(imagePaths);
         
         //establecer la información acerca del destino y anfitrión seleccionado
         jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
@@ -91,7 +68,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel26.setText("Precio por noche: "+inmueble.getPrecioNoche()+"€");
         costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
         
-        updateImagePanel(jPanel2, imagePaths);
+        updateImagePanel(imagePaths);
         
         dateChooser1 = new JDateChooser();
         dateChooser2 = new JDateChooser();
@@ -149,13 +126,13 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     }
     
     //Método para añadir las imágenes al jpanel
-    private void updateImagePanel(JPanel imagePanel, ArrayList<String> imagePaths) {
-        imagePanel.removeAll();
+    private void updateImagePanel(ArrayList<String> imagePaths) {
+        jPanel2.removeAll();
 
         int size = imagePaths.size();
         if (size == 0) {
             JLabel noImagesLabel = new JLabel("Imagenes no disponibles");
-            imagePanel.add(noImagesLabel);
+            jPanel2.add(noImagesLabel);
         } else {
                 ImageIcon originalIcon = new ImageIcon(rutaImgs+imagePaths.get(imagen));
                 Image originalImage = originalIcon.getImage();
@@ -163,11 +140,11 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 ImageIcon scaledIcon = new ImageIcon(scaledImage);
                 
                 JLabel imageLabel = new JLabel(scaledIcon);
-                imagePanel.add(imageLabel);
+                jPanel2.add(imageLabel);
         }
 
-        imagePanel.revalidate();
-        imagePanel.repaint();
+        jPanel2.revalidate();
+        jPanel2.repaint();
     }
     
     //Método para identificar los servicios del inmueble
@@ -226,6 +203,10 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         else if (value < 1) {
             spinner.setValue(1);
         }
+    }
+    
+    private void mostrarCalificacion() {
+        JOptionPane.showMessageDialog(this, "La calificación dada al inmueble es: " + calificacion + " estrellas.", "Calificación", JOptionPane.INFORMATION_MESSAGE);
     }
     
     /**
@@ -335,7 +316,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel17.setText("<3");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        this.imagePanel=jPanel2;
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel19.setText("Localidad, Pais");
@@ -742,8 +722,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
     private void valorarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorarButtonActionPerformed
         // TODO add your handling code here:
-        ValorarInmueble valoracion = new ValorarInmueble(FrameDestinoSeleccionado.this, true, calificacion,inmueble, cliente);
-        valoracion.setVisible(true);
+        mostrarCalificacion();
     }//GEN-LAST:event_valorarButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -755,7 +734,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
             System.out.println("Imagen inicial");
             imagen=imagePaths.size()-1;
         }
-        
+        updateImagePanel(imagePaths);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -767,15 +746,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
             System.out.println("no hay más imagenes");
             imagen=0;
         }
-        
-        ImageIcon originalIcon = new ImageIcon(rutaImgs+imagePaths.get(imagen));
-        Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(637, 358, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-                
-        JLabel imageLabel = new JLabel(scaledIcon);
-        imagePanel.add(imageLabel);
-        
+        updateImagePanel(imagePaths);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botonFechaFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFechaFinalActionPerformed
@@ -838,20 +809,21 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameDestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameDestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameDestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameDestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DestinoSeleccionado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameDestinoSeleccionado().setVisible(true);
+                new DestinoSeleccionado().setVisible(true);
             }
         });
     }

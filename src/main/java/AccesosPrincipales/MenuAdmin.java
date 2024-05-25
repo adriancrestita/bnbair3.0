@@ -12,21 +12,11 @@ import java.util.List;
 import ManejoDatos.GestorUsuarios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableRowSorter;
+import poo.javabnb.Anfitrion;
+import poo.javabnb.ClienteParticular;
 import poo.javabnb.Inmueble;
 
 
@@ -35,7 +25,7 @@ import poo.javabnb.Inmueble;
  *
  * @author Usuario
  */
-public class DialogMenuAdmin extends javax.swing.JDialog {
+public class MenuAdmin extends javax.swing.JFrame {
 
     private GestorUsuarios gestorUsuarios;
     private GestorInmuebles gestorInmuebles;
@@ -49,69 +39,17 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
     private JPopupMenu popupMenu2;
     private JMenuItem deleteMenuItem2;
 
-    private String[] nombresVariables = {
-        "Buscador",
-        "Buscador1",
-        "Buscador2"
-    };
-
-    private String[] mensajesOriginales = {
-        " 🔍 Buscador de Inmuebles",
-        " 🔍 Buscador de Reservas",
-        " 🔍 Buscador de Usuarios",
-    };
-    
-    private HashMap<String, JTextField> camposDeTexto = new HashMap<>();
-
 
     
-    public DialogMenuAdmin(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    private GestorClientes gestorClientes;
+    private GestorAnfitrion gestorAnfitrion;
+    private GestorTarjetas gestorTarjetas;
+
+    
+    public MenuAdmin() {
+        super();
         initComponents();
         setTitle("JavaBnB");
-        gestorInmuebles.cargarInmuebles();
-        GestorClientes.cargarClientes();
-        //GestorAnfitrion.cargarAnfitriones();
-        
-        listaInmuebles = gestorInmuebles.obtenerInmuebles();
-
-        
-        // Agregamos los campos de texto al HashMap
-        camposDeTexto.put("Buscador", Buscador);
-        camposDeTexto.put("Buscador1", Buscador1);
-        camposDeTexto.put("Buscador2", Buscador2);     
-        
-        for (int i = 0; i < nombresVariables.length; i++) {
-            
-            JTextField campo = camposDeTexto.get(nombresVariables[i]);
-            final String mensajeOriginal = mensajesOriginales[i];
-            
-            campo.putClientProperty("JTextField.placeholderText", mensajeOriginal);
-            campo.putClientProperty("JComponent.roundRect", true);
-            campo.setForeground(UIManager.getColor("TextField.foreground"));
-
-            campo.addFocusListener(new FocusAdapter() {
-                @Override
-                public void focusGained(FocusEvent e) {
-                    if (campo.getText().equals(mensajeOriginal)) {
-                        campo.setText("");
-                    }
-                    JTextField previousFocusOwner = campo;
-
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (campo.getText().isEmpty()) {
-                        campo.setText(mensajeOriginal);
-                    }
-                    Component previousFocusOwner = e.getOppositeComponent();
-
-                }
-                
-                
-            });
-        }
 
         /*--------------------------------------------------------------------------------*/        
         //TABLA USUARIOS
@@ -126,14 +64,16 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             }     
         };
         
+        gestorClientes = new GestorClientes();
+        gestorAnfitrion = new GestorAnfitrion();
+        gestorTarjetas = new GestorTarjetas();
+        
         tablaUsuarios.setModel(tableModel1);
         tablaUsuarios.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        //Carga los .dat a la tabla        
-        List<Object[]> usuarios = GestorUsuarios.obtenerTodosLosUsuarios();
-        for (Object[] usuario : usuarios) {
-            tableModel1.addRow(usuario);
-        }
+        
+        //Cargamos los clientes y los usuarios
+        cargarListaClientes(gestorClientes.obtenerClientes());
+        cargarListaAnfitriones(gestorAnfitrion.obtenerAnfitriones());
         
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
@@ -154,47 +94,28 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 int selectedRow = tablaUsuarios.getSelectedRow();
                 String tipoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 0);
                 String correoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
-                if("Cliente".equals(tipoClienteSeleccionado)){
-                    GestorClientes.eliminarCliente(correoClienteSeleccionado);
-                    GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
-                }
-                if("Anfitrion".equals(tipoClienteSeleccionado)){
-                    GestorAnfitrion.eliminarAnfitrion(correoClienteSeleccionado);
-                    GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);               
-                }
-                vaciarTabla(tableModel1);
-//                try {
-//                    GestorAnfitrion.deserializarUsuarios();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                
-//                try {
-//                    GestorClientes.deserializarUsuarios();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                try {
-//                    GestorTarjetas.deserializarTarjetas();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ClassNotFoundException ex) {
-//                    Logger.getLogger(DialogMenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//                }
                 
-                List<Object[]> usuarios = GestorUsuarios.obtenerTodosLosUsuarios();
-                    for (Object[] usuario : usuarios) {
-                        tableModel1.addRow(usuario);
-                        
-                    }
+                //Si es un cliente 
+                if("Cliente".equals(tipoClienteSeleccionado)){
+                    List<ClienteParticular> clien = GestorClientes.eliminarCliente(correoClienteSeleccionado);
+                    GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
+                    cargarListaClientes(clien);
+
+                    
+                }
+                
+                //Si es un anfitrion elimina anfitrion
+                if("Anfitrion".equals(tipoClienteSeleccionado)){
+                    List<Anfitrion> anfs =GestorAnfitrion.eliminarAnfitrion(correoClienteSeleccionado);
+                    GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
+                    cargarListaAnfitriones(anfs);
+
+                }
+
+                
+                
             }
         });
-        
-        
         
         // Ajuste de tamaño de las columnas
         TableColumnModel columnModel1 = tablaUsuarios.getColumnModel();
@@ -218,6 +139,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             }
             columnModel1.getColumn(column).setPreferredWidth(width);
         }
+        
         /*--------------------------------------------------------------------------------*/
         // TABLA INMUEBLES
         gestorInmuebles = new GestorInmuebles();
@@ -231,14 +153,13 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             }     
         };
         
+        //Setea el model de la tabla y hacemos que no se pueda hacer resize
         tablaInmuebles.setModel(tableModel2);
         tablaInmuebles.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         
-        //Carga el .dat a la tabla
-        List<Object[]> inmuebles = GestorInmuebles.obtenerTodosLosInmuebles();
-        for (Object[] inmueble : inmuebles) {
-            tableModel2.addRow(inmueble);
-        }      
+        //Carga el .dat a la tabla por primera vez
+        cargarListaInmuebles(gestorInmuebles.obtenerInmuebles());
+   
         
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
@@ -252,10 +173,25 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         // Asignar el Popup Menu a la tabla
         tablaInmuebles.setComponentPopupMenu(popupMenu2);
         
-        // Ajuste de tamaño de las columnas
+        //Asignamos el metodo de eliminar cuando se pulse el boton
+        deleteMenuItem2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tablaInmuebles.getSelectedRow();
+                String correoInmuebleSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
+                
+                //Elimina el inmueble de la lista y recargue los datos de la tabla
+                List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado);
+                cargarListaInmuebles(inm);          
+                
+            }
+        });
+        
+        // Ajuste de tamaño de las columnas para que se vea todo al completo
         TableColumnModel columnModel3 = tablaInmuebles.getColumnModel();
         for (int column = 0; column < tablaInmuebles.getColumnCount(); column++) {
             int width = 15; // Mínimo ancho
+            
             // Obtener el ancho del encabezado
             TableColumn tableColumn = columnModel3.getColumn(column);
             TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
@@ -275,11 +211,9 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
             columnModel3.getColumn(column).setPreferredWidth(width);
         }
         
-
-        
         /*--------------------------------------------------------------------------------*/        
-        // TABLA RESERVAS
-        /*gestorInmuebles = new GestorInmuebles();
+        /*// TABLA RESERVAS
+        gestorInmuebles = new GestorInmuebles();
         
         tableModel2 = new DefaultTableModel(new Object[][]{}, new String[]{
             "Correo Anfitrion", "Titulo", "Dirección", "Tipo Propiedad", "Máximo Huéspedes", "Precio Noche", 
@@ -291,28 +225,10 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         List<Object[]> inmuebles = GestorInmuebles.obtenerTodosLosInmuebles();
         for (Object[] inmueble : inmuebles) {
             tableModel2.addRow(inmueble);
-        }
         */
         
         /*--------------------------------------------------------------------------------*/   
-        //CODIGO BUSCADOR INMUEBLES
-        Buscador2.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                filterTable(Buscador.getText());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filterTable(Buscador.getText());
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                filterTable(Buscador.getText());
-            }
-        });
-    
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -545,50 +461,48 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    //Vacía el contenido de la tabla
     private static void vaciarTabla(DefaultTableModel modeloTabla) {
         while(modeloTabla.getRowCount() > 0){
             modeloTabla.removeRow(0);
         }
     }
-    private void filterTable(String query) {
-        List<Object[]> inmuebles = gestorInmuebles.obtenerTodosLosInmuebles();
-        List<Object[]> filteredInmuebles = inmuebles.stream()
-                .filter(inmueble -> {
-                    for (Object field : inmueble) {
-                        if (field.toString().toLowerCase().contains(query.toLowerCase())) {
-                            return true;
-                        }
-                    }
-                    return false;
-                })
-                .collect(Collectors.toList());
-
-        tableModel2.setRowCount(0); // Limpia la tabla
-        for (Object[] inmueble : filteredInmuebles) {
-            tableModel2.addRow(inmueble);
+    
+    //Cargamos los clientes en una lista
+    private void cargarListaClientes(List<ClienteParticular> clientes){
+        //Vacio el contenido de la tabla
+        vaciarTabla(tableModel1);
+        
+        //Cargamos los clientes en una lista
+        for (ClienteParticular cliente : clientes) {
+            
+            String numeroTarjeta = gestorTarjetas.obtenerNumeroTarjeta(cliente.getCorreoElectronico());
+            Object[] fila = {"Cliente", cliente.getNombre(), cliente.getCorreoElectronico(),
+                cliente.getTelefono(), cliente.getDni(), numeroTarjeta, cliente.cmpVIP() ? "VIP" : "No VIP", ""};
+            tableModel1.addRow(fila);
+           
         }
     }
-    /*
-    private void eliminarClienteSeleccionado() {
-        int selectedRow = tablaUsuarios.getSelectedRow();
-        if (selectedRow != -1) {
-            String tipoUsuario = (String) tablaUsuarios.getValueAt(selectedRow, 0);
-            String correo = (String) tablaUsuarios.getValueAt(selectedRow, 2);
-            if(("Cliente").equals(tipoUsuario)){
-                GestorClientes.eliminarCliente(correo);
-                ((DefaultTableModel) tablaUsuarios.getModel()).removeRow(selectedRow);
-                JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.");
-            }
-            if(("Anfitrión").equals(tipoUsuario)){
-                GestorAnfitrion.eliminarAnfitrion(correo);
-                ((DefaultTableModel) tablaUsuarios.getModel()).removeRow(selectedRow);
-                JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
+    
+    //Cargamos los anfitriones en una lista
+    private void cargarListaAnfitriones(List<Anfitrion> anfitriones){
+        vaciarTabla(tableModel1);
+        for (Anfitrion anfitrion : anfitriones) {
+            String numeroTarjeta = gestorTarjetas.obtenerNumeroTarjeta(anfitrion.getCorreoElectronico());
+            Object[] fila = {"Anfitrion", anfitrion.getNombre(), anfitrion.getCorreoElectronico(),
+                anfitrion.getTelefono(), anfitrion.getDni(), numeroTarjeta, anfitrion.cmpSuperAnfitrion(), anfitrion.getFechaRegistro()};
+            tableModel1.addRow(fila);
         }
     }
-    */
+    
+    //Cargamos los inmuebles en una lista
+    private void cargarListaInmuebles(List<Inmueble> inmuebles){
+        vaciarTabla(tableModel2);
+        for (Inmueble inmueble : inmuebles) {
+            Object [] fila = {inmueble.getCorreoAnfitrion(), inmueble.getTitulo(), inmueble.getDireccion(), inmueble.getTipoPropiedad(), inmueble.getMaxHuespedes(), inmueble.getPrecioNoche(), inmueble.getServicios()};
+            tableModel2.addRow(fila);
+        }            
+    }
 
     private void buttonUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUserActionPerformed
         jTabbedPane1.setSelectedIndex(2);
@@ -598,7 +512,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
 
     private void buttonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCerrarSesionActionPerformed
         // TODO add your handling code here:
-        FrameInicio inicio = new FrameInicio();
+        Inicio inicio = new Inicio();
         inicio.setVisible(true);
         dispose();
     }//GEN-LAST:event_buttonCerrarSesionActionPerformed
@@ -675,14 +589,18 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogMenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -691,7 +609,7 @@ public class DialogMenuAdmin extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogMenuAdmin dialog = new DialogMenuAdmin(new javax.swing.JFrame(), true);
+                MenuAdmin dialog = new MenuAdmin();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

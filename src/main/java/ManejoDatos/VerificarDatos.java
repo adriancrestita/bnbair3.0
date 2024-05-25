@@ -38,7 +38,7 @@ public class VerificarDatos {
     }
 
     // Verificar registro de Cliente
-    public static boolean verificarRegistroCliente(String email)throws IOException {
+    public static boolean verificarCorreoCliente(String email)throws IOException {
         for (ClienteParticular cliente : gestorClientes.obtenerClientes()) {
             if (cliente.getCorreoElectronico().equals(email)) {
                 return false; // Email ya registrado
@@ -48,7 +48,7 @@ public class VerificarDatos {
     }
 
     // Verificar registro de Anfitrion
-    public static boolean verificarRegistroAnfitrion(String email)throws IOException {
+    public static boolean verificarCorreoAnfitrion(String email)throws IOException {
         for (Anfitrion anfitrion : gestorAnfitrion.obtenerAnfitriones()) {
             if (anfitrion.getCorreoElectronico().equals(email)) {
                 return false; // Email ya registrado
@@ -57,18 +57,7 @@ public class VerificarDatos {
         return true; // Email disponible
     }
 
-    // Iniciar sesión Cliente
-    public static boolean verificarCredencialesPart(String email, String password) throws IOException {
-        for (ClienteParticular cliente : gestorClientes.obtenerClientes()) {
-            // Verificar si el correo y la contraseña del cliente no son nulos
-            if (cliente.getCorreoElectronico() != null && cliente.getClave() != null) {
-                if (cliente.getCorreoElectronico().equals(email) && cliente.getClave().equals(password)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    // Iniciar sesion
     
     public static ClienteParticular iniciarSesionCliente(String email, String password) {
         List<ClienteParticular> clientes = leerDatos(CLIENTES_FILENAME);
@@ -78,19 +67,6 @@ public class VerificarDatos {
             }
         }
         return null; // Credenciales incorrectas
-    }
-
-    // Iniciar sesión Anfitrion
-    public static boolean verificarCredencialesAnf(String email, String password) throws IOException {
-        for (Anfitrion anf : gestorAnfitrion.obtenerAnfitriones()) {
-            // Verificar si el correo y la contraseña del cliente no son nulos
-            if (anf.getCorreoElectronico() != null && anf.getClave() != null) {
-                if (anf.getCorreoElectronico().equals(email) && anf.getClave().equals(password)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
     
     public static Anfitrion iniciarSesionAnfitrion(String email, String password) {
@@ -115,7 +91,8 @@ public class VerificarDatos {
             return List.of();
         }
     }
-        
+    
+    //Método que valida si la tarjeta del usuario es valida (longitudes y fecha caducidad posterior a la actual)
     public boolean validarTarjeta(String titularTarjeta, String numeroTarjeta, String fechaCaducidad) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (titularTarjeta.isEmpty() || titularTarjeta.equals("Ingrese el nombre del titular") ||
@@ -134,6 +111,7 @@ public class VerificarDatos {
         }
     }
     
+    //Método que verifica si los daos introducidos en un registro son validos para cliente/anfitrion
     public boolean validarRegistro(String correo, String nombre, String contraseña, String telefono, String dni, String tipo) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
@@ -146,7 +124,7 @@ public class VerificarDatos {
 
         // Verificar cada campo con sus respectivas funciones de validación
         if("Anfitrión".equals(tipo)){
-            if(verificarRegistroAnfitrion(correo) == true){
+            if(verificarCorreoAnfitrion(correo) == true){
                 if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
                         return true;
                 }
@@ -163,17 +141,15 @@ public class VerificarDatos {
             }    
         }
         if("Cliente".equals(tipo)){
-            if(verificarRegistroCliente(correo) == true){
+            if(verificarCorreoCliente(correo) == true){
                 if((esCorreo(correo) && xLongitud(telefono, 9) && esDni(dni)) == true){
                         return true;
                 }
-
                 else{
                     JOptionPane.showMessageDialog(null, "Los datos introducidos no son válidos");
                     return false;
                 }    
             }
-
             else{
                 JOptionPane.showMessageDialog(null, "El usuario ya existe");
                 return false;
@@ -184,7 +160,7 @@ public class VerificarDatos {
         }  
     }
     
-    
+    //Método que valida si los datos introducidos en un inmueble son correctos
     public static boolean validarInmueble(String titulo, String calle, String numero, String cp, String ciudad, String precio){
         if (titulo.isEmpty() || titulo.equals("Ingrese el titulo") ||
             numero.isEmpty() || numero.equals("Ingrese el numero") ||

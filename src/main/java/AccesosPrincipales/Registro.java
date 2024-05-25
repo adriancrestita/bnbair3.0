@@ -9,25 +9,15 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import poo.javabnb.*;
-import java.lang.*;
-import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLaf;
-import java.awt.Color;
 import java.awt.Image;
-import java.util.Collections;
-import poo.javabnb.*;
-import java.lang.*;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
  *
  * @author crestas
  */
-public class FrameRegistro extends javax.swing.JFrame {
+public class Registro extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameRegistro
@@ -61,7 +51,7 @@ public class FrameRegistro extends javax.swing.JFrame {
     private GestorAnfitrion gestorAnfitrion;
 
     
-    public FrameRegistro() {
+    public Registro() {
         initComponents();
         
         gestorClientes = new GestorClientes();
@@ -404,7 +394,7 @@ public class FrameRegistro extends javax.swing.JFrame {
                     gestorClientes.agregarCliente(nuevoCliente);
                     gestorTarjetas.agregarTarjeta(nuevaTarjeta);
                     JOptionPane.showMessageDialog(this, "Registrado correctamente");
-                    FrameLogin fLog = new FrameLogin();
+                    Login fLog = new Login();
                     fLog.setVisible(true);
                     dispose();
                 } 
@@ -426,7 +416,7 @@ public class FrameRegistro extends javax.swing.JFrame {
                     gestorAnfitrion.agregarAnfitrion(nuevoAnfitrion);
                     gestorTarjetas.agregarTarjeta(nuevaTarjeta);
                     JOptionPane.showMessageDialog(this, "Registrado correctamente");
-                    FrameLogin fl = new FrameLogin();
+                    Login fl = new Login();
                     fl.setVisible(true);
                     dispose();
                 }
@@ -467,13 +457,13 @@ public class FrameRegistro extends javax.swing.JFrame {
 
     private void InicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioActionPerformed
         // TODO add your handling code here:
-        FrameInicio inicio = new FrameInicio();
+        Inicio inicio = new Inicio();
         inicio.setVisible(true);
     }//GEN-LAST:event_InicioActionPerformed
 
     private void InicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSesionActionPerformed
         // TODO add your handling code here:
-        FrameLogin login = new FrameLogin();
+        Login login = new Login();
         login.setVisible(true);
         dispose();
     }//GEN-LAST:event_InicioSesionActionPerformed
@@ -545,20 +535,21 @@ public class FrameRegistro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameRegistro().setVisible(true);
+                new Registro().setVisible(true);
             }
         });
     }

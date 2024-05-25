@@ -110,19 +110,24 @@ public class GestorClientes {
         return false;
     }
     
-    public static void eliminarCliente(String correo) {
+    public static List<ClienteParticular> eliminarCliente(String correo) {
+        List<ClienteParticular> clientesMod = new ArrayList<>();
         try {
-            List<ClienteParticular> clientesMod = deserializarUsuarios();
+            clientesMod = deserializarUsuarios();
 
             for (int i = 0; i < clientesMod.size(); i++) {
                 ClienteParticular cp = clientesMod.get(i);
                 if (cp.getCorreoElectronico().equals(correo)) {
                     clientesMod.remove(i);
                     guardarClientes(clientesMod);
+                    break;
                 }
             }
+            
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println("Error al eliminar el usuario: " + ex.getMessage());
         }
+        return clientesMod;
     }
+    
 }

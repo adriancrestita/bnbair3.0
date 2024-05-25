@@ -5,17 +5,11 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorInmuebles;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+
 
 /**
  *

@@ -1,7 +1,7 @@
 package poo.javabnb;
 
-import AccesosPrincipales.FrameInicio;
-import AccesosPrincipales.FrameRegistro;
+import AccesosPrincipales.Inicio;
+import AccesosPrincipales.Registro;
 import ManejoDatos.ArchivoUtil;
 import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorClientes;
@@ -47,7 +47,7 @@ public class Javabnb {
 
         System.out.println("Cargando datos de valoraciones...");
         
-        FrameInicio fi = new FrameInicio();
+        Inicio fi = new Inicio();
         fi.setVisible(true);
     }
 
