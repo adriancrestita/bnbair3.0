@@ -638,7 +638,7 @@ public class ModificacionDestino extends javax.swing.JFrame {
             lavadora.setEnabled(true);
             trabajo.setEnabled(true);
             precioNoche.setEnabled(true);
-            
+            //
             //Hacemos que no se pueda hacer focus al text field
             titulo.setFocusable(true);
             calle.setFocusable(true);
@@ -670,7 +670,7 @@ public class ModificacionDestino extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_precioNocheAncestorAdded
 
-    private void precioNocheStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_precioNocheStateChanged
+    private void precioNocheStateChanged(javax.swing.event.ChangeEvent evt) {                                         
         // TODO add your handling code here:
     }                                                
 
