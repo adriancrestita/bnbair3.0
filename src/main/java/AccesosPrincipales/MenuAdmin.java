@@ -178,10 +178,11 @@ public class MenuAdmin extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tablaInmuebles.getSelectedRow();
-                String correoInmuebleSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
+                String correoInmuebleSeleccionado = (String) tablaInmuebles.getValueAt(selectedRow, 2);
+                String tituloInmuebleSeleccionado = (String) tablaInmuebles.getValueAt(selectedRow, 1);
                 
                 //Elimina el inmueble de la lista y recargue los datos de la tabla
-                List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado);
+                List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado, tituloInmuebleSeleccionado);
                 cargarListaInmuebles(inm);          
                 
             }

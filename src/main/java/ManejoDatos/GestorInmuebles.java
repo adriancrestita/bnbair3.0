@@ -84,14 +84,14 @@ public class GestorInmuebles {
         return listainmuebles;
     }
     
-    public static List<Inmueble> eliminarInmueble(String correo) {
+    public static List<Inmueble> eliminarInmueble(String correo, String titulo) {
         List<Inmueble> inmueblesMod = new ArrayList<>();
         try {
             inmueblesMod = deserializarInmuebles();
 
             for (int i = 0; i < inmueblesMod.size(); i++) {
                 Inmueble inm = inmueblesMod.get(i);
-                if (inm.getCorreoAnfitrion().equals(correo)) {
+                if (inm.getCorreoAnfitrion().equals(correo) && inm.getTitulo().equals(titulo)) {
                     inmueblesMod.remove(i);
                     guardarInmuebles(inmueblesMod);
                     break;
