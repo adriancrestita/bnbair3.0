@@ -79,7 +79,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel26.setText("Precio por noche: "+inmueble.getPrecioNoche()+"€");
         costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
         
-        updateImagePanel(jPanel2, imagePaths);
+        updateImagePanel(imagePaths);
         
         dateChooser1 = new JDateChooser();
         dateChooser2 = new JDateChooser();
@@ -137,13 +137,13 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     }
     
     //Método para añadir las imágenes al jpanel
-    private void updateImagePanel(JPanel imagePanel, ArrayList<String> imagePaths) {
-        imagePanel.removeAll();
+    private void updateImagePanel(ArrayList<String> imagePaths) {
+        jPanel2.removeAll();
 
         int size = imagePaths.size();
         if (size == 0) {
             JLabel noImagesLabel = new JLabel("Imagenes no disponibles");
-            imagePanel.add(noImagesLabel);
+            jPanel2.add(noImagesLabel);
         } else {
                 ImageIcon originalIcon = new ImageIcon(rutaImgs+imagePaths.get(imagen));
                 Image originalImage = originalIcon.getImage();
@@ -151,11 +151,11 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
                 ImageIcon scaledIcon = new ImageIcon(scaledImage);
                 
                 JLabel imageLabel = new JLabel(scaledIcon);
-                imagePanel.add(imageLabel);
+                jPanel2.add(imageLabel);
         }
 
-        imagePanel.revalidate();
-        imagePanel.repaint();
+        jPanel2.revalidate();
+        jPanel2.repaint();
     }
     
     //Método para identificar los servicios del inmueble
@@ -745,6 +745,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
             System.out.println("Imagen inicial");
             imagen=imagePaths.size()-1;
         }
+        updateImagePanel(imagePaths);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -756,6 +757,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
             System.out.println("no hay más imagenes");
             imagen=0;
         }
+        updateImagePanel(imagePaths);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botonFechaFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFechaFinalActionPerformed
