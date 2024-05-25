@@ -68,7 +68,7 @@ public class Anfitrion implements Serializable{
         return fechaRegistro;
     }
     
-    public boolean getesSuperAnfitrion(){
+    public boolean getEsSuperAnfitrion(){
         return esSuperAnfitrion;
     }
     

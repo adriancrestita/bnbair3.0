@@ -7,6 +7,7 @@ import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorClientes;
 import ManejoDatos.GestorInmuebles;
 import ManejoDatos.GestorTarjetas;
+import ManejoDatos.GestorValoraciones;
 import java.io.*; 
 import java.util.*;
  
@@ -29,6 +30,7 @@ public class Javabnb {
         GestorTarjetas gestorTarjetas = new GestorTarjetas();
         GestorInmuebles gestorInmuebles = new GestorInmuebles();
         GestorAnfitrion gestorAnfitrion = new GestorAnfitrion();
+        GestorValoraciones gestorValoraciones = new GestorValoraciones();
 
         // Cargar los datos desde los archivos .dat
         System.out.println("Cargando datos de clientes...");
@@ -43,7 +45,7 @@ public class Javabnb {
         System.out.println("Cargando datos de anfitriones...");
         //gestorAnfitrion.obtenerAnfitriones().forEach(anfitrion -> System.out.println(anfitrion.getCorreoElectronico()));
 
-        
+        System.out.println("Cargando datos de valoraciones...");
         
         FrameInicio fi = new FrameInicio();
         fi.setVisible(true);

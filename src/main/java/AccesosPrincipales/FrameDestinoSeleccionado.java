@@ -5,6 +5,7 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
+import ManejoDatos.GestorClientes;
 import java.awt.*;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import poo.javabnb.ClienteParticular;
+import poo.javabnb.Sesion;
 
 
 /**
@@ -45,10 +48,15 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     private GestorAnfitrion gestorAnfitrion;
     private ArrayList<String> imagePaths;
     private String rutaImgs="src/main/java/ImagenesDestino/";
-    private int imagen=0;
+    private int imagen;
     private int rating = 0;
     private JLabel[] stars;
     private int calificacion;
+    private Inmueble inmueble;
+    private JPanel imagePanel;
+    
+    private ClienteParticular cliente;
+    private GestorClientes gestorClientes = new GestorClientes();
     
     public FrameDestinoSeleccionado(){
         initComponents();
@@ -56,11 +64,15 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
     
     // Constructor con destino seleccionado
     public FrameDestinoSeleccionado(Inmueble inmueble) {
+        this.inmueble=inmueble;
+        cliente = gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario());
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
         anfiInmueble = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
         imagePaths = inmueble.getImages();
+        imagen=0;
+        System.out.println(imagePaths);
         
         //establecer la información acerca del destino y anfitrión seleccionado
         jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
@@ -216,10 +228,6 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         }
     }
     
-    private void mostrarCalificacion() {
-        JOptionPane.showMessageDialog(this, "La calificación dada al inmueble es: " + calificacion + " estrellas.", "Calificación", JOptionPane.INFORMATION_MESSAGE);
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -327,6 +335,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
         jLabel17.setText("<3");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        this.imagePanel=jPanel2;
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel19.setText("Localidad, Pais");
@@ -733,7 +742,8 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
 
     private void valorarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorarButtonActionPerformed
         // TODO add your handling code here:
-        mostrarCalificacion();
+        ValorarInmueble valoracion = new ValorarInmueble(FrameDestinoSeleccionado.this, true, calificacion,inmueble, cliente);
+        valoracion.setVisible(true);
     }//GEN-LAST:event_valorarButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -745,6 +755,7 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
             System.out.println("Imagen inicial");
             imagen=imagePaths.size()-1;
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -756,6 +767,15 @@ public class FrameDestinoSeleccionado extends javax.swing.JFrame {
             System.out.println("no hay más imagenes");
             imagen=0;
         }
+        
+        ImageIcon originalIcon = new ImageIcon(rutaImgs+imagePaths.get(imagen));
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(637, 358, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                
+        JLabel imageLabel = new JLabel(scaledIcon);
+        imagePanel.add(imageLabel);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botonFechaFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFechaFinalActionPerformed
