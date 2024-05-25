@@ -24,7 +24,20 @@ public class ValoracionClienteInmueble {
         this.notaDada=notaDada;
         this.reseña=reseña;
         
-        GestorValoraciones.guardarValoraciones();
+        //GestorValoraciones.guardarValoraciones();
     }
     
+    //getters y setters
+    public ClienteParticular getCliente(){
+        return cliente;
+    }
+    public Inmueble getInmueble(){
+        return inmueble;
+    }
+    public int getNota(){
+        return notaDada;
+    }
+    public String getReseña(){
+        return reseña;
+    }
 }

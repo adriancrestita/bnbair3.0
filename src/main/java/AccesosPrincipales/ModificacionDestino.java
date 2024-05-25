@@ -518,13 +518,13 @@ public class ModificacionDestino extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
         String correoInmuebleSeleccionado = "";
         String titulo = "";
         List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado, titulo);
         GestorInmuebles.guardarInmuebles(inm);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }                                        
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -672,9 +672,23 @@ public class ModificacionDestino extends javax.swing.JFrame {
 
     private void precioNocheStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_precioNocheStateChanged
         // TODO add your handling code here:
-        int price = precioNoche.getValue();
-        precioEtiqueta.setText(String.valueOf(price));
-    }//GEN-LAST:event_precioNocheStateChanged
+    }                                                
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void numHuespedesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numHuespedesAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numHuespedesAncestorAdded
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String correoInmuebleSeleccionado = "";
+        String titulo = "";
+        //List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado, titulo);
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -746,6 +760,7 @@ public class ModificacionDestino extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -756,7 +771,6 @@ public class ModificacionDestino extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
