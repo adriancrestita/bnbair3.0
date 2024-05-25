@@ -42,6 +42,7 @@ public class GestorValoraciones {
             System.out.println(e);
         }    
     }
+    
     public static void guardarValoraciones(){
         try{
            FileOutputStream fos = new FileOutputStream("valoraciones.dat");
@@ -51,5 +52,15 @@ public class GestorValoraciones {
        }catch(Exception e){
            System.out.println(e);
        }
+    }
+    
+    public void agregarValoracion(ValoracionClienteInmueble valoracion) {
+//        if (valoracion.getCorreoElectronico() == null || cliente.getCorreoElectronico().isEmpty()) {
+//            throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
+//        }
+//        else{
+//            clientes.add(cliente);
+//            guardarClientes();  
+//        }  
     }
 }
