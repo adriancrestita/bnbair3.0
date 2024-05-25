@@ -105,11 +105,6 @@ public class Anfitrion implements Serializable{
         
         this.fechaRegistro = fechaActual;
     }
-    
-    public boolean getEsSuperAnfitrion(){
-        return esSuperAnfitrion;
-    }
-    
     // Métodos específicos para Anfitrion
 
     public void modificarValoraciones(double calificacionNew){
