@@ -5,6 +5,7 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
+import com.toedter.calendar.JCalendar;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -78,6 +79,12 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
         // Configurar el primer JDateChooser para que no se puedan seleccionar fechas anteriores a hoy
         dateChooser1.setSelectableDateRange(new Date(), null);
+        
+        JCalendar calendar1 = dateChooser1.getJCalendar();
+        JCalendar calendar2 = dateChooser2.getJCalendar();
+        
+        calendar1.setWeekOfYearVisible(false);
+        calendar2.setWeekOfYearVisible(false);
         
         ArrayList <String> servicios = inmueble.getServicios();
         
@@ -203,10 +210,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         else if (value < 1) {
             spinner.setValue(1);
         }
-    }
-    
-    private void mostrarCalificacion() {
-        JOptionPane.showMessageDialog(this, "La calificación dada al inmueble es: " + calificacion + " estrellas.", "Calificación", JOptionPane.INFORMATION_MESSAGE);
     }
     
     /**
@@ -722,7 +725,8 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
     private void valorarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorarButtonActionPerformed
         // TODO add your handling code here:
-        mostrarCalificacion();
+        ValorarInmueble valorarInmueble = new ValorarInmueble(DestinoSeleccionado.this, true);
+        valorarInmueble.setVisible(true);
     }//GEN-LAST:event_valorarButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
