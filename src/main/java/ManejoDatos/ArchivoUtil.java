@@ -30,10 +30,11 @@ public class ArchivoUtil {
         asegurarArchivoExiste("anfitriones.dat");
         asegurarArchivoExiste("inmuebles.dat");
         asegurarArchivoExiste("reservas.dat");
+        asegurarArchivoExiste("valoraciones.dat");
     }
 
     public static void resetFiles() {
-        String[] archivos = {"clientes.dat", "tarjetas.dat", "anfitriones.dat", "inmuebles.dat", "reservas.dat"};
+        String[] archivos = {"clientes.dat", "tarjetas.dat", "anfitriones.dat", "inmuebles.dat", "reservas.dat", "valoraciones.dat"};
         for (String archivo : archivos) {
             File file = new File(archivo);
             if (file.exists()) {
@@ -47,6 +48,7 @@ public class ArchivoUtil {
         asegurarArchivoExiste("anfitriones.dat");
         asegurarArchivoExiste("inmuebles.dat");
         asegurarArchivoExiste("reservas.dat");
+        asegurarArchivoExiste("valoraciones.dat");
 
     }
 }
