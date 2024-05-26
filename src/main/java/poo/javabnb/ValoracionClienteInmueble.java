@@ -17,6 +17,7 @@ public class ValoracionClienteInmueble {
     public Inmueble inmueble;
     public int notaDada;
     public String reseña;
+    public GestorValoraciones gestorValoraciones;
     
     public ValoracionClienteInmueble(ClienteParticular cliente, Inmueble inmueble, int notaDada, String reseña){
         this.cliente=cliente;
@@ -24,7 +25,10 @@ public class ValoracionClienteInmueble {
         this.notaDada=notaDada;
         this.reseña=reseña;
         
-        //GestorValoraciones.guardarValoraciones();
+        
+        gestorValoraciones = new GestorValoraciones();
+        
+        gestorValoraciones.guardarValoraciones();
     }
     
     //getters y setters
