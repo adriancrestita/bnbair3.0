@@ -51,6 +51,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
         anfiInmueble = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
         imagePaths = inmueble.getImages();
+        System.out.println(imagePaths);
         
         //establecer la información acerca del destino y anfitrión seleccionado
         jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());

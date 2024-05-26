@@ -54,13 +54,17 @@ public class GestorValoraciones {
        }
     }
     
-    public void agregarValoracion(ValoracionClienteInmueble valoracion) {
-//        if (valoracion.getCorreoElectronico() == null || cliente.getCorreoElectronico().isEmpty()) {
-//            throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
-//        }
-//        else{
-//            clientes.add(cliente);
-//            guardarClientes();  
-//        }  
+    public static void agregarValoracion(ValoracionClienteInmueble valoracion) {
+        if (valoracion.getReseña().isEmpty()){
+            System.out.println("Reseña inválida");
+        }
+        else{
+            valoraciones.add(valoracion);
+            guardarValoraciones();
+        }
+    }
+    
+    public List<ValoracionClienteInmueble> getValoraciones(){
+        return valoraciones;
     }
 }
