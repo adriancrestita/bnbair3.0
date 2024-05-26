@@ -427,7 +427,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }
     
-    //Cargamos los inmuebles en una lista
+    /**
+     * Método que carga los inmuebles en la lista
+     * @param inmuebles 
+     */
     private void cargarListaInmuebles(List<Inmueble> inmuebles){
         vaciarTabla(tableModel2);
         for (Inmueble inmueble : inmuebles) {
