@@ -18,9 +18,12 @@ public class ValorarInmueble extends javax.swing.JDialog {
     /**
      * Creates new form ValorarInmueble
      */
-    private int puntuacion;
-    private ClienteParticular particular;
+    private ValoracionClienteInmueble valoracion;
+    private GestorValoraciones gestorValoraciones;
+    private int puntuación;
     private Inmueble inmueble;
+    private ClienteParticular cliente;                                                                                                   
+    
     
     
     public ValorarInmueble(java.awt.Frame parent, boolean modal){
@@ -31,9 +34,6 @@ public class ValorarInmueble extends javax.swing.JDialog {
     public ValorarInmueble(java.awt.Frame parent, boolean modal, int puntuación, Inmueble inmueble, ClienteParticular cliente) {
         super(parent, modal);
         initComponents();
-        this.puntuacion=puntuación;
-        this.particular=cliente;
-        this.inmueble=inmueble;
     }
 
     /**
@@ -118,8 +118,12 @@ public class ValorarInmueble extends javax.swing.JDialog {
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         // TODO add your handling code here:
-        ValoracionClienteInmueble valoracion = new ValoracionClienteInmueble(particular, inmueble, puntuacion, jTextField1.getText());
-        GestorValoraciones.agregarValoracion(valoracion);
+        valoracion = new ValoracionClienteInmueble(cliente, inmueble, puntuación, jTextField1.getText());
+        
+        System.out.println(valoracion.getReseña());
+        
+        gestorValoraciones = new GestorValoraciones();
+        gestorValoraciones.agregarValoracion(valoracion);
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     /**

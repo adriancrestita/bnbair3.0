@@ -54,7 +54,7 @@ public class GestorValoraciones {
        }
     }
     
-    public static void agregarValoracion(ValoracionClienteInmueble valoracion) {
+    public void agregarValoracion(ValoracionClienteInmueble valoracion) {
         if (valoracion.getReseña().isEmpty()){
             System.out.println("Reseña inválida");
         }

@@ -236,7 +236,6 @@ public class DestinoModificacion extends javax.swing.JFrame {
         jLabel15.setPreferredSize(new java.awt.Dimension(50, 50));
 
         panelImagenes.setBackground(new java.awt.Color(255, 255, 255));
-        this.imagePanel=panelImagenes;
         panelImagenes.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel26.setText("Precio noche");
