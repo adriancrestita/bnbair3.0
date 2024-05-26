@@ -5,8 +5,10 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
+import ManejoDatos.GestorValoraciones;
 import com.toedter.calendar.JCalendar;
 import java.awt.*;
+import java.util.List;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -18,6 +20,7 @@ import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import poo.javabnb.ValoracionClienteInmueble;
 
 /**
  *
@@ -39,6 +42,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private int rating = 0;
     private JLabel[] stars;
     private int calificacion;
+    private Inmueble inmueble;
     
     public DestinoSeleccionado(){
         initComponents();
@@ -52,6 +56,9 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         anfiInmueble = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
         imagePaths = inmueble.getImages();
         System.out.println(imagePaths);
+        this.inmueble=inmueble;
+        GestorValoraciones gestorValoraciones = new GestorValoraciones();
+        java.util.List<ValoracionClienteInmueble> valoraciones = gestorValoraciones.getValoraciones(inmueble);
         
         //establecer la información acerca del destino y anfitrión seleccionado
         jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
@@ -71,6 +78,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
         
         updateImagePanel(imagePaths);
+        mostrarReseñas(inmueble);
         
         dateChooser1 = new JDateChooser();
         dateChooser2 = new JDateChooser();
@@ -229,6 +237,36 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         }
     }
     
+    private void mostrarReseñas(Inmueble inmueble) {
+        GestorValoraciones gestorValoraciones = new GestorValoraciones();
+        List<ValoracionClienteInmueble> valoraciones = gestorValoraciones.getValoraciones(inmueble);
+
+        JPanel jPanelResenas = new JPanel();
+        jPanelResenas.setLayout(new BoxLayout(jPanelResenas, BoxLayout.Y_AXIS));  // Configurar layout para apilar JLabels
+
+        if (valoraciones.isEmpty()) {
+            JLabel noResenasLabel = new JLabel("no hay reseñas disponibles");
+            jPanelResenas.add(noResenasLabel);
+        } else {
+            for (ValoracionClienteInmueble valoracion : valoraciones) {
+                String clienteNombre = valoracion.getCliente().getNombre();
+                String resenaTexto = valoracion.getReseña();
+                // Usar HTML para formatear el texto con un salto de línea
+                String resenaHtml = "<html>" + clienteNombre + "<br/>" + resenaTexto + "</html>";
+                JLabel resenaLabel = new JLabel(resenaHtml);
+                resenaLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Añadir padding para mejor visualización
+                jPanelResenas.add(resenaLabel);
+            }
+        }
+
+        // Agregar el jPanelResenas al jScrollPane1
+        jScrollPane1.setViewportView(jPanelResenas);
+
+        // Refrescar el JScrollPane para asegurar que se muestran los nuevos componentes
+        jScrollPane1.revalidate();
+        jScrollPane1.repaint();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -305,6 +343,9 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -548,45 +589,23 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel29.setText("número de valoraciones");
         jPanel5.add(jLabel29);
 
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel26)
-                                        .addComponent(jLabel30)
-                                        .addComponent(jLabel31))
-                                    .addGap(26, 26, 26)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel32)
-                                        .addComponent(numHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabel36)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jLabel33))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel37)
-                                        .addComponent(jLabel38)
-                                        .addComponent(jLabel39))
-                                    .addGap(39, 39, 39)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel42)
-                                        .addComponent(jLabel41)
-                                        .addComponent(jLabel40)))
-                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
-                                .addComponent(jSeparator1)))
-                        .addGap(0, 310, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -630,8 +649,42 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
                                         .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                                         .addComponent(jButton6))
                                     .addGap(135, 135, 135))))
-                        .addContainerGap(72, Short.MAX_VALUE))))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(72, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel26)
+                                        .addComponent(jLabel30)
+                                        .addComponent(jLabel31))
+                                    .addGap(26, 26, 26)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel32)
+                                        .addComponent(numHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel36)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(jLabel33))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel37)
+                                        .addComponent(jLabel38)
+                                        .addComponent(jLabel39))
+                                    .addGap(39, 39, 39)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel42)
+                                        .addComponent(jLabel41)
+                                        .addComponent(jLabel40)))
+                                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                                .addComponent(jSeparator1))
+                            .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3)))
+                        .addGap(0, 84, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -670,7 +723,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel24)
                             .addComponent(jLabel34))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -687,6 +740,15 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(165, 165, 165)))
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -718,9 +780,9 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel39)
                     .addComponent(jLabel42))
-                .addGap(135, 135, 135)
+                .addGap(153, 153, 153)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(165, 165, 165))
+                .addGap(18, 18, 18))
         );
 
         jScrollPane2.setViewportView(jPanel1);
@@ -733,7 +795,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1719, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 2056, Short.MAX_VALUE)
         );
 
         pack();
@@ -813,6 +875,11 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_numHuespedesAncestorAdded
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        mostrarReseñas(inmueble);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -854,6 +921,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JButton botonFechaInicial;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -899,6 +967,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -907,6 +976,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSpinner numHuespedes;
     private javax.swing.JRadioButton servicioAC;
     private javax.swing.JRadioButton servicioAparcamiento;

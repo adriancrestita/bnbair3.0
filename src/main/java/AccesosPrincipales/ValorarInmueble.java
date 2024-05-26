@@ -124,6 +124,7 @@ public class ValorarInmueble extends javax.swing.JDialog {
         
         gestorValoraciones = new GestorValoraciones();
         gestorValoraciones.agregarValoracion(valoracion);
+        dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     /**

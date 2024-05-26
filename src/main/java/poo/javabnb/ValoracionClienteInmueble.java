@@ -24,11 +24,6 @@ public class ValoracionClienteInmueble {
         this.inmueble=inmueble;
         this.notaDada=notaDada;
         this.reseña=reseña;
-        
-        
-        gestorValoraciones = new GestorValoraciones();
-        
-        gestorValoraciones.guardarValoraciones();
     }
     
     //getters y setters
