@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import poo.javabnb.Inmueble;
 import poo.javabnb.Sesion;
 import poo.javabnb.ValoracionClienteInmueble;
 
@@ -64,7 +65,16 @@ public class GestorValoraciones {
         }
     }
     
-    public List<ValoracionClienteInmueble> getValoraciones(){
-        return valoraciones;
+    public List<ValoracionClienteInmueble> getValoraciones(Inmueble inmueble) {
+        cargarValoraciones();
+        List<ValoracionClienteInmueble> valoracionesCoincidentes = new ArrayList<>();
+        
+        for (ValoracionClienteInmueble valoracion : valoraciones) {
+            if (valoracion.getInmueble().equals(inmueble)) {
+                valoracionesCoincidentes.add(valoracion);
+            }
+        }
+        
+        return valoracionesCoincidentes;
     }
 }
