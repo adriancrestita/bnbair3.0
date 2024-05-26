@@ -26,7 +26,7 @@ public class MenuParticular extends javax.swing.JFrame {
      */
     private GestorInmuebles gestorInmuebles = new GestorInmuebles();
     private List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
-    private String PATH_IMAGENES="src/main/java/ImagenesDestino/";
+    private final String PATH_IMAGENES="src/main/java/ImagenesDestino/";
     
     private ClienteParticular cliente;
     private GestorClientes gestorClientes = new GestorClientes();
@@ -273,6 +273,8 @@ public class MenuParticular extends javax.swing.JFrame {
             }
         });
         panelExplorarReservas.add(buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 570, -1));
+
+        scrollPaneReservas.getVerticalScrollBar().setUnitIncrement(20);
         panelExplorarReservas.add(scrollPaneReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 550, 430));
 
         jTabbedPane1.addTab("tab1", panelExplorarReservas);

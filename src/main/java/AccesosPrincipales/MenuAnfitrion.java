@@ -123,26 +123,23 @@ public class MenuAnfitrion extends javax.swing.JFrame {
     private void agregarInmueblesAlScrollPane(List<Inmueble> listaInmuebles, JScrollPane scrollPane) {
         // Crear el panel principal que contendrá todos los inmuebles
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(Color.WHITE); // Establecer el color de fondo del panel principal
 
-        // Configurar los GridBagConstraints para el panel principal
-        GridBagConstraints mainGbc = new GridBagConstraints();
-        mainGbc.fill = GridBagConstraints.HORIZONTAL;
-        mainGbc.insets = new Insets(10, 10, 10, 10);
-
-        int row = 0;
-        int col = 0;
+        // Obtener el correo del usuario logueado
+        String correoUsuario = Sesion.obtenerCorreoUsuario();
 
         // Iterar sobre la lista de inmuebles para crear un JPanel para cada uno
         for (Inmueble inmueble : listaInmuebles) {
-            // Crear un JPanel para el inmueble actual
-            JPanel itemPanel = new JPanel();
-            itemPanel.setLayout(new GridBagLayout());
+            // Filtrar los inmuebles por el correo del anfitrión
+            if (!inmueble.getCorreoAnfitrion().equals(correoUsuario)) {
+                continue; // Saltar los inmuebles que no pertenecen al usuario logueado
+            }
+
+            // Crear un JPanel para el inmueble actual con FlowLayout
+            JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             itemPanel.setBackground(Color.WHITE); // Establecer el color de fondo del panel del inmueble
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.insets = new Insets(5, 5, 5, 5); // Márgenes entre componentes
+            itemPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Añadir margen
 
             // Cargar y reescalar la imagen
             ImageIcon originalIcon = new ImageIcon(PATH_IMAGENES + inmueble.getImages().get(0));
@@ -151,56 +148,45 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
             JLabel imageLabel = new JLabel(scaledIcon); // Añadir la imagen reescalada
 
+            // Crear un panel para la información del inmueble
+            JPanel infoPanel = new JPanel();
+            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.setBackground(Color.WHITE);
+
             JLabel titleLabel = new JLabel(inmueble.getTitulo());
             JLabel priceLabel = new JLabel(inmueble.getPrecioNoche() + "€");
             JLabel addressLabel = new JLabel("C/" + inmueble.getCalle() + ", " + inmueble.getCiudad());
 
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            itemPanel.add(imageLabel, gbc);
+            infoPanel.add(titleLabel);
+            infoPanel.add(addressLabel);
+            infoPanel.add(priceLabel);
 
-            gbc.gridy = 1;
-            itemPanel.add(titleLabel, gbc);
-
-            gbc.gridy = 2;
-            itemPanel.add(addressLabel, gbc);
-
-            gbc.gridy = 3;
-            itemPanel.add(priceLabel, gbc);
+            // Añadir la imagen y la información al panel del inmueble
+            itemPanel.add(imageLabel);
+            itemPanel.add(infoPanel);
 
             // Añadir MouseListener para capturar clics en el JPanel
             itemPanel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     // Acción al hacer clic en el JPanel
-                    DestinoSeleccionado destino = new DestinoSeleccionado(inmueble);
+                    DestinoModificacion destino = new DestinoModificacion(inmueble);
                     destino.setVisible(true);
                     setVisible(false);
                 }
             });
 
             // Agregar el JPanel del inmueble al panel principal
-            mainGbc.gridx = col;
-            mainGbc.gridy = row;
-            mainPanel.add(itemPanel, mainGbc);
-
-            // Actualizar las coordenadas para la siguiente iteración
-            col++;
-            if (col == 3) { // Si se alcanza la tercera columna, saltar a la siguiente fila
-                col = 0;
-                row++;
-            }
+            mainPanel.add(itemPanel);
+            mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre los paneles de inmuebles
         }
-
-        // Agregar un panel vacío para empujar los elementos a la esquina superior izquierda
-        mainGbc.gridx = 0;
-        mainGbc.gridy = row + 1;
-        mainGbc.weightx = 1;
-        mainGbc.weighty = 1;
-        mainPanel.add(new JPanel(), mainGbc);
 
         // Configurar el JScrollPane con el panel principal
         scrollPane.setViewportView(mainPanel);
+
+        // Refrescar el JScrollPane para asegurar que se muestran los nuevos componentes
+        scrollPane.revalidate();
+        scrollPane.repaint();
     }
 
     /**
@@ -351,6 +337,8 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         PanelMisInmuebles.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("MIS INMUEBLES");
+
+        inmueblesScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 
         javax.swing.GroupLayout PanelMisInmueblesLayout = new javax.swing.GroupLayout(PanelMisInmuebles);
         PanelMisInmuebles.setLayout(PanelMisInmueblesLayout);
@@ -1115,7 +1103,9 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(this, "Los datos introducidos no son validos");
-        }       
+        }
+        listaInmuebles = gestorInmuebles.obtenerInmuebles();
+        agregarInmueblesAlScrollPane(listaInmuebles, inmueblesScrollPane);
     }//GEN-LAST:event_finalizarActionPerformed
 
     private void buttonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCerrarSesionActionPerformed

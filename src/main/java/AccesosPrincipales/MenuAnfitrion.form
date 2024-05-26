@@ -186,6 +186,9 @@
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="inmueblesScrollPane">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="inmueblesScrollPane.getVerticalScrollBar().setUnitIncrement(20);"/>
+              </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
             </Container>

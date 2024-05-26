@@ -58,10 +58,10 @@ public class DestinoModificacion extends javax.swing.JFrame {
         numero.setText(inmueble.getNumero());
         ciudad.setText(inmueble.getCiudad());
         cp.setText(inmueble.getCP());
-        camas.setValue(inmueble.getNumCamas());
-        baños.setValue(inmueble.getNumBaños());
-        habitaciones.setValue(inmueble.getNumHabitaciones());
-        huespedes.setValue(inmueble.getMaxHuespedes());
+//        camas.setValue(inmueble.getNumCamas());
+//        baños.setValue(inmueble.getNumBaños());
+//        habitaciones.setValue(inmueble.getNumHabitaciones());
+//        huespedes.setValue(inmueble.getMaxHuespedes());
         precioNoche.setValue(Integer.parseInt(inmueble.getPrecioNoche())); 
         
         //Se hace update del panel de las imagenes con las imagense del destino
@@ -207,6 +207,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         eliminar = new javax.swing.JButton();
         editButton = new javax.swing.JToggleButton();
         guardar = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -598,6 +599,10 @@ public class DestinoModificacion extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(precioNoche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -685,7 +690,9 @@ public class DestinoModificacion extends javax.swing.JFrame {
                     .addComponent(eliminar)
                     .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(guardar))
-                .addGap(327, 327, 327)
+                .addGap(368, 368, 368)
+                .addComponent(jLabel21)
+                .addGap(78, 78, 78)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(165, 165, 165))
         );
@@ -700,9 +707,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1566, Short.MAX_VALUE)
         );
 
         pack();
@@ -957,6 +962,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel33;
