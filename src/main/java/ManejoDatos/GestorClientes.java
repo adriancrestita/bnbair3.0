@@ -16,31 +16,32 @@ public class GestorClientes {
         cargarClientes();
     }
 
+    /**
+     * Dado un objeto de cliente, añade el mismo a clientes.dat y lo guarda
+     * @param cliente 
+     */
     public void agregarCliente(ClienteParticular cliente) {
         if (cliente.getCorreoElectronico() == null || cliente.getCorreoElectronico().isEmpty()) {
             throw new IllegalArgumentException("El correo electrónico no puede ser nulo o vacío");
         }
         else{
             clientes.add(cliente);
-            guardarClientes();  
+            guardarClientes(obtenerClientes());  
         }  
     }
-
+    
+    /**
+     * 
+     * @return de la lista de todos los objetos de clientes 
+     */
     public List<ClienteParticular> obtenerClientes() {
         return clientes;
     }
-
-    private void guardarClientes() {
-       try{
-           FileOutputStream fos = new FileOutputStream("clientes.dat");
-           ObjectOutputStream oos = new ObjectOutputStream(fos);
-           oos.writeObject(clientes);
-           oos.close();
-       }catch(Exception e){
-           System.out.println(e);
-       }        
-    }
     
+    /**
+     * Guarda los anfitriones en anfitriones.dat una vez proporcionada una List de anfitriones
+     * @param array 
+     */
     private static void guardarClientes(List<ClienteParticular> array) {
        try{
            FileOutputStream fos = new FileOutputStream("clientes.dat");
@@ -52,6 +53,9 @@ public class GestorClientes {
        }        
     }
 
+    /**
+     * Carga todos los clientes en el programa obteniendo los archivos desde clientes.dat
+     */
     public static void cargarClientes() {
         try{
             FileInputStream fis = new FileInputStream("clientes.dat");
@@ -71,6 +75,12 @@ public class GestorClientes {
         }    
     }
     
+    /**
+     * Deserializa el .dat de clientes para poder trabajar con él directamente desde el .dat
+     * @return la lista de Anfitriones
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     public static List<ClienteParticular> deserializarUsuarios() throws IOException, ClassNotFoundException {
         File file = new File("clientes.dat");
         if (!file.exists()) {
@@ -92,6 +102,12 @@ public class GestorClientes {
         return null; // Retornar null si no se encuentra el cliente
     }
     
+    /**
+     * Método encargado de modificar un objeto de ClinteParticular ya existente en el .dat dado el objeto modificado y carga la lista modificada
+     * @param correoOriginal
+     * @param cliente
+     * @return true/false para saber si se ha cumplido el proceso
+     */
     public static boolean modificarCliente(String correoOriginal, ClienteParticular cliente) {
         try {
             List<ClienteParticular> clientesMod = deserializarUsuarios();

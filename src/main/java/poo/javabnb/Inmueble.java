@@ -56,11 +56,7 @@ public class Inmueble implements Serializable{
     public String getCorreoAnfitrion() {    
         return correoAnfitrion;
     }
-//    
-//    public void setAnfitrion(Anfitrion anfitrion){
-//        this.CorreoAnfitrion =  anfitrion.getCorreoElectronico();
-//        Anfitrion = anfitrion;
-//    }
+// 
     
     public String getTitulo() {
         return titulo;

@@ -19,9 +19,7 @@ import javax.swing.*;
  */
 public class Registro extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrameRegistro
-     */
+    
     
     private String[] nombresVariables = {
         "jmailsign",
@@ -50,7 +48,9 @@ public class Registro extends javax.swing.JFrame {
     private GestorTarjetas gestorTarjetas;
     private GestorAnfitrion gestorAnfitrion;
 
-    
+    /**
+     * Creates new form FrameRegistro
+     */
     public Registro() {
         initComponents();
         

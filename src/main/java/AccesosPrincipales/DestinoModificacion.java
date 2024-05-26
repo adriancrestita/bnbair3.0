@@ -52,7 +52,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         imagePaths = inmueble.getImages();
         
         
-        //establecer la información acerca del destino a modificar
+        //Establecer la información acerca del destino a modificar
         titulo.setText(inmueble.getTitulo());
         calle.setText(inmueble.getCalle());
         numero.setText(inmueble.getNumero());
@@ -62,12 +62,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         baños.setValue(inmueble.getNumBaños());
         habitaciones.setValue(inmueble.getNumHabitaciones());
         huespedes.setValue(inmueble.getMaxHuespedes());
-//        jLabel22.setText("Número de camas: "+inmueble.getNumCamas()); 
-//        jLabel23.setText("Número de baños: "+inmueble.getNumBaños());
-//        jLabel27.setText("Valoración: "+inmueble.getCalificacion()+"/5");
-//        jLabel29.setText(inmueble.getNumCalif()+" valoraciones");
-//        jLabel26.setText("Precio por noche: "+inmueble.getPrecioNoche()+"€");
-//        costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
+        precioNoche.setValue(Integer.parseInt(inmueble.getPrecioNoche())); 
         
         //Se hace update del panel de las imagenes con las imagense del destino
         updateImagePanel(imagePaths);
