@@ -9,20 +9,17 @@ import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorInmuebles;
 import ManejoDatos.GestorTarjetas;
 import ManejoDatos.VerificarDatos;
-import java.awt.Color;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
+import javax.swing.*;
 import poo.javabnb.Anfitrion;
 
 import poo.javabnb.Inmueble;
@@ -34,11 +31,13 @@ import poo.javabnb.TarjetaCredito;
  * @author adria
  */
 public class MenuAnfitrion extends javax.swing.JFrame {
-    private GestorInmuebles gestorInmuebles;
+    private GestorInmuebles gestorInmuebles = new GestorInmuebles();
+    private List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
     private Anfitrion anfitrion;
     private TarjetaCredito tj;
     private GestorAnfitrion gestorAnfitrion;
     private GestorTarjetas gestorTarjetas;
+    private String PATH_IMAGENES="src/main/java/ImagenesDestino/";
     
     private String[] nombresVariables = {
         "tituloInmueble",
@@ -65,7 +64,6 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         initComponents();
         gestorInmuebles = new GestorInmuebles();
         gestorAnfitrion = new GestorAnfitrion();
-        gestorTarjetas = new GestorTarjetas();
         
         //Seteamos el objeto cliente y tarjeta del usuario que está utilizado la aplicación
         anfitrion = gestorAnfitrion.obtenerAnfitrion(Sesion.obtenerCorreoUsuario());
@@ -91,6 +89,8 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         titular.setText(tj.getNombreTitular());
         numtarj.setText(tj.getNumeroTarjeta());
         fcad.setText(tj.getFechaCaducidad());
+        
+        agregarInmueblesAlScrollPane(listaInmuebles, inmueblesScrollPane);
         
         
         for (int i = 0; i < nombresVariables.length; i++) {
@@ -119,6 +119,89 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             });
         }
     }
+    
+    private void agregarInmueblesAlScrollPane(List<Inmueble> listaInmuebles, JScrollPane scrollPane) {
+        // Crear el panel principal que contendrá todos los inmuebles
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setBackground(Color.WHITE); // Establecer el color de fondo del panel principal
+
+        // Configurar los GridBagConstraints para el panel principal
+        GridBagConstraints mainGbc = new GridBagConstraints();
+        mainGbc.fill = GridBagConstraints.HORIZONTAL;
+        mainGbc.insets = new Insets(10, 10, 10, 10);
+
+        int row = 0;
+        int col = 0;
+
+        // Iterar sobre la lista de inmuebles para crear un JPanel para cada uno
+        for (Inmueble inmueble : listaInmuebles) {
+            // Crear un JPanel para el inmueble actual
+            JPanel itemPanel = new JPanel();
+            itemPanel.setLayout(new GridBagLayout());
+            itemPanel.setBackground(Color.WHITE); // Establecer el color de fondo del panel del inmueble
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.insets = new Insets(5, 5, 5, 5); // Márgenes entre componentes
+
+            // Cargar y reescalar la imagen
+            ImageIcon originalIcon = new ImageIcon(PATH_IMAGENES + inmueble.getImages().get(0));
+            Image originalImage = originalIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(125, 127, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            JLabel imageLabel = new JLabel(scaledIcon); // Añadir la imagen reescalada
+
+            JLabel titleLabel = new JLabel(inmueble.getTitulo());
+            JLabel priceLabel = new JLabel(inmueble.getPrecioNoche() + "€");
+            JLabel addressLabel = new JLabel("C/" + inmueble.getCalle() + ", " + inmueble.getCiudad());
+
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            itemPanel.add(imageLabel, gbc);
+
+            gbc.gridy = 1;
+            itemPanel.add(titleLabel, gbc);
+
+            gbc.gridy = 2;
+            itemPanel.add(addressLabel, gbc);
+
+            gbc.gridy = 3;
+            itemPanel.add(priceLabel, gbc);
+
+            // Añadir MouseListener para capturar clics en el JPanel
+            itemPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Acción al hacer clic en el JPanel
+                    DestinoSeleccionado destino = new DestinoSeleccionado(inmueble);
+                    destino.setVisible(true);
+                    setVisible(false);
+                }
+            });
+
+            // Agregar el JPanel del inmueble al panel principal
+            mainGbc.gridx = col;
+            mainGbc.gridy = row;
+            mainPanel.add(itemPanel, mainGbc);
+
+            // Actualizar las coordenadas para la siguiente iteración
+            col++;
+            if (col == 3) { // Si se alcanza la tercera columna, saltar a la siguiente fila
+                col = 0;
+                row++;
+            }
+        }
+
+        // Agregar un panel vacío para empujar los elementos a la esquina superior izquierda
+        mainGbc.gridx = 0;
+        mainGbc.gridy = row + 1;
+        mainGbc.weightx = 1;
+        mainGbc.weighty = 1;
+        mainPanel.add(new JPanel(), mainGbc);
+
+        // Configurar el JScrollPane con el panel principal
+        scrollPane.setViewportView(mainPanel);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -139,6 +222,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         PanelMisInmuebles = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        inmueblesScrollPane = new javax.swing.JScrollPane();
         PanelCrearInmueble = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -273,16 +357,23 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         PanelMisInmueblesLayout.setHorizontalGroup(
             PanelMisInmueblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
-                .addGap(229, 229, 229)
-                .addComponent(jLabel1)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addGroup(PanelMisInmueblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(inmueblesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
+                        .addGap(257, 257, 257)
+                        .addComponent(jLabel1)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         PanelMisInmueblesLayout.setVerticalGroup(
             PanelMisInmueblesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMisInmueblesLayout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(36, 36, 36)
                 .addComponent(jLabel1)
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(inmueblesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab1", PanelMisInmuebles);
@@ -1201,6 +1292,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
     private javax.swing.JTextField fcad;
     private javax.swing.JButton finalizar;
     private javax.swing.JButton imagenesInmueble;
+    private javax.swing.JScrollPane inmueblesScrollPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
