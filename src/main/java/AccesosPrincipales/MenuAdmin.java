@@ -81,6 +81,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         gestorClientes = new GestorClientes();
         gestorAnfitrion = new GestorAnfitrion();
         gestorTarjetas = new GestorTarjetas();
+        gestorReservas = new GestorReservas();
                 
         tablaUsuarios.setModel(tableModel1);
         tablaUsuarios.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

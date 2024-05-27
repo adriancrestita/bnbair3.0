@@ -5,6 +5,7 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
+import ManejoDatos.GestorReservas;
 import ManejoDatos.GestorValoraciones;
 import com.toedter.calendar.JCalendar;
 import java.awt.*;
@@ -20,6 +21,10 @@ import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import poo.javabnb.Reservas;
 import poo.javabnb.Valoracion;
 
 /**
@@ -43,7 +48,8 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private JLabel[] stars;
     private int calificacion;
     private Inmueble inmueble;
-    
+    private GestorReservas gestorReservas;
+    private List<Reservas> res;
     
     private GestorValoraciones gestorValoraciones;
     public DestinoSeleccionado(){
@@ -728,9 +734,21 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
             updateDaysLabel();
         }
     }//GEN-LAST:event_botonFechaFinalActionPerformed
-
+    
     private void botonFechaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFechaInicialActionPerformed
         // TODO add your handling code here:
+        gestorReservas = new GestorReservas();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        res = gestorReservas.obtenerReservas();
+        /*for(Reservas reserva : res){
+            if(reserva.getTituloInmueble().equals(inmueble.getTitulo())){
+                try {
+                    dateChooser2.setSelectableDateRange(dateFormat.parse(reserva.getFechaEntrada()), dateFormat.parse(reserva.getFechaSalida()));
+                } catch (ParseException ex) {
+                    Logger.getLogger(DestinoSeleccionado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }*/
         int result = JOptionPane.showConfirmDialog(null, dateChooser1, "Seleccione una fecha", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             Date selectedDate = dateChooser1.getDate();
@@ -765,11 +783,22 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int precio = (int) getPrecioDias();
-        if (precio >0){
-        FlotanteReservar reservar = new FlotanteReservar(DestinoSeleccionado.this, true, inmueble, precio);
-        reservar.setVisible(true);}
-        else{
-            JOptionPane.showMessageDialog(this, "Introduzca fecha de entrada y salida");
+        gestorReservas = new GestorReservas();
+        try {
+            if(gestorReservas.reservaDisponible(inmueble.getTitulo(),dateChooser1.getDate(), dateChooser2.getDate())){
+                if (precio > 0){
+                    FlotanteReservar reservar = new FlotanteReservar(DestinoSeleccionado.this, true, inmueble, precio, jLabel2.getText(), jLabel3.getText());
+                    reservar.setVisible(true);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Introduzca fecha de entrada y salida");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Las fechas seleccionadas no son validas");
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(DestinoSeleccionado.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
