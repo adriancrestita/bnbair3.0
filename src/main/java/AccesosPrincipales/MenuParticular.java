@@ -304,6 +304,8 @@ public class MenuParticular extends javax.swing.JFrame {
 
         jLabel19.setText("VIP");
 
+        vip.setEnabled(false);
+        vip.setFocusable(false);
         vip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vipActionPerformed(evt);
@@ -319,20 +321,28 @@ public class MenuParticular extends javax.swing.JFrame {
             }
         });
 
+        nombre.setEnabled(false);
         nombre.setFocusable(false);
 
+        correo.setEnabled(false);
         correo.setFocusable(false);
 
+        contraseña.setEnabled(false);
         contraseña.setFocusable(false);
 
+        dni.setEnabled(false);
         dni.setFocusable(false);
 
+        telefono.setEnabled(false);
         telefono.setFocusable(false);
 
+        titular.setEnabled(false);
         titular.setFocusable(false);
 
+        numtarj.setEnabled(false);
         numtarj.setFocusable(false);
 
+        fcad.setEnabled(false);
         fcad.setFocusable(false);
 
         editButton.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
@@ -536,6 +546,16 @@ public class MenuParticular extends javax.swing.JFrame {
             titular.setFocusable(false);
             numtarj.setFocusable(false);
             fcad.setFocusable(false);
+            
+            //Desactivamos el enabled
+            nombre.setEnabled(false);
+            correo.setEnabled(false);
+            contraseña.setEnabled(false);
+            telefono.setEnabled(false);
+            dni.setEnabled(false);
+            titular.setEnabled(false);
+            numtarj.setEnabled(false);
+            fcad.setEnabled(false);
         }
         else{
             editButton.setBackground(Color.white);
@@ -561,6 +581,16 @@ public class MenuParticular extends javax.swing.JFrame {
             titular.setFocusable(true);
             numtarj.setFocusable(true);
             fcad.setFocusable(true);
+            
+            //Activamos el enabled
+            nombre.setEnabled(true);
+            correo.setEnabled(true);
+            contraseña.setEnabled(true);
+            telefono.setEnabled(true);
+            dni.setEnabled(true);
+            titular.setEnabled(true);
+            numtarj.setEnabled(true);
+            fcad.setEnabled(true);
             
 
         }

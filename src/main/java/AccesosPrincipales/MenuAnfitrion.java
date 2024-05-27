@@ -64,6 +64,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         initComponents();
         gestorInmuebles = new GestorInmuebles();
         gestorAnfitrion = new GestorAnfitrion();
+        gestorTarjetas = new GestorTarjetas();
         
         //Seteamos el objeto cliente y tarjeta del usuario que está utilizado la aplicación
         anfitrion = gestorAnfitrion.obtenerAnfitrion(Sesion.obtenerCorreoUsuario());
@@ -1180,6 +1181,16 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             titular.setEditable(false);
             numtarj.setEditable(false);
             fcad.setEditable(false);
+            
+            //Desactivamos el enabled de los textField
+            nombre.setEnabled(false);
+            correo.setEnabled(false);
+            contraseña.setEnabled(false);
+            telefono.setEnabled(false);
+            dni.setEnabled(false);
+            titular.setEnabled(false);
+            numtarj.setEnabled(false);
+            fcad.setEnabled(false);
 
             //Hacemos que no se pueda hacer focus al text field
             nombre.setFocusable(false);
@@ -1190,6 +1201,8 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             titular.setFocusable(false);
             numtarj.setFocusable(false);
             fcad.setFocusable(false);
+            
+            
         }
         else{
             editButton.setBackground(Color.white);
@@ -1204,6 +1217,16 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             titular.setEditable(true);
             numtarj.setEditable(true);
             fcad.setEditable(true);
+            
+            //Hacemos que los textField estén enabled ya que se están desactivador por defecto
+            nombre.setEnabled(true);
+            correo.setEnabled(true);
+            contraseña.setEnabled(true);
+            telefono.setEnabled(true);
+            dni.setEnabled(true);
+            titular.setEnabled(true);
+            numtarj.setEnabled(true);
+            fcad.setEnabled(true);
 
             //Hacemos que no se pueda hacer focus al text field
             nombre.setFocusable(true);
@@ -1214,7 +1237,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             titular.setFocusable(true);
             numtarj.setFocusable(true);
             fcad.setFocusable(true);
-
+            
         }
     }//GEN-LAST:event_editButtonActionPerformed
 
