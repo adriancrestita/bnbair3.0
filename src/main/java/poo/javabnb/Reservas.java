@@ -48,12 +48,8 @@ public class Reservas {
             ocultarTarjeta(tj.getNumeroTarjeta()) // Asumiendo que TarjetaCredito tiene un método getNumeroTarjeta()
         );
 
-        // Obtener el directorio de descargas del usuario
-        String userHome = System.getProperty("user.home");
-        File descargasDir = Paths.get(userHome, "Descargas").toFile();
-
-        // Crear la carpeta "reservas" dentro de "Descargas"
-        File reservasDir = new File(descargasDir, "reservas");
+       // Crear la carpeta "reservas"
+        File reservasDir = new File("reservas");
         if (!reservasDir.exists()) {
             reservasDir.mkdirs();
         }
