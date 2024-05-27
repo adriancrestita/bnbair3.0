@@ -409,26 +409,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }
     
-    private void vaciarAnfitriones(DefaultTableModel modeloTabla, JTable tabla) {
-        for (int row = 0; row < modeloTabla.getRowCount(); row++) {
-            int selectedRow = tabla.getSelectedRow();
-            String tipoClienteSeleccionado = (String) tabla.getValueAt(selectedRow, 0);
-            if ("Anfitrion".equals(tipoClienteSeleccionado)){
-                tableModel1.removeRow(0);
-            }
-        }
-    }
-    
-    private void vaciarClientes(DefaultTableModel modeloTabla, JTable tabla) {
-        for (int row = 0; row < modeloTabla.getRowCount(); row++) {
-            int selectedRow = tabla.getSelectedRow();
-            String tipoClienteSeleccionado = (String) tabla.getValueAt(selectedRow, 0);
-            if ("Cliente".equals(tipoClienteSeleccionado)){
-                modeloTabla.removeRow(0);
-            }
-        }
-    }
-    
     //Cargamos los clientes en una lista
     private void cargarListaClientes(List<ClienteParticular> clientes){
         
