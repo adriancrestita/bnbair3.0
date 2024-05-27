@@ -1,7 +1,10 @@
 package ManejoDatos;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import poo.javabnb.Reservas;
 import poo.javabnb.TarjetaCredito;
@@ -133,5 +136,30 @@ public class GestorReservas {
             System.out.println("Error al eliminar las reservas: " + ex.getMessage());
         }
         return reservasMod;
+    }
+    
+    public boolean reservaDisponible(String titulo, Date fechaEntrada, Date fechaSalida) throws ParseException{
+        cargarReservas(); // Se asegura de cargar los datos más recientes
+        for (Reservas reserva : reservas) {
+            if(fechasSinSolapamiento(fechaEntrada, fechaSalida, reserva.getFechaEntrada(), reserva.getFechaSalida()) && titulo.equals(reserva.getTituloInmueble())){
+                return true;
+            }
+        }
+        return false; // Retornar true si está disponible la reserva
+    }
+    
+    public static boolean fechasSinSolapamiento(Date fechaEntrada1, Date fechaSalida1,
+                                                   String fechaEntradaStr, String fechaSalidaStr) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        Date fechaEntrada = dateFormat.parse(fechaEntradaStr);
+        Date fechaSalida= dateFormat.parse(fechaSalidaStr);
+
+        // Si fechaEntrada1 es después de fechaSalida o fechaSalida1 es antes de fechaEntrada, no hay solapamiento
+        if (fechaEntrada1.after(fechaSalida) || fechaSalida1.before(fechaEntrada)) {
+            return true; // No hay solapamiento
+        } else {
+            return false; // Hay solapamiento
+        }
     }
 }

@@ -78,6 +78,13 @@ public class Reservas {
         return String.valueOf(precioTotal);
     }
     
+    public String getFechaEntrada(){
+        return fechaEntrada;
+    }
+    public String getFechaSalida(){
+        return fechaSalida;
+    }
+    
     private String ocultarTarjeta(String numeroTarjeta) {
         if (numeroTarjeta.length() != 16) {
             throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos.");
