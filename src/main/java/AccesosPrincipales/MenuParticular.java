@@ -119,7 +119,6 @@ public class MenuParticular extends javax.swing.JFrame {
                     // Acción al hacer clic en el JPanel
                     DestinoSeleccionado destino = new DestinoSeleccionado(inmueble);
                     destino.setVisible(true);
-                    setVisible(false);
                 }
             });
 

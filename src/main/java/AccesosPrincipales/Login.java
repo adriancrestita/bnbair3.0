@@ -65,13 +65,6 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        MenuBar = new javax.swing.JMenuBar();
-        MenuInicio = new javax.swing.JMenu();
-        PaginaInicial = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        MenuSalir = new javax.swing.JMenu();
-        Quit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,52 +161,6 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 500));
 
-        MenuInicio.setText("Inicio");
-
-        ImageIcon inicio = new ImageIcon("src/main/java/com/images/logo2icon.png");
-        PaginaInicial.setIcon(inicio);
-        PaginaInicial.setText("Página inicial");
-        PaginaInicial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PaginaInicialActionPerformed(evt);
-            }
-        });
-        MenuInicio.add(PaginaInicial);
-
-        jMenuItem1.setText("particular");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        MenuInicio.add(jMenuItem1);
-
-        jMenuItem2.setText("anfitrion");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        MenuInicio.add(jMenuItem2);
-
-        MenuBar.add(MenuInicio);
-
-        MenuSalir.setText("Salir");
-
-        ImageIcon apagar = new ImageIcon("src/main/java/com/images/shootDown.png");
-        Quit.setIcon(apagar);
-        Quit.setText("Cerrar aplicación");
-        Quit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                QuitActionPerformed(evt);
-            }
-        });
-        MenuSalir.add(Quit);
-
-        MenuBar.add(MenuSalir);
-
-        setJMenuBar(MenuBar);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -304,18 +251,6 @@ public class Login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_MostrarContraseñaActionPerformed
 
-    private void PaginaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PaginaInicialActionPerformed
-        // TODO add your handling code here:
-        Inicio inicio = new Inicio();
-        inicio.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_PaginaInicialActionPerformed
-
-    private void QuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_QuitActionPerformed
-
     private void jmaillogFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jmaillogFocusGained
         // TODO add your handling code here:
         if (jmaillog.getText().equals(mensajeOriginalCorreo)){
@@ -344,20 +279,6 @@ public class Login extends javax.swing.JFrame {
             jpasswordlog.setText(mensajeOriginalContraseña);
         }
     }//GEN-LAST:event_jpasswordlogFocusLost
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        MenuParticular particular = new MenuParticular();
-        particular.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        MenuAnfitrion anfitrion = new MenuAnfitrion();
-        anfitrion.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,12 +323,7 @@ public class Login extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JMenu MenuInicio;
-    private javax.swing.JMenu MenuSalir;
     private javax.swing.JCheckBox MostrarContraseña;
-    private javax.swing.JMenuItem PaginaInicial;
-    private javax.swing.JMenuItem Quit;
     private javax.swing.JButton blogin;
     private javax.swing.JButton bsignin;
     private javax.swing.JLabel jLabel1;
@@ -415,8 +331,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jmaillog;

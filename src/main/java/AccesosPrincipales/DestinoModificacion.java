@@ -18,6 +18,8 @@ import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -58,10 +60,10 @@ public class DestinoModificacion extends javax.swing.JFrame {
         numero.setText(inmueble.getNumero());
         ciudad.setText(inmueble.getCiudad());
         cp.setText(inmueble.getCP());
-//        camas.setValue(inmueble.getNumCamas());
-//        baños.setValue(inmueble.getNumBaños());
-//        habitaciones.setValue(inmueble.getNumHabitaciones());
-//        huespedes.setValue(inmueble.getMaxHuespedes());
+        camas.setValue(Integer.valueOf(inmueble.getNumCamas()));
+        baños.setValue(Integer.valueOf(inmueble.getNumBaños()));
+        habitaciones.setValue(Integer.valueOf(inmueble.getNumHabitaciones()));
+        huespedes.setValue(Integer.valueOf(inmueble.getMaxHuespedes()));
         precioNoche.setValue(Integer.parseInt(inmueble.getPrecioNoche())); 
         
         //Se hace update del panel de las imagenes con las imagense del destino
@@ -133,11 +135,10 @@ public class DestinoModificacion extends javax.swing.JFrame {
                 }
                 case "Zona de trabajo" -> {
                     trabajo.setSelected(true);
-                } 
+                }
             }
-        }
-        
-    }    
+        }  
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -690,7 +691,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
                     .addComponent(eliminar)
                     .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(guardar))
-                .addGap(368, 368, 368)
+                .addGap(184, 184, 184)
                 .addComponent(jLabel21)
                 .addGap(78, 78, 78)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
