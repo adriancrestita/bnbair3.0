@@ -82,6 +82,17 @@ public class GestorValoraciones {
         return null; // Retornar null si no se encuentra la valoracion
     }
     
+    public List<Valoracion> obtenerValoracionesInmueble(String correo, String titulo){
+        cargarValoraciones(); // Se asegura de cargar los datos más recientes
+        List<Valoracion> valoracionesInmueble = new ArrayList<>();
+        for (Valoracion valoracion : valoraciones) {
+            if (valoracion.getCorreoAnfitrion().equals(correo) && valoracion.getInmueble().getTitulo().equals(titulo)) {
+                valoracionesInmueble.add(valoracion);
+            }
+        }
+        return valoracionesInmueble; 
+    }
+    
     public boolean existeValoracionCliente(String correo, String titulo){
         cargarValoraciones(); // Se asegura de cargar los datos más recientes
         for (Valoracion valoracion : valoraciones) {

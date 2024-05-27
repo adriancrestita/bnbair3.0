@@ -116,4 +116,22 @@ public class GestorReservas {
         }
         return reservasMod;
     }
+    
+    public static List<Reservas> eliminarReservasCliente(String correo) {
+        List<Reservas> reservasMod = new ArrayList<>();
+        try {
+            reservasMod = deserializarReservas();
+
+            for (int i = 0; i < reservasMod.size(); i++) {
+                Reservas reserva = reservasMod.get(i);
+                if (reserva.getCorreoCliente().equals(correo)) {
+                    reservasMod.remove(i);
+                }
+            }
+            guardarReservas(reservasMod);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error al eliminar las reservas: " + ex.getMessage());
+        }
+        return reservasMod;
+    }
 }
