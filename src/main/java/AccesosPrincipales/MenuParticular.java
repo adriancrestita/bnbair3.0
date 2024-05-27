@@ -490,32 +490,37 @@ public class MenuParticular extends javax.swing.JFrame {
 
     private void cambioDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioDatosActionPerformed
         // TODO add your handling code here:
-        JFrame frame = new JFrame("Confirm Dialog Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
-        
-        int response = JOptionPane.showConfirmDialog(frame,
-                "¿Desea guardar los cambios establecidos?",
-                "Confirmar",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        
-        if (response == JOptionPane.YES_OPTION) {
-            // Acción cuando se pulsa "Aceptar"
-            
-            //Modifico los datos del cliente
-            ClienteParticular cambioCliente = new ClienteParticular(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(), vip.isSelected());
-            gestorClientes.modificarCliente(Sesion.obtenerCorreoUsuario(), cambioCliente);
-            
-            //Modifico los cambios de las tarjetas
-            TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
-            gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
-            
-            Sesion.iniciarSesion(dni.getText());
-            JOptionPane.showMessageDialog(frame, "Los cambios se han guardado.");
-        } else if (response == JOptionPane.NO_OPTION) {
-            // Acción cuando se pulsa "Cancelar"
-            JOptionPane.showMessageDialog(frame, "Los cambios no se han guardado.");
+        if (editButton.isEnabled()){
+            JOptionPane.showMessageDialog(this, "Cierre el candado para guardar los datos");
+        }
+        else{
+            JFrame frame = new JFrame("Confirm Dialog Example");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 200);
+
+            int response = JOptionPane.showConfirmDialog(frame,
+                    "¿Desea guardar los cambios establecidos?",
+                    "Confirmar",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+
+            if (response == JOptionPane.YES_OPTION) {
+                // Acción cuando se pulsa "Aceptar"
+
+                //Modifico los datos del cliente
+                ClienteParticular cambioCliente = new ClienteParticular(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(), vip.isSelected());
+                gestorClientes.modificarCliente(Sesion.obtenerCorreoUsuario(), cambioCliente);
+
+                //Modifico los cambios de las tarjetas
+                TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
+                gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
+
+                Sesion.iniciarSesion(dni.getText());
+                JOptionPane.showMessageDialog(frame, "Los cambios se han guardado.");
+            } else if (response == JOptionPane.NO_OPTION) {
+                // Acción cuando se pulsa "Cancelar"
+                JOptionPane.showMessageDialog(frame, "Los cambios no se han guardado.");
+            }
         }
     
     }//GEN-LAST:event_cambioDatosActionPerformed
