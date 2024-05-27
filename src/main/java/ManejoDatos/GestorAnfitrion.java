@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import poo.javabnb.Anfitrion;
 
-public class GestorAnfitrion {
+public class GestorAnfitrion implements Serializable{
     private List<Anfitrion> anfitriones;
+    private static final long serialVersionUID = 1L;
     private final String FILENAME = "anfitriones.dat";
 
     public GestorAnfitrion() {

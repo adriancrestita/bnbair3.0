@@ -7,9 +7,11 @@ import java.util.Set;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.Sesion;
 
-public class GestorClientes {
+public class GestorClientes implements Serializable{
     private static List<ClienteParticular> clientes;
     private final String FILENAME = "clientes.dat";
+    private static final long serialVersionUID = 1L;
+
     
     public GestorClientes() {
         clientes = new ArrayList<>();

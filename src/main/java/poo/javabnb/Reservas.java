@@ -5,10 +5,14 @@ import ManejoDatos.GestorClientes;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class Reservas {
+public class Reservas implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
+
     
     public String fechaEntrada;
     public String fechaSalida;
@@ -23,9 +27,8 @@ public class Reservas {
     public int precioTotal;
     
     
-    public Reservas(String correoAnfitrion, String correoCliente, Inmueble inmueble, String fechaEntrada, String fechaSalida, int precioTotal){
-        gestorAnfitrion = new GestorAnfitrion();
-        this.anfitrion=gestorAnfitrion.obtenerAnfitrion(correoAnfitrion);
+    public Reservas(Anfitrion anfitrion, String correoCliente, Inmueble inmueble, String fechaEntrada, String fechaSalida, int precioTotal){
+        this.anfitrion=anfitrion;
         gestorCliente = new GestorClientes();
         this.particular = gestorCliente.obtenerCliente(correoCliente);
         this.fechaEntrada = fechaEntrada;
