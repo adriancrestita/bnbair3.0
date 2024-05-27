@@ -321,7 +321,7 @@ public class FlotanteReservar extends javax.swing.JDialog {
         gestorReservas.agregarReserva(reserva);
         dispose();
     }//GEN-LAST:event_pagarButtonActionPerformed
-
+//
     /**
      * @param args the command line arguments
      */
