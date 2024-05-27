@@ -214,7 +214,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             }
         });
         
-        // Ajuste de tamaño de las columnas para que se vea todo al completo
+        // Ajuste de tamaño de las columnas para que se vea todo al complet
         TableColumnModel columnModel2 = tablaInmuebles.getColumnModel();
         for (int column = 0; column < tablaInmuebles.getColumnCount(); column++) {
             int width = 15; // Mínimo ancho
