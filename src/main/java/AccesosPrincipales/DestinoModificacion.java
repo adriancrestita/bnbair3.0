@@ -820,7 +820,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private void editButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_editButtonStateChanged
 
     }//GEN-LAST:event_editButtonStateChanged
-
+//h
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
         if(editButton.isSelected()){
