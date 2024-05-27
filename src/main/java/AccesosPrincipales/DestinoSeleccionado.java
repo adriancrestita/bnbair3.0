@@ -50,8 +50,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private Inmueble inmueble;
     private GestorReservas gestorReservas;
     private List<Reservas> res;
+    private double mediaValoracion;
     
     private GestorValoraciones gestorValoraciones;
+    
     public DestinoSeleccionado(){
         initComponents();
     }
@@ -70,6 +72,11 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         gestorValoraciones = new GestorValoraciones();
         java.util.List<Valoracion> valoraciones = gestorValoraciones.obtenerValoracionesInmueble(inmueble.getCorreoAnfitrion(), inmueble.getTitulo());
         
+        for (Valoracion valoracion:valoraciones){
+            mediaValoracion+=valoracion.getNota();
+        }
+        mediaValoracion = mediaValoracion/valoraciones.size();
+        
         //establecer la información acerca del destino y anfitrión seleccionado
         jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
         jLabel34.setText("Valoración: "+anfiInmueble.getMediaValoraciones()+"/5");
@@ -82,8 +89,8 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel21.setText("Número de habitaciones: "+inmueble.getNumHabitaciones());
         jLabel22.setText("Número de camas: "+inmueble.getNumCamas()); 
         jLabel23.setText("Número de baños: "+inmueble.getNumBaños());
-        jLabel27.setText("Valoración: "+inmueble.getCalificacion()+"/5");
-        jLabel29.setText(inmueble.getNumCalif()+" valoraciones");
+        jLabel27.setText("Valoración: "+mediaValoracion+"/5");
+        jLabel29.setText(valoraciones.size()+" valoraciones");
         jLabel26.setText("Precio por noche: "+inmueble.getPrecioNoche()+"€");
         costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
         
@@ -371,7 +378,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         volverButton = new javax.swing.JButton();
@@ -649,14 +655,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1191, 567, 10));
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1207, 567, 272));
 
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(659, 1305, -1, -1));
-
         jButton4.setText("Reservar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -777,11 +775,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_numHuespedesAncestorAdded
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        mostrarReseñas(inmueble);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         int precio = (int) getPrecioDias();
@@ -846,7 +839,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JButton botonFechaInicial;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

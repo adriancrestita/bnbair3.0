@@ -237,12 +237,5 @@ public class Inmueble implements Serializable{
         "\nPrecio por noche: $" + precioNoche +
         "\nServicios: " + servicios +
         "\nCalificación: " + calificacion + "/5";
-    }
-    
-    // Método para actualizar la calificación basado en una nueva revisión
-    public void actualizarCalificacion(double calificacionNew) {
-        this.calificacion = ((calificacion*numCalif)+calificacionNew)/(numCalif++); //hace la media aritmética de todas las calificaciones
-        numCalif ++;
-    }
-    
+    }    
 }
