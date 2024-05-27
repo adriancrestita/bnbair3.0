@@ -12,6 +12,7 @@ import java.util.List;
 import ManejoDatos.GestorUsuarios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -36,6 +37,8 @@ public class MenuAdmin extends javax.swing.JFrame {
     private List<Inmueble> listaInmuebles;
     private JPopupMenu popupMenu1;
     private JMenuItem deleteMenuItem1;
+    private List<ClienteParticular> clien;
+    private List<Anfitrion> anf;
     private JPopupMenu popupMenu2;
     private JMenuItem deleteMenuItem2;
 
@@ -43,6 +46,8 @@ public class MenuAdmin extends javax.swing.JFrame {
     
     private GestorClientes gestorClientes;
     private GestorAnfitrion gestorAnfitrion;
+    private GestorClientes gClientes;
+    private GestorAnfitrion gAnfitriones;
     private GestorTarjetas gestorTarjetas;
 
     
@@ -67,13 +72,17 @@ public class MenuAdmin extends javax.swing.JFrame {
         gestorClientes = new GestorClientes();
         gestorAnfitrion = new GestorAnfitrion();
         gestorTarjetas = new GestorTarjetas();
-        
+                
         tablaUsuarios.setModel(tableModel1);
         tablaUsuarios.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         
         //Cargamos los clientes y los usuarios
-        cargarListaClientes(gestorClientes.obtenerClientes());
-        cargarListaAnfitriones(gestorAnfitrion.obtenerAnfitriones());
+        vaciarTabla(tableModel1);
+        clien = gestorClientes.obtenerClientes();
+        anf = gestorAnfitrion.obtenerAnfitriones();
+        
+        cargarListaClientes(clien);
+        cargarListaAnfitriones(anf);
         
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane1.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
@@ -91,29 +100,29 @@ public class MenuAdmin extends javax.swing.JFrame {
         deleteMenuItem1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                gClientes = new GestorClientes();
+                gAnfitriones = new GestorAnfitrion();
                 int selectedRow = tablaUsuarios.getSelectedRow();
                 String tipoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 0);
                 String correoClienteSeleccionado = (String) tablaUsuarios.getValueAt(selectedRow, 2);
                 
                 //Si es un cliente 
                 if("Cliente".equals(tipoClienteSeleccionado)){
-                    List<ClienteParticular> clien = GestorClientes.eliminarCliente(correoClienteSeleccionado);
+                    clien = GestorClientes.eliminarCliente(correoClienteSeleccionado);
                     GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
+                    vaciarTabla(tableModel1);
                     cargarListaClientes(clien);
-
-                    
+                    cargarListaAnfitriones(anf);
                 }
                 
                 //Si es un anfitrion elimina anfitrion
                 if("Anfitrion".equals(tipoClienteSeleccionado)){
-                    List<Anfitrion> anfs =GestorAnfitrion.eliminarAnfitrion(correoClienteSeleccionado);
+                    anf =GestorAnfitrion.eliminarAnfitrion(correoClienteSeleccionado);
                     GestorTarjetas.eliminarTarjeta(correoClienteSeleccionado);
-                    cargarListaAnfitriones(anfs);
-
-                }
-
-                
-                
+                    vaciarTabla(tableModel1);
+                    cargarListaClientes(clien);
+                    cargarListaAnfitriones(anf);
+                }                
             }
         });
         
@@ -402,12 +411,9 @@ public class MenuAdmin extends javax.swing.JFrame {
     
     //Cargamos los clientes en una lista
     private void cargarListaClientes(List<ClienteParticular> clientes){
-        //Vacio el contenido de la tabla
-        vaciarTabla(tableModel1);
         
         //Cargamos los clientes en una lista
         for (ClienteParticular cliente : clientes) {
-            
             String numeroTarjeta = gestorTarjetas.obtenerNumeroTarjeta(cliente.getCorreoElectronico());
             Object[] fila = {"Cliente", cliente.getNombre(), cliente.getCorreoElectronico(),
                 cliente.getTelefono(), cliente.getDni(), numeroTarjeta, cliente.cmpVIP() ? "VIP" : "No VIP", ""};
@@ -418,7 +424,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     
     //Cargamos los anfitriones en una lista
     private void cargarListaAnfitriones(List<Anfitrion> anfitriones){
-        vaciarTabla(tableModel1);
         for (Anfitrion anfitrion : anfitriones) {
             String numeroTarjeta = gestorTarjetas.obtenerNumeroTarjeta(anfitrion.getCorreoElectronico());
             Object[] fila = {"Anfitrion", anfitrion.getNombre(), anfitrion.getCorreoElectronico(),
