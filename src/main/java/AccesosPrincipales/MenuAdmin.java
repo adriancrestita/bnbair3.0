@@ -64,6 +64,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         super();
         initComponents();
         setTitle("JavaBnB");
+        setResizable(false);
 
         /*--------------------------------------------------------------------------------*/        
         //TABLA USUARIOS

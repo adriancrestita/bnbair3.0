@@ -40,6 +40,7 @@ public class MenuParticular extends javax.swing.JFrame {
         super();
         initComponents();
         setTitle("JavaBnB");
+        setResizable(false);
         
         gestorTarjetas = new GestorTarjetas();  
         

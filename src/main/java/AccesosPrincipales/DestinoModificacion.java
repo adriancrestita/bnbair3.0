@@ -54,6 +54,8 @@ public class DestinoModificacion extends javax.swing.JFrame {
     public DestinoModificacion(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
+        setResizable(false);
+        
         jLabel15.requestFocus(true);
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
         imagePaths = inmueble.getImages();

@@ -53,6 +53,7 @@ public class Registro extends javax.swing.JFrame {
      */
     public Registro() {
         initComponents();
+        setResizable(false);
         
         gestorClientes = new GestorClientes();
         gestorTarjetas = new GestorTarjetas();
