@@ -412,7 +412,7 @@ public class MenuAdmin extends javax.swing.JFrame {
             Object[] fila = {"Cliente", cliente.getNombre(), cliente.getCorreoElectronico(),
                 cliente.getTelefono(), cliente.getDni(), numeroTarjeta, cliente.cmpVIP() ? "VIP" : "No VIP", ""};
             tableModel1.addRow(fila);
-           
+            
         }
     }
     
