@@ -58,7 +58,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         initComponents();
     }
     
-    // Constructor con destino seleccionado
+    /**
+     * Constructor del jFrame, recibiendo como parametro el inmueble seleccionado para poner toda su información
+     * @param inmueble 
+     */
     public DestinoSeleccionado(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
