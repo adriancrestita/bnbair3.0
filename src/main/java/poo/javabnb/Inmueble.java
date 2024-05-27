@@ -244,4 +244,5 @@ public class Inmueble implements Serializable{
         this.calificacion = ((calificacion*numCalif)+calificacionNew)/(numCalif++); //hace la media aritmética de todas las calificaciones
         numCalif ++;
     }
+    
 }
