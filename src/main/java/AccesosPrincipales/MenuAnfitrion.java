@@ -1112,7 +1112,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             ArrayList<String> direccion = new ArrayList<>(initialElements);        
             
             
-            Inmueble nuevoInmueble = new Inmueble(Sesion.obtenerCorreoUsuario(), titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, imagePaths);
+            Inmueble nuevoInmueble = new Inmueble(Sesion.obtenerCorreoUsuario(), titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, imagePaths, String.valueOf(descripcion));
             //nuevoInmueble.setAnfitrion(anfitrion);
             gestorInmuebles.agregarInmueble(nuevoInmueble);  
             MetodosConsultaInmuebles.saveImages(files);

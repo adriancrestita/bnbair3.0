@@ -30,7 +30,7 @@ public class Inmueble implements Serializable{
     private Anfitrion anfi;
     
     // Constructor
-    public Inmueble(String correoAnfitrion, String titulo, ArrayList<String> direccion, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios, ArrayList<String> imagePaths) {
+    public Inmueble(String correoAnfitrion, String titulo, ArrayList<String> direccion, String maxHuespedes, String numHabitaciones, String numCamas, String numBaños, String tipoPropiedad, String precioNoche, ArrayList<String> servicios, ArrayList<String> imagePaths, String descripcion) {
         this.correoAnfitrion = correoAnfitrion;
         this.titulo = titulo;
         this.direccion = direccion;
@@ -42,7 +42,7 @@ public class Inmueble implements Serializable{
         this.precioNoche = precioNoche;
         this.servicios = servicios;
         this.imagePaths = imagePaths;
-        this.numCalif=0;
+        this.descripcion = descripcion;
         //Separar la información de la dirección
         this.calle=direccion.get(0);
         this.numero=direccion.get(1);
