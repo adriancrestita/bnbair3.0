@@ -39,4 +39,7 @@ public class ValoracionClienteInmueble {
     public String getReseña(){
         return reseña;
     }
+    public String toString(){
+        return cliente.getNombre() + inmueble.getTitulo() + getNota() + getReseña();
+    }
 }
