@@ -50,6 +50,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
     public DestinoModificacion(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
+        jLabel15.requestFocus(true);
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
         imagePaths = inmueble.getImages();
         
@@ -209,6 +210,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         editButton = new javax.swing.JToggleButton();
         guardar = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
+        volverButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -494,6 +496,11 @@ public class DestinoModificacion extends javax.swing.JFrame {
 
         eliminar.setBackground(java.awt.Color.red);
         eliminar.setText("Eliminar");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         editButton.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         editButton.setSelected(true);
@@ -511,6 +518,14 @@ public class DestinoModificacion extends javax.swing.JFrame {
         });
 
         guardar.setText("Guardar Cambios");
+        guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarActionPerformed(evt);
+            }
+        });
+
+        volverButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        volverButton.setText("←");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -524,17 +539,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel14))
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -583,7 +588,20 @@ public class DestinoModificacion extends javax.swing.JFrame {
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                                 .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel14)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(volverButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(panelImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)))
                         .addContainerGap(134, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -613,7 +631,8 @@ public class DestinoModificacion extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14))
+                            .addComponent(jLabel14)
+                            .addComponent(volverButton))
                         .addGap(19, 19, 19)
                         .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -849,17 +868,23 @@ public class DestinoModificacion extends javax.swing.JFrame {
             editButton.setBackground(Color.white);
             editButton.setText("🔓");
 
-            //Hacemos que los text field sean editables desactivado el modo editable
+            //Hacemos que los text field sean editables desactivando el modo editable
             titulo.setEditable(true);
             calle.setEditable(true);
             numero.setEditable(true);
             ciudad.setEditable(true);
             cp.setEditable(true);
+            descripcion.setEditable(true);
+            titulo.setEnabled(true);
+            calle.setEnabled(true);
+            numero.setEnabled(true);
+            ciudad.setEnabled(true);
+            cp.setEnabled(true);
+            descripcion.setEnabled(true);
             camas.setEnabled(true);
             huespedes.setEnabled(true);
             baños.setEnabled(true);
             habitaciones.setEnabled(true);
-            descripcion.setEditable(true);
             wifi.setEnabled(true);
             ac.setEnabled(true);
             aparcamiento.setEnabled(true);
@@ -869,8 +894,8 @@ public class DestinoModificacion extends javax.swing.JFrame {
             lavadora.setEnabled(true);
             trabajo.setEnabled(true);
             precioNoche.setEnabled(true);
-            //
-            //Hacemos que no se pueda hacer focus al text field
+            
+            //Hacemos que se pueda hacer focus al text field
             titulo.setFocusable(true);
             calle.setFocusable(true);
             numero.setFocusable(true);
@@ -892,6 +917,20 @@ public class DestinoModificacion extends javax.swing.JFrame {
             precioNoche.setFocusable(true);
         }
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
+        // TODO add your handling code here:
+        if (editButton.isSelected()){
+            //guardar los cambios
+        }else{
+            JOptionPane.showMessageDialog(this, "Cierre el candado para guardar");
+        }
+    }//GEN-LAST:event_guardarActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        // TODO add your handling code here:
+        //eliminar el inmueble
+    }//GEN-LAST:event_eliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -992,6 +1031,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private javax.swing.JSlider precioNoche;
     private javax.swing.JTextField titulo;
     private javax.swing.JRadioButton trabajo;
+    private javax.swing.JButton volverButton;
     private javax.swing.JRadioButton wifi;
     // End of variables declaration//GEN-END:variables
 }

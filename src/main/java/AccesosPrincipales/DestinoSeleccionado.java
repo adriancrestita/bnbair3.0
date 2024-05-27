@@ -77,6 +77,13 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel26.setText("Precio por noche: "+inmueble.getPrecioNoche()+"€");
         costeNoche=Integer.parseInt(inmueble.getPrecioNoche());
         
+        if (inmueble.getDescripcion()==null){
+            jLabel25.setText("El anfitrión no ha proporcionado ninguna información acerca del inmueble");
+        }
+        else{
+            jLabel25.setText(inmueble.getDescripcion());
+        }
+        
         updateImagePanel(imagePaths);
         mostrarReseñas(inmueble);
         
@@ -304,7 +311,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         numHuespedes = new javax.swing.JSpinner();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         jPanel7 = new javax.swing.JPanel();
         servicioWifi = new javax.swing.JRadioButton();
@@ -357,6 +363,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -399,11 +406,11 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel24.setText("Anfitrion: ________");
         jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 727, -1, -1));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 812, 567, 13));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 760, 567, 13));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 708, 567, 13));
 
         jLabel25.setText("Descripcion alojamiento");
-        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 831, 432, 92));
+        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 810, 432, 150));
 
         jLabel26.setText("Precio noche");
         jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1615, -1, -1));
@@ -430,14 +437,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel32.setText("precio total");
         jPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(173, 1694, -1, -1));
-
-        jButton6.setText("Mostrar más >");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 929, -1, -1));
         jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1497, 567, 13));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -658,6 +657,9 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 1690, -1, -1));
 
+        jLabel12.setText("Descripción del alojamiento");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 780, -1, -1));
+
         jScrollPane2.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -740,10 +742,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_servicioLavadoraActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
     private void numHuespedesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_numHuespedesAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_numHuespedesAncestorAdded
@@ -807,10 +805,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
