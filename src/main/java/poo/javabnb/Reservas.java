@@ -5,10 +5,11 @@ import ManejoDatos.GestorClientes;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class Reservas {
+public class Reservas implements Serializable{
     
     public String fechaEntrada;
     public String fechaSalida;
