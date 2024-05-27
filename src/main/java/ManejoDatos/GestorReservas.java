@@ -94,7 +94,25 @@ public class GestorReservas {
             }
             
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Error al eliminar el usuario: " + ex.getMessage());
+            System.out.println("Error al eliminar la reserva: " + ex.getMessage());
+        }
+        return reservasMod;
+    }
+    
+    public static List<Reservas> eliminarReservasInmueble(String titulo, String correoAnfitrion) {
+        List<Reservas> reservasMod = new ArrayList<>();
+        try {
+            reservasMod = deserializarReservas();
+
+            for (int i = 0; i < reservasMod.size(); i++) {
+                Reservas reserva = reservasMod.get(i);
+                if (reserva.inmueble.getTitulo().equals(titulo) && reserva.getCorreoAnfitrion().equals(correoAnfitrion)) {
+                    reservasMod.remove(i);
+                }
+            }
+            guardarReservas(reservasMod);
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error al eliminar las reservas: " + ex.getMessage());
         }
         return reservasMod;
     }

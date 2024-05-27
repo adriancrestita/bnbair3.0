@@ -112,7 +112,7 @@ public class GestorTarjetas {
                 }
             }
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Error al modificar el usuario: " + ex.getMessage());
+            System.out.println("Error al modificar la tarjeta: " + ex.getMessage());
         }
         return false;
     }
@@ -129,7 +129,7 @@ public class GestorTarjetas {
                 }
             }
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Error al eliminar el usuario: " + ex.getMessage());
+            System.out.println("Error al eliminar la tarjeta: " + ex.getMessage());
         }
     }
 }

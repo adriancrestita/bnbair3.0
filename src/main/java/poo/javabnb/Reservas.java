@@ -70,6 +70,14 @@ public class Reservas {
         return anfitrion.getCorreoElectronico();
     }
     
+    public String getTituloInmueble(){
+        return inmueble.getTitulo();
+    }
+    
+    public String getPrecioTotal(){
+        return String.valueOf(precioTotal);
+    }
+    
     private String ocultarTarjeta(String numeroTarjeta) {
         if (numeroTarjeta.length() != 16) {
             throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos.");

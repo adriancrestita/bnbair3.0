@@ -4,6 +4,7 @@ package AccesosPrincipales;
 import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorClientes;
 import ManejoDatos.GestorInmuebles;
+import ManejoDatos.GestorReservas;
 import ManejoDatos.GestorTarjetas;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,7 @@ import javax.swing.table.TableColumnModel;
 import poo.javabnb.Anfitrion;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.Inmueble;
+import poo.javabnb.Reservas;
 
 
 
@@ -28,27 +30,34 @@ import poo.javabnb.Inmueble;
  */
 public class MenuAdmin extends javax.swing.JFrame {
 
-    private GestorUsuarios gestorUsuarios;
-    private GestorInmuebles gestorInmuebles;
+    
     private DefaultTableModel tableModel1;
     private DefaultTableModel tableModel2;
     private DefaultTableModel tableModel3;
+    
+    //DEclaramos y creamos los 
     private JPopupMenu menuContextual;
-    private List<Inmueble> listaInmuebles;
     private JPopupMenu popupMenu1;
     private JMenuItem deleteMenuItem1;
-    private List<ClienteParticular> clien;
-    private List<Anfitrion> anf;
     private JPopupMenu popupMenu2;
     private JMenuItem deleteMenuItem2;
-
-
+    private JPopupMenu popupMenu3;
+    private JMenuItem deleteMenuItem3;
     
+    //Declaramos las listas a utilizar para las tablas
+    private List<ClienteParticular> clien;
+    private List<Anfitrion> anf;
+    private List<Reservas> reserv;
+    private List<Inmueble> listaInmuebles;
+
+    //Declaramos los gestores para acceder a ellos
+    private GestorInmuebles gestorInmuebles;
     private GestorClientes gestorClientes;
     private GestorAnfitrion gestorAnfitrion;
     private GestorClientes gClientes;
     private GestorAnfitrion gAnfitriones;
     private GestorTarjetas gestorTarjetas;
+    private GestorReservas gestorReservas;
 
     
     public MenuAdmin() {
@@ -58,7 +67,6 @@ public class MenuAdmin extends javax.swing.JFrame {
 
         /*--------------------------------------------------------------------------------*/        
         //TABLA USUARIOS
-        gestorUsuarios = new GestorUsuarios();
         String[] columnNames = {"Tipo de Usuario", "Nombre", "Correo", "Telefono", "DNI", "Numero Tarjeta", "Estatus", "Fecha Registro"};
         
         //Fija un modo no editable del contenido de las celdas de la tabla
@@ -80,6 +88,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         vaciarTabla(tableModel1);
         clien = gestorClientes.obtenerClientes();
         anf = gestorAnfitrion.obtenerAnfitriones();
+        reserv = gestorReservas.obtenerReservas();
         
         cargarListaClientes(clien);
         cargarListaAnfitriones(anf);
@@ -171,8 +180,8 @@ public class MenuAdmin extends javax.swing.JFrame {
    
         
         // Hacer las barras de scroll invisibles pero funcionales
-        jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
-        jScrollPane3.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane2.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane2.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
        
         // Configurar el Popup Menu
         popupMenu2 = new JPopupMenu();
@@ -198,12 +207,12 @@ public class MenuAdmin extends javax.swing.JFrame {
         });
         
         // Ajuste de tamaño de las columnas para que se vea todo al completo
-        TableColumnModel columnModel3 = tablaInmuebles.getColumnModel();
+        TableColumnModel columnModel2 = tablaInmuebles.getColumnModel();
         for (int column = 0; column < tablaInmuebles.getColumnCount(); column++) {
             int width = 15; // Mínimo ancho
             
             // Obtener el ancho del encabezado
-            TableColumn tableColumn = columnModel3.getColumn(column);
+            TableColumn tableColumn = columnModel2.getColumn(column);
             TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
             if (headerRenderer == null) {
                 headerRenderer = tablaInmuebles.getTableHeader().getDefaultRenderer();
@@ -218,24 +227,79 @@ public class MenuAdmin extends javax.swing.JFrame {
                 Component comp = tablaInmuebles.prepareRenderer(renderer, row, column);
                 width = Math.max(comp.getPreferredSize().width + 1, width);
             }
-            columnModel3.getColumn(column).setPreferredWidth(width);
+            columnModel2.getColumn(column).setPreferredWidth(width);
         }
         
         /*--------------------------------------------------------------------------------*/        
-        /*// TABLA RESERVAS
-        gestorInmuebles = new GestorInmuebles();
+        // TABLA RESERVAS
+        gestorReservas = new GestorReservas();
+        String[] columnNames3 = {"Correo Cliente", "Numero de Tarjeta Cliente", "Titulo Inmueble", "Correo Anfitrion", "Precio Noche", "Precio Total"};
         
-        tableModel2 = new DefaultTableModel(new Object[][]{}, new String[]{
-            "Correo Anfitrion", "Titulo", "Dirección", "Tipo Propiedad", "Máximo Huéspedes", "Precio Noche", 
-            "Servicios"
+        //Fija un modo no editable del contenido de las celdas de la tabla 
+        tableModel3 = new DefaultTableModel(columnNames3,0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace todas las celdas no editables
+            }     
+        };
+        
+        //Setea el model de la tabla y hacemos que no se pueda hacer resize
+        tablaReservas.setModel(tableModel3);
+        tablaReservas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
+        //Carga el .dat a la tabla por primera vez
+        cargarListaReservas(gestorReservas.obtenerReservas());
+   
+        // Hacer las barras de scroll invisibles pero funcionales
+        jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane3.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+       
+        // Configurar el Popup Menu
+        popupMenu3 = new JPopupMenu();
+        deleteMenuItem3 = new JMenuItem("Eliminar Resrverva");
+        popupMenu3.add(deleteMenuItem3);
+        
+        // Asignar el Popup Menu a la tabla
+        tablaReservas.setComponentPopupMenu(popupMenu3);
+        
+        //Asignamos el metodo de eliminar cuando se pulse el boton
+        deleteMenuItem3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tablaReservas.getSelectedRow();
+                String correoAnfitrion = (String) tablaReservas.getValueAt(selectedRow, 3);
+                String correoCliente = (String) tablaReservas.getValueAt(selectedRow, 0);
+                
+                //Elimina el inmueble de la lista y recargue los datos de la tabla
+                List<Inmueble> inm = GestorInmuebles.eliminarInmueble(correoCliente, correoAnfitrion);
+                cargarListaInmuebles(inm);          
+                
+            }
         });
         
-        tablaInmuebles.setModel(tableModel2);
-                
-        List<Object[]> inmuebles = GestorInmuebles.obtenerTodosLosInmuebles();
-        for (Object[] inmueble : inmuebles) {
-            tableModel2.addRow(inmueble);
-        */
+        // Ajuste de tamaño de las columnas para que se vea todo al completo
+        TableColumnModel columnModel3 = tablaReservas.getColumnModel();
+        for (int column = 0; column < tablaReservas.getColumnCount(); column++) {
+            int width = 15; // Mínimo ancho
+            
+            // Obtener el ancho del encabezado
+            TableColumn tableColumn = columnModel3.getColumn(column);
+            TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
+            if (headerRenderer == null) {
+                headerRenderer = tablaReservas.getTableHeader().getDefaultRenderer();
+            }
+            Component headerComp = headerRenderer.getTableCellRendererComponent(
+                tablaReservas, tableColumn.getHeaderValue(), false, false, 0, 0);
+            width = headerComp.getPreferredSize().width;
+
+            // Obtener el ancho máximo de la columna (datos)
+            for (int row = 0; row < tablaReservas.getRowCount(); row++) {
+                TableCellRenderer renderer = tablaReservas.getCellRenderer(row, column);
+                Component comp = tablaReservas.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            columnModel3.getColumn(column).setPreferredWidth(width);
+        }
         
         /*--------------------------------------------------------------------------------*/   
        
@@ -259,11 +323,11 @@ public class MenuAdmin extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         consultaInmuebles = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tablaInmuebles = new javax.swing.JTable();
         consultaReservas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
         tablaReservas = new javax.swing.JTable();
         consultaUsuarios = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -341,9 +405,9 @@ public class MenuAdmin extends javax.swing.JFrame {
                 "Correo Anfitrion", "Titulo", "Dirección", "Tipo", "Nº Camas", "Nº Habitaciones", "Nº Baños", "Máx Huéspedes", "Precio Noche", "Servicios"
             }
         ));
-        jScrollPane3.setViewportView(tablaInmuebles);
+        jScrollPane2.setViewportView(tablaInmuebles);
 
-        consultaInmuebles.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 390));
+        consultaInmuebles.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 390));
 
         jTabbedPane1.addTab("tab1", consultaInmuebles);
 
@@ -366,9 +430,9 @@ public class MenuAdmin extends javax.swing.JFrame {
                 "Nombre Anfitrion", "Nombre Cliente", "Correo Cliente", "Teléfono Cliente", "DNI Cliente", "Estatus Cliente"
             }
         ));
-        jScrollPane2.setViewportView(tablaReservas);
+        jScrollPane3.setViewportView(tablaReservas);
 
-        consultaReservas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 390));
+        consultaReservas.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 570, 390));
 
         jTabbedPane1.addTab("tab2", consultaReservas);
 
@@ -440,6 +504,19 @@ public class MenuAdmin extends javax.swing.JFrame {
         vaciarTabla(tableModel2);
         for (Inmueble inmueble : inmuebles) {
             Object [] fila = {inmueble.getCorreoAnfitrion(), inmueble.getTitulo(), inmueble.getDireccion(), inmueble.getTipoPropiedad(), inmueble.getMaxHuespedes(), inmueble.getPrecioNoche(), inmueble.getServicios()};
+            tableModel2.addRow(fila);
+        }            
+    }
+    
+    /**
+     * 
+     * @param reservas 
+     */
+    private void cargarListaReservas(List<Reservas> reservas){
+        vaciarTabla(tableModel3);
+        for (Reservas reserva : reservas) {
+            Object [] fila = {reserva.getCorreoCliente(), gestorTarjetas.obtenerNumeroTarjeta(reserva.getCorreoCliente()), reserva.getCorreoAnfitrion(), 
+                reserva.getTituloInmueble(), reserva.inmueble.getPrecioNoche(),  reserva.getPrecioTotal()};
             tableModel2.addRow(fila);
         }            
     }

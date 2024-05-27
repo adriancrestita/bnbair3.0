@@ -99,7 +99,7 @@ public class GestorInmuebles {
             }
             
         } catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Error al eliminar el usuario: " + ex.getMessage());
+            System.out.println("Error al eliminar el inmueble: " + ex.getMessage());
         }
         return inmueblesMod;
     }
