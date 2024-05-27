@@ -58,7 +58,7 @@ public class FlotanteReservar extends javax.swing.JDialog {
         setTitle("JavaBnB");
         gestorClientes= new GestorClientes();
         cliente = gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario());
-        inmueble = inm;
+        this.inmueble = inm;
         gestorTarjetas = new GestorTarjetas();
         this.precioTotal=precioTotal;
         
@@ -207,7 +207,7 @@ public class FlotanteReservar extends javax.swing.JDialog {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addGap(30, 30, 30)
                             .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(114, 114, 114)
+                            .addGap(69, 69, 69)
                             .addComponent(jLabel1))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(40, 40, 40)

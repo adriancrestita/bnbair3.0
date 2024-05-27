@@ -90,6 +90,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         clien = gestorClientes.obtenerClientes();
         anf = gestorAnfitrion.obtenerAnfitriones();
         reserv = gestorReservas.obtenerReservas();
+        inm = GestorInmuebles.obtenerInmuebles();
         
         cargarListaClientes(clien);
         cargarListaAnfitriones(anf);
@@ -178,7 +179,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         
         //Carga el .dat a la tabla por primera vez
         vaciarTabla(tableModel2);
-        cargarListaInmuebles(gestorInmuebles.obtenerInmuebles());
+        cargarListaInmuebles(inm);
    
         
         // Hacer las barras de scroll invisibles pero funcionales
@@ -278,10 +279,11 @@ public class MenuAdmin extends javax.swing.JFrame {
                 int selectedRow = tablaReservas.getSelectedRow();
                 String correoAnfitrion = (String) tablaReservas.getValueAt(selectedRow, 3);
                 String correoCliente = (String) tablaReservas.getValueAt(selectedRow, 0);
+                String tituloInmueble = (String) tablaReservas.getValueAt(selectedRow, 2);
                 
                 //Elimina la reserva de la lista y recargue los datos de la tabla
                 vaciarTabla(tableModel3);
-                reserv = gestorReservas.eliminarReserva(correoCliente, correoAnfitrion);
+                reserv = gestorReservas.eliminarReserva(correoCliente, correoAnfitrion, tituloInmueble);
                 cargarListaReservas(reserv);          
             }
         });
