@@ -44,6 +44,8 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private int calificacion;
     private Inmueble inmueble;
     
+    
+    private GestorValoraciones gestorValoraciones;
     public DestinoSeleccionado(){
         initComponents();
     }
@@ -59,8 +61,8 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         imagePaths = inmueble.getImages();
         System.out.println(imagePaths);
         this.inmueble=inmueble;
-        GestorValoraciones gestorValoraciones = new GestorValoraciones();
-        java.util.List<Valoracion> valoraciones = gestorValoraciones.getValoraciones(inmueble);
+        gestorValoraciones = new GestorValoraciones();
+        java.util.List<Valoracion> valoraciones = gestorValoraciones.obtenerValoracionesInmueble(inmueble.getCorreoAnfitrion(), inmueble.getTitulo());
         
         //establecer la información acerca del destino y anfitrión seleccionado
         jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
@@ -260,7 +262,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     
     private void mostrarReseñas(Inmueble inmueble) {
         GestorValoraciones gestorValoraciones = new GestorValoraciones();
-        List<Valoracion> valoraciones = gestorValoraciones.getValoraciones(inmueble);
+        List<Valoracion> valoraciones = gestorValoraciones.obtenerValoracionesInmueble(inmueble.getCorreoAnfitrion(), inmueble.getTitulo());
 
         JPanel jPanelResenas = new JPanel();
         jPanelResenas.setLayout(new BoxLayout(jPanelResenas, BoxLayout.Y_AXIS));  // Configurar layout para apilar JLabels

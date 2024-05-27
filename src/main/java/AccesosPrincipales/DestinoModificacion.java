@@ -936,6 +936,9 @@ public class DestinoModificacion extends javax.swing.JFrame {
         // TODO add your handling code here:
         gestorInmuebles = new GestorInmuebles();
         gestorInmuebles.eliminarInmueble(correo, titulo.getText());
+        MenuAnfitrion ma = new MenuAnfitrion();
+        ma.setVisible(true);
+        dispose();
     }//GEN-LAST:event_eliminarActionPerformed
 
     /**
