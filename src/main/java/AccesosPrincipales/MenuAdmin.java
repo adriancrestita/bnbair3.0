@@ -526,7 +526,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         for (Reservas reserva : reservas) {
             Object [] fila = {reserva.getCorreoCliente(), gestorTarjetas.obtenerNumeroTarjeta(reserva.getCorreoCliente()), reserva.getCorreoAnfitrion(), 
                 reserva.getTituloInmueble(), reserva.inmueble.getPrecioNoche(),  reserva.getPrecioTotal()};
-            tableModel2.addRow(fila);
+            tableModel3.addRow(fila);
         }            
     }
 

@@ -5,13 +5,16 @@
 package poo.javabnb;
 
 import ManejoDatos.GestorValoraciones;
+import java.io.Serializable;
 
 /**
  *
  * @author hugos
  */
-public class Valoracion {
-    
+public class Valoracion implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     // Atributos de la clase
     public ClienteParticular cliente;
     public Inmueble inmueble;

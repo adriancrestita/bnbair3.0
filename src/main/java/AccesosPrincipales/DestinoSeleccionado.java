@@ -786,22 +786,18 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         // TODO add your handling code here:
         int precio = (int) getPrecioDias();
         gestorReservas = new GestorReservas();
-        try {
-            if(gestorReservas.reservaDisponible(inmueble.getTitulo(),dateChooser1.getDate(), dateChooser2.getDate())){
-                if (precio > 0){
-                    FlotanteReservar reservar = new FlotanteReservar(DestinoSeleccionado.this, true, inmueble, precio, jLabel2.getText(), jLabel3.getText());
-                    reservar.setVisible(true);
-                }
-                else{
-                    JOptionPane.showMessageDialog(this, "Introduzca fecha de entrada y salida");
-                }
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Las fechas seleccionadas no son validas");
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(DestinoSeleccionado.class.getName()).log(Level.SEVERE, null, ex);
+        //            if(gestorReservas.reservaDisponible(inmueble.getTitulo(),dateChooser1.getDate(), dateChooser2.getDate())){
+        if (precio > 0){
+            FlotanteReservar reservar = new FlotanteReservar(DestinoSeleccionado.this, true, inmueble, precio, jLabel2.getText(), jLabel3.getText());
+            reservar.setVisible(true);
         }
+        else{
+            JOptionPane.showMessageDialog(this, "Introduzca fecha de entrada y salida");
+        }
+//            }
+//            else{
+//                JOptionPane.showMessageDialog(this, "Las fechas seleccionadas no son validas");
+//            }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
