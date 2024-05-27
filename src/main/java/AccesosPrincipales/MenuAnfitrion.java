@@ -68,7 +68,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         
         //Seteamos el objeto cliente y tarjeta del usuario que está utilizado la aplicación
         anfitrion = gestorAnfitrion.obtenerAnfitrion(Sesion.obtenerCorreoUsuario());
-        tj = gestorTarjetas.obtenerTarjeta(Sesion.obtenerCorreoUsuario());
+        //tj = gestorTarjetas.obtenerTarjeta(Sesion.obtenerCorreoUsuario());
         
         setResizable(false);
         setTitle("JavaBnB");
@@ -87,9 +87,9 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         telefono.setText(anfitrion.getTelefono());
         dni.setText(anfitrion.getDni());
         superAnfitrion.setSelected(anfitrion.getEsSuperAnfitrion());
-        titular.setText(tj.getNombreTitular());
-        numtarj.setText(tj.getNumeroTarjeta());
-        fcad.setText(tj.getFechaCaducidad());
+//        titular.setText(tj.getNombreTitular());
+//        numtarj.setText(tj.getNumeroTarjeta());
+//        fcad.setText(tj.getFechaCaducidad());o
         
         agregarInmueblesAlScrollPane(listaInmuebles, inmueblesScrollPane);
         
@@ -1148,8 +1148,8 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             gestorAnfitrion.modificarAnfitrion(Sesion.obtenerCorreoUsuario(), cambioAnfitrion);
             
             //Modifico los cambios de las tarjetas
-            TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
-            gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
+//            TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
+//            gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
             
             //Si se cambia el correo cambia el usuario Registrado
             Sesion.iniciarSesion(dni.getText());

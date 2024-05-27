@@ -134,12 +134,7 @@ public class Registro extends javax.swing.JFrame {
         jesVIP = new javax.swing.JCheckBox();
         jTipoCliente = new javax.swing.JComboBox<>();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        Inicio = new javax.swing.JMenuItem();
-        InicioSesion = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        Quit = new javax.swing.JMenuItem();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -206,7 +201,7 @@ public class Registro extends javax.swing.JFrame {
                 bregistrarseActionPerformed(evt);
             }
         });
-        jtelefono.add(bregistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, -1, -1));
+        jtelefono.add(bregistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 460, -1, -1));
 
         jtitular.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
         jtitular.setForeground(new java.awt.Color(204, 204, 204));
@@ -318,39 +313,13 @@ public class Registro extends javax.swing.JFrame {
         });
         jtelefono.add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, 30, 30));
 
-        jMenu1.setText("Inicio");
-
-        Inicio.setText("Página inicial");
-        Inicio.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Iniciar sesión");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InicioActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        jMenu1.add(Inicio);
-
-        InicioSesion.setText("Iniciar sesión");
-        InicioSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InicioSesionActionPerformed(evt);
-            }
-        });
-        jMenu1.add(InicioSesion);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Salir");
-
-        Quit.setText("Cerrar aplicación");
-        Quit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                QuitActionPerformed(evt);
-            }
-        });
-        jMenu2.add(Quit);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
+        jtelefono.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -360,9 +329,7 @@ public class Registro extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jtelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -455,24 +422,6 @@ public class Registro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jdniActionPerformed
 
-    private void InicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioActionPerformed
-        // TODO add your handling code here:
-        Inicio inicio = new Inicio();
-        inicio.setVisible(true);
-    }//GEN-LAST:event_InicioActionPerformed
-
-    private void InicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InicioSesionActionPerformed
-        // TODO add your handling code here:
-        Login login = new Login();
-        login.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_InicioSesionActionPerformed
-
-    private void QuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_QuitActionPerformed
-
     private void jesVIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jesVIPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jesVIPActionPerformed
@@ -518,6 +467,13 @@ public class Registro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -555,11 +511,9 @@ public class Registro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Inicio;
-    private javax.swing.JMenuItem InicioSesion;
     private javax.swing.JLabel LabelLogo;
-    private javax.swing.JMenuItem Quit;
     private javax.swing.JButton bregistrarse;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -570,9 +524,6 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JComboBox<String> jTipoCliente;
