@@ -32,6 +32,10 @@ public class GestorAnfitrion {
         }  
     }
     
+    
+    
+    
+    
     /**
      * 
      * @return de la lista de todos los objetos de anfitriones 
