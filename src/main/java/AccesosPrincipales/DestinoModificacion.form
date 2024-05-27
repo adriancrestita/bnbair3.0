@@ -878,6 +878,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="&#x2190;"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="volverButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

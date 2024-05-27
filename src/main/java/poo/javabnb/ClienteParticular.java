@@ -51,6 +51,10 @@ public class ClienteParticular implements Serializable{
             return "No es VIP";
         }
     }
+    
+    public boolean getVip(){
+        return esVIP;
+    }
 
     // Setters
     public void setDni(String dni) {
