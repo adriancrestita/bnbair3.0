@@ -5,6 +5,7 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
+import ManejoDatos.GestorInmuebles;
 import com.toedter.calendar.JCalendar;
 import java.awt.*;
 import java.util.ArrayList;
@@ -41,6 +42,9 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private int rating = 0;
     private JLabel[] stars;
     private int calificacion;
+    private String correo;
+            
+    private GestorInmuebles gestorInmuebles;
     
     public DestinoModificacion(){
         initComponents();
@@ -53,8 +57,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         jLabel15.requestFocus(true);
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
         imagePaths = inmueble.getImages();
-        
-        
+        correo = inmueble.getCorreoAnfitrion();
         //Establecer la información acerca del destino a modificar
         titulo.setText(inmueble.getTitulo());
         calle.setText(inmueble.getCalle());
@@ -929,7 +932,8 @@ public class DestinoModificacion extends javax.swing.JFrame {
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
         // TODO add your handling code here:
-        //eliminar el inmueble
+        gestorInmuebles = new GestorInmuebles();
+        gestorInmuebles.eliminarInmueble(correo, titulo.getText());
     }//GEN-LAST:event_eliminarActionPerformed
 
     /**
