@@ -10,6 +10,7 @@ import ManejoDatos.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.*;
@@ -62,9 +63,16 @@ public class MenuParticular extends javax.swing.JFrame {
         titular.setText(tj.getNombreTitular());
         numtarj.setText(tj.getNumeroTarjeta());
         fcad.setText(tj.getFechaCaducidad());
+        
+        comboBoxOrdenar.addItem("Precio Ascendente");
+        comboBoxOrdenar.addItem("Precio Descendente");
+        comboBoxOrdenar.addItem("Relevancia");
+
+        comboBoxFiltrar.addItem("Todos");
+        comboBoxFiltrar.addItem("Casas");
+        comboBoxFiltrar.addItem("Apartamentos");
 
     }
-    
     private void agregarInmueblesAlScrollPane(List<Inmueble> listaInmuebles, JScrollPane scrollPane) {
         // Crear el panel principal que contendrá todos los inmuebles
         JPanel mainPanel = new JPanel();
@@ -175,6 +183,10 @@ public class MenuParticular extends javax.swing.JFrame {
         panelExplorarReservas = new javax.swing.JPanel();
         buscador = new javax.swing.JTextField();
         scrollPaneReservas = new javax.swing.JScrollPane();
+        comboBoxOrdenar = new javax.swing.JComboBox<>();
+        comboBoxFiltrar = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         panelMisReservas = new javax.swing.JPanel();
         panelMiPerfil = new javax.swing.JPanel();
         PanelPerfil = new javax.swing.JPanel();
@@ -272,10 +284,30 @@ public class MenuParticular extends javax.swing.JFrame {
                 buscadorActionPerformed(evt);
             }
         });
-        panelExplorarReservas.add(buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 570, -1));
+        panelExplorarReservas.add(buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 280, -1));
 
         scrollPaneReservas.getVerticalScrollBar().setUnitIncrement(20);
-        panelExplorarReservas.add(scrollPaneReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 550, 430));
+        panelExplorarReservas.add(scrollPaneReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 550, 420));
+
+        comboBoxOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxOrdenarActionPerformed(evt);
+            }
+        });
+        panelExplorarReservas.add(comboBoxOrdenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+
+        comboBoxFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxFiltrarActionPerformed(evt);
+            }
+        });
+        panelExplorarReservas.add(comboBoxFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
+
+        jLabel1.setText("Ordenar por:");
+        panelExplorarReservas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, -1));
+
+        jLabel2.setText("Filtrar por:");
+        panelExplorarReservas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, -1));
 
         jTabbedPane1.addTab("tab1", panelExplorarReservas);
 
@@ -628,6 +660,45 @@ public class MenuParticular extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buscadorFocusGained
 
+    private void comboBoxOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxOrdenarActionPerformed
+        // TODO add your handling code here:
+        String selectedOrder = (String) comboBoxOrdenar.getSelectedItem();
+        switch (selectedOrder) {
+            case "Precio Ascendente":
+                listaInmuebles.sort(Comparator.comparing(Inmueble::getPrecioNoche));
+                break;
+            case "Precio Descendente":
+                listaInmuebles.sort(Comparator.comparing(Inmueble::getPrecioNoche).reversed());
+                break;
+            case "Valoración":
+                listaInmuebles.sort(Comparator.comparing(Inmueble::getCalificacion).reversed());
+                break;
+        }
+        agregarInmueblesAlScrollPane(listaInmuebles, scrollPaneReservas);
+    }//GEN-LAST:event_comboBoxOrdenarActionPerformed
+
+    private void comboBoxFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxFiltrarActionPerformed
+        // TODO add your handling code here:
+        String selectedFilter = (String) comboBoxFiltrar.getSelectedItem();
+        List<Inmueble> filteredList;
+        switch (selectedFilter) {
+            case "Casas":
+                filteredList = listaInmuebles.stream()
+                                             .filter(inmueble -> "Casa".equals(inmueble.getTipoPropiedad()))
+                                             .collect(Collectors.toList());
+                break;
+            case "Apartamentos":
+                filteredList = listaInmuebles.stream()
+                                             .filter(inmueble -> "Apartamento".equals(inmueble.getTipoPropiedad()))
+                                             .collect(Collectors.toList());
+                break;
+            default:
+                filteredList = listaInmuebles;
+                break;
+        }
+        agregarInmueblesAlScrollPane(filteredList, scrollPaneReservas);
+    }//GEN-LAST:event_comboBoxFiltrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -679,17 +750,21 @@ public class MenuParticular extends javax.swing.JFrame {
     private javax.swing.JButton buttonMisReservas;
     private javax.swing.JButton buttonPerfil;
     private javax.swing.JButton cambioDatos;
+    private javax.swing.JComboBox<String> comboBoxFiltrar;
+    private javax.swing.JComboBox<String> comboBoxOrdenar;
     private javax.swing.JTextField contraseña;
     private javax.swing.JTextField correo;
     private javax.swing.JTextField dni;
     private javax.swing.JToggleButton editButton;
     private javax.swing.JTextField fcad;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;

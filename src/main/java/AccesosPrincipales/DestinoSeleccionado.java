@@ -692,6 +692,8 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         // TODO add your handling code here:
         ValorarInmueble valorarInmueble = new ValorarInmueble(DestinoSeleccionado.this, true);
         valorarInmueble.setVisible(true);
+        dispose();
+        jPanel4.setEnabled(false);
     }//GEN-LAST:event_valorarButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

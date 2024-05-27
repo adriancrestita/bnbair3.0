@@ -21,6 +21,7 @@ public class FlotanteReservar extends javax.swing.JDialog {
     private GestorClientes gestorClientes;
     private GestorTarjetas gestorTarjetas;
     private ClienteParticular cliente;
+    private double precioVip;
     
     
     /**
@@ -53,7 +54,13 @@ public class FlotanteReservar extends javax.swing.JDialog {
         jLabel5.setText(numTarjeta);
         jLabel9.setText(inmueble.getTitulo());
         jLabel6.setText(inmueble.getPrecioNoche()+"€");
-        jLabel10.setText(String.valueOf(precioTotal)+"€");
+        if (cliente.getVip()){
+            precioVip = (double) (precioTotal * 0.9);
+            jLabel10.setText(String.valueOf(precioVip)+"€");
+        }
+        else{
+            jLabel10.setText(String.valueOf(precioTotal)+"€");
+        }
     }
     
     /**

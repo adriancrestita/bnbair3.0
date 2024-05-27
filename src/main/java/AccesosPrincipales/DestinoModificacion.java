@@ -531,6 +531,11 @@ public class DestinoModificacion extends javax.swing.JFrame {
 
         volverButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         volverButton.setText("←");
+        volverButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -940,6 +945,10 @@ public class DestinoModificacion extends javax.swing.JFrame {
         ma.setVisible(true);
         dispose();
     }//GEN-LAST:event_eliminarActionPerformed
+
+    private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_volverButtonActionPerformed
 
     /**
      * @param args the command line arguments
