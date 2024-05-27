@@ -24,6 +24,7 @@ public class Inmueble implements Serializable{
     private ArrayList<String> servicios;
     private ArrayList<String> imagePaths;
     private double calificacion;
+    private String descripcion;
 
     private int numCalif;
     private Anfitrion anfi;
@@ -56,7 +57,6 @@ public class Inmueble implements Serializable{
     public String getCorreoAnfitrion() {    
         return correoAnfitrion;
     }
-// 
     
     public String getTitulo() {
         return titulo;
@@ -197,6 +197,13 @@ public class Inmueble implements Serializable{
     
     public ArrayList<String> getImages(){
         return imagePaths;
+    }
+    
+    public String getDescripcion(){
+        return descripcion;
+    }
+    public void setDescripcion(String msg){
+        this.descripcion=msg;
     }
     //Otros métodos de utilidad
     private void verificarDireccion(){

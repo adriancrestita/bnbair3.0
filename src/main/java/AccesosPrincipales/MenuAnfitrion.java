@@ -173,7 +173,6 @@ public class MenuAnfitrion extends javax.swing.JFrame {
                     // Acción al hacer clic en el JPanel
                     DestinoModificacion destino = new DestinoModificacion(inmueble);
                     destino.setVisible(true);
-                    setVisible(false);
                 }
             });
 
