@@ -15,30 +15,30 @@ public class GestorInmuebles {
         cargarInmuebles();
     }
 
+    /**
+     * Dado un objeto de inmueble, añade el mismo a inmuebles.dat y lo guarda
+     * @param inmueble 
+     */
     public static void agregarInmueble(Inmueble inmueble) {
         if (inmueble.getTitulo() == null || inmueble.getTitulo().isEmpty()) {
             throw new IllegalArgumentException("El titulo no puede estar vacío");
         }
         else{
             inmuebles.add(inmueble);
-            guardarInmuebles();  
+            guardarInmuebles(obtenerInmuebles());  
         }  
     }
+    
     
     public static List<Inmueble> obtenerInmuebles() {
         return inmuebles;
     }
-
-    public static void guardarInmuebles() {
-        try{
-           FileOutputStream fos = new FileOutputStream("inmuebles.dat");
-           ObjectOutputStream oos = new ObjectOutputStream(fos);
-           oos.writeObject(inmuebles);
-           oos.close();
-       }catch(Exception e){
-           System.out.println(e);
-       }        
-    }
+    
+    /**
+     * Guarda los inmuebles en inmuebles.dat una vez proporcionada una List de inmuebles
+     * @param array 
+     */
+    
     
     public static void guardarInmuebles(List<Inmueble> array) {
        try{

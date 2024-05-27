@@ -48,6 +48,7 @@ public class GestorTarjetas {
            System.out.println(e);
        }        
     }
+    
     private void cargarTarjetas() {
         try {
             FileInputStream fis = new FileInputStream(FILENAME);

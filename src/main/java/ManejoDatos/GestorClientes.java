@@ -126,6 +126,11 @@ public class GestorClientes {
         return false;
     }
     
+    /**
+     * Método similar a modificar, pero que elimina directamente el objeto 
+     * @param correo
+     * @return lista de clientes actualizada para poder guardarlo posteriormente
+     */
     public static List<ClienteParticular> eliminarCliente(String correo) {
         List<ClienteParticular> clientesMod = new ArrayList<>();
         try {
