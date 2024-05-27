@@ -33,6 +33,9 @@ public class Reservas {
         this.precioTotal = precioTotal;    
     }
     
+    /**
+     * Crea un archivo en descargas del usuario y en una carpeta interna en el programa con los datos de la reserva
+     */
     public void generarFactura(){
         String informacionReserva = String.format(
             "Anfitrión: %s\nCliente: %s\nInmueble: %s\nFecha de Entrada: %s\nFecha de Salida: %s\nPrecio Total: %d\nTarjeta: %s",
@@ -79,5 +82,4 @@ public class Reservas {
         String ultimosCuatroDigitos = numeroTarjeta.substring(12);
         return asteriscos + ultimosCuatroDigitos;
     }
-    
 }
