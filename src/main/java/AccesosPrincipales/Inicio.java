@@ -29,6 +29,7 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         setTitle("JavaBnB");
         jLabel1.requestFocus(true);
+        setResizable(false);
     }
 
     /**

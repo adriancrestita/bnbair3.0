@@ -1112,7 +1112,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
             ArrayList<String> direccion = new ArrayList<>(initialElements);        
             
             
-            Inmueble nuevoInmueble = new Inmueble(Sesion.obtenerCorreoUsuario(), titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, imagePaths, String.valueOf(descripcion));
+            Inmueble nuevoInmueble = new Inmueble(Sesion.obtenerCorreoUsuario(), titulo, direccion, huespedes, habitaciones, camas, baños, tipo, precio, servicios, imagePaths, descripcion.getText());
             //nuevoInmueble.setAnfitrion(anfitrion);
             gestorInmuebles.agregarInmueble(nuevoInmueble);  
             MetodosConsultaInmuebles.saveImages(files);
@@ -1148,34 +1148,39 @@ public class MenuAnfitrion extends javax.swing.JFrame {
 
     private void cambioDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioDatosActionPerformed
         // TODO add your handling code here:
-        JFrame frame = new JFrame("Confirm Dialog Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
+        if (editButton.isEnabled()){
+            JOptionPane.showMessageDialog(this, "Cierre el candado para guardar los datos");
+        }
+        else{
+            JFrame frame = new JFrame("Confirm Dialog Example");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 200);
 
-        int response = JOptionPane.showConfirmDialog(frame,
-            "¿Desea guardar los cambios establecidos?",
-            "Confirmar",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE);
+            int response = JOptionPane.showConfirmDialog(frame,
+                "¿Desea guardar los cambios establecidos?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
 
-        if (response == JOptionPane.YES_OPTION) {
-            // Acción cuando se pulsa "Aceptar"
-            
-            //Modifico los cambios del anfitrion
-            Anfitrion cambioAnfitrion = new Anfitrion(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(),superAnfitrion.isSelected());
-            gestorAnfitrion.modificarAnfitrion(Sesion.obtenerCorreoUsuario(), cambioAnfitrion);
-            
-            //Modifico los cambios de las tarjetas
-//            TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
-//            gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
-            
-            //Si se cambia el correo cambia el usuario Registrado
-            Sesion.iniciarSesion(dni.getText());
-            
-            JOptionPane.showMessageDialog(frame, "Los cambios se han guardado.");
-        } else if (response == JOptionPane.NO_OPTION) {
-            // Acción cuando se pulsa "Cancelar"
-            JOptionPane.showMessageDialog(frame, "Los cambios no se han guardado.");
+            if (response == JOptionPane.YES_OPTION) {
+                // Acción cuando se pulsa "Aceptar"
+
+                //Modifico los cambios del anfitrion
+                Anfitrion cambioAnfitrion = new Anfitrion(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(),superAnfitrion.isSelected());
+                gestorAnfitrion.modificarAnfitrion(Sesion.obtenerCorreoUsuario(), cambioAnfitrion);
+
+                //Modifico los cambios de las tarjetas
+    //            TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
+    //            gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
+
+                //Si se cambia el correo cambia el usuario Registrado
+                Sesion.iniciarSesion(dni.getText());
+
+                JOptionPane.showMessageDialog(frame, "Los cambios se han guardado.");
+            } else if (response == JOptionPane.NO_OPTION) {
+                // Acción cuando se pulsa "Cancelar"
+                JOptionPane.showMessageDialog(frame, "Los cambios no se han guardado.");
+            }
         }
 
     }//GEN-LAST:event_cambioDatosActionPerformed

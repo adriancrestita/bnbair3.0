@@ -52,6 +52,8 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     public DestinoSeleccionado(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
+        setResizable(false);
+        
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
         anfiInmueble = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
         imagePaths = inmueble.getImages();
@@ -81,6 +83,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
             jLabel25.setText("El anfitrión no ha proporcionado ninguna información acerca del inmueble");
         }
         else{
+            System.out.println(inmueble.getDescripcion());
             jLabel25.setText(inmueble.getDescripcion());
         }
         
@@ -299,7 +302,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
@@ -364,6 +366,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        volverButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -380,7 +383,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel14.setText("JAVABNB");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
 
         ImageIcon d = new ImageIcon("src/main/java/com/images/logo2rec.png");
         Image img = d.getImage();
@@ -393,9 +396,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel15.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel15.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
-
-        jLabel17.setText("<3");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(723, 124, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
@@ -660,6 +660,15 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel12.setText("Descripción del alojamiento");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 780, -1, -1));
 
+        volverButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        volverButton.setText("←");
+        volverButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(volverButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 100, -1));
+
         jScrollPane2.setViewportView(jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -762,6 +771,11 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_volverButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -812,7 +826,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -869,5 +882,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JRadioButton servicioWifi;
     private javax.swing.JRadioButton servicioZonaTrabajo;
     private javax.swing.JButton valorarButton;
+    private javax.swing.JButton volverButton;
     // End of variables declaration//GEN-END:variables
 }

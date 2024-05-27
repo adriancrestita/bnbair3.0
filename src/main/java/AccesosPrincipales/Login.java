@@ -30,6 +30,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         jLabel4.requestFocus(true);
         setTitle("JavaBnB");
+        setResizable(false);
         
         // Configuración del placeholder de jmaillog
         jmaillog.putClientProperty("JTextField.placeholderText", "Introduzca el correo");
