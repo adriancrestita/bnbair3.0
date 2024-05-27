@@ -1,144 +1,83 @@
 package poo.javabnb;
 
+import ManejoDatos.GestorAnfitrion;
+import ManejoDatos.GestorClientes;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class Reservas {
-    private String correoAnfitrion;
-    private String correoCliente;
-    private String tituloInmueble;
-    private List<String> direccionInmueble;
-    private String fechaEntrada;
-    private String fechaSalida;
-    private String huespedes;
-    private String precioNoche;
-    private String precioTotal;
-    private String tarjetaCliente;
-    private String tarjetaInmueble;
     
-    private Anfitrion anfitrion;
-    private ClienteParticular particular;
-    private Inmueble inmueble;
-    private TarjetaCredito tj;
+    public String fechaEntrada;
+    public String fechaSalida;
     
     
-    // Getters and Setters for each attribute
-    public String getCorreoAnfitrion() {
-        return correoAnfitrion;
-    }
-
-    public void setCorreoAnfitrion(String correoAnfitrion) {
-        this.correoAnfitrion = correoAnfitrion;
-    }
-
-    public String getCorreoCliente() {
-        return correoCliente;
-    }
-
-    public void setCorreoCliente(String correoCliente) {
-        this.correoCliente = correoCliente;
-    }
-
-    public String getTituloInmueble() {
-        return tituloInmueble;
-    }
-
-    public void setTituloInmueble(String tituloInmueble) {
-        this.tituloInmueble = tituloInmueble;
-    }
-
-    public List<String> getDireccionInmueble() {
-        return direccionInmueble;
-    }
-
-    public void setDireccionInmueble(List<String> direccionInmueble) {
-        this.direccionInmueble = direccionInmueble;
-    }
-
-    public String getFechaEntrada() {
-        return fechaEntrada;
-    }
-
-    public void setFechaEntrada(String fechaEntrada) {
+    public Anfitrion anfitrion;
+    public GestorAnfitrion gestorAnfitrion;
+    public GestorClientes gestorCliente;
+    public ClienteParticular particular;
+    public Inmueble inmueble;
+    public TarjetaCredito tj;
+    public int precioTotal;
+    
+    
+    public Reservas(String correoAnfitrion, String correoCliente, Inmueble inmueble, String fechaEntrada, String fechaSalida, int precioTotal){
+        gestorAnfitrion = new GestorAnfitrion();
+        this.anfitrion=gestorAnfitrion.obtenerAnfitrion(correoAnfitrion);
+        gestorCliente = new GestorClientes();
+        this.particular = gestorCliente.obtenerCliente(correoCliente);
         this.fechaEntrada = fechaEntrada;
-    }
-
-    public String getFechaSalida() {
-        return fechaSalida;
-    }
-
-    public void setFechaSalida(String fechaSalida) {
         this.fechaSalida = fechaSalida;
+        this.precioTotal = precioTotal;    
     }
+    
+    public void generarFactura(){
+        String informacionReserva = String.format(
+            "Anfitrión: %s\nCliente: %s\nInmueble: %s\nFecha de Entrada: %s\nFecha de Salida: %s\nPrecio Total: %d\nTarjeta: %s",
+            anfitrion.getNombre(), // Asumiendo que Anfitrion tiene un método getNombre()
+            particular.getNombre(), // Asumiendo que ClienteParticular tiene un método getNombre()
+            inmueble.mostrarInformacion(), // Asumiendo que Inmueble tiene un método getDescripcion()
+            fechaEntrada,
+            fechaSalida,
+            precioTotal,
+            ocultarTarjeta(tj.getNumeroTarjeta()) // Asumiendo que TarjetaCredito tiene un método getNumeroTarjeta()
+        );
 
-    public String getHuespedes() {
-        return huespedes;
-    }
+        // Obtener el directorio de descargas del usuario
+        String userHome = System.getProperty("user.home");
+        File descargasDir = Paths.get(userHome, "Descargas").toFile();
 
-    public void setHuespedes(String huespedes) {
-        this.huespedes = huespedes;
-    }
+        // Crear la carpeta "reservas" dentro de "Descargas"
+        File reservasDir = new File(descargasDir, "reservas");
+        if (!reservasDir.exists()) {
+            reservasDir.mkdirs();
+        }
 
-    public String getPrecioNoche() {
-        return precioNoche;
+        // Crear el archivo de reserva
+        File reservaFile = new File(reservasDir, "reserva.txt");
+        try (FileWriter writer = new FileWriter(reservaFile)) {
+            writer.write(informacionReserva);
+            System.out.println("Reserva guardada en: " + reservaFile.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-    public void setPrecioNoche(String precioNoche) {
-        this.precioNoche = precioNoche;
+    public String getCorreoCliente(){
+        return particular.getCorreoElectronico();
     }
-
-    public String getPrecioTotal() {
-        return precioTotal;
+    public String getCorreoAnfitrion(){
+        return anfitrion.getCorreoElectronico();
     }
-
-    public void setPrecioTotal(String precioTotal) {
-        this.precioTotal = precioTotal;
+    
+    private String ocultarTarjeta(String numeroTarjeta) {
+        if (numeroTarjeta.length() != 16) {
+            throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos.");
+        }
+        String asteriscos = "************";
+        String ultimosCuatroDigitos = numeroTarjeta.substring(12);
+        return asteriscos + ultimosCuatroDigitos;
     }
-
-    public String getTarjetaCliente() {
-        return tarjetaCliente;
-    }
-
-    public void setTarjetaCliente(String tarjetaCliente) {
-        this.tarjetaCliente = tarjetaCliente;
-    }
-
-    public String getTarjetaInmueble() {
-        return tarjetaInmueble;
-    }
-
-    public void setTarjetaInmueble(String tarjetaInmueble) {
-        this.tarjetaInmueble = tarjetaInmueble;
-    }
-
-    public Anfitrion getAnfitrion() {
-        return anfitrion;
-    }
-
-    public void setAnfitrion(Anfitrion anfitrion) {
-        this.anfitrion = anfitrion;
-    }
-
-    public ClienteParticular getParticular() {
-        return particular;
-    }
-
-    public void setParticular(ClienteParticular particular) {
-        this.particular = particular;
-    }
-
-    public Inmueble getInmueble() {
-        return inmueble;
-    }
-
-    public void setInmueble(Inmueble inmueble) {
-        this.inmueble = inmueble;
-    }
-
-    public TarjetaCredito getTj() {
-        return tj;
-    }
-
-    public void setTj(TarjetaCredito tj) {
-        this.tj = tj;
-    }
+    
 }
