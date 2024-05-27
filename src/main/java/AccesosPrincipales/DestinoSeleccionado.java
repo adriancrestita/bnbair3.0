@@ -20,7 +20,7 @@ import poo.javabnb.Anfitrion;
 import poo.javabnb.Inmueble;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import poo.javabnb.ValoracionClienteInmueble;
+import poo.javabnb.Valoracion;
 
 /**
  *
@@ -58,7 +58,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         System.out.println(imagePaths);
         this.inmueble=inmueble;
         GestorValoraciones gestorValoraciones = new GestorValoraciones();
-        java.util.List<ValoracionClienteInmueble> valoraciones = gestorValoraciones.getValoraciones(inmueble);
+        java.util.List<Valoracion> valoraciones = gestorValoraciones.getValoraciones(inmueble);
         
         //establecer la información acerca del destino y anfitrión seleccionado
         jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
@@ -257,7 +257,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     
     private void mostrarReseñas(Inmueble inmueble) {
         GestorValoraciones gestorValoraciones = new GestorValoraciones();
-        List<ValoracionClienteInmueble> valoraciones = gestorValoraciones.getValoraciones(inmueble);
+        List<Valoracion> valoraciones = gestorValoraciones.getValoraciones(inmueble);
 
         JPanel jPanelResenas = new JPanel();
         jPanelResenas.setLayout(new BoxLayout(jPanelResenas, BoxLayout.Y_AXIS));  // Configurar layout para apilar JLabels
@@ -266,7 +266,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
             JLabel noResenasLabel = new JLabel("no hay reseñas disponibles");
             jPanelResenas.add(noResenasLabel);
         } else {
-            for (ValoracionClienteInmueble valoracion : valoraciones) {
+            for (Valoracion valoracion : valoraciones) {
                 String clienteNombre = valoracion.getCliente().getNombre();
                 String resenaTexto = valoracion.getReseña();
                 // Usar HTML para formatear el texto con un salto de línea

@@ -34,7 +34,7 @@ public class Javabnb {
 
         // Cargar los datos desde los archivos .dat
         System.out.println("Cargando datos de clientes...");
-        //gestorClientes.obtenerClientes().forEach(cliente -> System.out.println(cliente.getCorreoElectronico()));
+        //gestorClientes.obtenerValoraciones().forEach(cliente -> System.out.println(cliente.getCorreoElectronico()));
 
         System.out.println("Cargando datos de tarjetas...");
         //gestorTarjetas.obtenerTarjetas().forEach(tarjeta -> System.out.println(tarjeta.getNumeroTarjeta()));

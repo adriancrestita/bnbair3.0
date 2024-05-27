@@ -7,7 +7,7 @@ package AccesosPrincipales;
 import ManejoDatos.GestorValoraciones;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.Inmueble;
-import poo.javabnb.ValoracionClienteInmueble;
+import poo.javabnb.Valoracion;
 
 /**
  *
@@ -18,7 +18,7 @@ public class ValorarInmueble extends javax.swing.JDialog {
     /**
      * Creates new form ValorarInmueble
      */
-    private ValoracionClienteInmueble valoracion;
+    private Valoracion valoracion;
     private GestorValoraciones gestorValoraciones;
     private int puntuación;
     private Inmueble inmueble;
@@ -126,7 +126,7 @@ public class ValorarInmueble extends javax.swing.JDialog {
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         // TODO add your handling code here:
-        valoracion = new ValoracionClienteInmueble(cliente, inmueble, puntuación, jTextArea1.getText());
+        valoracion = new Valoracion(cliente, inmueble, puntuación, jTextArea1.getText());
         
         System.out.println(valoracion.toString());
         

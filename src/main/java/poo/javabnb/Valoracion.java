@@ -10,19 +10,19 @@ import ManejoDatos.GestorValoraciones;
  *
  * @author hugos
  */
-public class ValoracionClienteInmueble {
+public class Valoracion {
     
     // Atributos de la clase
     public ClienteParticular cliente;
     public Inmueble inmueble;
-    public int notaDada;
+    public int nota;
     public String reseña;
     public GestorValoraciones gestorValoraciones;
     
-    public ValoracionClienteInmueble(ClienteParticular cliente, Inmueble inmueble, int notaDada, String reseña){
+    public Valoracion(ClienteParticular cliente, Inmueble inmueble, int nota, String reseña){
         this.cliente=cliente;
         this.inmueble=inmueble;
-        this.notaDada=notaDada;
+        this.nota=nota;
         this.reseña=reseña;
     }
     
@@ -34,12 +34,15 @@ public class ValoracionClienteInmueble {
         return inmueble;
     }
     public int getNota(){
-        return notaDada;
+        return nota;
     }
     public String getReseña(){
         return reseña;
     }
-    public String toString(){
-        return cliente.getNombre() + inmueble.getTitulo() + getNota() + getReseña();
+    public String getCorreoCliente(){
+        return cliente.getCorreoElectronico();
+    }
+    public String getCorreoAnfitrion(){
+        return inmueble.getCorreoAnfitrion();
     }
 }
