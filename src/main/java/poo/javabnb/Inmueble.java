@@ -48,7 +48,6 @@ public class Inmueble implements Serializable{
         this.numero=direccion.get(1);
         this.ciudad=direccion.get(2);
         this.CP=direccion.get(3);
-        
     }
     
     
