@@ -43,6 +43,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private JLabel[] stars;
     private int calificacion;
     private String correo;
+    private Inmueble inmueble;
             
     private GestorInmuebles gestorInmuebles;
     
@@ -55,7 +56,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
         setResizable(false);
-        
+        this.inmueble = inmueble;
         jLabel15.requestFocus(true);
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
         imagePaths = inmueble.getImages();
@@ -186,7 +187,6 @@ public class DestinoModificacion extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JSeparator();
-        imagenes = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         titulo = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -344,15 +344,6 @@ public class DestinoModificacion extends javax.swing.JFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
-            }
-        });
-
-        imagenes.setText("Examinar archivos");
-        imagenes.setEnabled(false);
-        imagenes.setFocusable(false);
-        imagenes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                imagenesActionPerformed(evt);
             }
         });
 
@@ -552,7 +543,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -569,9 +560,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
                                                 .addGap(80, 80, 80)
                                                 .addComponent(jLabel13)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(imagenes))
+                                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
@@ -656,9 +645,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
                         .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(imagenes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel12)
                                 .addComponent(jLabel2)
@@ -781,10 +768,6 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private void tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tituloActionPerformed
-
-    private void imagenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenesActionPerformed
-
-    }//GEN-LAST:event_imagenesActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -931,7 +914,37 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
         // TODO add your handling code here:
         if (editButton.isSelected()){
-            //guardar los cambios
+            ArrayList<String> direccion = new ArrayList<>();
+            ArrayList<String> servicios = new ArrayList<>();
+            if(ac.isSelected()){
+            servicios.add("Aire Acondicionado");
+            } 
+            if(aparcamiento.isSelected()){
+                servicios.add("Aparcamiento");
+            }
+            if(calefaccion.isSelected()){
+                servicios.add("Calefacción");
+            } 
+            if(cocina.isSelected()){
+                servicios.add("Cocina");
+            }
+            if(lavadora.isSelected()){
+                servicios.add("Lavadora");
+            } 
+            if(piscina.isSelected()){
+                servicios.add("Piscina");
+            }
+            if(wifi.isSelected()){
+                servicios.add("Wifi");
+            } 
+            if(trabajo.isSelected()){
+                servicios.add("Zona de trabajo");
+            }
+            Inmueble newInmueble = new Inmueble(correo, titulo.getText().trim(), direccion, String.valueOf(huespedes.getValue()), String.valueOf(habitaciones.getValue()), String.valueOf(camas.getValue()), String.valueOf(baños.getValue()), inmueble.getTipoPropiedad(), String.valueOf(precioNoche.getValue()), servicios, inmueble.getImages(), descripcion.getText() );
+            gestorInmuebles.modificarInmueble(correo, inmueble.getTitulo(), newInmueble);
+            gestorInmuebles.cargarInmuebles();
+            JOptionPane.showMessageDialog(this, "Guardado correctamente");
+            
         }else{
             JOptionPane.showMessageDialog(this, "Cierre el candado para guardar");
         }
@@ -941,6 +954,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         // TODO add your handling code here:
         gestorInmuebles = new GestorInmuebles();
         gestorInmuebles.eliminarInmueble(correo, titulo.getText());
+        gestorInmuebles.cargarInmuebles();
         MenuAnfitrion ma = new MenuAnfitrion();
         ma.setVisible(true);
         dispose();
@@ -1005,7 +1019,6 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private javax.swing.JButton guardar;
     private javax.swing.JSpinner habitaciones;
     private javax.swing.JSpinner huespedes;
-    private javax.swing.JButton imagenes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
