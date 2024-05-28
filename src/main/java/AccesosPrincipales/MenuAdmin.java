@@ -477,14 +477,20 @@ public class MenuAdmin extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    //Vacía el contenido de la tabla
+    /**
+     * Vacia el contenido de la tabla introducida en el método
+     * @param modeloTabla 
+     */
     private static void vaciarTabla(DefaultTableModel modeloTabla) {
         while(modeloTabla.getRowCount() > 0){
             modeloTabla.removeRow(0);
         }
     }
     
-    //Cargamos los clientes en una lista
+    /**
+     * Método que carga los cilentes en una lista
+     * @param clientes 
+     */
     private void cargarListaClientes(List<ClienteParticular> clientes){
         
         //Cargamos los clientes en una lista
@@ -497,7 +503,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         }
     }
     
-    //Cargamos los anfitriones en una lista
+    /**
+     * Método que carga los anfitriones en una lista
+     * @param anfitriones 
+     */
     private void cargarListaAnfitriones(List<Anfitrion> anfitriones){
         for (Anfitrion anfitrion : anfitriones) {
             String numeroTarjeta = gestorTarjetas.obtenerNumeroTarjeta(anfitrion.getCorreoElectronico());
