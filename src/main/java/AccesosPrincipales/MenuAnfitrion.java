@@ -32,6 +32,7 @@ import poo.javabnb.TarjetaCredito;
  * @author adria
  */
 public class MenuAnfitrion extends javax.swing.JFrame {
+    
     private GestorInmuebles gestorInmuebles = new GestorInmuebles();
     private List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
     private Anfitrion anfitrion;
@@ -131,7 +132,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
     }
     
     /**
-     * Añade los inmuebles propios del anfitrionm al  scroll panel principal
+     * Añade los inmuebles propios del anfitrion al scroll panel principal
      * @param listaInmuebles
      * @param scrollPane 
      */

@@ -21,7 +21,7 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form FrameInicio
      */
     public Inicio() {
-        //inicializar el flatlaf
+        //inicializar el flatlaf para todo el programa
         FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#500000"));
         FlatIntelliJLaf.setup();
         

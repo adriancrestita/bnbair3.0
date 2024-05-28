@@ -19,11 +19,17 @@ public class GestorUsuarios {
         gestorTarjetas = new GestorTarjetas();
         cargarDatos();
     }
-
+    /**
+     * obtiene una lista con todos los objetos Cliente
+     * @return list con todos los clientes registrados
+     */
     public List<ClienteParticular> getClientes() {
         return clientes;
     }
-
+    /**
+     * obtiene una lista con todos los objetos Anfitriones
+     * @return list con todos los Anfitriones registrados
+     */
     public List<Anfitrion> getAnfitriones() {
         return anfitriones;
     }

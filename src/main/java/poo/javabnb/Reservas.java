@@ -70,6 +70,11 @@ public class Reservas implements Serializable{
         return fechaSalida;
     }
     
+    /**
+     * método para ocultar los 12 primeros dígitos de la tarjeta de crédito
+     * @param numeroTarjeta
+     * @return String tarjeta ocultada
+     */
     private String ocultarTarjeta(String numeroTarjeta) {
         if (numeroTarjeta.length() != 16) {
             throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos.");

@@ -92,6 +92,11 @@ public class Anfitrion implements Serializable{
         this.fechaRegistro = fechaActual;
     }
     // Métodos específicos para Anfitrion
+    
+    /**
+     * comprueba si es superAnfitrion o no
+     * @return String mostrando si es super anfitrion o no
+     */
     public String cmpSuperAnfitrion(){
         if(esSuperAnfitrion == true){
             return "Super Anfitrion";

@@ -44,9 +44,6 @@ public class MenuParticular extends javax.swing.JFrame {
    
     
     
-    /**
-     * Constructor del jFrame
-     */
     public MenuParticular() {
         super();
         initComponents();
@@ -141,6 +138,10 @@ public class MenuParticular extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * carga todas las reservas realizadas por el cliente
+     * @param reservas 
+     */
     private void cargarListaReservas(List<Reservas> reservas){
         vaciarTabla(tableModel);
         for (Reservas reserva : reservas) {
@@ -243,7 +244,7 @@ public class MenuParticular extends javax.swing.JFrame {
      * Método para filtrar inmuebles por ciudad
      * @param listaInmuebles
      * @param query
-     * @return devuelve la lista de inmuebles filtrados
+     * @return List devuelve la lista de inmuebles filtrados
      */
     private List<Inmueble> filtrarInmuebles(List<Inmueble> listaInmuebles, String query) {
         return listaInmuebles.stream()

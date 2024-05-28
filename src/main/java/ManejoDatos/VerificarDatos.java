@@ -37,7 +37,12 @@ public class VerificarDatos {
         
     }
 
-    // Verificar registro de Cliente
+    /**
+     * Verificar registro de Cliente
+     * @param email
+     * @return boolean
+     * @throws IOException 
+     */
     public static boolean verificarCorreoCliente(String email)throws IOException {
         for (ClienteParticular cliente : gestorClientes.obtenerClientes()) {
             if (cliente.getCorreoElectronico().equals(email)) {
@@ -47,7 +52,12 @@ public class VerificarDatos {
         return true; // Email disponible
     }
 
-    // Verificar registro de Anfitrion
+    /**
+     * Verificar registro de Anfitrion
+     * @param email
+     * @return boolean
+     * @throws IOException 
+     */
     public static boolean verificarCorreoAnfitrion(String email)throws IOException {
         for (Anfitrion anfitrion : gestorAnfitrion.obtenerAnfitriones()) {
             if (anfitrion.getCorreoElectronico().equals(email)) {
@@ -57,8 +67,12 @@ public class VerificarDatos {
         return true; // Email disponible
     }
 
-    // Iniciar sesion
-    
+    /**
+     * Iniciar sesion cliente
+     * @param email
+     * @param password
+     * @return Cliente
+     */
     public static ClienteParticular iniciarSesionCliente(String email, String password) {
         List<ClienteParticular> clientes = leerDatos(CLIENTES_FILENAME);
         for (ClienteParticular cliente : clientes) {
@@ -69,6 +83,12 @@ public class VerificarDatos {
         return null; // Credenciales incorrectas
     }
     
+    /**
+     * Iniciar sesion Anfitrion
+     * @param email
+     * @param password
+     * @return Anfitrion
+     */
     public static Anfitrion iniciarSesionAnfitrion(String email, String password) {
         List<Anfitrion> anfitriones = leerDatos(ANFITRIONES_FILENAME);
         for (Anfitrion anfitrion : anfitriones) {
@@ -79,7 +99,12 @@ public class VerificarDatos {
         return null; // Credenciales incorrectas
     }
 
-    // Método genérico para leer datos de un archivo .dat
+    /**
+     * Método genérico para leer datos de un archivo .dat
+     * @param <T>
+     * @param filename
+     * @return List
+     */
     private static <T> List<T> leerDatos(String filename) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
             return (List<T>) ois.readObject();
@@ -92,7 +117,14 @@ public class VerificarDatos {
         }
     }
     
-    //Método que valida si la tarjeta del usuario es valida (longitudes y fecha caducidad posterior a la actual)
+    /**
+     * Método que valida si la tarjeta del usuario es valida (longitudes y fecha caducidad posterior a la actual)
+     * @param titularTarjeta
+     * @param numeroTarjeta
+     * @param fechaCaducidad
+     * @return boolean
+     * @throws IOException 
+     */
     public boolean validarTarjeta(String titularTarjeta, String numeroTarjeta, String fechaCaducidad) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (titularTarjeta.isEmpty() || titularTarjeta.equals("Ingrese el nombre del titular") ||
@@ -111,7 +143,17 @@ public class VerificarDatos {
         }
     }
     
-    //Método que verifica si los daos introducidos en un registro son validos para cliente/anfitrion
+    /**
+     * Método que verifica si los daos introducidos en un registro son validos para cliente/anfitrion
+     * @param correo
+     * @param nombre
+     * @param contraseña
+     * @param telefono
+     * @param dni
+     * @param tipo
+     * @return boolean
+     * @throws IOException 
+     */
     public boolean validarRegistro(String correo, String nombre, String contraseña, String telefono, String dni, String tipo) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (correo.isEmpty() || correo.equals("Ingrese el correo") ||
@@ -160,7 +202,16 @@ public class VerificarDatos {
         }  
     }
     
-    //Método que valida si los datos introducidos en un inmueble son correctos
+    /**
+     * Método que valida si los datos introducidos en un inmueble son correctos
+     * @param titulo
+     * @param calle
+     * @param numero
+     * @param cp
+     * @param ciudad
+     * @param precio
+     * @return boolean
+     */
     public static boolean validarInmueble(String titulo, String calle, String numero, String cp, String ciudad, String precio){
         if (titulo.isEmpty() || titulo.equals("Ingrese el titulo") ||
             numero.isEmpty() || numero.equals("Ingrese el numero") ||

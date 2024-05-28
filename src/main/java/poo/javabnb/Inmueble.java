@@ -205,6 +205,10 @@ public class Inmueble implements Serializable{
         this.descripcion=msg;
     }
     //Otros métodos de utilidad
+    
+    /**
+     * Obtiene la calle, numero, ciudad y CP de la lista "direccion"
+     */
     private void verificarDireccion(){
         this.calle=direccion.get(0);
         this.numero=direccion.get(1);
@@ -219,7 +223,10 @@ public class Inmueble implements Serializable{
         return "C/"+calle+" "+numero+", "+ciudad+", "+CP;
     }
     
-    // Método para mostrar información del inmueble
+    /**
+     * Método para mostrar información del inmueble
+     * @return String con la información
+     */
     public String mostrarInformacion() {
         
         if((calle==null)||(numero==null)||(CP==null)||(ciudad==null)){

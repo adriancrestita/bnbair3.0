@@ -48,9 +48,7 @@ public class Registro extends javax.swing.JFrame {
     private GestorTarjetas gestorTarjetas;
     private GestorAnfitrion gestorAnfitrion;
 
-    /**
-     * Creates new form FrameRegistro
-     */
+    
     public Registro() {
         initComponents();
         setResizable(false);
@@ -348,6 +346,11 @@ public class Registro extends javax.swing.JFrame {
     private ClienteParticular particular;
     private TarjetaCredito tj;
     private Anfitrion anf;
+    
+    /**
+     * verifica que los datos son válidos, si es así, crea un nuevo cliente o anfitrión y lo guarda en el archivo .dat correspondiente
+     * @param evt 
+     */
     private void bregistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bregistrarseActionPerformed
         MetodosAuxiliares ma = new MetodosAuxiliares();
         VerificarDatos vd = new VerificarDatos();

@@ -182,7 +182,10 @@ public class Login extends javax.swing.JFrame {
     private void jmaillogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmaillogActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jmaillogActionPerformed
-
+    /**
+     * Comprueba que has rellenado todos los campos, y si están completos verifica que el usuario está registrado en los archivos .dat para acceder a su respectivo menú
+     * @param evt 
+     */
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
     String email = jmaillog.getText();
     String password = new String(jpasswordlog.getPassword());

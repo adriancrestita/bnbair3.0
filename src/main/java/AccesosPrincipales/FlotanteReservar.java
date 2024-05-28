@@ -38,25 +38,11 @@ public class FlotanteReservar extends javax.swing.JDialog {
     private int precioTotal;
     
     
-    /**
-     * Constructor del jDialog default
-     * @param parent
-     * @param modal 
-     */
     public FlotanteReservar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
     
-    /**
-     * Constructor del jDialog con el inmueble seleccionado
-     * @param parent
-     * @param modal
-     * @param inm 
-     * @param precioTotal 
-     * @param fechaEntrada 
-     * @param fechaSalida 
-     */
     public FlotanteReservar(java.awt.Frame parent, boolean modal, Inmueble inm, int precioTotal, String fechaEntrada, String fechaSalida) {
         super(parent, modal);
         initComponents();
@@ -90,7 +76,7 @@ public class FlotanteReservar extends javax.swing.JDialog {
     /**
      * Método para ocultar los 12 primeros dígitos de la tarjeta de crédito
      * @param numero
-     * @return retorna la tarjeta con los números ocultos
+     * @return String retorna la tarjeta con los números ocultos
      */
     public static String ocultarTarjeta(String numero) {
         String asteriscos = "************";

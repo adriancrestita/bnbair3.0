@@ -35,7 +35,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     private DefaultTableModel tableModel2;
     private DefaultTableModel tableModel3;
     
-    //DEclaramos y creamos los 
+    //DEclaramos y creamos los popup menus
     private JPopupMenu menuContextual;
     private JPopupMenu popupMenu1;
     private JMenuItem deleteMenuItem1;

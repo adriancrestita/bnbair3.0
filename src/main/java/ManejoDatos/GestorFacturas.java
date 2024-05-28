@@ -12,7 +12,15 @@ public class GestorFacturas {
     public GestorFacturas(){
     
     }  
-    
+    /**
+     * recopila toda la información y crea la factura de la reserva
+     * @param fechaReserva
+     * @param importe
+     * @param inmueble
+     * @param cliente
+     * @param fechaEntrada
+     * @param fechaSalida 
+     */
     public void generarFactura(String fechaReserva, int importe, Inmueble inmueble, ClienteParticular cliente, String fechaEntrada, String fechaSalida){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/Facturas/factura_" + cliente.getNombre() + "_" + inmueble.getTitulo() + ".txt"))) {
             writer.write("Factura\n");

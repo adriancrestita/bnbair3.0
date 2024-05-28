@@ -17,6 +17,11 @@ public class MetodosAuxiliares {
         
     }
     
+    /**
+     * Comprueba si el dni es válido
+     * @param dni
+     * @return boolean
+     */
     public static boolean esDni(String dni){
         if (dni == null || dni.length() != 9) {
             return false;
@@ -32,6 +37,11 @@ public class MetodosAuxiliares {
         return LETRAS_DNI.charAt(indice) == letra;
     }
     
+    /**
+     * comprueba si el correo es válid
+     * @param texto
+     * @return boolean
+     */
     public static boolean esCorreo(String texto) {
         if (texto == null) {
             return false;
@@ -39,6 +49,11 @@ public class MetodosAuxiliares {
         return texto.matches("[^@]*@[^@]*");
     }
     
+    /**
+     * Comprueba si la tarjeta no está caducada
+     * @param fechaCaducidad
+     * @return boolean
+     */
     public static boolean esFechaCaducidadValida(String fechaCaducidad) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
@@ -50,19 +65,30 @@ public class MetodosAuxiliares {
         }
     }
     
+    /**
+     * Comprueba que la cadena de texto coincide con la longitud introducida
+     * @param texto
+     * @param longitud
+     * @return boolean
+     */
     public static boolean xLongitud(String texto, int longitud) {
         if (texto == null) {
             return false;  // Considera si una cadena nula debe retornar false o lanzar una excepción.
         }
         return texto.length() == longitud;
     }
-   
+    
+   /**
+    * Retorna la fecha en el momento que se ejecuta el método
+    * @return String 
+    */
     public static String fechaActual(){
         Date todayDate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String fechaActual = sdf.format(todayDate);
         return fechaActual;
     }
+    
     public boolean validarFormulario(String correo, String nombre, String contraseña, String telefono, String dni, boolean esVIP) throws IOException {        
         // Validar que los campos no están vacíos ni tienen el texto por defecto
         if (correo.isEmpty() || correo.equals("Ingrese el correo") ||

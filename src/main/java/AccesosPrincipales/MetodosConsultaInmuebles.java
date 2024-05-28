@@ -21,6 +21,10 @@ public class MetodosConsultaInmuebles {
         
     }
     
+    /**
+     * Guarda las imagenes de los inmuebles en una carpeta determinada, si no existe, la crea
+     * @param files 
+     */
     public static void saveImages(File[] files) {
         String destinationDirectory = "src/main/java/ImagenesDestino";  // Ruta del directorio de destino
         File dir = new File(destinationDirectory);

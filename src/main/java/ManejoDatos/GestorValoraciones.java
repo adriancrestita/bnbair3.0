@@ -15,7 +15,11 @@ public class GestorValoraciones {
         valoraciones = new ArrayList<>();
         cargarValoraciones();
     }
-
+    
+    /**
+     * añade una nueva valoracion al archivo valoraciones.dat
+     * @param valoracion 
+     */
     public void agregarValoracion(Valoracion valoracion) {
         if (String.valueOf(valoracion.getNota()) == null || String.valueOf(valoracion.getNota()).isEmpty()) {
             throw new IllegalArgumentException("La nota no puede ser nula o vacía");
@@ -26,10 +30,18 @@ public class GestorValoraciones {
         }  
     }
     
+    /**
+     * devuelve la lista con todas las valoraciones
+     * @return 
+     */
     public List<Valoracion> obtenerValoraciones() {
         return valoraciones;
     }
-      
+    
+    /**
+     * Guarda las valoraciones en el archivo valoraciones.dat
+     * @param array 
+     */
     private static void guardarValoraciones(List<Valoracion> array) {
        try{
            FileOutputStream fos = new FileOutputStream("valoraciones.dat");
@@ -40,7 +52,10 @@ public class GestorValoraciones {
            System.out.println(e);
        }        
     }
-
+    
+    /**
+     * Lee el archivo valoraciones.dat y los incluye todos en una lista
+     */
     public static void cargarValoraciones() {
         try{
             FileInputStream fis = new FileInputStream("valoraciones.dat");
@@ -72,6 +87,12 @@ public class GestorValoraciones {
         }
     }
     
+    /**
+     * mediante el correo del cliente y el titulo del inmueble, obtiene una valoracion en concreto
+     * @param correo
+     * @param titulo
+     * @return Valoracion del inmueble en concreto
+     */
     public Valoracion obtenerValoracion(String correo, String titulo) {
         cargarValoraciones(); // Se asegura de cargar los datos más recientes
         for (Valoracion valoracion : valoraciones) {
@@ -82,6 +103,12 @@ public class GestorValoraciones {
         return null; // Retornar null si no se encuentra la valoracion
     }
     
+    /**
+     * Devuelve la lista de valoraciones de un inmueble
+     * @param correo
+     * @param titulo
+     * @return Lista de valoraciones
+     */
     public List<Valoracion> obtenerValoracionesInmueble(String correo, String titulo){
         cargarValoraciones(); // Se asegura de cargar los datos más recientes
         List<Valoracion> valoracionesInmueble = new ArrayList<>();
@@ -93,6 +120,13 @@ public class GestorValoraciones {
         return valoracionesInmueble; 
     }
     
+    /**
+     * Comprueba que un cliente no pueda valorar un mismo inmueble varias veces
+     * @param correo
+     * @param titulo
+     * @param correoAnfitrion
+     * @return boolean
+     */
     public boolean existeValoracionCliente(String correo, String titulo, String correoAnfitrion){
         cargarValoraciones(); // Se asegura de cargar los datos más recientes
         for (Valoracion valoracion : valoraciones) {
@@ -103,6 +137,11 @@ public class GestorValoraciones {
         return false; // Retornar false si no se existe la valoracion
     }
     
+    /**
+     * Retorna el numero de valoraciones totales de un anfitrión
+     * @param correo
+     * @return 
+     */
     public int obtenerNumeroValoracionesAnfitrion(String correo){
         int num = 0;
         for (Valoracion valoracion : valoraciones){
@@ -113,6 +152,11 @@ public class GestorValoraciones {
         return num;
     }
     
+    /**
+     * obtiene la media de valoraciones de todos los inmuebles del administrador
+     * @param correo
+     * @return 
+     */
     public double obtenerMediaValoracionesAnfitrion(String correo){
         int suma = 0;
         for (Valoracion valoracion : valoraciones){
@@ -130,6 +174,12 @@ public class GestorValoraciones {
         }
     }
     
+    /**
+     * elimina una valoración de un inmueble en concreto
+     * @param correo
+     * @param titulo
+     * @return 
+     */
     public static List<Valoracion> eliminarValoracion(String correo, String titulo) {
         List<Valoracion> valoracionesMod = new ArrayList<>();
         try {

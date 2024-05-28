@@ -7,7 +7,6 @@ public class ArchivoUtil {
     
     /**
      * Método que se encarga de que si un archivo no existe, lo cree
-     * 
      * @param nombreArchivo 
      */
     public static void asegurarArchivoExiste(String nombreArchivo) {
