@@ -535,10 +535,7 @@ public class MenuParticular extends javax.swing.JFrame {
 
     private void cambioDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambioDatosActionPerformed
         // TODO add your handling code here:
-        if (editButton.isEnabled()){
-            JOptionPane.showMessageDialog(this, "Cierre el candado para guardar los datos");
-        }
-        else{
+        if (editButton.isSelected()){
             JFrame frame = new JFrame("Confirm Dialog Example");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(300, 200);
@@ -566,6 +563,9 @@ public class MenuParticular extends javax.swing.JFrame {
                 // Acción cuando se pulsa "Cancelar"
                 JOptionPane.showMessageDialog(frame, "Los cambios no se han guardado.");
             }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Cierre el candado para guardar los datos");
         }
     
     }//GEN-LAST:event_cambioDatosActionPerformed
