@@ -674,31 +674,35 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         valoracion = new Valoracion(gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario()), inmueble, calificacion);        
         gestorValoraciones.agregarValoracion(valoracion);
         
-        System.out.println("Calificacion puntuada" + calificacion);
-        System.out.println("Numero de valoraciones anfitrion" + gestorValoraciones.obtenerNumeroValoracionesAnfitrion(anfitrion.getCorreoElectronico()));
-        System.out.println("Media de valoraciones Anfitrion" + gestorValoraciones.obtenerMediaValoracionesAnfitrion(anfitrion.getCorreoElectronico()));
-        
-        if(gestorValoraciones.obtenerMediaValoracionesAnfitrion(inmueble.getCorreoAnfitrion())>=4){
-            Anfitrion cambioAnfitrion = new Anfitrion(anfitrion.getDni(), anfitrion.getNombre(), anfitrion.getCorreoElectronico(), anfitrion.getClave(), anfitrion.getTelefono(), anfitrion.getFechaRegistro(), true);
-            gestorAnfitrion.modificarAnfitrion(anfitrion.getCorreoElectronico(), cambioAnfitrion);   
+        if(gestorValoraciones.existeValoracionCliente(Sesion.obtenerCorreoUsuario(), inmueble.getTitulo(), inmueble.getCorreoAnfitrion())){
+            JOptionPane.showMessageDialog(this,"Ya ha valorado anteriormente este inmueble");
         }
         else{
-            Anfitrion cambioAnfitrion = new Anfitrion(anfitrion.getDni(), anfitrion.getNombre(), anfitrion.getCorreoElectronico(), anfitrion.getClave(), anfitrion.getTelefono(), anfitrion.getFechaRegistro(), false);
+            if(gestorValoraciones.obtenerMediaValoracionesAnfitrion(inmueble.getCorreoAnfitrion())>=4){
+            Anfitrion cambioAnfitrion = new Anfitrion(anfitrion.getDni(), anfitrion.getNombre(), anfitrion.getCorreoElectronico(), anfitrion.getClave(), anfitrion.getTelefono(), anfitrion.getFechaRegistro(), true);
             gestorAnfitrion.modificarAnfitrion(anfitrion.getCorreoElectronico(), cambioAnfitrion);   
-        }
-                
-        for(int i = 0; i<stars.length; i++){
-            jPanel4.remove(stars[i]);
-        }
-        estrellas = new JLabel[calificacion];
+            }
+            else{
+                Anfitrion cambioAnfitrion = new Anfitrion(anfitrion.getDni(), anfitrion.getNombre(), anfitrion.getCorreoElectronico(), anfitrion.getClave(), anfitrion.getTelefono(), anfitrion.getFechaRegistro(), false);
+                gestorAnfitrion.modificarAnfitrion(anfitrion.getCorreoElectronico(), cambioAnfitrion);   
+            }
 
-        for (int i = 0; i < calificacion; i++) {
-            estrellas[i] = new JLabel("\u2605");
-            estrellas[i].setFont(new Font("Arial Unicode MS", Font.PLAIN, 18));
-            estrellas[i].setForeground(Color.GRAY); 
-            jPanel4.add(estrellas[i]);
+            for(int i = 0; i<stars.length; i++){
+                jPanel4.remove(stars[i]);
+            }
+            estrellas = new JLabel[calificacion];
+
+            for (int i = 0; i < calificacion; i++) {
+                estrellas[i] = new JLabel("\u2605");
+                estrellas[i].setFont(new Font("Arial Unicode MS", Font.PLAIN, 18));
+                estrellas[i].setForeground(Color.GRAY); 
+                jPanel4.add(estrellas[i]);
+            }
+            JOptionPane.showMessageDialog(this, "Valoración registrada");
         }
-        JOptionPane.showMessageDialog(this, "Valoración registrada");
+        
+        
+        
         
     }//GEN-LAST:event_valorarButtonActionPerformed
 
