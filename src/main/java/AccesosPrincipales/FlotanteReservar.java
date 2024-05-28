@@ -43,15 +43,7 @@ public class FlotanteReservar extends javax.swing.JDialog {
         initComponents();
     }
     
-    /**
-     * Constructor del jDialog con el inmueble seleccionado
-     * @param parent
-     * @param modal
-     * @param inm 
-     * @param precioTotal 
-     * @param fechaEntrada 
-     * @param fechaSalida 
-     */
+    
     public FlotanteReservar(java.awt.Frame parent, boolean modal, Inmueble inm, int precioTotal, String fechaEntrada, String fechaSalida) {
         super(parent, modal);
         initComponents();

@@ -17,6 +17,7 @@ import java.nio.file.StandardCopyOption;
  */
 public class MetodosConsultaInmuebles {
     private GestorInmuebles gestorInmuebles;
+    
     public MetodosConsultaInmuebles(){
         
     }
