@@ -87,8 +87,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
     
     /**
      * 
-     * Método para hacer update en el panel de imagenes con las imagenes actualizadas
-     * 
+     * Método para actualizar el panel de imagenes para que muestre las imagenes del inmueble
      * @param imagePaths es una array con los nombres de archivo de imagenes
      */
     private void updateImagePanel(ArrayList<String> imagePaths) {

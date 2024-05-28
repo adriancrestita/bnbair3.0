@@ -5,6 +5,7 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
+import ManejoDatos.GestorClientes;
 import ManejoDatos.GestorReservas;
 import ManejoDatos.GestorValoraciones;
 import com.toedter.calendar.JCalendar;
@@ -25,6 +26,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import poo.javabnb.Reservas;
+import poo.javabnb.Sesion;
 import poo.javabnb.Valoracion;
 
 /**
@@ -39,18 +41,21 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     
     private double costeNoche;
     private JDateChooser dateChooser1, dateChooser2;
-    private Anfitrion anfiInmueble;
+    private Anfitrion anfitrion;
     private GestorAnfitrion gestorAnfitrion;
     private ArrayList<String> imagePaths;
     private String rutaImgs="src/main/java/ImagenesDestino/";
     private int imagen=0;
     private int rating = 0;
     private JLabel[] stars;
+    private JLabel[] estrellas;
     private int calificacion;
     private Inmueble inmueble;
     private GestorReservas gestorReservas;
+    private GestorClientes gestorClientes;
     private List<Reservas> res;
     private double mediaValoracion;
+    private Valoracion valoracion;
     
     private GestorValoraciones gestorValoraciones;
     
@@ -68,7 +73,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         setResizable(false);
         
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
-        anfiInmueble = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
+        anfitrion = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
         imagePaths = inmueble.getImages();
         System.out.println(imagePaths);
         this.inmueble=inmueble;
@@ -81,11 +86,11 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         mediaValoracion = mediaValoracion/valoraciones.size();
         
         //establecer la información acerca del destino y anfitrión seleccionado
-        jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
-        jLabel34.setText("Valoración: "+anfiInmueble.getMediaValoraciones()+"/5");
-        jLabel40.setText(anfiInmueble.getNombre());
-        jLabel41.setText(anfiInmueble.getCorreoElectronico());
-        jLabel42.setText(anfiInmueble.getTelefono());
+        jLabel24.setText("Anfitrion: "+anfitrion.getNombre());
+        jLabel34.setText("Valoración: "+gestorValoraciones.obtenerMediaValoracionesAnfitrion(anfitrion.getCorreoElectronico())+"/5");
+        jLabel40.setText(anfitrion.getNombre());
+        jLabel41.setText(anfitrion.getCorreoElectronico());
+        jLabel42.setText(anfitrion.getTelefono());
         jLabel13.setText(inmueble.getTitulo());
         jLabel19.setText(inmueble.direccionToString());
         jLabel20.setText("Huéspedes máximos "+inmueble.getMaxHuespedes());
@@ -106,7 +111,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         }
         
         updateImagePanel(imagePaths);
-        mostrarReseñas(inmueble);
         
         dateChooser1 = new JDateChooser();
         dateChooser2 = new JDateChooser();
@@ -156,7 +160,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         }
     }
     /**
-     * Analiza las estrellas selecionadas por el usuario
+     * Analiza las estrellas selecionadas por el usuario a la hora de valorar el inmueble
      * @param rating
      * @return devuelve el numero de estrellas seleccionadas
      */
@@ -168,8 +172,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
                 stars[i].setForeground(Color.LIGHT_GRAY);
             }
         }
-        return calificacion = rating;
+        calificacion = rating;
+        return calificacion;
     }
+    
     
     /**
      * Método para añadir las imágenes al jpanel
@@ -236,9 +242,9 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     }
     
     /**
-     * Método para calcular los días entre 2 fechas, y multiplicarlo por el precio por noche
+     * Método para calcular los días entre 2 fechas, y multiplicarlo por el precio por noche del inmueble
      */
-    private void updateDaysLabel() {
+    private void calcularCostoTotal() {
         Date date1 = dateChooser1.getDate();
         Date date2 = dateChooser2.getDate();
         if (date1 != null && date2 != null) {
@@ -248,6 +254,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Calcula el precio de la reserva
+     * @return double coste de la reserva
+     */
     private double getPrecioDias(){
         Date date1 = dateChooser1.getDate();
         Date date2 = dateChooser2.getDate();
@@ -276,36 +286,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         }
     }
     
-    private void mostrarReseñas(Inmueble inmueble) {
-        GestorValoraciones gestorValoraciones = new GestorValoraciones();
-        List<Valoracion> valoraciones = gestorValoraciones.obtenerValoracionesInmueble(inmueble.getCorreoAnfitrion(), inmueble.getTitulo());
-
-        JPanel jPanelResenas = new JPanel();
-        jPanelResenas.setLayout(new BoxLayout(jPanelResenas, BoxLayout.Y_AXIS));  // Configurar layout para apilar JLabels
-
-        if (valoraciones.isEmpty()) {
-            JLabel noResenasLabel = new JLabel("no hay reseñas disponibles");
-            jPanelResenas.add(noResenasLabel);
-        } else {
-            for (Valoracion valoracion : valoraciones) {
-                String clienteNombre = valoracion.getCliente().getNombre();
-                String resenaTexto = valoracion.getReseña();
-                // Usar HTML para formatear el texto con un salto de línea
-                String resenaHtml = "<html>" + clienteNombre + "<br/>" + resenaTexto + "</html>";
-                JLabel resenaLabel = new JLabel(resenaHtml);
-                resenaLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Añadir padding para mejor visualización
-                jPanelResenas.add(resenaLabel);
-            }
-        }
-
-        // Agregar el jPanelResenas al jScrollPane1
-        jScrollPane1.setViewportView(jPanelResenas);
-
-        // Refrescar el JScrollPane para asegurar que se muestran los nuevos componentes
-        jScrollPane1.revalidate();
-        jScrollPane1.repaint();
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -331,7 +311,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         numHuespedes = new javax.swing.JSpinner();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
         jPanel7 = new javax.swing.JPanel();
         servicioWifi = new javax.swing.JRadioButton();
         jLabel11 = new javax.swing.JLabel();
@@ -380,7 +359,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jButton4 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         volverButton = new javax.swing.JButton();
@@ -430,10 +408,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 810, 432, 150));
 
         jLabel26.setText("Precio noche");
-        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1615, -1, -1));
+        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1300, -1, -1));
 
         jLabel30.setText("Huespedes");
-        jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1654, -1, -1));
+        jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1340, -1, -1));
 
         numHuespedes.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         numHuespedes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -447,14 +425,13 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jPanel1.add(numHuespedes, new org.netbeans.lib.awtextra.AbsoluteConstraints(173, 1649, 84, -1));
+        jPanel1.add(numHuespedes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 1340, 84, -1));
 
         jLabel31.setText("TOTAL");
-        jPanel1.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1694, -1, -1));
+        jPanel1.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1380, -1, -1));
 
         jLabel32.setText("precio total");
-        jPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(173, 1694, -1, -1));
-        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1497, 567, 13));
+        jPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 1380, -1, -1));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -548,28 +525,28 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         jLabel33.setText("Servicios del alojamiento:");
         jPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 999, -1, -1));
         jPanel1.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 974, 567, 13));
-        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1716, 567, 13));
+        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1410, 567, 13));
 
         jLabel36.setText("Contactame");
-        jPanel1.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1741, -1, -1));
+        jPanel1.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1430, -1, -1));
 
         jLabel37.setText("Nombre anfitrion");
-        jPanel1.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1775, -1, -1));
+        jPanel1.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1460, -1, -1));
 
         jLabel38.setText("Correo Electronico");
-        jPanel1.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1803, -1, -1));
+        jPanel1.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1490, -1, -1));
 
         jLabel39.setText("Telefono");
-        jPanel1.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1831, -1, -1));
+        jPanel1.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1520, -1, -1));
 
         jLabel40.setText("jLabel30");
-        jPanel1.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 1775, -1, -1));
+        jPanel1.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 1460, -1, -1));
 
         jLabel41.setText("jLabel31");
-        jPanel1.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 1803, -1, -1));
+        jPanel1.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 1490, -1, -1));
 
         jLabel42.setText("jLabel32");
-        jPanel1.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 1831, -1, -1));
+        jPanel1.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 1520, -1, -1));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 2000, 822, 50));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -599,8 +576,8 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         });
         jPanel3.add(botonFechaFinal);
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1516, 432, -1));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1593, 432, 10));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1210, 432, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1280, 432, 10));
 
         jButton1.setText(">");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -656,7 +633,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 602, -1, -1));
         jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1191, 567, 10));
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 1207, 567, 272));
 
         jButton4.setText("Reservar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -664,7 +640,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 1690, -1, -1));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 1380, -1, -1));
 
         jLabel12.setText("Descripción del alojamiento");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 780, -1, -1));
@@ -697,10 +673,36 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
     private void valorarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorarButtonActionPerformed
         // TODO add your handling code here:
-        ValorarInmueble valorarInmueble = new ValorarInmueble(DestinoSeleccionado.this, true);
-        valorarInmueble.setVisible(true);
-        dispose();
-        jPanel4.setEnabled(false);
+        gestorClientes = new GestorClientes();
+        
+        valoracion = new Valoracion(gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario()), inmueble, calificacion);        
+        gestorValoraciones.agregarValoracion(valoracion);
+        
+        System.out.println("Calificacion puntuada" + calificacion);
+        System.out.println("Numero de valoraciones anfitrion" + gestorValoraciones.obtenerNumeroValoracionesAnfitrion(anfitrion.getCorreoElectronico()));
+        System.out.println("Media de valoraciones Anfitrion" + gestorValoraciones.obtenerMediaValoracionesAnfitrion(anfitrion.getCorreoElectronico()));
+        
+        if(gestorValoraciones.obtenerMediaValoracionesAnfitrion(inmueble.getCorreoAnfitrion())>=4){
+            Anfitrion cambioAnfitrion = new Anfitrion(anfitrion.getDni(), anfitrion.getNombre(), anfitrion.getCorreoElectronico(), anfitrion.getClave(), anfitrion.getTelefono(), anfitrion.getFechaRegistro(), true);
+            gestorAnfitrion.modificarAnfitrion(anfitrion.getCorreoElectronico(), cambioAnfitrion);   
+        }
+        else{
+            Anfitrion cambioAnfitrion = new Anfitrion(anfitrion.getDni(), anfitrion.getNombre(), anfitrion.getCorreoElectronico(), anfitrion.getClave(), anfitrion.getTelefono(), anfitrion.getFechaRegistro(), false);
+            gestorAnfitrion.modificarAnfitrion(anfitrion.getCorreoElectronico(), cambioAnfitrion);   
+        }
+                
+        for(int i = 0; i<stars.length; i++){
+            jPanel4.remove(stars[i]);
+        }
+        estrellas = new JLabel[calificacion];
+
+        for (int i = 0; i < calificacion; i++) {
+            estrellas[i] = new JLabel("\u2605");
+            estrellas[i].setFont(new Font("Arial Unicode MS", Font.PLAIN, 18));
+            estrellas[i].setForeground(Color.GRAY); 
+            jPanel4.add(estrellas[i]);
+        }
+        
     }//GEN-LAST:event_valorarButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -734,7 +736,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
             Date selectedDate = dateChooser2.getDate();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             jLabel3.setText(sdf.format(selectedDate));
-            updateDaysLabel();
+            calcularCostoTotal();
         }
     }//GEN-LAST:event_botonFechaFinalActionPerformed
     
@@ -758,7 +760,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             jLabel2.setText(sdf.format(selectedDate));
             dateChooser2.setMinSelectableDate(selectedDate);
-            updateDaysLabel();
+            calcularCostoTotal();
         }
     }//GEN-LAST:event_botonFechaInicialActionPerformed
 
@@ -886,12 +888,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;

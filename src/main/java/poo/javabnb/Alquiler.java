@@ -20,7 +20,10 @@ public class Alquiler {
         this.esVIP = cliente.cmpVIP();
         calcularCostoTotal();
     }
-
+    
+    /**
+     * Calcula el costo total de la estancia y aplica un descuento si el cliente es vip
+     */
     private void calcularCostoTotal() {
         int diasEstancia = fechaEntrada.until(fechaSalida).getDays();
         costoTotal = diasEstancia * Integer.parseInt(inmueble.getPrecioNoche());
@@ -28,7 +31,11 @@ public class Alquiler {
             costoTotal *= 0.9; // Descuento del 10% para clientes VIP
         }
     }
-
+    
+    /**
+     * Genera una factura con los datos acerca del alquiler
+     * @return String con la información del alquiler
+     */
     public String generarFactura() {
         return "Fecha de Reserva: " + LocalDate.now() +
                 "\nCliente: " + cliente.getNombre() +
@@ -38,6 +45,9 @@ public class Alquiler {
                 "\nCosto Total: $" + costoTotal;
     }
     
+    /**
+     * crea el archivo de la factura
+     */
     public void archivoFactura(){
         String nombreArchivo = "factura_reserva_"+cliente.getNombre()+"_"+LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + ".txt";
         

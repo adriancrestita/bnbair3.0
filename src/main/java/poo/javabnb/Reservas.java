@@ -25,49 +25,22 @@ public class Reservas implements Serializable{
     public Inmueble inmueble;
     public TarjetaCredito tj;
     public int precioTotal;
+    private String fechaReserva;
     
     
     
-    public Reservas(String fechaReserva, int precioTotal, Inmueble inmueble, String correoCliente, String fechaEntrada, String fechaSalida){
+    public Reservas(String fechaReserva, int precioTotal, Inmueble inmueble, ClienteParticular cliente, String fechaEntrada, String fechaSalida){
         this.anfitrion=anfitrion;
         gestorCliente = new GestorClientes();
-        this.particular = gestorCliente.obtenerCliente(correoCliente);
+        this.particular = cliente;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.precioTotal = precioTotal;  
         this.inmueble = inmueble;
+        this.fechaReserva = fechaReserva;
     }
     
-    /**
-     * Crea un archivo en descargas del usuario y en una carpeta interna en el programa con los datos de la reserva
-     */
-    public void generarFactura(){
-        String informacionReserva = String.format(
-            "Anfitrión: %s\nCliente: %s\nInmueble: %s\nFecha de Entrada: %s\nFecha de Salida: %s\nPrecio Total: %d\nTarjeta: %s",
-            anfitrion.getNombre(), // Asumiendo que Anfitrion tiene un método getNombre()
-            particular.getNombre(), // Asumiendo que ClienteParticular tiene un método getNombre()
-            inmueble.mostrarInformacion(), // Asumiendo que Inmueble tiene un método getDescripcion()
-            fechaEntrada,
-            fechaSalida,
-            precioTotal,
-            ocultarTarjeta(tj.getNumeroTarjeta()) // Asumiendo que TarjetaCredito tiene un método getNumeroTarjeta()
-        );
-
-       // Crear la carpeta "reservas"
-        File reservasDir = new File("reservas");
-        if (!reservasDir.exists()) {
-            reservasDir.mkdirs();
-        }
-
-        // Crear el archivo de reserva
-        File reservaFile = new File(reservasDir, "reserva.txt");
-        try (FileWriter writer = new FileWriter(reservaFile)) {
-            writer.write(informacionReserva);
-            System.out.println("Reserva guardada en: " + reservaFile.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    
     public String getCorreoCliente(){
         return particular.getCorreoElectronico();
     }
@@ -77,6 +50,13 @@ public class Reservas implements Serializable{
     
     public String getTituloInmueble(){
         return inmueble.getTitulo();
+    }
+    public Inmueble getInmueble(){
+        return inmueble;
+    }
+    
+    public String getFechaReserva(){
+        return fechaReserva;
     }
     
     public String getPrecioTotal(){
@@ -90,6 +70,11 @@ public class Reservas implements Serializable{
         return fechaSalida;
     }
     
+    /**
+     * método para ocultar los 12 primeros dígitos de la tarjeta de crédito
+     * @param numeroTarjeta
+     * @return String tarjeta ocultada
+     */
     private String ocultarTarjeta(String numeroTarjeta) {
         if (numeroTarjeta.length() != 16) {
             throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos.");

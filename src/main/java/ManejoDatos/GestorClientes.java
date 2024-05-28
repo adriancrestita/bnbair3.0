@@ -33,8 +33,7 @@ public class GestorClientes implements Serializable{
     }
     
     /**
-     * 
-     * @return de la lista de todos los objetos de clientes 
+     * @return de la lista de todos los clientes 
      */
     public List<ClienteParticular> obtenerClientes() {
         return clientes;
@@ -93,7 +92,11 @@ public class GestorClientes implements Serializable{
             return (List<ClienteParticular>) ois.readObject();
         }
     }
-    
+    /**
+     * Obtiene el objeto cliente desde el correo de dicho cliente
+     * @param correo
+     * @return Objeto cliente que verifique la condicion
+     */
     public ClienteParticular obtenerCliente(String correo) {
         cargarClientes(); // Se asegura de cargar los datos más recientes
         for (ClienteParticular cliente : clientes) {

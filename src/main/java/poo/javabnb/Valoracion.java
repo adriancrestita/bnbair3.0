@@ -15,14 +15,11 @@ public class Valoracion implements Serializable{
     private ClienteParticular cliente;
     private Inmueble inmueble;
     private int nota;
-    private String reseña;
-    private GestorValoraciones gestorValoraciones;
     
-    public Valoracion(ClienteParticular cliente, Inmueble inmueble, int nota, String reseña){
+    public Valoracion(ClienteParticular cliente, Inmueble inmueble, int nota){
         this.cliente=cliente;
         this.inmueble=inmueble;
         this.nota=nota;
-        this.reseña=reseña;
     }
     
     //getters y setters
@@ -35,9 +32,7 @@ public class Valoracion implements Serializable{
     public int getNota(){
         return nota;
     }
-    public String getReseña(){
-        return reseña;
-    }
+    
     public String getCorreoCliente(){
         return cliente.getCorreoElectronico();
     }

@@ -147,7 +147,7 @@ public class GestorReservas {
         }
         return false; // Retornar true si está disponible la reserva
     }
-    
+
     public static boolean fechasSinSolapamiento(Date fechaEntrada1, Date fechaSalida1,
                                                    String fechaEntradaStr, String fechaSalidaStr) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

@@ -78,10 +78,15 @@ public class ClienteParticular implements Serializable{
     }
    
     public void setesVIP(boolean vip){
-        this.esVIP = esVIP;
+        this.esVIP = vip;
     }
     
-    // Métodos específicos para ClienteParticular 
+    // Métodos específicos para ClienteParticular
+    
+    /**
+     * Comprueba si el cliente es vip
+     * @return boolean
+     */
     public boolean cmpVIP(){
         return esVIP;   
     }

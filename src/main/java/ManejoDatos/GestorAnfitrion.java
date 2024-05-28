@@ -34,7 +34,7 @@ public class GestorAnfitrion implements Serializable{
     
     /**
      * 
-     * @return de la lista de todos los objetos de anfitriones 
+     * @return List lista con todos los anfitriones (obj)
      */
     public List<Anfitrion> obtenerAnfitriones() {
         return anfitriones;
@@ -57,7 +57,7 @@ public class GestorAnfitrion implements Serializable{
     }
     
     /**
-     * Carga todos los anfitriones en el programa obteniendo los archivos desde anfitriones.dat
+     * Carga todos los anfitriones en el programa obteniendo los datos de anfitriones.dat
      */
     public void cargarAnfitriones() {
         try{

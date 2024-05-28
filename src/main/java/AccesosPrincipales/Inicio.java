@@ -21,7 +21,7 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form FrameInicio
      */
     public Inicio() {
-        //inicializar el flatlaf
+        //inicializar el flatlaf para todo el programa
         FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#500000"));
         FlatIntelliJLaf.setup();
         
@@ -49,6 +49,7 @@ public class Inicio extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,6 +140,10 @@ public class Inicio extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Helvetica Neue", 0, 10)); // NOI18N
+        jLabel4.setText("¿Todavía no tienes una cuenta?");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,6 +227,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

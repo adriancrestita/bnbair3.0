@@ -29,7 +29,7 @@ public class GestorInmuebles {
         }  
     }
     
-    
+
     public static List<Inmueble> obtenerInmuebles() {
         return inmuebles;
     }
@@ -38,8 +38,6 @@ public class GestorInmuebles {
      * Guarda los inmuebles en inmuebles.dat una vez proporcionada una List de inmuebles
      * @param array 
      */
-    
-    
     public static void guardarInmuebles(List<Inmueble> array) {
        try{
            FileOutputStream fos = new FileOutputStream("inmuebles.dat");
@@ -50,7 +48,10 @@ public class GestorInmuebles {
            System.out.println(e);
        }        
     }
-
+    
+    /**
+     * Carga el archivo con todos los inmuebles registrados 
+     */
     public static void cargarInmuebles() {
         try{
             FileInputStream fis = new FileInputStream("inmuebles.dat");
@@ -124,7 +125,7 @@ public class GestorInmuebles {
                 if (inm.getCorreoAnfitrion().equals(correoAnfitrion) && inm.getTitulo().equals(tituloOriginal)) {
                     inmueblesMod.set(i, inm);
                     guardarInmuebles(inmueblesMod);
-                    return true; //cliente actualizado
+                    return true; //inmueble actualizado
                 }
             }
         } catch (IOException | ClassNotFoundException ex) {

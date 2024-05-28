@@ -49,11 +49,5 @@ public class Javabnb {
         
         Inicio fi = new Inicio();
         fi.setVisible(true);
-    }
-
-    public boolean autenticarAdmin(String correo, String clave) {
-        return administrador.getCorreoElectronico().equals(correo) && administrador.getClave().equals(clave);
-    }
-    
-   
+    }   
 }
