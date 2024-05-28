@@ -25,6 +25,7 @@ public class Reservas implements Serializable{
     public Inmueble inmueble;
     public TarjetaCredito tj;
     public int precioTotal;
+    private String fechaReserva;
     
     
     
@@ -36,6 +37,7 @@ public class Reservas implements Serializable{
         this.fechaSalida = fechaSalida;
         this.precioTotal = precioTotal;  
         this.inmueble = inmueble;
+        this.fechaReserva = fechaReserva;
     }
     
     
@@ -48,6 +50,13 @@ public class Reservas implements Serializable{
     
     public String getTituloInmueble(){
         return inmueble.getTitulo();
+    }
+    public Inmueble getInmueble(){
+        return inmueble;
+    }
+    
+    public String getFechaReserva(){
+        return fechaReserva;
     }
     
     public String getPrecioTotal(){

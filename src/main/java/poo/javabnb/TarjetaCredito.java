@@ -35,7 +35,7 @@ public class TarjetaCredito implements Serializable{
     public void setNombreTitular(String nombreTitular) {
         this.nombreTitular = nombreTitular;
     }
-
+    
     public String getNumeroTarjeta() {
         return numeroTarjeta;
     }

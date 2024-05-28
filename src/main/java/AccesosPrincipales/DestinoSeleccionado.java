@@ -284,7 +284,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     }
     
     private void mostrarReseñas(Inmueble inmueble) {
-        GestorValoraciones gestorValoraciones = new GestorValoraciones();
         List<Valoracion> valoraciones = gestorValoraciones.obtenerValoracionesInmueble(inmueble.getCorreoAnfitrion(), inmueble.getTitulo());
 
         JPanel jPanelResenas = new JPanel();
@@ -698,12 +697,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
     private void valorarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorarButtonActionPerformed
         // TODO add your handling code here:
-        gestorValoraciones = new GestorValoraciones();
         gestorClientes = new GestorClientes();
         
         valoracion = new Valoracion(gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario()), inmueble, calificacion);        
         gestorValoraciones.agregarValoracion(valoracion);
-        gestorValoraciones.cargarValoraciones();
         
         System.out.println("Calificacion puntuada" + calificacion);
         System.out.println("Numero de valoraciones anfitrion" + gestorValoraciones.obtenerNumeroValoracionesAnfitrion(anfitrion.getCorreoElectronico()));

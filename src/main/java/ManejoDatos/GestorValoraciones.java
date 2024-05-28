@@ -22,7 +22,7 @@ public class GestorValoraciones {
         }
         else{
             valoraciones.add(valoracion);
-            guargarValoraciones(obtenerValoraciones());  
+            guardarValoraciones(obtenerValoraciones());  
         }  
     }
     
@@ -30,7 +30,7 @@ public class GestorValoraciones {
         return valoraciones;
     }
       
-    private static void guargarValoraciones(List<Valoracion> array) {
+    private static void guardarValoraciones(List<Valoracion> array) {
        try{
            FileOutputStream fos = new FileOutputStream("valoraciones.dat");
            ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -93,10 +93,10 @@ public class GestorValoraciones {
         return valoracionesInmueble; 
     }
     
-    public boolean existeValoracionCliente(String correo, String titulo){
+    public boolean existeValoracionCliente(String correo, String titulo, String correoAnfitrion){
         cargarValoraciones(); // Se asegura de cargar los datos más recientes
         for (Valoracion valoracion : valoraciones) {
-            if (valoracion.getCorreoCliente().equals(correo) && valoracion.getInmueble().getTitulo().equals(titulo)) {
+            if (valoracion.getCorreoCliente().equals(correo) && valoracion.getInmueble().getTitulo().equals(titulo) && valoracion.getInmueble().getCorreoAnfitrion().equals(correoAnfitrion)) {
                 return true;
             }
         }
@@ -104,7 +104,6 @@ public class GestorValoraciones {
     }
     
     public int obtenerNumeroValoracionesAnfitrion(String correo){
-        cargarValoraciones();
         int num = 0;
         for (Valoracion valoracion : valoraciones){
             if (valoracion.getInmueble().getCorreoAnfitrion().equals(correo)){
@@ -115,7 +114,6 @@ public class GestorValoraciones {
     }
     
     public double obtenerMediaValoracionesAnfitrion(String correo){
-        cargarValoraciones();
         int suma = 0;
         for (Valoracion valoracion : valoraciones){
             if (valoracion.getInmueble().getCorreoAnfitrion().equals(correo)){
@@ -141,7 +139,7 @@ public class GestorValoraciones {
                 Valoracion val = valoracionesMod.get(i);
                 if (val.getCorreoCliente().equals(correo) && val.getInmueble().getTitulo().equals(titulo)) {
                     valoracionesMod.remove(i);
-                    guargarValoraciones(valoracionesMod);
+                    guardarValoraciones(valoracionesMod);
                     break;
                 }
             }

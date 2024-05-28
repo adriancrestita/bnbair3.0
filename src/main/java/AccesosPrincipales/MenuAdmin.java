@@ -185,35 +185,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane2.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         jScrollPane2.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
-       
-        // Configurar el Popup Menu
-        popupMenu2 = new JPopupMenu();
-        deleteMenuItem2 = new JMenuItem("Eliminar Inmueble");
-        popupMenu2.add(deleteMenuItem2);
-        
-        // Asignar el Popup Menu a la tabla
-        tablaInmuebles.setComponentPopupMenu(popupMenu2);
-        
-        //Asignamos el metodo de eliminar cuando se pulse el boton
-        deleteMenuItem2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = tablaInmuebles.getSelectedRow();
-                String correoInmuebleSeleccionado = (String) tablaInmuebles.getValueAt(selectedRow, 2);
-                String tituloInmuebleSeleccionado = (String) tablaInmuebles.getValueAt(selectedRow, 1);
-                
-                //Vaciamos inmuebles y reservas
-                vaciarTabla(tableModel2);
-                vaciarTabla(tableModel3);
-                
-                inm = gestorInmuebles.eliminarInmueble(correoInmuebleSeleccionado, tituloInmuebleSeleccionado);
-                reserv = gestorReservas.eliminarReservasInmueble(tituloInmuebleSeleccionado, correoInmuebleSeleccionado);
-                
-                cargarListaInmuebles(inm);          
-                cargarListaReservas(reserv);
-                
-            }
-        });
         
         // Ajuste de tamaño de las columnas para que se vea todo al complet
         TableColumnModel columnModel2 = tablaInmuebles.getColumnModel();
@@ -242,7 +213,7 @@ public class MenuAdmin extends javax.swing.JFrame {
         /*--------------------------------------------------------------------------------*/        
         // TABLA RESERVAS
         gestorReservas = new GestorReservas();
-        String[] columnNames3 = {"Correo Cliente", "Numero de Tarjeta Cliente", "Titulo Inmueble", "Correo Anfitrion", "Precio Noche", "Precio Total"};
+        String[] columnNames3 = {"Fecha Reserva", "Importe Total", "Correo Anfitrion", "Titulo Inmueble", "Direccion", "Numero Huespedes", "Numero Habitaciones", "Numero Camas", "Numero Baños", "Tipo Propiedad", "Precio Noche", "Servicios"};
         
         //Fija un modo no editable del contenido de las celdas de la tabla 
         tableModel3 = new DefaultTableModel(columnNames3,0) {
@@ -263,30 +234,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         jScrollPane3.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
-       
-        // Configurar el Popup Menu
-        popupMenu3 = new JPopupMenu();
-        deleteMenuItem3 = new JMenuItem("Eliminar Resrverva");
-        popupMenu3.add(deleteMenuItem3);
-        
-        // Asignar el Popup Menu a la tabla
-        tablaReservas.setComponentPopupMenu(popupMenu3);
-        
-        //Asignamos el metodo de eliminar cuando se pulse el boton
-        deleteMenuItem3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = tablaReservas.getSelectedRow();
-                String correoAnfitrion = (String) tablaReservas.getValueAt(selectedRow, 3);
-                String correoCliente = (String) tablaReservas.getValueAt(selectedRow, 0);
-                String tituloInmueble = (String) tablaReservas.getValueAt(selectedRow, 2);
-                
-                //Elimina la reserva de la lista y recargue los datos de la tabla
-                vaciarTabla(tableModel3);
-                reserv = gestorReservas.eliminarReserva(correoCliente, correoAnfitrion, tituloInmueble);
-                cargarListaReservas(reserv);          
-            }
-        });
         
         // Ajuste de tamaño de las columnas para que se vea todo al completo
         TableColumnModel columnModel3 = tablaReservas.getColumnModel();
@@ -523,7 +470,7 @@ public class MenuAdmin extends javax.swing.JFrame {
     private void cargarListaInmuebles(List<Inmueble> inmuebles){
         vaciarTabla(tableModel2);
         for (Inmueble inmueble : inmuebles) {
-            Object [] fila = {inmueble.getCorreoAnfitrion(), inmueble.getTitulo(), inmueble.getDireccion(), inmueble.getTipoPropiedad(), inmueble.getMaxHuespedes(), inmueble.getPrecioNoche(), inmueble.getServicios()};
+            Object [] fila = {inmueble.getCorreoAnfitrion(), inmueble.getTitulo(), inmueble.getDireccionAsString(), inmueble.getTipoPropiedad(), inmueble.getMaxHuespedes(), inmueble.getPrecioNoche(), inmueble.getServiciosAsString()};
             tableModel2.addRow(fila);
         }            
     }
@@ -535,8 +482,10 @@ public class MenuAdmin extends javax.swing.JFrame {
     private void cargarListaReservas(List<Reservas> reservas){
         vaciarTabla(tableModel3);
         for (Reservas reserva : reservas) {
-            Object [] fila = {reserva.getCorreoCliente(), gestorTarjetas.obtenerNumeroTarjeta(reserva.getCorreoCliente()), reserva.getCorreoAnfitrion(), 
-                reserva.getTituloInmueble(), reserva.inmueble.getPrecioNoche(),  reserva.getPrecioTotal()};
+            Object [] fila = {reserva.getFechaReserva(), reserva.getPrecioTotal(), reserva.getCorreoAnfitrion(), reserva.getInmueble().getTitulo(), reserva.getInmueble().getDireccionAsString(), 
+                reserva.getInmueble().getMaxHuespedes(),reserva.getInmueble().getNumHabitaciones(), 
+                reserva.getInmueble().getNumCamas(), reserva.getInmueble().getNumBaños(), 
+                reserva.getInmueble().getTipoPropiedad(), reserva.getInmueble().getPrecioNoche(), reserva.getInmueble().getServiciosAsString()};
             tableModel3.addRow(fila);
         }            
     }

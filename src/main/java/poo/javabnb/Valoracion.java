@@ -15,7 +15,6 @@ public class Valoracion implements Serializable{
     private ClienteParticular cliente;
     private Inmueble inmueble;
     private int nota;
-    private GestorValoraciones gestorValoraciones;
     
     public Valoracion(ClienteParticular cliente, Inmueble inmueble, int nota){
         this.cliente=cliente;
