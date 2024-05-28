@@ -962,6 +962,8 @@ public class DestinoModificacion extends javax.swing.JFrame {
     private void volverButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverButtonActionPerformed
         // TODO add your handling code here:
         dispose();
+        MenuAnfitrion ma = new MenuAnfitrion();
+        ma.setVisible(true);
     }//GEN-LAST:event_volverButtonActionPerformed
 
     /**

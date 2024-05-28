@@ -30,7 +30,6 @@ public class Reservas implements Serializable{
     
     
     public Reservas(String fechaReserva, int precioTotal, Inmueble inmueble, ClienteParticular cliente, String fechaEntrada, String fechaSalida){
-        this.anfitrion=anfitrion;
         gestorCliente = new GestorClientes();
         this.particular = cliente;
         this.fechaEntrada = fechaEntrada;
@@ -45,7 +44,7 @@ public class Reservas implements Serializable{
         return particular.getCorreoElectronico();
     }
     public String getCorreoAnfitrion(){
-        return anfitrion.getCorreoElectronico();
+        return inmueble.getCorreoAnfitrion();
     }
     
     public String getTituloInmueble(){

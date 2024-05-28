@@ -41,6 +41,9 @@ public class MenuParticular extends javax.swing.JFrame {
     private GestorTarjetas gestorTarjetas;
     private GestorReservas gestorReservas;
     private TarjetaCredito tj;
+    
+    private List<Reservas> reserv;
+
    
     
     /**
@@ -54,7 +57,8 @@ public class MenuParticular extends javax.swing.JFrame {
         
         gestorTarjetas = new GestorTarjetas();
         gestorReservas = new GestorReservas();
-        
+        reserv = gestorReservas.obtenerReservas();
+
         
         //Seteamos el objeto cliente y tarjeta del usuario que está utilizado la aplicación
         cliente = gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario());
@@ -84,7 +88,7 @@ public class MenuParticular extends javax.swing.JFrame {
         
         // TABLA RESERVAS
         gestorReservas = new GestorReservas();
-        String[] columnNames3 = {"Correo Cliente", "Numero de Tarjeta Cliente", "Titulo Inmueble", "Correo Anfitrion", "Precio Noche", "Precio Total"};
+        String[] columnNames3 = {"Fecha Reserva", "Importe Total", "Correo Anfitrion", "Titulo Inmueble", "Direccion", "Numero Huespedes", "Numero Habitaciones", "Numero Camas", "Numero Baños", "Tipo Propiedad", "Precio Noche", "Servicios"};
         
         //Fija un modo no editable del contenido de las celdas de la tabla 
         tableModel = new DefaultTableModel(columnNames3,0) {
@@ -100,7 +104,7 @@ public class MenuParticular extends javax.swing.JFrame {
         
         //Carga el .dat a la tabla por primera vez
         vaciarTabla(tableModel);
-        cargarListaReservas(gestorReservas.obtenerReservas());
+        cargarListaReservas(reserv);
    
         // Hacer las barras de scroll invisibles pero funcionales
         jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
@@ -147,14 +151,13 @@ public class MenuParticular extends javax.swing.JFrame {
     private void cargarListaReservas(List<Reservas> reservas){
         vaciarTabla(tableModel);
         for (Reservas reserva : reservas) {
-            if (reserva.getCorreoCliente().equals(Sesion.obtenerCorreoUsuario())){
-                Object [] fila = {reserva.getCorreoCliente(), gestorTarjetas.obtenerNumeroTarjeta(reserva.getCorreoCliente()), reserva.getCorreoAnfitrion(), 
-                    reserva.getTituloInmueble(), reserva.inmueble.getPrecioNoche(),  reserva.getPrecioTotal()};
-                tableModel.addRow(fila);
-            }
+            Object [] fila = {reserva.getFechaReserva(), reserva.getPrecioTotal(), reserva.getCorreoAnfitrion(), reserva.getInmueble().getTitulo(), reserva.getInmueble().getDireccionAsString(), 
+                reserva.getInmueble().getMaxHuespedes(),reserva.getInmueble().getNumHabitaciones(), 
+                reserva.getInmueble().getNumCamas(), reserva.getInmueble().getNumBaños(), 
+                reserva.getInmueble().getTipoPropiedad(), reserva.getInmueble().getPrecioNoche(), reserva.getInmueble().getServiciosAsString()};
+            tableModel.addRow(fila);
         }            
-    }
-    
+    }    
     /**
      * Agrega los inmuebles disponibles al scroll panel
      * @param listaInmuebles

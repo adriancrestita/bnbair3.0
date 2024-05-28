@@ -1,0 +1,27 @@
+Factura
+========
+Fecha de Reserva: 2024/05/28 19:36:11
+Fecha de Entrada: 29/05/2024
+Fecha de Salida: 30/05/2024
+Importe: 217 €
+========
+
+Datos del Cliente:
+DNI: 54008144G
+Nombre: cliente1
+Correo Electrónico: cliente1@gmail.com
+Teléfono: 123123123
+VIP: No
+========
+
+Datos del Inmueble:
+Correo del Anfitrión: anfitrion1@gmail.com
+Título: casita
+Dirección: acs, 1, ciudaddd, 12321
+Máximo de Huéspedes: 1
+Número de Habitaciones: 1
+Número de Camas: 1
+Número de Baños: 1
+Tipo de Propiedad: Casa
+Precio por Noche: 217 EUR
+Servicios: Wifi
