@@ -36,7 +36,9 @@ public class MenuParticular extends javax.swing.JFrame {
 
     
     
-    
+    /**
+     * Constructor del jFrame
+     */
     public MenuParticular() {
         super();
         initComponents();
@@ -73,6 +75,12 @@ public class MenuParticular extends javax.swing.JFrame {
         comboBoxFiltrar.addItem("Apartamentos");
 
     }
+    
+    /**
+     * Agrega los inmuebles disponibles al scroll panel
+     * @param listaInmuebles
+     * @param scrollPane 
+     */
     private void agregarInmueblesAlScrollPane(List<Inmueble> listaInmuebles, JScrollPane scrollPane) {
         // Crear el panel principal que contendrá todos los inmuebles
         JPanel mainPanel = new JPanel();
@@ -155,7 +163,12 @@ public class MenuParticular extends javax.swing.JFrame {
         scrollPane.setViewportView(mainPanel);
     }
     
-    // Método para filtrar inmuebles por ciudad
+    /**
+     * Método para filtrar inmuebles por ciudad
+     * @param listaInmuebles
+     * @param query
+     * @return devuelve la lista de inmuebles filtrados
+     */
     private List<Inmueble> filtrarInmuebles(List<Inmueble> listaInmuebles, String query) {
         return listaInmuebles.stream()
                 .filter(inmueble -> inmueble.getCiudad().toLowerCase().contains(query.toLowerCase()))

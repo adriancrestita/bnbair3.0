@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package poo.javabnb;
 
 import ManejoDatos.GestorValoraciones;
@@ -16,11 +12,11 @@ public class Valoracion implements Serializable{
     private static final long serialVersionUID = 1L;
 
     // Atributos de la clase
-    public ClienteParticular cliente;
-    public Inmueble inmueble;
-    public int nota;
-    public String reseña;
-    public GestorValoraciones gestorValoraciones;
+    private ClienteParticular cliente;
+    private Inmueble inmueble;
+    private int nota;
+    private String reseña;
+    private GestorValoraciones gestorValoraciones;
     
     public Valoracion(ClienteParticular cliente, Inmueble inmueble, int nota, String reseña){
         this.cliente=cliente;

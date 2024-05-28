@@ -21,11 +21,10 @@ public class Inicio extends javax.swing.JFrame {
      * Creates new form FrameInicio
      */
     public Inicio() {
-        // Esto solo se debe hacer una vez en la ventana principal;
-        // Cambio el accentColor del tema al magenta
+        //inicializar el flatlaf
         FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#500000"));
-        // Inicia el tema de los controles de la ventana
         FlatIntelliJLaf.setup();
+        
         initComponents();
         setTitle("JavaBnB");
         jLabel1.requestFocus(true);

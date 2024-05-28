@@ -27,13 +27,15 @@ public class Reservas implements Serializable{
     public int precioTotal;
     
     
-    public Reservas(Anfitrion anfitrion, String correoCliente, Inmueble inmueble, String fechaEntrada, String fechaSalida, int precioTotal){
+    
+    public Reservas(String fechaReserva, int precioTotal, Inmueble inmueble, String correoCliente, String fechaEntrada, String fechaSalida){
         this.anfitrion=anfitrion;
         gestorCliente = new GestorClientes();
         this.particular = gestorCliente.obtenerCliente(correoCliente);
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.precioTotal = precioTotal;    
+        this.precioTotal = precioTotal;  
+        this.inmueble = inmueble;
     }
     
     /**

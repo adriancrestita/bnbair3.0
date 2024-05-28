@@ -28,7 +28,10 @@ public class ArchivoUtil {
             System.out.println("El archivo ya existe: " + nombreArchivo);
         }
     }
-
+    
+    /**
+     * inicializa todos los archivos de la aplicacion
+     */
     public static void inicializarArchivos() {
         asegurarArchivoExiste("clientes.dat");
         asegurarArchivoExiste("tarjetas.dat");

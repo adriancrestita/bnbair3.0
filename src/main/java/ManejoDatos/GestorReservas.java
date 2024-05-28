@@ -51,7 +51,7 @@ public class GestorReservas {
             if (obj instanceof List) {
                 List tempList = (List) obj;
                 tempList.stream().forEach(object -> {
-                    if (object instanceof TarjetaCredito) {
+                    if (object instanceof Reservas) {
                         reservas.add((Reservas) object);
                     }
                 });
@@ -82,14 +82,14 @@ public class GestorReservas {
         return null; // Retornar null si no se encuentra el cliente
     }    
     
-    public static List<Reservas> eliminarReserva(String correoCliente, String correoAnfitrion) {
+    public static List<Reservas> eliminarReserva(String correoCliente, String correoAnfitrion, String titulo) {
         List<Reservas> reservasMod = new ArrayList<>();
         try {
             reservasMod = deserializarReservas();
 
             for (int i = 0; i < reservasMod.size(); i++) {
                 Reservas reserva = reservasMod.get(i);
-                if (reserva.getCorreoCliente().equals(correoCliente) && reserva.getCorreoAnfitrion().equals(correoAnfitrion)) {
+                if (reserva.getCorreoCliente().equals(correoCliente) && reserva.getCorreoAnfitrion().equals(correoAnfitrion) && reserva.getTituloInmueble().equals(titulo)) {
                     reservasMod.remove(i);
                     guardarReservas(reservasMod);
                     break;

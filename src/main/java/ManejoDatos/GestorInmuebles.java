@@ -114,4 +114,22 @@ public class GestorInmuebles {
             return (List<Inmueble>) ois.readObject();
         }
     }
+    
+    public static boolean modificarInmueble(String correoAnfitrion, String tituloOriginal, Inmueble inmueble) {
+        try {
+            List<Inmueble> inmueblesMod = deserializarInmuebles();
+
+            for (int i = 0; i < inmueblesMod.size(); i++) {
+                Inmueble inm = inmueblesMod.get(i);
+                if (inm.getCorreoAnfitrion().equals(correoAnfitrion) && inm.getTitulo().equals(tituloOriginal)) {
+                    inmueblesMod.set(i, inm);
+                    guardarInmuebles(inmueblesMod);
+                    return true; //cliente actualizado
+                }
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Error al modificar el inmueble: " + ex.getMessage());
+        }
+        return false;
+    }
 }

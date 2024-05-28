@@ -30,12 +30,24 @@ public class ValorarInmueble extends javax.swing.JDialog {
     private ClienteParticular cliente;
  
     
-    
+    /**
+     * constructor default
+     * @param parent
+     * @param modal 
+     */
     public ValorarInmueble(java.awt.Frame parent, boolean modal){
         super(parent, modal);
         initComponents();
     }
     
+    /**
+     * Constructor con parametros
+     * @param parent
+     * @param modal
+     * @param puntuación
+     * @param inmueble
+     * @param cliente 
+     */
     public ValorarInmueble(java.awt.Frame parent, boolean modal, int puntuación, Inmueble inmueble, ClienteParticular cliente) {
         super(parent, modal);
         initComponents();

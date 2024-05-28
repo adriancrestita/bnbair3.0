@@ -87,9 +87,9 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         telefono.setText(anfitrion.getTelefono());
         dni.setText(anfitrion.getDni());
         superAnfitrion.setSelected(anfitrion.getEsSuperAnfitrion());
-//        titular.setText(tj.getNombreTitular());
-//        numtarj.setText(tj.getNumeroTarjeta());
-//        fcad.setText(tj.getFechaCaducidad());o
+        titular.setText(tj.getNombreTitular());
+        numtarj.setText(tj.getNumeroTarjeta());
+        fcad.setText(tj.getFechaCaducidad());
         
         agregarInmueblesAlScrollPane(listaInmuebles, inmueblesScrollPane);
         
@@ -121,6 +121,11 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Añade los inmuebles propios del anfitrionm al  scroll panel principal
+     * @param listaInmuebles
+     * @param scrollPane 
+     */
     private void agregarInmueblesAlScrollPane(List<Inmueble> listaInmuebles, JScrollPane scrollPane) {
         // Crear el panel principal que contendrá todos los inmuebles
         JPanel mainPanel = new JPanel();
