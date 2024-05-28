@@ -33,7 +33,7 @@ public class MenuParticular extends javax.swing.JFrame {
     private GestorClientes gestorClientes = new GestorClientes();
     private GestorTarjetas gestorTarjetas;
     private TarjetaCredito tj;
-
+   
     
     
     /**
