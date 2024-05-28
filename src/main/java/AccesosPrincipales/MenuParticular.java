@@ -8,12 +8,18 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import ManejoDatos.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import poo.javabnb.*;
 
 /**
@@ -25,6 +31,7 @@ public class MenuParticular extends javax.swing.JFrame {
     /**
      * Creates new form DialogMenuParticular
      */
+    private DefaultTableModel tableModel;
     private GestorInmuebles gestorInmuebles = new GestorInmuebles();
     private List<Inmueble> listaInmuebles = gestorInmuebles.obtenerInmuebles();
     private final String PATH_IMAGENES="src/main/java/ImagenesDestino/";
@@ -32,6 +39,7 @@ public class MenuParticular extends javax.swing.JFrame {
     private ClienteParticular cliente;
     private GestorClientes gestorClientes = new GestorClientes();
     private GestorTarjetas gestorTarjetas;
+    private GestorReservas gestorReservas;
     private TarjetaCredito tj;
 
     
@@ -45,7 +53,8 @@ public class MenuParticular extends javax.swing.JFrame {
         setTitle("JavaBnB");
         setResizable(false);
         
-        gestorTarjetas = new GestorTarjetas();  
+        gestorTarjetas = new GestorTarjetas();
+        gestorReservas = new GestorReservas();
         
         
         //Seteamos el objeto cliente y tarjeta del usuario que está utilizado la aplicación
@@ -73,7 +82,74 @@ public class MenuParticular extends javax.swing.JFrame {
         comboBoxFiltrar.addItem("Todos");
         comboBoxFiltrar.addItem("Casas");
         comboBoxFiltrar.addItem("Apartamentos");
+        
+        // TABLA RESERVAS
+        gestorReservas = new GestorReservas();
+        String[] columnNames3 = {"Correo Cliente", "Numero de Tarjeta Cliente", "Titulo Inmueble", "Correo Anfitrion", "Precio Noche", "Precio Total"};
+        
+        //Fija un modo no editable del contenido de las celdas de la tabla 
+        tableModel = new DefaultTableModel(columnNames3,0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Hace todas las celdas no editables
+            }     
+        };
+        
+        //Setea el model de la tabla y hacemos que no se pueda hacer resize
+        tablaReservas.setModel(tableModel);
+        tablaReservas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
+        //Carga el .dat a la tabla por primera vez
+        vaciarTabla(tableModel);
+        cargarListaReservas(gestorReservas.obtenerReservas());
+   
+        // Hacer las barras de scroll invisibles pero funcionales
+        jScrollPane3.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        jScrollPane3.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        
+        // Ajuste de tamaño de las columnas para que se vea todo al completo
+        TableColumnModel columnModel3 = tablaReservas.getColumnModel();
+        for (int column = 0; column < tablaReservas.getColumnCount(); column++) {
+            int width = 15; // Mínimo ancho
+            
+            // Obtener el ancho del encabezado
+            TableColumn tableColumn = columnModel3.getColumn(column);
+            TableCellRenderer headerRenderer = tableColumn.getHeaderRenderer();
+            if (headerRenderer == null) {
+                headerRenderer = tablaReservas.getTableHeader().getDefaultRenderer();
+            }
+            Component headerComp = headerRenderer.getTableCellRendererComponent(
+                tablaReservas, tableColumn.getHeaderValue(), false, false, 0, 0);
+            width = headerComp.getPreferredSize().width;
 
+            // Obtener el ancho máximo de la columna (datos)
+            for (int row = 0; row < tablaReservas.getRowCount(); row++) {
+                TableCellRenderer renderer = tablaReservas.getCellRenderer(row, column);
+                Component comp = tablaReservas.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            columnModel3.getColumn(column).setPreferredWidth(width);
+        }
+        
+        /*--------------------------------------------------------------------------------*/ 
+
+    }
+    
+    private static void vaciarTabla(DefaultTableModel modeloTabla) {
+        while(modeloTabla.getRowCount() > 0){
+            modeloTabla.removeRow(0);
+        }
+    }
+    
+    private void cargarListaReservas(List<Reservas> reservas){
+        vaciarTabla(tableModel);
+        for (Reservas reserva : reservas) {
+            if (reserva.getCorreoCliente().equals(Sesion.obtenerCorreoUsuario())){
+                Object [] fila = {reserva.getCorreoCliente(), gestorTarjetas.obtenerNumeroTarjeta(reserva.getCorreoCliente()), reserva.getCorreoAnfitrion(), 
+                    reserva.getTituloInmueble(), reserva.inmueble.getPrecioNoche(),  reserva.getPrecioTotal()};
+                tableModel.addRow(fila);
+            }
+        }            
     }
     
     /**
@@ -201,6 +277,9 @@ public class MenuParticular extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         panelMisReservas = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaReservas = new javax.swing.JTable();
         panelMiPerfil = new javax.swing.JPanel();
         PanelPerfil = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -325,6 +404,29 @@ public class MenuParticular extends javax.swing.JFrame {
         jTabbedPane1.addTab("tab1", panelExplorarReservas);
 
         panelMisReservas.setBackground(new java.awt.Color(255, 255, 255));
+        panelMisReservas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Mis reservas");
+        panelMisReservas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, -1, -1));
+
+        tablaReservas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre Anfitrion", "Nombre Cliente", "Correo Cliente", "Teléfono Cliente", "DNI Cliente", "Estatus Cliente"
+            }
+        ));
+        jScrollPane3.setViewportView(tablaReservas);
+
+        panelMisReservas.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 570, 390));
+
         jTabbedPane1.addTab("tab2", panelMisReservas);
 
         panelMiPerfil.setBackground(new java.awt.Color(255, 255, 255));
@@ -779,12 +881,14 @@ public class MenuParticular extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField numtarj;
@@ -792,6 +896,7 @@ public class MenuParticular extends javax.swing.JFrame {
     private javax.swing.JPanel panelMiPerfil;
     private javax.swing.JPanel panelMisReservas;
     private javax.swing.JScrollPane scrollPaneReservas;
+    private javax.swing.JTable tablaReservas;
     private javax.swing.JTextField telefono;
     private javax.swing.JTextField titular;
     private javax.swing.JCheckBox vip;
