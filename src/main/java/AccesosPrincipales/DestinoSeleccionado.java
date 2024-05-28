@@ -699,6 +699,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
             estrellas[i].setForeground(Color.GRAY); 
             jPanel4.add(estrellas[i]);
         }
+        JOptionPane.showMessageDialog(this, "Valoración registrada");
         
     }//GEN-LAST:event_valorarButtonActionPerformed
 
