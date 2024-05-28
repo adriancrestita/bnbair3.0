@@ -43,7 +43,9 @@ public class MenuParticular extends javax.swing.JFrame {
     private TarjetaCredito tj;
    
     
-    
+    /**
+     * Constructor del jFrame
+     */
     public MenuParticular() {
         super();
         initComponents();

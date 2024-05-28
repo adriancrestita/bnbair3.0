@@ -82,6 +82,13 @@ public class GestorReservas {
         return null; // Retornar null si no se encuentra el cliente
     }    
     
+    /**
+     * Elimina una reserva en concreto
+     * @param correoCliente
+     * @param correoAnfitrion
+     * @param titulo
+     * @return 
+     */
     public static List<Reservas> eliminarReserva(String correoCliente, String correoAnfitrion, String titulo) {
         List<Reservas> reservasMod = new ArrayList<>();
         try {
@@ -102,6 +109,12 @@ public class GestorReservas {
         return reservasMod;
     }
     
+    /**
+     * Método que elimina todas las reservas de un inmueble
+     * @param titulo
+     * @param correoAnfitrion
+     * @return la lista actualizada de reservas
+     */
     public static List<Reservas> eliminarReservasInmueble(String titulo, String correoAnfitrion) {
         List<Reservas> reservasMod = new ArrayList<>();
         try {
@@ -120,6 +133,11 @@ public class GestorReservas {
         return reservasMod;
     }
     
+    /**
+     * Elimina las reservas de un cliente en caso que el mismo se de de baja
+     * @param correo
+     * @return  lista actualizada de las reservas
+     */
     public static List<Reservas> eliminarReservasCliente(String correo) {
         List<Reservas> reservasMod = new ArrayList<>();
         try {
@@ -138,6 +156,14 @@ public class GestorReservas {
         return reservasMod;
     }
     
+    /** 
+     * utilizando fechasSinSolapamiento comprobamos si puede reservarse dos dias a la vez
+     * @param titulo
+     * @param fechaEntrada
+     * @param fechaSalida
+     * @return
+     * @throws ParseException 
+     */
     public boolean reservaDisponible(String titulo, Date fechaEntrada, Date fechaSalida) throws ParseException{
         cargarReservas(); // Se asegura de cargar los datos más recientes
         for (Reservas reserva : reservas) {
@@ -147,7 +173,16 @@ public class GestorReservas {
         }
         return false; // Retornar true si está disponible la reserva
     }
-
+    
+    /**
+     * Método para saber si dos fechas coinciden
+     * @param fechaEntrada1
+     * @param fechaSalida1
+     * @param fechaEntradaStr
+     * @param fechaSalidaStr
+     * @return
+     * @throws ParseException 
+     */
     public static boolean fechasSinSolapamiento(Date fechaEntrada1, Date fechaSalida1,
                                                    String fechaEntradaStr, String fechaSalidaStr) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

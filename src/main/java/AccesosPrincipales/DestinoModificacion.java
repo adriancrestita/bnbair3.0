@@ -51,6 +51,7 @@ public class DestinoModificacion extends javax.swing.JFrame {
         initComponents();
     }
     
+    
     public DestinoModificacion(Inmueble inmueble) {
         initComponents(); // Llama a la función initComponents para inicializar los componentes
         setTitle("JavaBnB"); // Establece el título de la ventana
