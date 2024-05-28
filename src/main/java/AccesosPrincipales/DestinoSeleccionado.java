@@ -5,6 +5,7 @@
 package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
+import ManejoDatos.GestorClientes;
 import ManejoDatos.GestorReservas;
 import ManejoDatos.GestorValoraciones;
 import com.toedter.calendar.JCalendar;
@@ -25,6 +26,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import poo.javabnb.Reservas;
+import poo.javabnb.Sesion;
 import poo.javabnb.Valoracion;
 
 /**
@@ -39,18 +41,21 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
     
     private double costeNoche;
     private JDateChooser dateChooser1, dateChooser2;
-    private Anfitrion anfiInmueble;
+    private Anfitrion anfitrion;
     private GestorAnfitrion gestorAnfitrion;
     private ArrayList<String> imagePaths;
     private String rutaImgs="src/main/java/ImagenesDestino/";
     private int imagen=0;
     private int rating = 0;
     private JLabel[] stars;
+    private JLabel[] estrellas;
     private int calificacion;
     private Inmueble inmueble;
     private GestorReservas gestorReservas;
+    private GestorClientes gestorClientes;
     private List<Reservas> res;
     private double mediaValoracion;
+    private Valoracion valoracion;
     
     private GestorValoraciones gestorValoraciones;
     
@@ -68,7 +73,7 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         setResizable(false);
         
         gestorAnfitrion = new GestorAnfitrion(); // Accedemos al gestor de anfitriones
-        anfiInmueble = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
+        anfitrion = gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion());// Retorna el objeto del Anfitrión del inmueble para acceder a sus datos
         imagePaths = inmueble.getImages();
         System.out.println(imagePaths);
         this.inmueble=inmueble;
@@ -81,11 +86,11 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         mediaValoracion = mediaValoracion/valoraciones.size();
         
         //establecer la información acerca del destino y anfitrión seleccionado
-        jLabel24.setText("Anfitrion: "+anfiInmueble.getNombre());
-        jLabel34.setText("Valoración: "+anfiInmueble.getMediaValoraciones()+"/5");
-        jLabel40.setText(anfiInmueble.getNombre());
-        jLabel41.setText(anfiInmueble.getCorreoElectronico());
-        jLabel42.setText(anfiInmueble.getTelefono());
+        jLabel24.setText("Anfitrion: "+anfitrion.getNombre());
+        jLabel34.setText("Valoración: "+gestorValoraciones.obtenerMediaValoracionesAnfitrion(anfitrion.getCorreoElectronico())+"/5");
+        jLabel40.setText(anfitrion.getNombre());
+        jLabel41.setText(anfitrion.getCorreoElectronico());
+        jLabel42.setText(anfitrion.getTelefono());
         jLabel13.setText(inmueble.getTitulo());
         jLabel19.setText(inmueble.direccionToString());
         jLabel20.setText("Huéspedes máximos "+inmueble.getMaxHuespedes());
@@ -168,8 +173,10 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
                 stars[i].setForeground(Color.LIGHT_GRAY);
             }
         }
-        return calificacion = rating;
+        calificacion = rating;
+        return calificacion;
     }
+    
     
     /**
      * Método para añadir las imágenes al jpanel
@@ -289,12 +296,6 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
         } else {
             for (Valoracion valoracion : valoraciones) {
                 String clienteNombre = valoracion.getCliente().getNombre();
-                String resenaTexto = valoracion.getReseña();
-                // Usar HTML para formatear el texto con un salto de línea
-                String resenaHtml = "<html>" + clienteNombre + "<br/>" + resenaTexto + "</html>";
-                JLabel resenaLabel = new JLabel(resenaHtml);
-                resenaLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Añadir padding para mejor visualización
-                jPanelResenas.add(resenaLabel);
             }
         }
 
@@ -697,10 +698,38 @@ public class DestinoSeleccionado extends javax.swing.JFrame {
 
     private void valorarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valorarButtonActionPerformed
         // TODO add your handling code here:
-        ValorarInmueble valorarInmueble = new ValorarInmueble(DestinoSeleccionado.this, true);
-        valorarInmueble.setVisible(true);
-        dispose();
-        jPanel4.setEnabled(false);
+        gestorValoraciones = new GestorValoraciones();
+        gestorClientes = new GestorClientes();
+        
+        valoracion = new Valoracion(gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario()), inmueble, calificacion);        
+        gestorValoraciones.agregarValoracion(valoracion);
+        gestorValoraciones.cargarValoraciones();
+        
+        System.out.println("Calificacion puntuada" + calificacion);
+        System.out.println("Numero de valoraciones anfitrion" + gestorValoraciones.obtenerNumeroValoracionesAnfitrion(anfitrion.getCorreoElectronico()));
+        System.out.println("Media de valoraciones Anfitrion" + gestorValoraciones.obtenerMediaValoracionesAnfitrion(anfitrion.getCorreoElectronico()));
+        
+        if(gestorValoraciones.obtenerMediaValoracionesAnfitrion(inmueble.getCorreoAnfitrion())>=4){
+            Anfitrion cambioAnfitrion = new Anfitrion(anfitrion.getDni(), anfitrion.getNombre(), anfitrion.getCorreoElectronico(), anfitrion.getClave(), anfitrion.getTelefono(), anfitrion.getFechaRegistro(), true);
+            gestorAnfitrion.modificarAnfitrion(anfitrion.getCorreoElectronico(), cambioAnfitrion);   
+        }
+        else{
+            Anfitrion cambioAnfitrion = new Anfitrion(anfitrion.getDni(), anfitrion.getNombre(), anfitrion.getCorreoElectronico(), anfitrion.getClave(), anfitrion.getTelefono(), anfitrion.getFechaRegistro(), false);
+            gestorAnfitrion.modificarAnfitrion(anfitrion.getCorreoElectronico(), cambioAnfitrion);   
+        }
+                
+        for(int i = 0; i<stars.length; i++){
+            jPanel4.remove(stars[i]);
+        }
+        estrellas = new JLabel[calificacion];
+
+        for (int i = 0; i < calificacion; i++) {
+            estrellas[i] = new JLabel("\u2605");
+            estrellas[i].setFont(new Font("Arial Unicode MS", Font.PLAIN, 18));
+            estrellas[i].setForeground(Color.GRAY); 
+            jPanel4.add(estrellas[i]);
+        }
+        
     }//GEN-LAST:event_valorarButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

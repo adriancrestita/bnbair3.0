@@ -6,12 +6,14 @@ package AccesosPrincipales;
 
 import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorClientes;
+import ManejoDatos.GestorFacturas;
 import ManejoDatos.GestorReservas;
 import ManejoDatos.GestorTarjetas;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import poo.javabnb.ClienteParticular;
 import poo.javabnb.Inmueble;
+import poo.javabnb.MetodosAuxiliares;
 import poo.javabnb.Reservas;
 import poo.javabnb.Sesion;
 import poo.javabnb.TarjetaCredito;
@@ -25,8 +27,11 @@ public class FlotanteReservar extends javax.swing.JDialog {
     private GestorTarjetas gestorTarjetas;
     private GestorReservas gestorReservas;
     private GestorAnfitrion gestorAnfitrion;
+    private GestorFacturas gestorFacturas;
+    
     private ClienteParticular cliente;
     private Inmueble inmueble;
+    
     private String fechaE;
     private String fechaS;
     private double precioVip;
@@ -56,6 +61,7 @@ public class FlotanteReservar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("JavaBnB");
+        
         gestorClientes= new GestorClientes();
         cliente = gestorClientes.obtenerCliente(Sesion.obtenerCorreoUsuario());
         this.inmueble = inm;
@@ -330,10 +336,14 @@ public class FlotanteReservar extends javax.swing.JDialog {
 
     private void pagarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagarButtonActionPerformed
         // TODO add your handling code here:
+        MetodosAuxiliares ma = new MetodosAuxiliares();
         gestorReservas = new GestorReservas();
         gestorAnfitrion = new GestorAnfitrion();
-        Reservas reserva = new Reservas(gestorAnfitrion.obtenerAnfitrion(inmueble.getCorreoAnfitrion()), cliente.getCorreoElectronico(), inmueble, fechaE, fechaS, precioTotal);
+        gestorFacturas = new GestorFacturas();
+        
+        Reservas reserva = new Reservas(ma.fechaActual(), precioTotal, inmueble, cliente, fechaE, fechaS);
         gestorReservas.agregarReserva(reserva);
+        gestorFacturas.generarFactura(ma.fechaActual(), precioTotal, inmueble, cliente, fechaE, fechaS);
         dispose();
     }//GEN-LAST:event_pagarButtonActionPerformed
 //

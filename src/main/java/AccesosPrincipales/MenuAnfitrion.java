@@ -8,6 +8,7 @@ package AccesosPrincipales;
 import ManejoDatos.GestorAnfitrion;
 import ManejoDatos.GestorInmuebles;
 import ManejoDatos.GestorTarjetas;
+import ManejoDatos.GestorValoraciones;
 import ManejoDatos.VerificarDatos;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
@@ -36,6 +37,7 @@ public class MenuAnfitrion extends javax.swing.JFrame {
     private Anfitrion anfitrion;
     private TarjetaCredito tj;
     private GestorAnfitrion gestorAnfitrion;
+    private GestorValoraciones gestorValoraciones;
     private GestorTarjetas gestorTarjetas;
     private String PATH_IMAGENES="src/main/java/ImagenesDestino/";
     
@@ -65,10 +67,11 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         gestorInmuebles = new GestorInmuebles();
         gestorAnfitrion = new GestorAnfitrion();
         gestorTarjetas = new GestorTarjetas();
+        gestorValoraciones = new GestorValoraciones();
         
         //Seteamos el objeto cliente y tarjeta del usuario que está utilizado la aplicación
         anfitrion = gestorAnfitrion.obtenerAnfitrion(Sesion.obtenerCorreoUsuario());
-        //tj = gestorTarjetas.obtenerTarjeta(Sesion.obtenerCorreoUsuario());
+        tj = gestorTarjetas.obtenerTarjeta(Sesion.obtenerCorreoUsuario());
         
         setResizable(false);
         setTitle("JavaBnB");
@@ -90,6 +93,12 @@ public class MenuAnfitrion extends javax.swing.JFrame {
         titular.setText(tj.getNombreTitular());
         numtarj.setText(tj.getNumeroTarjeta());
         fcad.setText(tj.getFechaCaducidad());
+        if(gestorValoraciones.obtenerMediaValoracionesAnfitrion(anfitrion.getCorreoElectronico())>=4){
+            superAnfitrion.setSelected(true);
+        }
+        System.out.print(anfitrion.cmpSuperAnfitrion());
+        System.out.println("numero valoraciones" + gestorValoraciones.obtenerNumeroValoracionesAnfitrion(anfitrion.getCorreoElectronico()));
+        System.out.println("MediaValoraciones" + gestorValoraciones.obtenerMediaValoracionesAnfitrion(anfitrion.getCorreoElectronico()));
         
         agregarInmueblesAlScrollPane(listaInmuebles, inmueblesScrollPane);
         
@@ -1171,12 +1180,12 @@ public class MenuAnfitrion extends javax.swing.JFrame {
                 // Acción cuando se pulsa "Aceptar"
 
                 //Modifico los cambios del anfitrion
-                Anfitrion cambioAnfitrion = new Anfitrion(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(),superAnfitrion.isSelected());
+                Anfitrion cambioAnfitrion = new Anfitrion(dni.getText().trim(), nombre.getText().trim(), correo.getText().trim(), contraseña.getText().trim(), telefono.getText().trim(), anfitrion.getFechaRegistro(), superAnfitrion.isSelected());
                 gestorAnfitrion.modificarAnfitrion(Sesion.obtenerCorreoUsuario(), cambioAnfitrion);
 
                 //Modifico los cambios de las tarjetas
-    //            TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
-    //            gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
+                TarjetaCredito tj = new TarjetaCredito(dni.getText().trim(), titular.getText().trim(), numtarj.getText().trim(), fcad.getText().trim());
+                gestorTarjetas.modificarTarjeta(Sesion.obtenerCorreoUsuario(), tj);
 
                 //Si se cambia el correo cambia el usuario Registrado
                 Sesion.iniciarSesion(dni.getText());

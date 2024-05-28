@@ -136,6 +136,7 @@ public class Registro extends javax.swing.JFrame {
         jTipoCliente = new javax.swing.JComboBox<>();
         jToggleButton1 = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -288,7 +289,7 @@ public class Registro extends javax.swing.JFrame {
                 jesVIPActionPerformed(evt);
             }
         });
-        jtelefono.add(jesVIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, -1, -1));
+        jtelefono.add(jesVIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 410, -1, -1));
 
         jTipoCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Anfitrión" }));
         jTipoCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -320,7 +321,11 @@ public class Registro extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jtelefono.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, -1, -1));
+        jtelefono.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 0, 10)); // NOI18N
+        jLabel2.setText("¿Ya tienes una cuenta?");
+        jtelefono.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -522,6 +527,7 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

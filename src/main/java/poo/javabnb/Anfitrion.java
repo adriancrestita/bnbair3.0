@@ -18,30 +18,20 @@ public class Anfitrion implements Serializable{
     protected String telefono;
     private static final long serialVersionUID = 1L;
     private String fechaRegistro; //LocalDate para el registro en hora actual
-    private boolean esSuperAnfitrion;
-    private int totalValoraciones;
-    private float mediaValoraciones=0;
+    private boolean esSuperAnfitrion = false;
     
     //Constructor
-    public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono, String fechaRegistro, boolean superAnfitrion) {
+    public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono, String fechaRegistro, boolean esSuperAnfitrion) {
         this.dni=dni;
         this.nombre=nombre;
         this.correoElectronico=correoElectronico;
         this.clave=clave;
         this.telefono=telefono;
         this.fechaRegistro = fechaRegistro;
-        this.esSuperAnfitrion = superAnfitrion;
+        this.esSuperAnfitrion=esSuperAnfitrion;
     }
     
-    public Anfitrion(String dni, String nombre, String correoElectronico, String clave, String telefono, boolean superAnfitrion) {
-        this.dni=dni;
-        this.nombre=nombre;
-        this.correoElectronico=correoElectronico;
-        this.clave=clave;
-        this.telefono=telefono;
-        this.fechaRegistro = fechaRegistro;
-        this.esSuperAnfitrion = superAnfitrion;
-    }
+    
     
     //Getters
     public String getDni() {
@@ -71,14 +61,10 @@ public class Anfitrion implements Serializable{
     public boolean getEsSuperAnfitrion(){
         return esSuperAnfitrion;
     }
-    
-    public int getValoraciones(){
-        return totalValoraciones;
+    public void setEsSuperAnfitrion(){
+         this.esSuperAnfitrion = true;
     }
     
-    public float getMediaValoraciones(){
-        return mediaValoraciones;
-    }
     
     // Setters
     public void setDni(String dni) {
@@ -106,17 +92,6 @@ public class Anfitrion implements Serializable{
         this.fechaRegistro = fechaActual;
     }
     // Métodos específicos para Anfitrion
-
-    public void modificarValoraciones(double calificacionNew){
-        
-        this.mediaValoraciones = (float) (((mediaValoraciones*totalValoraciones)+calificacionNew)/(totalValoraciones++)); //hace la media aritmética de todas las calificaciones
-        totalValoraciones++;
-        
-        if (mediaValoraciones<=4){
-            esSuperAnfitrion=true;
-        }
-    }
-    
     public String cmpSuperAnfitrion(){
         if(esSuperAnfitrion == true){
             return "Super Anfitrion";

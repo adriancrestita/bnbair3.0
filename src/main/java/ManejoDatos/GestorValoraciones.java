@@ -103,6 +103,35 @@ public class GestorValoraciones {
         return false; // Retornar false si no se existe la valoracion
     }
     
+    public int obtenerNumeroValoracionesAnfitrion(String correo){
+        cargarValoraciones();
+        int num = 0;
+        for (Valoracion valoracion : valoraciones){
+            if (valoracion.getInmueble().getCorreoAnfitrion().equals(correo)){
+                num++;
+            }
+        }
+        return num;
+    }
+    
+    public double obtenerMediaValoracionesAnfitrion(String correo){
+        cargarValoraciones();
+        int suma = 0;
+        for (Valoracion valoracion : valoraciones){
+            if (valoracion.getInmueble().getCorreoAnfitrion().equals(correo)){
+                suma+=valoracion.getNota();
+            }
+        }
+        
+        if(obtenerNumeroValoracionesAnfitrion(correo) != 0){
+            double media = (double) (suma/obtenerNumeroValoracionesAnfitrion(correo));
+            return media;
+        }
+        else{
+            return 0;
+        }
+    }
+    
     public static List<Valoracion> eliminarValoracion(String correo, String titulo) {
         List<Valoracion> valoracionesMod = new ArrayList<>();
         try {
